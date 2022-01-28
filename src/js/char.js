@@ -1,10 +1,4 @@
-import { distance, getMousePos, collR, collL, collB, collT, coll } from './utils.js'
-import Bullet from './bullet.js';
-import Mine from './mine.js';
-import { bullets, chars, charsAI, walls, mines, holes, char1, stopgame, bulletFiredSound, explosionSound, minePlacedSound } from './game.js';
-import Intelligence from './intelligence.js';
-
-export default class Char {
+class Char {
   constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
     this.x = x;
     this.y = y;
@@ -127,7 +121,7 @@ export default class Char {
     }
   }
 
-  isInto(startposx, startposy, wallx, wally, sx, sy){
+  isInto(startposx, startposy, wallx, wally, sx, sy) {
     return ((startposx > wallx) && (startposx < wallx + sx) && (startposy > wally) && (startposy < wally + sy))
   }
 

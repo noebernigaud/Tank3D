@@ -1,7 +1,5 @@
-import { walls, chars } from './game.js';
-import { collR, collL, collB, collT, coll } from './utils.js';
 
-export default class SimBullet {
+class SimBullet {
     constructor(charTireur, live, speed, target) {
         this.angle = charTireur.angle;
         this.x = charTireur.x;
@@ -18,7 +16,7 @@ export default class SimBullet {
 
     simulate() {
         var i = 0;
-        while(this.live >= 0 && i < 1000){
+        while (this.live >= 0 && i < 1000) {
             this.move();
             i++;
         }
@@ -30,7 +28,7 @@ export default class SimBullet {
         // FONCTIONS DE COLLISION AVEC LES MURS
         // entraine le rebond de la balle et la perte d'une de ses vies
 
-        for (let wall of walls){
+        for (let wall of walls) {
 
             let collisionHappened = 0;
 
@@ -77,7 +75,7 @@ export default class SimBullet {
 
             if (coll(this.x - 5, this.y - 5, 10, 10, char.x - 20, char.y - 20, 40, 40)) {
                 this.live = -1;
-                if(char === this.target){
+                if (char === this.target) {
                     this.collTarget = true;
                 }
             }

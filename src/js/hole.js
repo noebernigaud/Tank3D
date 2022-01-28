@@ -1,6 +1,4 @@
-import { holeImage } from './game.js';
-
-export default class Hole {
+class Hole {
     constructor(x, y) {
         this.x = x;
         this.y = y;

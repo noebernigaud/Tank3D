@@ -1,7 +1,4 @@
-import { walls, bullets, chars, bulletImage, bulletBounceSound, bulletDestroyedSound } from './game.js';
-import { collR, collL, collB, collT, coll } from './utils.js';
-
-export default class Bullet {
+class Bullet {
     constructor(char, live, speed) {
         this.angle = char.angle;
         this.x = char.x - 40 * Math.cos(this.angle);

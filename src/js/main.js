@@ -1,11 +1,3 @@
-import Char from './char.js';
-import Hole from './hole.js';
-import { getMousePos } from './utils.js'
-import Wall from './wall.js';
-export { walls, holes, bullets, mines, chars, charsAI, char1, stopgame };
-export { wallTexture, wallDTexture, holeImage, tankImage, bulletImage, mineImage };
-export { bulletFiredSound, explosionSound, bulletBounceSound, bulletDestroyedSound, minePlacedSound };
-
 var canvas, ctx, width, height;
 var char1;
 var charsAI;
@@ -281,12 +273,12 @@ function startgame(level) {
 
             walls = new Array();
             for (var i = 1; i < 5; i++) {
-                for (var j = 1; j < 5; j++){
-                    walls.push(new Wall(i * (width / 5), 60 + (j * 40) + 240 * ((i+1) % 2)));
-                    if(i==1) walls.push(new Wall(i * (width / 5) + j * 40, 100 + 240 * (i % 2)));
-                    if(i==3) walls.push(new Wall(i * (width / 5) + j * 40, 220 + 240 * (i % 2)));
-                    if(i==2) walls.push(new Wall(i * (width / 5) - j * 40, 100 + 240 * (i % 2)));
-                    if(i==4) walls.push(new Wall(i * (width / 5) - j * 40, 220 + 240 * (i % 2)));
+                for (var j = 1; j < 5; j++) {
+                    walls.push(new Wall(i * (width / 5), 60 + (j * 40) + 240 * ((i + 1) % 2)));
+                    if (i == 1) walls.push(new Wall(i * (width / 5) + j * 40, 100 + 240 * (i % 2)));
+                    if (i == 3) walls.push(new Wall(i * (width / 5) + j * 40, 220 + 240 * (i % 2)));
+                    if (i == 2) walls.push(new Wall(i * (width / 5) - j * 40, 100 + 240 * (i % 2)));
+                    if (i == 4) walls.push(new Wall(i * (width / 5) - j * 40, 220 + 240 * (i % 2)));
                 }
             }
 
@@ -422,7 +414,7 @@ function anime() {
         }
 
         ctx.font = "30px Arial";
-        ctx.fillText("level: " + (level+1) + "/5", 10, 30);
+        ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
     }
 
     // On demande une nouvelle frame d'animation
@@ -431,14 +423,14 @@ function anime() {
 }
 
 var inputVitMult = document.getElementById("mutlvit")
-inputVitMult.oninput = function() {changeVitesseChar(inputVitMult.value)};
+inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
 
 function changeVitesseChar(value) {
     speedMultUti = value;
 }
 
 var inputReloadMult = document.getElementById("multReload")
-inputReloadMult.oninput = function() {changeCadenceTir(inputReloadMult.value)};
+inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
 
 function changeCadenceTir(value) {
     reloadMultUti = value;

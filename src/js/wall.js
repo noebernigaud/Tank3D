@@ -1,7 +1,4 @@
-import { walls, wallTexture, wallDTexture } from './game.js';
-import { collR, collL, collB, collT, coll } from './utils.js';
-
-export default class Wall {
+class Wall {
     constructor(x, y, destructable) {
         this.x = x;
         this.y = y;
