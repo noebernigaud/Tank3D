@@ -1,5 +1,11 @@
 
 class SimBullet {
+    /**
+     * @param {Char} charTireur 
+     * @param {number} live 
+     * @param {number} speed 
+     * @param {Char} target 
+     */
     constructor(charTireur, live, speed, target) {
         this.angle = charTireur.angle;
         this.x = charTireur.x;

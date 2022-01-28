@@ -1,4 +1,13 @@
 class Char {
+  /**
+   * 
+   * @param {number} x 
+   * @param {number} y 
+   * @param {number} angle 
+   * @param {number} vitesse 
+   * @param {number} tempsMinEntreTirsEnMillisecondes 
+   * @param {HTMLImageElement} img 
+   */
   constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
     this.x = x;
     this.y = y;

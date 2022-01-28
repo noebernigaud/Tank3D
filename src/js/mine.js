@@ -1,4 +1,7 @@
 class Mine {
+    /**
+     * @param {Char} char 
+     */
     constructor(char) {
         this.char = char;
         this.x = char.x;

@@ -1,4 +1,10 @@
 class Bullet {
+    /**
+     * 
+     * @param {Char} char 
+     * @param {number} live 
+     * @param {number} speed 
+     */
     constructor(char, live, speed) {
         this.angle = char.angle;
         this.x = char.x - 40 * Math.cos(this.angle);

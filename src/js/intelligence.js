@@ -1,4 +1,8 @@
 class Intelligence {
+    /**
+     * 
+     * @param {Char} charAI 
+     */
     constructor(charAI) {
         this.char = charAI;
         this.delayUpdateDirection = 3000;

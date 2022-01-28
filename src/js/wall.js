@@ -1,4 +1,10 @@
 class Wall {
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {boolean} destructable 
+     */
     constructor(x, y, destructable) {
         this.x = x;
         this.y = y;
