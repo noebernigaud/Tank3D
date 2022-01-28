@@ -13,6 +13,4 @@ class Hole {
         ctx.drawImage(holeImage, 0, 0, this.sizex, this.sizey);
         ctx.restore();
     }
-
-
 }
