@@ -18,3 +18,11 @@ The code has been based on Noé Bernigaud's project of a Tank game in 2D written
 # Note
 Once downloaded the html file needs to be opened with a live server, else access to scripts will be bocked by the CORS policy.
 
+# Audio source 
+
+[Crush8-Bit.ogg](https://rpg.hamsterrepublic.com/wiki-images/d/db/Crush8-Bit.ogg)
+[Explosion2.wav](http://schaeffer.ludo.free.fr/worms/DATA/Wav/Effects/Explosion2.wav)
+[plop.mp3](https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/plop.mp3)
+[Collision8-Bit.ogg](http://commondatastorage.googleapis.com/codeskulptor-assets/Collision8-Bit.ogg)
+[minplace.wav](http://www.utc.fr/si28/ProjetsUpload/P2006_si28p004/flash_puzzle/sons/rush/mineplace.wav)
+[Human-Applause-LargeCrowd01.mp3](http://sfxcontent.s3.amazonaws.com/soundfx/Human-Applause-LargeCrowd01.mp3)

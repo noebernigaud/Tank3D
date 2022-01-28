@@ -1,54 +1,3 @@
-var canvas, ctx, width, height;
-var char1;
-var charsAI;
-var chars;
-var walls;
-var holes;
-var mines;
-var bullets;
-var mousepos = { x: 0, y: 0 };
-var inputStates = {};
-var playing;
-var level;
-var speedMultUti = 1;
-var reloadMultUti = 1;
-
-var backgroundTexture = new Image();
-backgroundTexture.src = './images/woodTexture.jpg';
-
-var wallTexture = new Image();
-wallTexture.src = './images/wallTexture.jpg';
-var wallDTexture = new Image();
-wallDTexture.src = './images/wallDTexture.jpg';
-
-var holeImage = new Image();
-holeImage.src = './images/hole.png';
-
-var tankImage = new Image();
-tankImage.src = './images/tank.png';
-var tankImageRed = new Image();
-tankImageRed.src = './images/tankRed.png';
-var tankImageBlue = new Image();
-tankImageBlue.src = './images/tankBlue.png';
-var tankImageGreen = new Image();
-tankImageGreen.src = './images/tankGreen.png';
-
-let bulletFiredSound;
-let explosionSound;
-let bulletBounceSound;
-let bulletDestroyedSound;
-let minePlacedSound;
-let applauseSound;
-
-
-var bulletImage = new Image();
-bulletImage.src = './images/bullet.png';
-
-var mineImage = new Image();
-mineImage.src = './images/minemine.png';
-
-window.onload = init();
-
 // INITIALISATION
 
 function init() {
@@ -61,35 +10,6 @@ function init() {
     playing = 0;
 
     level = -1;
-
-    explosionSound = new Howl({
-        urls: ['http://schaeffer.ludo.free.fr/worms/DATA/Wav/Effects/Explosion2.wav'],
-        volume: 0.2
-    });
-
-    bulletFiredSound = new Howl({
-        urls: ['https://rpg.hamsterrepublic.com/wiki-images/d/db/Crush8-Bit.ogg'],
-        volume: 0.5
-    });
-
-    bulletBounceSound = new Howl({
-        urls: ['https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/plop.mp3']
-    });
-
-    bulletDestroyedSound = new Howl({
-        urls: ['http://commondatastorage.googleapis.com/codeskulptor-assets/Collision8-Bit.ogg']
-    });
-
-    minePlacedSound = new Howl({
-        urls: ['http://www.utc.fr/si28/ProjetsUpload/P2006_si28p004/flash_puzzle/sons/rush/mineplace.wav']
-    });
-
-    applauseSound = new Howl({
-        urls: ['http://sfxcontent.s3.amazonaws.com/soundfx/Human-Applause-LargeCrowd01.mp3']
-    });
-
-
-
 
     canvas.addEventListener('mousemove', (evt) => {
         mousepos = getMousePos(canvas, evt);
@@ -435,5 +355,3 @@ inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) 
 function changeCadenceTir(value) {
     reloadMultUti = value;
 }
-
-
