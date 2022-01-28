@@ -11,3 +11,10 @@ This project has been realized by
 - Venturelli Antoine
 
 We are three students at the University of Côte d'Azur in M2 of Coumputer Science
+
+# Code history
+The code has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame))
+
+# Note
+Once downloaded the html file needs to be opened with a live server, else access to scripts will be bocked by the CORS policy.
+
