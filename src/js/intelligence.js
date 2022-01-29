@@ -1,6 +1,5 @@
 class Intelligence {
     /**
-     * 
      * @param {Char} charAI 
      */
     constructor(charAI) {
@@ -10,6 +9,9 @@ class Intelligence {
         this.char.lastBulletTime = Date.now();
     }
 
+    /**
+     * @param {Char} char1 
+     */
     applyStrategy(char1) {
         this.updateAngle(char1);
         if (this.simulatedBullet.collTarget === true) { this.char.addBullet(Date.now()); }
@@ -54,6 +56,9 @@ class Intelligence {
         }
     }
 
+    /**
+     * @param {Char} char1 
+     */
     updateAngle(char1) {
         //le char vise droit vers sa cible
         let dx = this.char.x - char1.x;
