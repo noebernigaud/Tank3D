@@ -6,6 +6,22 @@
     <title>Small gamle prototype</title>
     <link rel="stylesheet" href="css/styles.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/ammo.js"></script>
+    <script src="https://preview.babylonjs.com/cannon.js"></script>
+    <script src="https://preview.babylonjs.com/Oimo.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+    <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+    <script src="levels/levels.js"></script>
+
     <script src="main/global_vars.js"></script>
     <script src="game_objects/char.js"></script>
     <script src="game_objects/bullet.js"></script>
@@ -15,13 +31,14 @@
     <script src="tools/SimBullet.js"></script>
     <script src="tools/utils.js"></script>
     <script src="game_objects/wall.js"></script>
-
-    <script src="levels/levels.js"></script>
+    <script src="main/main.js"></script>
 
     <link rel="shortcut icon" href="images/tankGreen.png">
 </head>
 
-<body onload="init();">
+<!-- <body onload="init();"> -->
+
+<body>
     <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
 
     <canvas id="myCanvas" width="1000" height="600">
@@ -34,9 +51,7 @@
         <input id="mutlvit" type="number" value="1" step="0.2" min="0.2" max="4">
     </label>
 
-    <script src="main/main.js">
-        window.onload = init();
-    </script>
+    <script src="babylon_start/test.js"></script>
 </body>
 
 </html>
