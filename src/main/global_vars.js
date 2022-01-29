@@ -1,6 +1,8 @@
 var canvas;
 var ctx, width, height;
 
+var cell_size = 40;
+
 /** @type {Char} */
 var char1;
 

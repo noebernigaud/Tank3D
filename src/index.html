@@ -6,15 +6,17 @@
     <title>Small gamle prototype</title>
     <link rel="stylesheet" href="css/styles.css">
 
-    <script src="js/global_vars.js"></script>
-    <script src="js/char.js"></script>
-    <script src="js/bullet.js"></script>
-    <script src="js/hole.js"></script>
-    <script src="js/intelligence.js"></script>
-    <script src="js/mine.js"></script>
-    <script src="js/SimBullet.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/wall.js"></script>
+    <script src="main/global_vars.js"></script>
+    <script src="game_objects/char.js"></script>
+    <script src="game_objects/bullet.js"></script>
+    <script src="game_objects/hole.js"></script>
+    <script src="tools/intelligence.js"></script>
+    <script src="game_objects/mine.js"></script>
+    <script src="tools/SimBullet.js"></script>
+    <script src="tools/utils.js"></script>
+    <script src="game_objects/wall.js"></script>
+
+    <script src="levels/levels.js"></script>
 
     <link rel="shortcut icon" href="images/tankGreen.png">
 </head>
@@ -32,7 +34,7 @@
         <input id="mutlvit" type="number" value="1" step="0.2" min="0.2" max="4">
     </label>
 
-    <script src="js/main.js">
+    <script src="main/main.js">
         window.onload = init();
     </script>
 </body>

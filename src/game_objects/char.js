@@ -1,6 +1,5 @@
 class Char {
   /**
-   * 
    * @param {number} x 
    * @param {number} y 
    * @param {number} angle 
@@ -9,10 +8,10 @@ class Char {
    * @param {HTMLImageElement} img 
    */
   constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
-    this.x = x;
-    this.y = y;
-    this.sizex = 40;
-    this.sizey = 40;
+    this.sizex = cell_size;
+    this.sizey = cell_size;
+    this.x = x + this.sizex / 2;
+    this.y = y + this.sizey / 2;
     this.angle = angle;
     this.v = vitesse;
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;

@@ -8,8 +8,8 @@ class Wall {
     constructor(x, y, destructable) {
         this.x = x;
         this.y = y;
-        this.sizex = 40;
-        this.sizey = 40;
+        this.sizex = cell_size;
+        this.sizey = cell_size;
         this.destructable = destructable
     }
 
