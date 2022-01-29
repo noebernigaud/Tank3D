@@ -1,7 +1,10 @@
-var canvas;
-var ctx, width, height;
+var cell_x_number = 25;
+var cell_y_number = 15;
 
 var cell_size = 40;
+
+var width = cell_x_number * cell_size;
+var height = cell_y_number * cell_size;
 
 /** @type {Char} */
 var char1;

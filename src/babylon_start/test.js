@@ -34,7 +34,7 @@ var createScene = function () {
   var scene = new BABYLON.Scene(engine);
 
   // This creates and positions a free camera (non-mesh)
-  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+  camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 385, -796), scene);
 
   // This targets the camera to scene origin
   camera.setTarget(BABYLON.Vector3.Zero());
@@ -49,26 +49,26 @@ var createScene = function () {
   light.intensity = 0.7;
 
   // Our built-in 'sphere' shape.
-  sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2, segments: 32 }, scene);
+  sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: cell_size, segments: 32 }, scene);
 
   // Move the sphere upward 1/2 its height
-  sphere.position.y = 1;
+  sphere.position.y = cell_size / 2;
 
   // Our built-in 'ground' shape.
-  var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 100, height: 100 }, scene);
+  var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width, height: height }, scene);
   ground.material = createMaterial(scene, 'images/woodTexture.jpg')
 
   print = console.log
-  for (var i = 0; i < 10; i++) {
-    for (var j = 0; j < 10; j++) {
-      if (i == 0 || i == 9 || j == 0 || j == 9) {
-        var box = BABYLON.MeshBuilder.CreateBox("box", { height: 10, width: 10, depth: 10 }, scene);
+  for (var i = 0; i < cell_x_number; i++) {
+    for (var j = 0; j < cell_y_number; j++) {
+      if (i == 0 || i == cell_x_number - 1 || j == 0 || j == cell_y_number - 1) {
+        var box = BABYLON.MeshBuilder.CreateBox("box", { height: cell_size, width: cell_size, depth: cell_size }, scene);
 
         material = createMaterial(scene, 'images/wallTexture.jpg');
 
-        box.position.y = 5
-        box.position.x = -45 + 10 * i
-        box.position.z = -45 + 10 * j
+        box.position.y = cell_size / 2;
+        box.position.x = -width / 2 + cell_size / 2 + cell_size * i;
+        box.position.z = -height / 2 + cell_size / 2 + cell_size * j;
         box.material = material
       }
     }
@@ -109,15 +109,15 @@ window.addEventListener('keydown', (evt) => {
     inputStates.SPACE = true;
   }
   if (evt.code === "KeyA") {
-    pos.x -= 0.1
+    pos.x -= 10
   }
   if (evt.code === "KeyW") {
-    pos.z += 0.1
+    pos.z += 10
   }
   if (evt.code === "KeyS") {
-    pos.z -= 0.1
+    pos.z -= 10
   }
   if (evt.code === "KeyD") {
-    pos.x += 0.1
+    pos.x += 10
   }
 });
