@@ -6,8 +6,8 @@ class Mine {
         this.char = char;
         this.sizex = 20;
         this.sizey = 20;
-        this.x = char.x + (cell_size - this.sizex) / 2;
-        this.y = char.y + (cell_size - this.sizey) / 2;
+        this.x = char.x;
+        this.y = char.y;
     }
 
     draw(ctx) {
