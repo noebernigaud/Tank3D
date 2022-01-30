@@ -18,6 +18,6 @@ function create_3d_shape(obj, img_path) {
 
 function place_object(obj) {
   obj.shape.position.y = cell_size / 2;
-  obj.shape.position.x = -width / 2 + obj.x + (cell_size - obj.sizex) / 2;
-  obj.shape.position.z = -height / 2 + obj.y + (cell_size - obj.sizey) / 2;
+  obj.shape.position.x = -width / 2 + obj.x;
+  obj.shape.position.z = -height / 2 + obj.y;
 }

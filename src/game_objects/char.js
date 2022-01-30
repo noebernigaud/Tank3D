@@ -10,8 +10,8 @@ class Char {
   constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
     this.sizex = cell_size - 5;
     this.sizey = cell_size - 5;
-    this.x = x + this.sizex / 2;
-    this.y = y + this.sizey / 2;
+    this.x = x;
+    this.y = y;
     this.angle = angle;
     this.v = vitesse;
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;

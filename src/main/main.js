@@ -15,9 +15,9 @@ function init() {
         mousepos = getMousePos(canvas, evt);
     }, false);
 
-    scene.onPointerMove = function (evt) {
-        mousepos = getMousePos(scene, evt);
-    }, false;
+    // scene.onPointerMove = function (evt) {
+    //     mousepos = getMousePos(scene, evt);
+    // }, false;
 
     // window.addEventListener('mousedown', (evt) => {
     //     inputStates.mouseclick = true;
