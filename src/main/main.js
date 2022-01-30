@@ -54,19 +54,22 @@ function keyApplaier() {
     }
     if (inputStates.rot_minus) {
         camera.rotation.y -= 0.05;
+        char1.angle = camera.rotation.y - Math.PI * 3 / 2;
     }
     if (inputStates.foreward) {
         char1.moveForeward(1)
     }
     if (inputStates.rot_plus) {
         camera.rotation.y += 0.05;
+        char1.angle = camera.rotation.y - Math.PI * 3 / 2;
     }
 }
 
 function init() {
 
     canvas = document.querySelector("#myCanvas");
-    // ctx = canvas.getContext('2d');
+    canvas2 = document.querySelector("#myCanvas1");
+    ctx = canvas2.getContext('2d');
     width = canvas.width;
     height = canvas.height;
 
@@ -219,7 +222,7 @@ function anime() {
     //IN GAME
     if (playing == 1) {
         // 1) On efface l'ecran
-        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         //Image de fond
         // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
@@ -230,8 +233,14 @@ function anime() {
         mines.forEach(mine => mine.draw3d());
         bullets.forEach(bullet => bullet.draw3d());
 
+        walls.forEach(wall => wall.draw(ctx));
+        holes.forEach(hole => hole.draw(ctx));
+        mines.forEach(mine => mine.draw(ctx));
+        bullets.forEach(bullet => bullet.draw(ctx));
+
         // 2) On dessine et on déplace les char
         chars.forEach(char => char.draw3d());
+        chars.forEach(char => char.draw(ctx));
         charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);
 

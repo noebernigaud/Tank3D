@@ -10,6 +10,7 @@ class Hole {
         this.sizey = 30;
         this.x = x + (cell_size - this.sizex) / 2;
         this.y = y + (cell_size - this.sizex) / 2;
+        this.shape = create_3d_shape(this, holeImage.src);
     }
 
     draw3d() {

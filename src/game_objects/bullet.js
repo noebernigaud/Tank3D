@@ -6,11 +6,11 @@ class Bullet {
      * @param {number} speed 
      */
     constructor(char, live, speed) {
-        this.angle = char.angle + Math.PI * 3 / 2;
+        this.angle = char.angle
         this.sizex = 5;
         this.sizey = 5;
-        this.x = char.x + (char.sizex + 5) * Math.cos(this.angle);
-        this.y = char.y + (char.sizey + 5) * Math.sin(this.angle);
+        this.x = char.x - (char.sizex + 5) * Math.cos(this.angle);
+        this.y = char.y - (char.sizey + 5) * Math.sin(this.angle);
         this.live = live;
         this.speed = speed;
         this.shape = create_3d_shape(this, bulletImage.src);
@@ -108,8 +108,8 @@ class Bullet {
 
 
         // LA BALLE AVANCE DE SE VITESSE DANS SA DIRECTION DONNEE PAR L'ANGLE
-        this.x += this.speed * Math.cos(this.angle);
-        this.y += this.speed * Math.sin(this.angle);
+        this.x -= this.speed * Math.cos(this.angle);
+        this.y -= this.speed * Math.sin(this.angle);
     }
 
     removeBullet() {

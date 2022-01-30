@@ -1,4 +1,7 @@
+
 class Char {
+  /** @type {BABYLON.Mesh} */
+  shape;
   /**
    * @param {number} x 
    * @param {number} y 
@@ -24,6 +27,7 @@ class Char {
   draw3d() {
     // console.log('Tank positioning');
     place_object(this);
+    this.shape.rotation.y = this.angle;
   }
 
   draw(ctx) {
@@ -129,10 +133,6 @@ class Char {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      if (this === char1) {
-        char1.angle = camera.rotation.y
-        console.log(this.angle);
-      }
       let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);
       let startposy = this.y - (this.sizex + 5) * Math.sin(this.angle);
       if (walls.every(wall => !this.isInto(startposx, startposy, wall.x, wall.y, wall.sizex, wall.sizey))) {
@@ -161,8 +161,6 @@ class Char {
       // on mémorise le dernier temps.
       this.lastMineTime = time;
     }
-
-    console.log(tempEcouleMine + " " + time + " " + this.lastMineTime)
   }
 
   removeChar() {
