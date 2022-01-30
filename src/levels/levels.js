@@ -17,7 +17,7 @@ const level_map = [
   [
     "-----------------------",
     "-----------------------",
-    "--------------------T--",
+    "--------------------B--",
     "----WWWWWWWWwww--------",
     "-----------------------",
     "-----------------------",
@@ -31,7 +31,7 @@ const level_map = [
   ],
   [
     "-----------------------",
-    "-------T---------------",
+    "-------B---------------",
     "---WWwwwwwwW-----------",
     "-----------W-----------",
     "-----------W-----------",
@@ -42,18 +42,18 @@ const level_map = [
     "------------W----------",
     "--I---------WwwwwwwWW--",
     "-----------------------",
-    "-----------------------",
+    "------------------B----",
   ],
   [
     "----------h------h-----",
-    "----------h---T--h--T--",
+    "----------h---B--h--B--",
     "----------h------h-----",
     "hhhhhhh---h------------",
     "----------h------------",
     "----------h--hhhhhhhhhh",
-    "----------h-------T----",
+    "----------h-------B----",
     "-----------------------",
-    "------------T--h-------",
+    "------------B--h-------",
     "hhhhhhhhhhh----h-------",
     "--I------------h---hhhh",
     "----------h----h-------",
@@ -61,9 +61,9 @@ const level_map = [
   ],
   [
     "-----------------------",
-    "---WWWWW-------W----T--",
+    "---WWWWW-------W----G--",
     "---W-----------W-------",
-    "---W-T---------W-------",
+    "---W-B---------W-------",
     "---W-----------W-------",
     "---W-----------WWWWW---",
     "-----------------------",
@@ -89,7 +89,17 @@ function draw_level_map(lvl_number) {
       switch (ch) {
         case '-': break;
         case 'T':
-          var char = new Char(posX, posY, 0, 2, 1500, tankImageBlue);
+          var char = new Char(posX, posY, 0, 0, 2500, tankImageGreen);
+          charsAI.push(char);
+          chars.push(char);
+          break;
+        case 'B':
+          var char = new Char(posX, posY, 0, 5, 10000, tankImageBlue);
+          charsAI.push(char);
+          chars.push(char);
+          break;
+        case 'G':
+          var char = new Char(posX, posY, 0, 5, 4000, tankImageGreen);
           charsAI.push(char);
           chars.push(char);
           break;
@@ -102,6 +112,9 @@ function draw_level_map(lvl_number) {
         case 'I':
           char1 = new Char(posX, posY, 0, 1.4 * speedMultUti, 800 * reloadMultUti, tankImage);
           chars.push(char1);
+          camera.rotation.x = 0.4854747337923555;
+          camera.rotation.y = 0.6936207932663223
+          camera.rotation.z = 0;
           break;
         case 'h':
           holes.push(new Hole(posX, posY))
