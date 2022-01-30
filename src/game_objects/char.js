@@ -25,7 +25,6 @@ class Char {
   }
 
   draw3d() {
-    // console.log('Tank positioning');
     place_object(this);
     this.shape.rotation.y = this.angle;
   }
@@ -42,9 +41,23 @@ class Char {
 
   move(speedX, speedY) {
     //deplace le tank
-    this.x += speedX * this.v;
-    this.y += speedY * this.v;
+    let old_x = this.x;
+    let old_y = this.y;
+    this.x = this.x + speedX * this.v;
+    this.y = this.y + speedY * this.v;
+    if (collision(this)) {
+      this.x = old_x;
+      this.y = old_y;
+    }
     this.draw3d();
+  }
+
+  moveForeward(coeff) {
+    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
+  }
+
+  moveBackward(coeff) {
+    this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
   }
 
   //FONCTIONS UTILITAIRES DE VERIFICATION DES COLLISIONS AVEC AUTRES OBJETS DANS LES DIFFERENTES DIRECTIONS
@@ -112,16 +125,12 @@ class Char {
     if (!this.collObjB()) { this.move(0, coeff); }
   }
 
-  moveForeward(coeff) {
-    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
-  }
 
-
-  updateAngle(mousepos) {
-    // 2) On déplace la balle 
-    let dx = this.x - mousepos.x;
-    let dy = this.y - mousepos.y;
-    this.angle = Math.atan2(dy, dx);
+  updateAngle(degree) {
+    let new_angle = camera.rotation.y + degree - Math.PI * 3 / 2;
+    // if (collision(this)) return;
+    camera.rotation.y += degree;
+    this.angle = new_angle;
   }
 
   addBullet(time) {

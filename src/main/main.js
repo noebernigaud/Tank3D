@@ -24,6 +24,9 @@ function keyListener(evt, is_true) {
     else if (evt.keyCode == 39) {
         inputStates.rot_plus = is_true; // camera.cameraRotation.y += 0.05;
     }
+    else if (evt.keyCode == 40) {
+        inputStates.backward = is_true; // camera.cameraRotation.y += 0.05;
+    }
 }
 
 function keyApplaier() {
@@ -40,28 +43,17 @@ function keyApplaier() {
     var coeff = 1;
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
-    if (inputStates.keyA) {
-        char1.moveL(coeff);
-    }
-    if (inputStates.keyW) {
-        char1.moveT(coeff);
-    }
-    if (inputStates.keyS) {
-        char1.moveB(coeff);
-    }
-    if (inputStates.keyD) {
-        char1.moveR(coeff);
-    }
     if (inputStates.rot_minus) {
-        camera.rotation.y -= 0.05;
-        char1.angle = camera.rotation.y - Math.PI * 3 / 2;
+        char1.updateAngle(-0.05)
     }
     if (inputStates.foreward) {
-        char1.moveForeward(1)
+        char1.moveForeward(2);
     }
     if (inputStates.rot_plus) {
-        camera.rotation.y += 0.05;
-        char1.angle = camera.rotation.y - Math.PI * 3 / 2;
+        char1.updateAngle(0.05);
+    }
+    if (inputStates.backward) {
+        char1.moveBackward(2);
     }
 }
 
@@ -137,7 +129,6 @@ function startgame(level) {
     mines = new Array();
 
     if (level < level_map.length) {
-        console.log('main : level map setting');
         draw_level_map(level)
     } else {
         playing = 2;

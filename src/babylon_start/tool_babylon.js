@@ -26,3 +26,17 @@ function place_object(obj) {
     camera.position.z = obj.shape.position.z - 100 * Math.cos(camera.rotation.y);
   }
 }
+
+/**
+ * @param {BABYLON.Mesh} obj
+ * @returns {boolean} if obj touches another Mesh object
+ */
+function collision(obj) {
+  let control = (elt) => elt !== obj && obj.shape.intersectsMesh(elt.shape);
+  return (
+    chars.some(control) ||
+    walls.some(control) ||
+    holes.some(control) ||
+    bullets.some(control)
+  )
+}
