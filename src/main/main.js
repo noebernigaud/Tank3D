@@ -3,7 +3,7 @@
 function init() {
 
     canvas = document.querySelector("#myCanvas");
-    ctx = canvas.getContext('2d');
+    // ctx = canvas.getContext('2d');
     width = canvas.width;
     height = canvas.height;
 
@@ -15,13 +15,25 @@ function init() {
         mousepos = getMousePos(canvas, evt);
     }, false);
 
-    window.addEventListener('mousedown', (evt) => {
-        inputStates.mouseclick = true;
-    });
+    scene.onPointerMove = function (evt) {
+        mousepos = getMousePos(scene, evt);
+    }, false;
 
-    window.addEventListener('mouseup', (evt) => {
-        inputStates.mouseclick = false;
-    });
+    // window.addEventListener('mousedown', (evt) => {
+    //     inputStates.mouseclick = true;
+    // });
+
+    scene.onPointerDown = function (_, _) {
+        inputStates.mouseclick = true;
+    }, false;
+
+    scene.onPointerUp = function (_, _0) {
+        inputStates.mouseclick = false
+    }, false;
+
+    // window.addEventListener('mouseup', (evt) => {
+    //     inputStates.mouseclick = false;
+    // });
 
     window.addEventListener('keydown', (evt) => {
         if (evt.code === "Space") {
@@ -59,6 +71,8 @@ function init() {
         }
     });
 
+    // My part
+    startgame(0)
     anime();
 }
 
@@ -85,6 +99,7 @@ function startgame(level) {
     mines = new Array();
 
     if (level < level_map.length) {
+        console.log('main : level map setting');
         draw_level_map(level)
     } else {
         playing = 2;
@@ -122,10 +137,21 @@ function pausebackgroundMusic() {
     audioPlayer.currentTime = 0;
 }
 
+
+function remove_all_objects() {
+    walls.forEach(wall => wall.shape.dispose());
+    holes.forEach(hole => hole.shape.dispose());
+    bullets.forEach(bullet => bullet.shape.dispose());
+
+    mines.forEach(mine => mine.shape.dispose());
+    chars.forEach(char => char.shape.dispose());
+}
+
 //ANIMATION
 
 function anime() {
 
+    playing = 1;
     //MENU
     if (playing == 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -158,63 +184,62 @@ function anime() {
     //IN GAME
     if (playing == 1) {
         // 1) On efface l'ecran
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         //Image de fond
-        ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
+        // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
 
         //On dessine les murs, trous, mines, balles
-        walls.forEach(wall => wall.draw(ctx));
-        holes.forEach(hole => hole.draw(ctx));
-        mines.forEach(mine => mine.draw(ctx));
-        bullets.forEach(bullet => bullet.draw(ctx));
+        walls.forEach(wall => wall.draw3d());
+        holes.forEach(hole => hole.draw3d());
+        mines.forEach(mine => mine.draw3d());
+        bullets.forEach(bullet => bullet.draw3d());
 
         // 2) On dessine et on déplace les char
-        chars.forEach(char => char.draw(ctx));
-        charsAI.forEach(char => char.intelligence.applyStrategy(char1));
+        chars.forEach(char => char.draw3d());
+        // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         char1.updateAngle(mousepos);
 
-
-        // On regarde si on doit poser une mine
-        if (inputStates.SPACE) {
-            char1.addMine(Date.now());
-        }
-        // On regarde si on doit tirer
-        if (inputStates.mouseclick) {
-            char1.addBullet(Date.now());
-        }
-
-        //DEPLACEMENTS DU CHAR
-        var coeff = 1;
-        if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
-
-        if (inputStates.keyA) {
-            char1.moveL(coeff);
-        }
-        if (inputStates.keyW) {
-            char1.moveT(coeff);
-        }
-        if (inputStates.keyS) {
-            char1.moveB(coeff);
-        }
-        if (inputStates.keyD) {
-            char1.moveR(coeff);
-        }
 
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
         if (charsAI.length == 0) {
             level += 1;
+            remove_all_objects()
             startgame(level);
         }
 
-        ctx.font = "30px Arial";
-        ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
+        // ctx.font = "30px Arial";
+        // ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
     }
 
-    // On demande une nouvelle frame d'animation
-    window.requestAnimationFrame(anime);
+    // On regarde si on doit poser une mine
+    if (inputStates.SPACE) {
+        char1.addMine(Date.now());
+    }
+    // On regarde si on doit tirer
+    if (inputStates.mouseclick) {
+        char1.addBullet(Date.now());
+    }
 
+    //DEPLACEMENTS DU CHAR
+    var coeff = 1;
+    if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
+
+    if (inputStates.keyA) {
+        char1.moveL(coeff);
+    }
+    if (inputStates.keyW) {
+        char1.moveT(coeff);
+    }
+    if (inputStates.keyS) {
+        char1.moveB(coeff);
+    }
+    if (inputStates.keyD) {
+        char1.moveR(coeff);
+    }
+    window.requestAnimationFrame(anime);
 }
+
 
 var inputVitMult = document.getElementById("mutlvit")
 inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };

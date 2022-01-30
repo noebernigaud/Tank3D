@@ -11,6 +11,11 @@ class Wall {
         this.sizex = cell_size;
         this.sizey = cell_size;
         this.destructable = destructable
+        this.shape = create_3d_shape(this, this.destructable ? wallDTexture.src : wallTexture.src)
+    }
+
+    draw3d() {
+        place_object(this);
     }
 
     draw(ctx) {
@@ -28,6 +33,7 @@ class Wall {
     destroy() {
         if (this.destructable === true) {
             let position = walls.indexOf(this);
+            this.shape.dispose();
             walls.splice(position, 1);
         }
     }

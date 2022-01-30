@@ -18,6 +18,12 @@ class Char {
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
     this.img = img;
+    this.shape = create_3d_shape(this, img.src)
+  }
+
+  draw3d() {
+    // console.log('Tank positioning');
+    place_object(this);
   }
 
   draw(ctx) {
@@ -34,14 +40,15 @@ class Char {
     //deplace le tank
     this.x += speedX * this.v;
     this.y += speedY * this.v;
+    this.draw3d();
   }
 
   //FONCTIONS UTILITAIRES DE VERIFICATION DES COLLISIONS AVEC AUTRES OBJETS DANS LES DIFFERENTES DIRECTIONS
 
   collObjL() {
-    if (walls.every(wall => !collL(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collL(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collL(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, char.x - this.sizex / 2, char.y - this.sizey / 2, char.sizex, char.sizey))) {
+    if (walls.every(wall => !collL(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
+      if (holes.every(hole => !collL(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
+        if (chars.every(char => !collL(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
           return false;
         }
       }
@@ -50,9 +57,9 @@ class Char {
   }
 
   collObjR() {
-    if (walls.every(wall => !collR(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collR(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collR(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, char.x - 20, char.y - 20, char.sizex, char.sizey))) {
+    if (walls.every(wall => !collR(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
+      if (holes.every(hole => !collR(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
+        if (chars.every(char => !collR(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
           return false;
         }
       }
@@ -61,9 +68,9 @@ class Char {
   }
 
   collObjT() {
-    if (walls.every(wall => !collT(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collT(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collT(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, char.x - 20, char.y - 20, char.sizex, char.sizey))) {
+    if (walls.every(wall => !collT(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
+      if (holes.every(hole => !collT(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
+        if (chars.every(char => !collT(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
           return false;
         }
       }
@@ -72,9 +79,9 @@ class Char {
   }
 
   collObjB() {
-    if (walls.every(wall => !collB(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collB(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collB(this.x - this.sizex / 2, this.y - this.sizey / 2, this.sizex, this.sizey, char.x - 20, char.y - 20, char.sizex, char.sizey))) {
+    if (walls.every(wall => !collB(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
+      if (holes.every(hole => !collB(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
+        if (chars.every(char => !collB(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
           return false;
         }
       }
@@ -152,6 +159,7 @@ class Char {
 
   removeChar() {
     let position = chars.indexOf(this);
+    this.shape.dispose();
     chars.splice(position, 1);
     explosionSound.play();
     if (this === char1) {

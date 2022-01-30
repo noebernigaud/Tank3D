@@ -8,6 +8,11 @@ class Mine {
         this.sizey = 20;
         this.x = char.x;
         this.y = char.y;
+        this.shape = create_3d_shape(this, mineImage.src);
+    }
+
+    draw3d() {
+        place_object(this);
     }
 
     draw(ctx) {
@@ -30,6 +35,7 @@ class Mine {
 
     remove() {
         let position = mines.indexOf(this);
+        this.shape.dispose();
         mines.splice(position, 1);
     }
 }

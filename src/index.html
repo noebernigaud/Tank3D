@@ -20,6 +20,8 @@
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
 
+    <script src="babylon_start/tool_babylon.js"></script>
+
     <script src="levels/levels.js"></script>
 
     <script src="main/global_vars.js"></script>
@@ -36,9 +38,9 @@
     <link rel="shortcut icon" href="images/tankGreen.png">
 </head>
 
-<!-- <body onload="init();"> -->
+<body onload="init();">
 
-<body>
+    <!-- <body> -->
     <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
 
     <canvas id="myCanvas" width="1000" height="600">
@@ -50,7 +52,6 @@
     <label>Multiplicateur vitesse tank hero:
         <input id="mutlvit" type="number" value="1" step="0.2" min="0.2" max="4">
     </label>
-
     <script src="babylon_start/test.js"></script>
 </body>
 

@@ -6,15 +6,27 @@ class Bullet {
      * @param {number} speed 
      */
     constructor(char, live, speed) {
-        this.angle = char.angle;
+        this.angle = - char.angle;
+        this.sizex = 5;
+        this.sizey = 5;
         this.x = char.x - 40 * Math.cos(this.angle);
         this.y = char.y - 40 * Math.sin(this.angle);
         this.live = live;
         this.speed = speed;
+        this.shape = create_3d_shape(this, bulletImage.src);
+        this.char = char
+    }
+
+    draw3d() {
+        place_object(this);
+        this.move();
+
+        if (this.live < 0) {
+            this.removeBullet(this);
+        }
     }
 
     draw(ctx) {
-
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle + 3.16);
@@ -103,6 +115,7 @@ class Bullet {
     removeBullet() {
         bulletDestroyedSound.play();
         let position = bullets.indexOf(this);
+        this.shape.dispose();
         bullets.splice(position, 1);
     }
 }

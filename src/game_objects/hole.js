@@ -12,6 +12,10 @@ class Hole {
         this.y = y + (cell_size - this.sizex) / 2;
     }
 
+    draw3d() {
+        place_object(this);
+    }
+
     draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
