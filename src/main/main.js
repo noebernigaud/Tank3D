@@ -1,6 +1,4 @@
 // INITIALISATION
-ag2 = Math.PI
-
 function keyListener(evt, is_true) {
     if (evt.code === "Space") {
         inputStates.mouseclick = is_true;
