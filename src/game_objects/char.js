@@ -108,6 +108,10 @@ class Char {
     if (!this.collObjB()) { this.move(0, coeff); }
   }
 
+  moveForeward(coeff) {
+    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
+  }
+
 
   updateAngle(mousepos) {
     // 2) On déplace la balle 
@@ -125,8 +129,12 @@ class Char {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      let startposx = this.x - 40 * Math.cos(this.angle);
-      let startposy = this.y - 40 * Math.sin(this.angle);
+      if (this === char1) {
+        char1.angle = camera.rotation.y * ag1 + ag2
+        console.log(this.angle);
+      }
+      let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);
+      let startposy = this.y - (this.sizex + 5) * Math.sin(this.angle);
       if (walls.every(wall => !this.isInto(startposx, startposy, wall.x, wall.y, wall.sizex, wall.sizey))) {
         bullets.push(new Bullet(this, 1, 5));
         bulletFiredSound.play();

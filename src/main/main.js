@@ -1,4 +1,70 @@
 // INITIALISATION
+ag2 = Math.PI
+ag1 = -1
+
+function keyListener(evt, is_true) {
+    if (evt.code === "Space") {
+        inputStates.mouseclick = is_true;
+    }
+    else if (evt.code === "KeyA") {
+        inputStates.keyA = is_true;
+    }
+    else if (evt.code === "KeyW") {
+        inputStates.keyW = is_true;
+    }
+    else if (evt.code === "KeyS") {
+        inputStates.keyS = is_true;
+    }
+    else if (evt.code === "KeyD") {
+        inputStates.keyD = is_true;
+    }
+    else if (evt.keyCode == 37) {
+        inputStates.rot_minus = is_true; // camera.cameraRotation.y -= 0.05;
+    }
+    else if (evt.keyCode == 38) {
+        inputStates.foreward = is_true; // char1.moveForeward(1)
+    }
+    else if (evt.keyCode == 39) {
+        inputStates.rot_plus = is_true; // camera.cameraRotation.y += 0.05;
+    }
+}
+
+function keyApplaier() {
+    // On regarde si on doit poser une mine
+    if (inputStates.SPACE) {
+        char1.addMine(Date.now());
+    }
+    // On regarde si on doit tirer
+    if (inputStates.mouseclick) {
+        char1.addBullet(Date.now());
+    }
+
+    //DEPLACEMENTS DU CHAR
+    var coeff = 1;
+    if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
+
+    if (inputStates.keyA) {
+        char1.moveL(coeff);
+    }
+    if (inputStates.keyW) {
+        char1.moveT(coeff);
+    }
+    if (inputStates.keyS) {
+        char1.moveB(coeff);
+    }
+    if (inputStates.keyD) {
+        char1.moveR(coeff);
+    }
+    if (inputStates.rot_minus) {
+        camera.rotation.y -= 0.05;
+    }
+    if (inputStates.foreward) {
+        char1.moveForeward(1)
+    }
+    if (inputStates.rot_plus) {
+        camera.rotation.y += 0.05;
+    }
+}
 
 function init() {
 
@@ -11,9 +77,9 @@ function init() {
 
     level = 0;
 
-    canvas.addEventListener('mousemove', (evt) => {
-        mousepos = getMousePos(canvas, evt);
-    }, false);
+    // canvas.addEventListener('mousemove', (evt) => {
+    //     mousepos = getMousePos(canvas, evt);
+    // }, false);
 
     // scene.onPointerMove = function (evt) {
     //     mousepos = getMousePos(scene, evt);
@@ -23,52 +89,24 @@ function init() {
     //     inputStates.mouseclick = true;
     // });
 
-    scene.onPointerDown = function (_, _) {
-        inputStates.mouseclick = true;
-    }, false;
+    // scene.onPointerDown = function (_, _) {
+    //     inputStates.mouseclick = true;
+    // }, false;
 
-    scene.onPointerUp = function (_, _0) {
-        inputStates.mouseclick = false
-    }, false;
+    // scene.onPointerUp = function (_, _0) {
+    //     inputStates.mouseclick = false
+    // }, false;
 
     // window.addEventListener('mouseup', (evt) => {
     //     inputStates.mouseclick = false;
     // });
 
     window.addEventListener('keydown', (evt) => {
-        if (evt.code === "Space") {
-            inputStates.SPACE = true;
-        }
-        if (evt.code === "KeyA") {
-            inputStates.keyA = true;
-        }
-        if (evt.code === "KeyW") {
-            inputStates.keyW = true;
-        }
-        if (evt.code === "KeyS") {
-            inputStates.keyS = true;
-        }
-        if (evt.code === "KeyD") {
-            inputStates.keyD = true;
-        }
+        keyListener(evt, true)
     });
 
     window.addEventListener('keyup', (evt) => {
-        if (evt.code === "Space") {
-            inputStates.SPACE = false;
-        }
-        if (evt.code === "KeyA") {
-            inputStates.keyA = false;
-        }
-        if (evt.code === "KeyW") {
-            inputStates.keyW = false;
-        }
-        if (evt.code === "KeyS") {
-            inputStates.keyS = false;
-        }
-        if (evt.code === "KeyD") {
-            inputStates.keyD = false;
-        }
+        keyListener(evt, false)
     });
 
     // My part
@@ -198,7 +236,7 @@ function anime() {
         // 2) On dessine et on déplace les char
         chars.forEach(char => char.draw3d());
         charsAI.forEach(char => char.intelligence.applyStrategy(char1));
-        char1.updateAngle(mousepos);
+        // char1.updateAngle(mousepos);
 
 
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
@@ -212,31 +250,8 @@ function anime() {
         // ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
     }
 
-    // On regarde si on doit poser une mine
-    if (inputStates.SPACE) {
-        char1.addMine(Date.now());
-    }
-    // On regarde si on doit tirer
-    if (inputStates.mouseclick) {
-        char1.addBullet(Date.now());
-    }
+    keyApplaier();
 
-    //DEPLACEMENTS DU CHAR
-    var coeff = 1;
-    if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
-
-    if (inputStates.keyA) {
-        char1.moveL(coeff);
-    }
-    if (inputStates.keyW) {
-        char1.moveT(coeff);
-    }
-    if (inputStates.keyS) {
-        char1.moveB(coeff);
-    }
-    if (inputStates.keyD) {
-        char1.moveR(coeff);
-    }
     window.requestAnimationFrame(anime);
 }
 

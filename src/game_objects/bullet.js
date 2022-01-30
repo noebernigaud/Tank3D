@@ -6,11 +6,11 @@ class Bullet {
      * @param {number} speed 
      */
     constructor(char, live, speed) {
-        this.angle = - char.angle;
+        this.angle = char.angle;
         this.sizex = 5;
         this.sizey = 5;
-        this.x = char.x - 40 * Math.cos(this.angle);
-        this.y = char.y - 40 * Math.sin(this.angle);
+        this.x = char.x + (char.sizex + 5) * Math.sin(this.angle);
+        this.y = char.y + (char.sizey + 5) * Math.cos(this.angle);
         this.live = live;
         this.speed = speed;
         this.shape = create_3d_shape(this, bulletImage.src);
@@ -55,28 +55,28 @@ class Bullet {
                 && (wall.noWallRight())
                 && (Math.cos(this.angle) > 0)) {
                 collisionHappened = 1;
-                this.angle = Math.atan2(Math.sin(this.angle), -Math.cos(this.angle));
+                this.angle = Math.atan2(Math.sin(this.angle), Math.cos(this.angle));
             }
             //si un collision à droite
             else if (collR(this.x - 5, this.y - 5, 10, 10, wall.x, wall.y, wall.sizex, wall.sizey)
                 && (wall.noWallLeft())
                 && (Math.cos(this.angle) < 0)) {
                 collisionHappened = 1;
-                this.angle = Math.atan2(Math.sin(this.angle), -Math.cos(this.angle));
+                this.angle = Math.atan2(Math.sin(this.angle), Math.cos(this.angle));
             }
             //si un collision en haut
             else if (collT(this.x - 5, this.y - 5, 10, 10, wall.x, wall.y, wall.sizex, wall.sizey)
                 && (wall.noWallBottom())
                 && (Math.sin(this.angle) > 0)) {
                 collisionHappened = 1;
-                this.angle = Math.atan2(-Math.sin(this.angle), Math.cos(this.angle));
+                this.angle = Math.atan2(Math.sin(this.angle), Math.cos(this.angle));
             }
             //si un collision en bas
             else if (collB(this.x - 5, this.y - 5, 10, 10, wall.x, wall.y, wall.sizex, wall.sizey)
                 && (wall.noWallTop())
                 && (Math.sin(this.angle) < 0)) {
                 collisionHappened = 1;
-                this.angle = Math.atan2(-Math.sin(this.angle), Math.cos(this.angle));
+                this.angle = Math.atan2(Math.sin(this.angle), Math.cos(this.angle));
             }
 
             //si une collision a eu lieu, la balle perd une vie et le mur se destruit (si il est destructible)
@@ -108,8 +108,8 @@ class Bullet {
 
 
         // LA BALLE AVANCE DE SE VITESSE DANS SA DIRECTION DONNEE PAR L'ANGLE
-        this.x -= this.speed * Math.cos(this.angle);
-        this.y -= this.speed * Math.sin(this.angle);
+        this.x += this.speed * Math.sin(this.angle);
+        this.y += this.speed * Math.cos(this.angle);
     }
 
     removeBullet() {

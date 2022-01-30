@@ -20,4 +20,7 @@ function place_object(obj) {
   obj.shape.position.y = cell_size / 2;
   obj.shape.position.x = -width / 2 + obj.x;
   obj.shape.position.z = height / 2 - cell_size / 2 - obj.y;
+  if (obj === char1) {
+    camera.position = obj.shape.position;
+  }
 }
