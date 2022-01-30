@@ -9,7 +9,7 @@ function init() {
 
     playing = 0;
 
-    level = -1;
+    level = 0;
 
     canvas.addEventListener('mousemove', (evt) => {
         mousepos = getMousePos(canvas, evt);
@@ -72,7 +72,7 @@ function init() {
     });
 
     // My part
-    startgame(0)
+    startgame(level)
     anime();
 }
 
@@ -197,7 +197,7 @@ function anime() {
 
         // 2) On dessine et on déplace les char
         chars.forEach(char => char.draw3d());
-        // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
+        charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         char1.updateAngle(mousepos);
 
 
