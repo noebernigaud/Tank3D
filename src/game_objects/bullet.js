@@ -6,7 +6,7 @@ class Bullet {
      * @param {number} speed 
      */
     constructor(char, live, speed) {
-        this.angle = char.angle;
+        this.angle = -char.angle;
         this.sizex = 5;
         this.sizey = 5;
         this.x = char.x + (char.sizex + 5) * Math.sin(this.angle);

@@ -130,7 +130,7 @@ class Char {
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
       if (this === char1) {
-        char1.angle = camera.rotation.y * ag1 + ag2
+        char1.angle = camera.rotation.y + ag2
         console.log(this.angle);
       }
       let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);

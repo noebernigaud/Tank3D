@@ -1,6 +1,5 @@
 // INITIALISATION
 ag2 = Math.PI
-ag1 = -1
 
 function keyListener(evt, is_true) {
     if (evt.code === "Space") {
