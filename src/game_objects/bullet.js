@@ -15,6 +15,7 @@ class Bullet {
         this.speed = speed;
         this.shape = create_3d_shape(this, bulletImage.src);
         this.char = char
+        this.draw3d()
     }
 
     draw3d() {

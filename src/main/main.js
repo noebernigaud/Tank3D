@@ -53,7 +53,7 @@ function keyApplaier() {
         char1.updateAngle(0.05);
     }
     if (inputStates.backward) {
-        char1.moveBackward(2);
+        char1.moveBackward(1);
     }
 }
 
