@@ -15,6 +15,7 @@ class Char {
     this.sizey = cell_size - 5;
     this.x = x;
     this.y = y;
+    this.height = cell_size - 5;
     this.angle = angle;
     this.v = vitesse;
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;

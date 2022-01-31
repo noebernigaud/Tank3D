@@ -6,6 +6,7 @@ class Mine {
         this.char = char;
         this.sizex = 20;
         this.sizey = 20;
+        this.height = 5;
         this.x = char.x;
         this.y = char.y;
         this.shape = create_3d_shape(this, mineImage.src);

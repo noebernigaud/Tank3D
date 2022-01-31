@@ -8,6 +8,7 @@ class Hole {
     constructor(x, y) {
         this.sizex = 30;
         this.sizey = 30;
+        this.height = 1;
         this.x = x + (cell_size - this.sizex) / 2;
         this.y = y + (cell_size - this.sizex) / 2;
         this.shape = create_3d_shape(this, holeImage.src);

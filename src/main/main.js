@@ -44,13 +44,13 @@ function keyApplaier() {
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
     if (inputStates.rot_minus) {
-        char1.updateAngle(-0.05)
+        char1.updateAngle(-0.02)
     }
     if (inputStates.foreward) {
-        char1.moveForeward(2);
+        char1.moveForeward(1);
     }
     if (inputStates.rot_plus) {
-        char1.updateAngle(0.05);
+        char1.updateAngle(0.02);
     }
     if (inputStates.backward) {
         char1.moveBackward(1);

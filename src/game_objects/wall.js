@@ -8,6 +8,7 @@ class Wall {
     constructor(x, y, destructable) {
         this.x = x;
         this.y = y;
+        this.height = cell_size;
         this.sizex = cell_size;
         this.sizey = cell_size;
         this.destructable = destructable

@@ -9,6 +9,7 @@ class Bullet {
         this.angle = char.angle
         this.sizex = 5;
         this.sizey = 5;
+        this.height = 20;
         this.x = char.x - (char.sizex + 5) * Math.cos(this.angle);
         this.y = char.y - (char.sizey + 5) * Math.sin(this.angle);
         this.live = live;
