@@ -47,13 +47,13 @@ function keyApplaier() {
         char1.updateAngle(-0.02)
     }
     if (inputStates.foreward) {
-        char1.moveForeward(1);
+        char1.moveForeward(2);
     }
     if (inputStates.rot_plus) {
         char1.updateAngle(0.02);
     }
     if (inputStates.backward) {
-        char1.moveBackward(1);
+        char1.moveBackward(2);
     }
 }
 
@@ -137,18 +137,18 @@ function startgame(level) {
     }
 
     //TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
-    for (var i = -10; i < width; i += 30) {
+    for (var i = 0; i < cell_x_number; i++) {
         //top wall
-        walls.push(new Wall(i, 0, false));
+        walls.push(new Wall(i * cell_size, 0, false));
         //bottom wall
-        walls.push(new Wall(i, height - cell_size, false));
+        walls.push(new Wall(i * cell_size, cell_y_number * cell_size, false));
     }
 
-    for (var i = -10; i < height; i += 30) {
+    for (var i = 0; i < cell_y_number; i++) {
         //left wall
-        walls.push(new Wall(0, i, false));
+        walls.push(new Wall(0, i * cell_size, false));
         //right wall
-        walls.push(new Wall(width - cell_size, i, false));
+        walls.push(new Wall(cell_x_number * cell_size, i * cell_size, false));
     }
 }
 
