@@ -220,6 +220,7 @@ function anime() {
         // 1) On efface l'ecran
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // bullets.forEach(bullet => bullet.move())
         //Image de fond
         // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
 
@@ -227,7 +228,7 @@ function anime() {
         // walls.forEach(wall => wall.draw3d());
         // holes.forEach(hole => hole.draw3d());
         // mines.forEach(mine => mine.draw3d());
-        // bullets.forEach(bullet => bullet.draw3d());
+        bullets.forEach(bullet => bullet.move());
 
         walls.forEach(wall => wall.draw(ctx));
         holes.forEach(hole => hole.draw(ctx));
@@ -238,7 +239,7 @@ function anime() {
         // chars.forEach(char => char.draw3d());
 
         chars.forEach(char => char.draw(ctx));
-        charsAI.forEach(char => char.intelligence.applyStrategy(char1));
+        // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);
 
 

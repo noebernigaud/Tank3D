@@ -16,7 +16,11 @@ class ObjectPos extends BABYLON.Mesh {
    */
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
-    this.addChild(this.create_3d_shape(type.name))
+    this.type = type;
+    let child = this.create_3d_shape(type.name)
+    this.addChild(child)
+    this.defineBoundingBox()
+    this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
 
@@ -27,10 +31,10 @@ class ObjectPos extends BABYLON.Mesh {
   }
 
   updateAngle(degree) {
-    let new_angle = camera.rotation.y + degree - Math.PI * 3 / 2;
+    let new_angle = camera.rotation.y;
     // if (collision(this)) return;
     camera.rotation.y += degree;
-    this.rotation.y = new_angle
+    this.rotation.y = new_angle + degree - Math.PI * 3 / 2
     this.speedAngle = new_angle;
   }
 
@@ -44,16 +48,17 @@ class ObjectPos extends BABYLON.Mesh {
 
   move() {
     //deplace le tank
-    // let old_x = this.x;
-    // let old_y = this.y;
-    console.log(camera.rotation.y);
-    this.position.x = this.position.x + this.speedNorme * Math.cos(this.speedAngle);
-    this.position.z = this.position.z + this.speedNorme * Math.sin(this.speedAngle);
-    // if (collision(this)) {
-    //   this.x = old_x;
-    //   this.y = old_y;
-    // }
-    this.center_camera()
+    let has_moved = true;
+    /** @type {BABYLON.Vector3} */
+    let old_pos = this.position.clone()
+    this.position = this.position.add(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
+    if (collision(this)) {
+      this.position = old_pos.subtract(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
+      has_moved = false;
+    }
+    if (this === char1)
+      this.center_camera()
+    return has_moved
   }
 
   modifySpeedAngle(angle) {
@@ -78,8 +83,8 @@ class ObjectPos extends BABYLON.Mesh {
           { diameter: Hole.diameter, height: 0 }, scene);
         break;
       case ObjectEnum.Bullet.name:
-        shape = BABYLON.MeshBuilder.CreateSphere("hole",
-          { diameter: obj.sizex * 2 }, scene);
+        shape = BABYLON.MeshBuilder.CreateSphere("bullet",
+          { diameter: Bullet.diameter }, scene);
         break;
       default:
         shape = BABYLON.MeshBuilder.CreateBox("box",
@@ -87,7 +92,20 @@ class ObjectPos extends BABYLON.Mesh {
         break;
     }
     shape.material = createMaterial(scene, img_path);
-    shape.showBoundingBox = true;
     return shape
+  }
+
+  defineBoundingBox() {
+    let childMeshes = this.getChildMeshes();
+    let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
+    let max = childMeshes[0].getBoundingInfo().boundingBox.maximumWorld;
+    for (let i = 0; i < childMeshes.length; i++) {
+      let meshMin = childMeshes[i].getBoundingInfo().boundingBox.minimumWorld;
+      let meshMax = childMeshes[i].getBoundingInfo().boundingBox.maximumWorld;
+
+      min = BABYLON.Vector3.Minimize(min, meshMin);
+      max = BABYLON.Vector3.Maximize(max, meshMax);
+    }
+    this.setBoundingInfo(new BABYLON.BoundingInfo(min, max));
   }
 }

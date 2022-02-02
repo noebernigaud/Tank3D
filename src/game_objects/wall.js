@@ -10,9 +10,8 @@ class Wall extends ObjectPos {
      * @param {boolean} destructable 
      */
     constructor(x, y, destructable) {
-        super(ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
+        super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.destructable = destructable
-        // this.shape = create_3d_shape(this, this.destructable ? wallDTexture.src : wallTexture.src)
     }
 
     draw(ctx) {

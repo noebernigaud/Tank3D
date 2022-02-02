@@ -89,7 +89,7 @@ function draw_level_map(lvl_number) {
       switch (ch) {
         case '-': break;
         case 'T':
-          var char = new Char(posX, posY, 0, 0, 2500, tankImageGreen);
+          var char = new Char(posX, posY, 0, 0, 0, tankImageGreen);
           charsAI.push(char);
           chars.push(char);
           break;

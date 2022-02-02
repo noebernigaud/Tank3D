@@ -19,6 +19,10 @@ var createScene = function () {
   // This creates a basic Babylon Scene object (non-mesh)
   scene = new BABYLON.Scene(engine);
 
+  var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+  var physicsPlugin = new BABYLON.CannonJSPlugin();
+  scene.enablePhysics(gravityVector, physicsPlugin);
+
   // This creates and positions a free camera (non-mesh)
   camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 385, -796), scene);
 
