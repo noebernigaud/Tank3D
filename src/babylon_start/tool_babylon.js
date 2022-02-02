@@ -10,6 +10,8 @@ function createMaterial(scene, path) {
 }
 
 function create_3d_shape(obj, img_path) {
+  /** @type {BABYLON.Mesh} */
+  var shape;
   if (obj instanceof Char)
     shape = BABYLON.MeshBuilder.CreateCylinder("char",
       { height: obj.sizex, diameter: obj.sizex }, scene);
@@ -26,6 +28,7 @@ function create_3d_shape(obj, img_path) {
     shape = BABYLON.MeshBuilder.CreateBox("box",
       { height: obj.sizex, width: obj.sizex, depth: obj.sizex }, scene);
   shape.material = createMaterial(scene, img_path);
+  shape.showBoundingBox = true;
   return shape
 }
 
