@@ -1,4 +1,8 @@
-class Wall {
+class Wall extends ObjectPos {
+
+    static height = cell_size;
+    static width = cell_size;
+    static depth = cell_size;
     /**
      * 
      * @param {number} x 
@@ -6,17 +10,9 @@ class Wall {
      * @param {boolean} destructable 
      */
     constructor(x, y, destructable) {
-        this.x = x;
-        this.y = y;
-        this.height = cell_size;
-        this.sizex = cell_size;
-        this.sizey = cell_size;
+        super(ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.destructable = destructable
-        this.shape = create_3d_shape(this, this.destructable ? wallDTexture.src : wallTexture.src)
-    }
-
-    draw3d() {
-        place_object(this);
+        // this.shape = create_3d_shape(this, this.destructable ? wallDTexture.src : wallTexture.src)
     }
 
     draw(ctx) {

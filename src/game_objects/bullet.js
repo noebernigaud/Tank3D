@@ -1,4 +1,9 @@
-class Bullet {
+class Bullet extends ObjectPos {
+
+
+    static width = 5;
+    static height = 20;
+    static depth = 5;
     /**
      * 
      * @param {Char} char 
@@ -6,21 +11,13 @@ class Bullet {
      * @param {number} speed 
      */
     constructor(char, live, speed) {
-        this.angle = char.angle
-        this.sizex = 5;
-        this.sizey = 5;
-        this.height = 20;
-        this.x = char.x - (char.sizex + 5) * Math.cos(this.angle);
-        this.y = char.y - (char.sizey + 5) * Math.sin(this.angle);
+        super(ObjectEnum.Char, char.x - (char.sizex + 5) * Math.cos(this.angle), Char.height / 2, char.y - (char.sizey + 5) * Math.sin(this.angle), speed, char.angle);
         this.live = live;
-        this.speed = speed;
-        this.shape = create_3d_shape(this, bulletImage.src);
-        this.char = char
+        this.char = char;
         this.draw3d()
     }
 
     draw3d() {
-        place_object(this);
         this.move();
 
         if (this.live < 0) {

@@ -2,7 +2,7 @@ const level_map = [
   [
     "-----------------------",
     "-----------------------",
-    "-----------------------",
+    "------h----------------",
     "-----------------------",
     "-----------------------",
     "--------W--W-----------",
@@ -85,7 +85,7 @@ function draw_level_map(lvl_number) {
   for (var [l_index, line] of current_level.entries()) {
     for (var [ch_index, ch] of line.split('').entries()) {
       var posX = (ch_index + 1) * cell_size;
-      var posY = (l_index + 1) * cell_size;
+      var posY = (current_level.length - l_index) * cell_size;
       switch (ch) {
         case '-': break;
         case 'T':

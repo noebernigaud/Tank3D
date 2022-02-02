@@ -1,7 +1,11 @@
 
-class Char {
+class Char extends ObjectPos {
   /** @type {BABYLON.Mesh} */
   shape;
+  static width = cell_size - 5;
+  static height = cell_size - 5;
+  static depth = cell_size - 5;
+
   /**
    * @param {number} x 
    * @param {number} y 
@@ -11,23 +15,11 @@ class Char {
    * @param {HTMLImageElement} img 
    */
   constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
-    this.sizex = cell_size - 5;
-    this.sizey = cell_size - 5;
-    this.x = x;
-    this.y = y;
-    this.height = cell_size - 5;
-    this.angle = angle;
-    this.v = vitesse;
+    super(ObjectEnum.Char, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
     this.img = img;
-    this.shape = create_3d_shape(this, img.src)
-  }
-
-  draw3d() {
-    place_object(this);
-    this.shape.rotation.y = this.angle;
   }
 
   draw(ctx) {
@@ -38,19 +30,6 @@ class Char {
     ctx.drawImage(this.img, 0, 0, this.sizex + 12, this.sizey);
     ctx.restore();
 
-  }
-
-  move(speedX, speedY) {
-    //deplace le tank
-    let old_x = this.x;
-    let old_y = this.y;
-    this.x = this.x + speedX * this.v;
-    this.y = this.y + speedY * this.v;
-    if (collision(this)) {
-      this.x = old_x;
-      this.y = old_y;
-    }
-    this.draw3d();
   }
 
   moveForeward(coeff) {
@@ -127,12 +106,7 @@ class Char {
   }
 
 
-  updateAngle(degree) {
-    let new_angle = camera.rotation.y + degree - Math.PI * 3 / 2;
-    // if (collision(this)) return;
-    camera.rotation.y += degree;
-    this.angle = new_angle;
-  }
+
 
   addBullet(time) {
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire

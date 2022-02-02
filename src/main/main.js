@@ -19,13 +19,16 @@ function keyListener(evt, is_true) {
         inputStates.rot_minus = is_true; // camera.cameraRotation.y -= 0.05;
     }
     else if (evt.keyCode == 38) {
-        inputStates.foreward = is_true; // char1.moveForeward(1)
+        inputStates.foreward = is_true;
+        //char1.moveForeward(1)
     }
     else if (evt.keyCode == 39) {
-        inputStates.rot_plus = is_true; // camera.cameraRotation.y += 0.05;
+        inputStates.rot_plus = is_true;
+        //camera.cameraRotation.y += 0.05;
     }
     else if (evt.keyCode == 40) {
-        inputStates.backward = is_true; // camera.cameraRotation.y += 0.05;
+        inputStates.backward = is_true;
+        //camera.cameraRotation.y += 0.05;
     }
 }
 
@@ -45,12 +48,14 @@ function keyApplaier() {
 
     if (inputStates.rot_minus) {
         char1.updateAngle(-0.02)
+        char1.center_camera()
     }
     if (inputStates.foreward) {
         char1.moveForeward(2);
     }
     if (inputStates.rot_plus) {
         char1.updateAngle(0.02);
+        char1.center_camera()
     }
     if (inputStates.backward) {
         char1.moveBackward(2);
@@ -137,18 +142,18 @@ function startgame(level) {
     }
 
     //TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
-    for (var i = 0; i < cell_x_number; i++) {
+    for (var i = 0; i <= cell_x_number; i++) {
         //top wall
-        walls.push(new Wall(i * cell_size, 0, false));
+        walls.push(new Wall(i * Wall.width, 0, false));
         //bottom wall
-        walls.push(new Wall(i * cell_size, cell_y_number * cell_size, false));
+        walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
     }
 
     for (var i = 0; i < cell_y_number; i++) {
         //left wall
-        walls.push(new Wall(0, i * cell_size, false));
+        walls.push(new Wall(0, i * Wall.width, false));
         //right wall
-        walls.push(new Wall(cell_x_number * cell_size, i * cell_size, false));
+        walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
     }
 }
 
@@ -219,10 +224,10 @@ function anime() {
         // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
 
         //On dessine les murs, trous, mines, balles
-        walls.forEach(wall => wall.draw3d());
-        holes.forEach(hole => hole.draw3d());
-        mines.forEach(mine => mine.draw3d());
-        bullets.forEach(bullet => bullet.draw3d());
+        // walls.forEach(wall => wall.draw3d());
+        // holes.forEach(hole => hole.draw3d());
+        // mines.forEach(mine => mine.draw3d());
+        // bullets.forEach(bullet => bullet.draw3d());
 
         walls.forEach(wall => wall.draw(ctx));
         holes.forEach(hole => hole.draw(ctx));
@@ -230,7 +235,8 @@ function anime() {
         bullets.forEach(bullet => bullet.draw(ctx));
 
         // 2) On dessine et on déplace les char
-        chars.forEach(char => char.draw3d());
+        // chars.forEach(char => char.draw3d());
+
         chars.forEach(char => char.draw(ctx));
         charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);

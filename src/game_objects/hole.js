@@ -1,4 +1,7 @@
-class Hole {
+class Hole extends ObjectPos {
+
+    static height = 1;
+    static diameter = 30;
 
     /**
      * 
@@ -6,12 +9,7 @@ class Hole {
      * @param {number} y 
      */
     constructor(x, y) {
-        this.sizex = 30;
-        this.sizey = 30;
-        this.height = 1;
-        this.x = x + (cell_size - this.sizex) / 2;
-        this.y = y + (cell_size - this.sizex) / 2;
-        this.shape = create_3d_shape(this, holeImage.src);
+        super(ObjectEnum.Hole, -width / 2 + x, Hole.height / 2, -height / 2 + y, 0, 0)
     }
 
     draw3d() {
