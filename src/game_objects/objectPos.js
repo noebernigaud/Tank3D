@@ -71,8 +71,7 @@ class ObjectPos extends BABYLON.Mesh {
     // if (obj instanceof Char)
     switch (img_path) {
       case ObjectEnum.Char.name:
-        shape = BABYLON.MeshBuilder.CreateCylinder("char",
-          { height: Char.height, diameter: Char.depth }, scene);
+        shape = this.createShape()
         break;
       case ObjectEnum.Mine.name:
         shape = BABYLON.MeshBuilder.CreateCylinder("mine",
@@ -91,7 +90,9 @@ class ObjectPos extends BABYLON.Mesh {
           { height: Wall.height, width: Wall.width, depth: Wall.depth }, scene);
         break;
     }
-    shape.material = createMaterial(scene, img_path);
+    if (img_path != ObjectEnum.Char.name)
+      shape.material = createMaterial(scene, img_path);
+    console.log(shape);
     return shape
   }
 

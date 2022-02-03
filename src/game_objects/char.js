@@ -160,4 +160,17 @@ class Char extends ObjectPos {
       charsAI.splice(position, 1);
     }
   }
+
+  createShape() {
+    var x;
+    BABYLON.SceneLoader.ImportMesh("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
+      for (var i = 0; i < meshes.length; i++) {
+        meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
+      }
+      x = meshes[0]
+      console.log('this is x in call', x);
+      x.position.x = 100
+    });
+    console.log('this is x', x);
+  }
 }
