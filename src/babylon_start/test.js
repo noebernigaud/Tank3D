@@ -39,6 +39,17 @@ var createScene = function () {
   var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width, height: height }, scene);
   ground.material = createMaterial(scene, 'images/woodTexture.jpg')
 
+  // var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 1000.0 }, scene);
+  // var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+  // skyboxMaterial.backFaceCulling = false;
+  // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
+  // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+  // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+  // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+  // skybox.material = skyboxMaterial;
+
+  //var sky = new BABYLON.PhotoDome("sky", "images/sky/equi.jpg", { resolution: 200, size: 3000 }, scene);
+
   return scene;
 };
 
