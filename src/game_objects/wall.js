@@ -11,7 +11,6 @@ class Wall extends ObjectPos {
      */
     constructor(x, y, destructable) {
         super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
-        this.destructable = destructable
     }
 
     draw(ctx) {
@@ -75,7 +74,7 @@ class Wall extends ObjectPos {
     createShape() {
         var shape = BABYLON.MeshBuilder.CreateBox("box",
             { height: Wall.height, width: Wall.width, depth: Wall.depth }, scene);
-        shape.material = createMaterial(scene, this.destructable ? wallDTexture.src : wallTexture.src);
+        shape.material = createMaterial(scene, this.type.name);
         return shape;
     }
 

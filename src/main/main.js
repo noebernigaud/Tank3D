@@ -149,7 +149,7 @@ function startgame(level) {
         walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
     }
 
-    for (var i = 0; i < cell_y_number; i++) {
+    for (var i = 1; i < cell_y_number; i++) {
         //left wall
         walls.push(new Wall(0, i * Wall.width, false));
         //right wall

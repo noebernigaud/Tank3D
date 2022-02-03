@@ -43,6 +43,7 @@ function create_3d_shape(obj, img_path) {
  * @returns {boolean} if obj touches another Mesh object
  */
 function collision(obj) {
+  return false;
   let control = (elt) => elt !== obj && obj.intersectsMesh(elt);
   return (
     chars.some(control) ||

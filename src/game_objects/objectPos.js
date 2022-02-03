@@ -25,9 +25,11 @@ class ObjectPos extends BABYLON.Mesh {
     this.speedAngle = speedAngle;
 
     this.position.x = posX
-    this.position.y = posY
+    this.position.y = posY;
     this.position.z = posZ
     this.center_camera()
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: type.name === ObjectEnum.Wall.name ? 0 : 1 });
+
   }
 
   updateAngle(degree) {

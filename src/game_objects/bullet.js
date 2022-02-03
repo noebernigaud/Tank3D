@@ -40,13 +40,13 @@ class Bullet extends ObjectPos {
         }
     }
 
-    move() {
-        if (!super.move()) {
-            this.speedAngle += Math.PI / 2
-            if (!super.move())
-                this.speedAngle += Math.PI / 2
-        }
-    }
+    // move() {
+    //     if (!super.move()) {
+    //         this.speedAngle += Math.PI / 2
+    //         if (!super.move())
+    //             this.speedAngle += Math.PI / 2
+    //     }
+    // }
 
     /*
         move(maxX, maxY) {
@@ -131,6 +131,7 @@ class Bullet extends ObjectPos {
         var shape = BABYLON.MeshBuilder.CreateSphere("bullet",
             { diameter: Bullet.diameter }, scene);
         shape.material = createMaterial(scene, bulletImage.src);
+
         return shape;
     }
 }
