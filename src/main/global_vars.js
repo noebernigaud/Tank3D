@@ -6,6 +6,9 @@ var cell_size = 40;
 var width = cell_x_number * cell_size;
 var height = cell_y_number * cell_size;
 
+/** @type {BABYLON.Scene} */
+var scene;
+
 /** @type {BABYLON.FreeCamera} */
 var camera;
 
