@@ -23,4 +23,11 @@ class Hole extends ObjectPos {
         ctx.drawImage(holeImage, 0, 0, this.sizex, this.sizey);
         ctx.restore();
     }
+
+    createShape() {
+        var shape = BABYLON.MeshBuilder.CreateCylinder("hole",
+            { diameter: Hole.diameter, height: 0 }, scene);
+        shape.material = createMaterial(scene, holeImage.src);
+        return shape;
+    }
 }

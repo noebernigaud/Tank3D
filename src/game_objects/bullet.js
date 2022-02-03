@@ -126,4 +126,11 @@ class Bullet extends ObjectPos {
             this.shape.dispose();
             bullets.splice(position, 1);
         }*/
+
+    createShape() {
+        var shape = BABYLON.MeshBuilder.CreateSphere("bullet",
+            { diameter: Bullet.diameter }, scene);
+        shape.material = createMaterial(scene, bulletImage.src);
+        return shape;
+    }
 }

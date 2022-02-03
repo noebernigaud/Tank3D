@@ -17,7 +17,7 @@ class ObjectPos extends BABYLON.Mesh {
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
     this.type = type;
-    let child = this.create_3d_shape(type.name)
+    let child = this.createShape()
     this.addChild(child)
     this.defineBoundingBox()
     this.showBoundingBox = true;
@@ -67,33 +67,7 @@ class ObjectPos extends BABYLON.Mesh {
 
   create_3d_shape(img_path) {
     /** @type {BABYLON.Mesh} */
-    var shape;
-    // if (obj instanceof Char)
-    switch (img_path) {
-      case ObjectEnum.Char.name:
-        shape = this.createShape()
-        break;
-      case ObjectEnum.Mine.name:
-        shape = BABYLON.MeshBuilder.CreateCylinder("mine",
-          { diameter: obj.sizex, height: 3 }, scene);
-        break;
-      case ObjectEnum.Hole.name:
-        shape = BABYLON.MeshBuilder.CreateCylinder("hole",
-          { diameter: Hole.diameter, height: 0 }, scene);
-        break;
-      case ObjectEnum.Bullet.name:
-        shape = BABYLON.MeshBuilder.CreateSphere("bullet",
-          { diameter: Bullet.diameter }, scene);
-        break;
-      default:
-        shape = BABYLON.MeshBuilder.CreateBox("box",
-          { height: Wall.height, width: Wall.width, depth: Wall.depth }, scene);
-        break;
-    }
-    if (img_path != ObjectEnum.Char.name)
-      shape.material = createMaterial(scene, img_path);
-    console.log(shape);
-    return shape
+    this.createShape();
   }
 
   defineBoundingBox() {

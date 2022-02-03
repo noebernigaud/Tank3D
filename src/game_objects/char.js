@@ -162,15 +162,23 @@ class Char extends ObjectPos {
   }
 
   createShape() {
-    var x;
-    BABYLON.SceneLoader.ImportMesh("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
-      for (var i = 0; i < meshes.length; i++) {
-        meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-      }
-      x = meshes[0]
-      console.log('this is x in call', x);
-      x.position.x = 100
-    });
-    console.log('this is x', x);
+    if (true) {
+      var shape = BABYLON.MeshBuilder.CreateCylinder("char",
+        { height: Char.height, diameter: Char.depth }, scene);
+      shape.material = createMaterial(scene, tankImage.src);
+      return shape;
+    } else {
+      var x;
+      BABYLON.SceneLoader.ImportMesh("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
+        for (var i = 0; i < meshes.length; i++) {
+          meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
+        }
+        x = meshes[0]
+        console.log('this is x in call', x);
+        x.position.x = 100
+      });
+      console.log('this is x', x);
+      return x;
+    }
   }
 }

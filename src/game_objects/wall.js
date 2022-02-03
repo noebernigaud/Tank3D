@@ -72,5 +72,12 @@ class Wall extends ObjectPos {
         return true;
     }
 
+    createShape() {
+        var shape = BABYLON.MeshBuilder.CreateBox("box",
+            { height: Wall.height, width: Wall.width, depth: Wall.depth }, scene);
+        shape.material = createMaterial(scene, this.destructable ? wallDTexture.src : wallTexture.src);
+        return shape;
+    }
+
 
 }

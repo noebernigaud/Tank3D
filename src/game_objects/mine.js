@@ -9,7 +9,6 @@ class Mine {
         this.height = 5;
         this.x = char.x;
         this.y = char.y;
-        this.shape = create_3d_shape(this, mineImage.src);
     }
 
     draw3d() {
@@ -38,5 +37,12 @@ class Mine {
         let position = mines.indexOf(this);
         this.shape.dispose();
         mines.splice(position, 1);
+    }
+
+    createShape() {
+        var shape = BABYLON.MeshBuilder.CreateCylinder("mine",
+            { diameter: obj.sizex, height: 3 }, scene);
+        shape.material = createMaterial(scene, mineImage.src);
+        return shape;
     }
 }
