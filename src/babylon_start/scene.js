@@ -13,7 +13,7 @@ class Scene {
       this.scene.render()
     );
 
-    // this.setBackground()
+    this.setBackground()
 
     init()
   }
@@ -32,13 +32,13 @@ class Scene {
 
     light.intensity = 0.5;
 
-    var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+    var gravityVector = new BABYLON.Vector3(0, 0, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
 
     var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
     ground.material = createMaterial(scene, 'images/woodTexture.jpg')
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 2 });
+    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
     return scene;
   }
 

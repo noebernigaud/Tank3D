@@ -14,12 +14,14 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, img) {
-    super(ObjectEnum.Char, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
+    super(type, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
-    this.img = img;
+    this.physicsImpostor.mass = 7000;
+    this.physicsImpostor.restitution = 0;
+    this.physicsImpostor.friction = 5;
   }
 
   draw(ctx) {
@@ -106,6 +108,21 @@ class Char extends ObjectPos {
   }
 
 
+  move() {
+    return
+    //deplace le tank
+    let has_moved = true;
+    /** @type {BABYLON.Vector3} */
+    let old_pos = this.position.clone()
+    this.position = this.position.add(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
+    if (collision(this)) {
+      this.position = old_pos.subtract(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
+      has_moved = false;
+    }
+    if (this === char1)
+      this.center_camera()
+    return has_moved
+  }
 
 
   addBullet(time) {
@@ -163,9 +180,9 @@ class Char extends ObjectPos {
 
   createShape() {
     if (true) {
-      var shape = BABYLON.MeshBuilder.CreateCylinder("char",
-        { height: Char.height, diameter: Char.depth }, scene);
-      shape.material = createMaterial(scene, tankImage.src);
+      var shape = BABYLON.MeshBuilder.CreateBox("char",
+        { height: Char.height, depth: Char.depth, width: Char.width }, scene);
+      shape.material = createMaterial(scene, "images/tank.png");
       return shape;
     } else {
       var x;

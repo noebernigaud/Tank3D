@@ -51,6 +51,8 @@ function keyApplaier() {
         char1.center_camera()
     }
     if (inputStates.foreward) {
+        var speed = 40;
+        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
         char1.moveForeward(2);
     }
     if (inputStates.rot_plus) {
@@ -230,15 +232,15 @@ function anime() {
         // mines.forEach(mine => mine.draw3d());
         bullets.forEach(bullet => bullet.move());
 
-        walls.forEach(wall => wall.draw(ctx));
-        holes.forEach(hole => hole.draw(ctx));
-        mines.forEach(mine => mine.draw(ctx));
-        bullets.forEach(bullet => bullet.draw(ctx));
+        // walls.forEach(wall => wall.draw(ctx));
+        // holes.forEach(hole => hole.draw(ctx));
+        // mines.forEach(mine => mine.draw(ctx));
+        // bullets.forEach(bullet => bullet.draw(ctx));
 
         // 2) On dessine et on déplace les char
         // chars.forEach(char => char.draw3d());
 
-        chars.forEach(char => char.draw(ctx));
+        // chars.forEach(char => char.draw(ctx));
         // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);
 

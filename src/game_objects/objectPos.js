@@ -16,6 +16,7 @@ class ObjectPos extends BABYLON.Mesh {
    */
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
+
     this.type = type;
     let child = this.createShape()
     this.addChild(child)
@@ -23,20 +24,29 @@ class ObjectPos extends BABYLON.Mesh {
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
+    this.child = child
 
     this.position.x = posX
     this.position.y = posY;
     this.position.z = posZ
     this.center_camera()
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: type.name === ObjectEnum.Wall.name ? 0 : 1 });
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: type.name === ObjectEnum.Wall.name ? 0 : 5, restitution: type.name === ObjectEnum.Wall.name ? 1 : 0 });
+    // if (type.name == ObjectEnum.Player.name)
+    //   scene.onPointerObservable.add((e) => {
+    //     console.log("test1");
+    //     if (e.type == BABYLON.PointerEventTypes.POINTERDOWN) {
+    //       //this.position.copyFrom(e.pickInfo.ray.origin);
+    //       this.physicsImpostor.setLinearVelocity(this.physicsImpostor.getLinearVelocity().add(new BABYLON.Vector3(1, 1, 1)));
 
+    //     }
+    //   })
   }
 
   updateAngle(degree) {
     let new_angle = camera.rotation.y;
     // if (collision(this)) return;
     camera.rotation.y += degree;
-    this.rotation.y = new_angle + degree - Math.PI * 3 / 2
+    this.rotation.y = camera.rotation.y
     this.speedAngle = new_angle;
   }
 
@@ -49,6 +59,7 @@ class ObjectPos extends BABYLON.Mesh {
   }
 
   move() {
+    return;
     //deplace le tank
     let has_moved = true;
     /** @type {BABYLON.Vector3} */

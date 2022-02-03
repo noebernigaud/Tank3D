@@ -1,3 +1,7 @@
+x = 1;
+y = 1;
+z = 1;
+w = 1;
 class Bullet extends ObjectPos {
 
 
@@ -11,11 +15,16 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed) {
         super(
             ObjectEnum.Bullet,
-            char.position.x + (Char.width + 5) * Math.sin(char.speedAngle),
+            char.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
             Char.height / 2,
-            char.position.z + (Char.width + 5) * Math.cos(char.speedAngle), speed, char.speedAngle);
+            char.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, char.speedAngle);
         this.live = live;
         this.char = char;
+        speed = 800;
+        this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
+        this.physicsImpostor.restitution = 1;
+        this.physicsImpostor.mass = 1;
+
     }
 
     // move() {
