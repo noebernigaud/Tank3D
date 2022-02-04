@@ -1,20 +1,19 @@
 /// <reference path="babylon.d.ts" />
 
 var canvas = document.getElementById("myCanvas");
-
+var tank;
 class Scene {
 
   constructor() {
     this.engine = new BABYLON.Engine(canvas, true);
     this.scene = this.createScene();
 
-
     this.engine.runRenderLoop(() =>
       this.scene.render()
     );
 
-    this.setBackground()
-
+    // this.setBackground()
+    // tank = this.addTank()
     init()
   }
 
@@ -32,7 +31,7 @@ class Scene {
 
     light.intensity = 0.5;
 
-    var gravityVector = new BABYLON.Vector3(0, 0, 0);
+    var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
 
@@ -53,33 +52,44 @@ class Scene {
     skybox.material = skyboxMaterial;
   }
 
-
-  old() {
-
-    window.initFunction = async function () {
-
-
-      var asyncEngineCreation = async function () {
-        try {
-          return createDefaultEngine();
-        } catch (e) {
-
-          return createDefaultEngine();
-        }
+  async addTank() {
+    var model = BABYLON.SceneLoader.ImportMeshAsync("", "./models2/merkava_tank/", "scene.gltf").then((meshes) => {
+      for (var i = 0; i < meshes.length; i++) {
+        meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
       }
-
-      window.engine = await asyncEngineCreation();
-      if (!engine) throw 'engine should not be null.';
-      startRenderLoop(engine, canvas);
-      window.scene = createScene();
-    };
-    initFunction().then(() => {
-      sceneToRender = scene
+      // var x = meshes[0]
+      // console.log('this is x in call', x);
+      // x.position.x = 100
     });
-
-    // Resize
-    window.addEventListener("resize", function () {
-      engine.resize();
-    });
+    console.log('this is x', x);
+    return model;
   }
+
+  // old() {
+
+  //   window.initFunction = async function () {
+
+  //     var asyncEngineCreation = async function () {
+  //       try {
+  //         return createDefaultEngine();
+  //       } catch (e) {
+
+  //         return createDefaultEngine();
+  //       }
+  //     }
+
+  //     window.engine = await asyncEngineCreation();
+  //     if (!engine) throw 'engine should not be null.';
+  //     startRenderLoop(engine, canvas);
+  //     window.scene = createScene();
+  //   };
+  //   initFunction().then(() => {
+  //     sceneToRender = scene
+  //   });
+
+  //   // Resize
+  //   window.addEventListener("resize", function () {
+  //     engine.resize();
+  //   });
+  // }
 }

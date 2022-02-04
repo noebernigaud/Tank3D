@@ -28,7 +28,6 @@ class SimBullet {
         }
     }
 
-
     move() {
 
         // FONCTIONS DE COLLISION AVEC LES MURS
@@ -87,7 +86,6 @@ class SimBullet {
             }
         }
         );
-
 
         // LA BALLE AVANCE DE SE VITESSE DANS SA DIRECTION DONNEE PAR L'ANGLE
         this.x -= this.speed * Math.cos(this.angle);

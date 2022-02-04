@@ -11,18 +11,8 @@ class Wall extends ObjectPos {
      */
     constructor(x, y, destructable) {
         super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
-    }
-
-    draw(ctx) {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        if (this.destructable === true) {
-            ctx.drawImage(wallDTexture, 0, 0, this.sizex, this.sizey);
-        }
-        else {
-            ctx.drawImage(wallTexture, 0, 0, this.sizex, this.sizey);
-        }
-        ctx.restore();
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
+            { mass: 0, restitution: 1, friction: 5 });
     }
 
     destroy() {
@@ -77,6 +67,5 @@ class Wall extends ObjectPos {
         shape.material = createMaterial(scene, this.type.name);
         return shape;
     }
-
 
 }

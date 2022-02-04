@@ -4,7 +4,6 @@ z = 1;
 w = 1;
 class Bullet extends ObjectPos {
 
-
     static diameter = 5;
     /**
      * 
@@ -21,6 +20,8 @@ class Bullet extends ObjectPos {
         this.live = live;
         this.char = char;
         speed = 800;
+
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 5, restitution: 0 });
         this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         this.physicsImpostor.restitution = 1;
         this.physicsImpostor.mass = 1;
@@ -35,19 +36,6 @@ class Bullet extends ObjectPos {
     //     }
     // }
 
-    draw(ctx) {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle + 3.16);
-        ctx.drawImage(bulletImage, 0, 0, 20, 10);
-        ctx.restore();
-
-        // this.move();
-
-        if (this.live < 0) {
-            this.removeBullet(this);
-        }
-    }
 
     // move() {
     //     if (!super.move()) {
@@ -59,14 +47,14 @@ class Bullet extends ObjectPos {
 
     /*
         move(maxX, maxY) {
-    
+     
             // FONCTIONS DE COLLISION AVEC LES MURS
             // entraine le rebond de la balle et la perte d'une de ses vies
-    
+     
             for (let wall of walls) {
-    
+     
                 let collisionHappened = 0;
-    
+     
                 //si un collision à gauche
                 if (collL(this.x - 5, this.y - 5, 10, 10, wall.x, wall.y, wall.sizex, wall.sizey)
                     && (wall.noWallRight())
@@ -95,7 +83,7 @@ class Bullet extends ObjectPos {
                     collisionHappened = 1;
                     this.angle = Math.atan2(-Math.sin(this.angle), Math.cos(this.angle));
                 }
-    
+     
                 //si une collision a eu lieu, la balle perd une vie et le mur se destruit (si il est destructible)
                 if (collisionHappened == 1) {
                     this.live--;
@@ -104,7 +92,7 @@ class Bullet extends ObjectPos {
                     break;
                 }
             }
-    
+     
             //FONCTIONS DE COLLISIONS ENTRE BALLES
             bullets.forEach(bullet => {
                 if (coll(this.x - 5, this.y - 5, 10, 10, bullet.x - 5, bullet.y - 5, 10, 10)) {
@@ -113,7 +101,7 @@ class Bullet extends ObjectPos {
                 }
             }
             );
-    
+     
             //FONCTONS DE COLLISIONS AVEC UN CHAR
             chars.forEach(char => {
                 if (coll(this.x - 5, this.y - 5, 10, 10, char.x - 20, char.y - 20, 40, 40)) {
@@ -122,13 +110,13 @@ class Bullet extends ObjectPos {
                 }
             }
             );
-    
-    
+     
+     
             // LA BALLE AVANCE DE SE VITESSE DANS SA DIRECTION DONNEE PAR L'ANGLE
             this.x -= this.speed * Math.cos(this.angle);
             this.y -= this.speed * Math.sin(this.angle);
         }
-    
+     
         removeBullet() {
             bulletDestroyedSound.play();
             let position = bullets.indexOf(this);

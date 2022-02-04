@@ -19,27 +19,18 @@ class ObjectPos extends BABYLON.Mesh {
 
     this.type = type;
     let child = this.createShape()
+    child.parent = this;
+    child.setParent(this)
     this.addChild(child)
+    child.setParent(this)
     this.defineBoundingBox()
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
     this.child = child
 
-    this.position.x = posX
-    this.position.y = posY;
-    this.position.z = posZ
+    this.position = new BABYLON.Vector3(posX, posY, posZ);
     this.center_camera()
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: type.name === ObjectEnum.Wall.name ? 0 : 5, restitution: type.name === ObjectEnum.Wall.name ? 1 : 0 });
-    // if (type.name == ObjectEnum.Player.name)
-    //   scene.onPointerObservable.add((e) => {
-    //     console.log("test1");
-    //     if (e.type == BABYLON.PointerEventTypes.POINTERDOWN) {
-    //       //this.position.copyFrom(e.pickInfo.ray.origin);
-    //       this.physicsImpostor.setLinearVelocity(this.physicsImpostor.getLinearVelocity().add(new BABYLON.Vector3(1, 1, 1)));
-
-    //     }
-    //   })
   }
 
   updateAngle(degree) {
@@ -47,6 +38,7 @@ class ObjectPos extends BABYLON.Mesh {
     // if (collision(this)) return;
     camera.rotation.y += degree;
     this.rotation.y = camera.rotation.y
+    // char1.rotationQuaternion = new BABYLON.Vector3(0, 10, 0)
     this.speedAngle = new_angle;
   }
 

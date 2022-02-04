@@ -50,17 +50,31 @@ function keyApplaier() {
         char1.updateAngle(-0.02)
         char1.center_camera()
     }
-    if (inputStates.foreward) {
-        var speed = 40;
-        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
-        char1.moveForeward(2);
-    }
+
     if (inputStates.rot_plus) {
         char1.updateAngle(0.02);
         char1.center_camera()
     }
+
+    if (inputStates.foreward) {
+        var speed = 40;
+        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
+        char1.center_camera()
+        return;
+        // char1.moveForeward(2);
+    } else {
+        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+        char1.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+        return;
+    }
     if (inputStates.backward) {
-        char1.moveBackward(2);
+        var speed = -40;
+        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
+        // char1.moveBackward(2);
+        char1.center_camera()
+    } else {
+        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
+        char1.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0))
     }
 }
 
@@ -173,7 +187,6 @@ function pausebackgroundMusic() {
     audioPlayer.currentTime = 0;
 }
 
-
 function remove_all_objects() {
     walls.forEach(wall => wall.shape.dispose());
     holes.forEach(hole => hole.shape.dispose());
@@ -244,7 +257,6 @@ function anime() {
         // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);
 
-
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
         if (charsAI.length == 0) {
             level += 1;
@@ -260,7 +272,6 @@ function anime() {
 
     window.requestAnimationFrame(anime);
 }
-
 
 var inputVitMult = document.getElementById("mutlvit")
 inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };

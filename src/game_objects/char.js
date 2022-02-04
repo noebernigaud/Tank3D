@@ -15,23 +15,13 @@ class Char extends ObjectPos {
    * @param {HTMLImageElement} img 
    */
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
-    super(type, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
+    super(type, -width / 2 + x, Char.height / 2 + 2, - height / 2 + y, vitesse, angle);
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
-    this.physicsImpostor.mass = 7000;
-    this.physicsImpostor.restitution = 0;
-    this.physicsImpostor.friction = 5;
-  }
 
-  draw(ctx) {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
-    ctx.translate(-this.sizex / 2 - 12, -this.sizey / 2);
-    ctx.drawImage(this.img, 0, 0, this.sizex + 12, this.sizey);
-    ctx.restore();
-
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
+      { mass: 7000, restitution: 0, friction: 5 });
   }
 
   moveForeward(coeff) {
@@ -88,7 +78,6 @@ class Char extends ObjectPos {
     return true;
   }
 
-
   //DEPLACEMENT DU CHAR DANS UNE DIRECTION SI IL N'Y A PAS COLLISION
 
   moveL(coeff) {
@@ -107,7 +96,6 @@ class Char extends ObjectPos {
     if (!this.collObjB()) { this.move(0, coeff); }
   }
 
-
   move() {
     return
     //deplace le tank
@@ -123,7 +111,6 @@ class Char extends ObjectPos {
       this.center_camera()
     return has_moved
   }
-
 
   addBullet(time) {
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire
@@ -185,17 +172,18 @@ class Char extends ObjectPos {
       shape.material = createMaterial(scene, "images/tank.png");
       return shape;
     } else {
-      var x;
-      BABYLON.SceneLoader.ImportMesh("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
-        for (var i = 0; i < meshes.length; i++) {
-          meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-        }
-        x = meshes[0]
-        console.log('this is x in call', x);
-        x.position.x = 100
-      });
-      console.log('this is x', x);
-      return x;
+      // var x;
+      // /** @type {BABYLON.Mesh} */
+      // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
+      //   for (var i = 0; i < meshes.length; i++) {
+      //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
+      //   }
+      //   x = meshes[0]
+      //   console.log('this is x in call', x);
+      //   x.position.x = 100
+      // });
+      // console.log('this is x', x);
+      // return model;
     }
   }
 }
