@@ -58,22 +58,32 @@ function keyApplaier() {
 
     if (inputStates.foreward) {
         var speed = 40;
-        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
+        char1.physicsImpostor.setLinearVelocity(
+            new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
+                char1.physicsImpostor.getLinearVelocity().y,
+                speed * Math.cos(char1.rotation.y * x)))
         char1.center_camera()
         return;
         // char1.moveForeward(2);
     } else {
-        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
-        char1.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
+        char1.physicsImpostor.setLinearVelocity(
+            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
+        char1.physicsImpostor.setAngularVelocity(
+            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
     }
     if (inputStates.backward) {
         var speed = -40;
-        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x), 0, speed * Math.cos(char1.rotation.y * x)))
+        char1.physicsImpostor.setLinearVelocity(
+            new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
+                char1.physicsImpostor.getLinearVelocity().y,
+                speed * Math.cos(char1.rotation.y * x)))
         // char1.moveBackward(2);
         char1.center_camera()
     } else {
-        char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
-        char1.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0))
+        char1.physicsImpostor.setLinearVelocity(
+            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
+        char1.physicsImpostor.setAngularVelocity(
+            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0))
     }
 }
 

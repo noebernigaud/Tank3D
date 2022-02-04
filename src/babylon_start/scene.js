@@ -67,6 +67,8 @@ class Scene {
       tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(40, 40, 40));
 
       tanksMeshes.forEach(x => x.physicsImpostor = new BABYLON.PhysicsImpostor(x, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }))
+
+      tanksMeshes.forEach(e => e.showBoundingBox = true);
     });
   }
 

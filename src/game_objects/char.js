@@ -32,86 +32,6 @@ class Char extends ObjectPos {
     this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
   }
 
-  //FONCTIONS UTILITAIRES DE VERIFICATION DES COLLISIONS AVEC AUTRES OBJETS DANS LES DIFFERENTES DIRECTIONS
-
-  collObjL() {
-    if (walls.every(wall => !collL(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collL(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collL(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  collObjR() {
-    if (walls.every(wall => !collR(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collR(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collR(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  collObjT() {
-    if (walls.every(wall => !collT(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collT(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collT(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  collObjB() {
-    if (walls.every(wall => !collB(this.x, this.y, this.sizex, this.sizey, wall.x, wall.y, wall.sizex, wall.sizey))) {
-      if (holes.every(hole => !collB(this.x, this.y, this.sizex, this.sizey, hole.x, hole.y, hole.sizex, hole.sizey))) {
-        if (chars.every(char => !collB(this.x, this.y, this.sizex, this.sizey, char.x, char.y, char.sizex, char.sizey))) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  //DEPLACEMENT DU CHAR DANS UNE DIRECTION SI IL N'Y A PAS COLLISION
-
-  moveL(coeff) {
-    if (!this.collObjL()) { this.move(-coeff, 0); }
-  }
-
-  moveR(coeff) {
-    if (!this.collObjR()) { this.move(coeff, 0); }
-  }
-
-  moveT(coeff) {
-    if (!this.collObjT()) { this.move(0, -coeff); }
-  }
-
-  moveB(coeff) {
-    if (!this.collObjB()) { this.move(0, coeff); }
-  }
-
-  move() {
-    return
-    //deplace le tank
-    let has_moved = true;
-    /** @type {BABYLON.Vector3} */
-    let old_pos = this.position.clone()
-    this.position = this.position.add(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
-    if (collision(this)) {
-      this.position = old_pos.subtract(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
-      has_moved = false;
-    }
-    if (this === char1)
-      this.center_camera()
-    return has_moved
-  }
-
   addBullet(time) {
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire
     var tempEcoule = 0;
@@ -121,19 +41,11 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);
-      let startposy = this.y - (this.sizex + 5) * Math.sin(this.angle);
-      if (walls.every(wall => !this.isInto(startposx, startposy, wall.x, wall.y, wall.sizex, wall.sizey))) {
-        bullets.push(new Bullet(this, 1, 5, this.charsAI));
-        bulletFiredSound.play();
-        // on mémorise le dernier temps.
-        this.lastBulletTime = time;
-      }
+      bullets.push(new Bullet(this, 1, 5, this.charsAI));
+      bulletFiredSound.play();
+      // on mémorise le dernier temps.
+      this.lastBulletTime = time;
     }
-  }
-
-  isInto(startposx, startposy, wallx, wally, sx, sy) {
-    return ((startposx > wallx) && (startposx < wallx + sx) && (startposy > wally) && (startposy < wally + sy))
   }
 
   addMine(time) {
