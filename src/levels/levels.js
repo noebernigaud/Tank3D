@@ -89,17 +89,17 @@ function draw_level_map(lvl_number) {
       switch (ch) {
         case '-': break;
         case 'T':
-          var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 0, 0, tankImageGreen);
+          var char = new Char(chars, ObjectEnum.CharRed, posX, posY, 0, 0, 0, tankImageGreen);
           charsAI.push(char);
           chars.push(char);
           break;
         case 'B':
-          var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 5, 10000, tankImageBlue);
+          var char = new Char(chars, ObjectEnum.CharBlue, posX, posY, 0, 5, 10000, tankImageBlue);
           charsAI.push(char);
           chars.push(char);
           break;
         case 'G':
-          var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 5, 4000, tankImageGreen);
+          var char = new Char(chars, ObjectEnum.CharGreen, posX, posY, 0, 5, 4000, tankImageGreen);
           charsAI.push(char);
           chars.push(char);
           break;
@@ -110,7 +110,7 @@ function draw_level_map(lvl_number) {
           walls.push(new Wall(posX, posY, true));
           break;
         case 'I':
-          char1 = new Char(ObjectEnum.Player, posX, posY, 0, 1.4 * speedMultUti, 800 * reloadMultUti, tankImage);
+          char1 = new Char(chars, ObjectEnum.Player, posX, posY, 0, 1.4 * speedMultUti, 800 * reloadMultUti, tankImage);
           chars.push(char1);
           camera.rotation.x = 0.4854747337923555;
           camera.rotation.y = 0.6936207932663223

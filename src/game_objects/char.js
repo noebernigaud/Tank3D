@@ -14,7 +14,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
+  constructor(charsAI, type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
     super(type, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
@@ -22,6 +22,7 @@ class Char extends ObjectPos {
     this.physicsImpostor.mass = 7000;
     this.physicsImpostor.restitution = 0;
     this.physicsImpostor.friction = 5;
+    this.charsAI = charsAI;
   }
 
   draw(ctx) {
@@ -137,7 +138,7 @@ class Char extends ObjectPos {
       let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);
       let startposy = this.y - (this.sizex + 5) * Math.sin(this.angle);
       if (walls.every(wall => !this.isInto(startposx, startposy, wall.x, wall.y, wall.sizex, wall.sizey))) {
-        bullets.push(new Bullet(this, 1, 5));
+        bullets.push(new Bullet(this, 1, 5, this.charsAI));
         bulletFiredSound.play();
         // on mémorise le dernier temps.
         this.lastBulletTime = time;
