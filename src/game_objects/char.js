@@ -124,7 +124,7 @@ class Char extends ObjectPos {
       let startposx = this.x - (this.sizex + 5) * Math.cos(this.angle);
       let startposy = this.y - (this.sizex + 5) * Math.sin(this.angle);
       if (walls.every(wall => !this.isInto(startposx, startposy, wall.x, wall.y, wall.sizex, wall.sizey))) {
-        bullets.push(new Bullet(this, 1, 5));
+        bullets.push(new Bullet(this, 1, 5, this.charsAI));
         bulletFiredSound.play();
         // on mémorise le dernier temps.
         this.lastBulletTime = time;

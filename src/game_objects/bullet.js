@@ -11,7 +11,7 @@ class Bullet extends ObjectPos {
      * @param {number} live 
      * @param {number} speed 
      */
-    constructor(char, live, speed) {
+    constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
             char.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
@@ -19,12 +19,26 @@ class Bullet extends ObjectPos {
             char.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, char.speedAngle);
         this.live = live;
         this.char = char;
+        this.chars = chars;
+        this.life = 8;
         speed = 800;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 5, restitution: 0 });
         this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         this.physicsImpostor.restitution = 1;
         this.physicsImpostor.mass = 1;
+        this.physicsImpostor.registerOnPhysicsCollide(this.chars.map(x => x.physicsImpostor), (e1, e2) => {
+            e1.object.dispose();
+            e2.object.dispose();
+        })
+
+        this.physicsImpostor.onCollideEvent = (b, w) => {
+            console.log(b, w);
+            this.life -= 1;
+            console.log(this.life);
+            if (this.life === 0) this.dispose();
+            return;
+        }
 
     }
 
