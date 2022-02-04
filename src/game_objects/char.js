@@ -84,11 +84,11 @@ class Char extends ObjectPos {
       shape.material = createMaterial(scene, "images/tank.png");
       return shape;
     } else {
-      // // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
-      //   // for (var i = 0; i < meshes.length; i++) {
-      //   //   meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-      //   //   // meshes[i].rotation = v
-      //   // }
+      // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
+      //   for (var i = 0; i < meshes.length; i++) {
+      //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
+      //     // meshes[i].rotation = v
+      //   }
       //   console.log('hereeeee');
       //   console.log(this.scene.getMeshByName('german_panzer_ww2_ausf_b.Turret_2'));
       //   x = meshes[0]

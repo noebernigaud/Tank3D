@@ -2,6 +2,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var tanksMeshes;
+var model;
 
 class Scene {
 
@@ -15,7 +16,7 @@ class Scene {
 
     // this.setBackground()
     this.addTank()
-    init()
+    // init()
   }
 
   /**
@@ -36,9 +37,9 @@ class Scene {
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
 
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    ground.material = createMaterial(scene, 'images/woodTexture.jpg')
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
+    // var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    // ground.material = createMaterial(scene, 'images/woodTexture.jpg')
+    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
     return scene;
   }
 
@@ -54,7 +55,7 @@ class Scene {
   }
 
   async addTank() {
-    model = BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
+    model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
       tanksMeshes = [
         scene.getMeshById('Body_1'),
         scene.getMeshById('Body_2'),
@@ -65,10 +66,15 @@ class Scene {
       ]
 
       tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(40, 40, 40));
+      tanksMeshes.forEach(x => x.position.y += 2);
 
-      tanksMeshes.forEach(x => x.physicsImpostor = new BABYLON.PhysicsImpostor(x, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }))
 
-      tanksMeshes.forEach(e => e.showBoundingBox = true);
+      defineBoundingBox(tanksMeshes);
+
+      // tanksMeshes[0].physicsImpostor = new BABYLON.PhysicsImpostor(tanksMeshes[0], BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100 })
+
+
+      // tanksMeshes.forEach(e => e.showBoundingBox = true);
     });
   }
 
@@ -101,3 +107,19 @@ class Scene {
   // }
 }
 
+
+function defineBoundingBox(eltList) {
+  let childMeshes = eltList;
+  let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
+  let max = childMeshes[0].getBoundingInfo().boundingBox.maximumWorld;
+  for (let i = 0; i < childMeshes.length; i++) {
+    let meshMin = childMeshes[i].getBoundingInfo().boundingBox.minimumWorld;
+    let meshMax = childMeshes[i].getBoundingInfo().boundingBox.maximumWorld;
+
+    min = BABYLON.Vector3.Minimize(min, meshMin);
+    max = BABYLON.Vector3.Maximize(max, meshMax);
+  }
+  let newBoundingBox = new BABYLON.BoundingInfo(min, max)
+  eltList[0].setBoundingInfo(newBoundingBox);
+  eltList[0].showBoundingBox = true;
+}
