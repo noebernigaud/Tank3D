@@ -172,18 +172,20 @@ class Char extends ObjectPos {
       shape.material = createMaterial(scene, "images/tank.png");
       return shape;
     } else {
-      // var x;
-      // /** @type {BABYLON.Mesh} */
-      // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models2/merkava_tank/", "scene.gltf", scene, (meshes) => {
-      //   for (var i = 0; i < meshes.length; i++) {
-      //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-      //   }
+      // // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
+      //   // for (var i = 0; i < meshes.length; i++) {
+      //   //   meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
+      //   //   // meshes[i].rotation = v
+      //   // }
+      //   console.log('hereeeee');
+      //   console.log(this.scene.getMeshByName('german_panzer_ww2_ausf_b.Turret_2'));
       //   x = meshes[0]
+
+      //   console.log(x.rotation);
       //   console.log('this is x in call', x);
       //   x.position.x = 100
       // });
       // console.log('this is x', x);
-      // return model;
     }
   }
 }

@@ -65,7 +65,6 @@ function keyApplaier() {
     } else {
         char1.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(0, 0, 0));
         char1.physicsImpostor.setAngularVelocity(new BABYLON.Vector3(0, 0, 0));
-        return;
     }
     if (inputStates.backward) {
         var speed = -40;
@@ -79,12 +78,7 @@ function keyApplaier() {
 }
 
 function init() {
-
     canvas = document.querySelector("#myCanvas");
-    canvas2 = document.querySelector("#myCanvas1");
-    ctx = canvas2.getContext('2d');
-    width = canvas.width;
-    height = canvas.height;
 
     playing = 0;
 
@@ -188,12 +182,12 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    walls.forEach(wall => wall.shape.dispose());
-    holes.forEach(hole => hole.shape.dispose());
-    bullets.forEach(bullet => bullet.shape.dispose());
+    walls.forEach(wall => wall.dispose());
+    holes.forEach(hole => hole.dispose());
+    bullets.forEach(bullet => bullet.dispose());
 
-    mines.forEach(mine => mine.shape.dispose());
-    chars.forEach(char => char.shape.dispose());
+    mines.forEach(mine => mine.dispose());
+    chars.forEach(char => char.dispose());
 }
 
 //ANIMATION
@@ -232,8 +226,6 @@ function anime() {
 
     //IN GAME
     if (playing == 1) {
-        // 1) On efface l'ecran
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // bullets.forEach(bullet => bullet.move())
         //Image de fond

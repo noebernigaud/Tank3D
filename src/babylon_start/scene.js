@@ -1,7 +1,8 @@
 /// <reference path="babylon.d.ts" />
 
 var canvas = document.getElementById("myCanvas");
-var tank;
+var tanksMeshes;
+
 class Scene {
 
   constructor() {
@@ -13,7 +14,7 @@ class Scene {
     );
 
     // this.setBackground()
-    // tank = this.addTank()
+    this.addTank()
     init()
   }
 
@@ -53,16 +54,20 @@ class Scene {
   }
 
   async addTank() {
-    var model = BABYLON.SceneLoader.ImportMeshAsync("", "./models2/merkava_tank/", "scene.gltf").then((meshes) => {
-      for (var i = 0; i < meshes.length; i++) {
-        meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-      }
-      // var x = meshes[0]
-      // console.log('this is x in call', x);
-      // x.position.x = 100
+    model = BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
+      tanksMeshes = [
+        scene.getMeshById('Body_1'),
+        scene.getMeshById('Body_2'),
+        scene.getMeshById('Track'),
+        scene.getMeshById('Turret'),
+        scene.getMeshById('Turret_2'),
+        scene.getMeshById('LightPreset'),
+      ]
+
+      tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(40, 40, 40));
+
+      tanksMeshes.forEach(x => x.physicsImpostor = new BABYLON.PhysicsImpostor(x, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }))
     });
-    console.log('this is x', x);
-    return model;
   }
 
   // old() {
@@ -93,3 +98,4 @@ class Scene {
   //   });
   // }
 }
+

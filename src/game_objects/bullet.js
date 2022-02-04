@@ -27,7 +27,12 @@ class Bullet extends ObjectPos {
         this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         this.physicsImpostor.restitution = 1;
         this.physicsImpostor.mass = 1;
-        this.physicsImpostor.registerOnPhysicsCollide(this.chars.map(x => x.physicsImpostor), (e1, e2) => {
+
+        this.createCollider()
+    }
+
+    createCollider() {
+        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.physicsImpostor), (e1, e2) => {
             e1.object.dispose();
             e2.object.dispose();
         })
@@ -39,7 +44,6 @@ class Bullet extends ObjectPos {
             if (this.life === 0) this.dispose();
             return;
         }
-
     }
 
     // move() {

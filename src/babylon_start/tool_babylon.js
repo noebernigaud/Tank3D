@@ -1,6 +1,5 @@
 x = 1;
 function createMaterial(scene, path) {
-  console.log(path);
   var myMaterial = new BABYLON.StandardMaterial(path, scene);
 
   myMaterial.diffuseTexture = new BABYLON.Texture(path, scene);

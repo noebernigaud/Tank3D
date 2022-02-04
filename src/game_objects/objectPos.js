@@ -18,16 +18,13 @@ class ObjectPos extends BABYLON.Mesh {
     super('')
 
     this.type = type;
-    let child = this.createShape()
-    child.parent = this;
-    child.setParent(this)
-    this.addChild(child)
-    child.setParent(this)
+    /** @type {BABYLON.Mesh} */
+
+    this.addChild(this.createShape())
     this.defineBoundingBox()
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
-    this.child = child
 
     this.position = new BABYLON.Vector3(posX, posY, posZ);
     this.center_camera()
@@ -86,6 +83,15 @@ class ObjectPos extends BABYLON.Mesh {
       min = BABYLON.Vector3.Minimize(min, meshMin);
       max = BABYLON.Vector3.Maximize(max, meshMax);
     }
-    this.setBoundingInfo(new BABYLON.BoundingInfo(min, max));
+    let newBoundingBox = new BABYLON.BoundingInfo(min, max)
+    this.setBoundingInfo(newBoundingBox);
+  }
+
+
+  addChild(child) {
+    child.parent = this;
+    child.setParent(this)
+    super.addChild(child)
+    child.rotation = this.rotation
   }
 }
