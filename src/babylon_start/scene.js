@@ -14,9 +14,9 @@ class Scene {
       this.scene.render()
     );
 
-    // this.setBackground()
+    this.setBackground()
     this.addTank()
-    // init()
+    init()
   }
 
   /**
@@ -37,9 +37,9 @@ class Scene {
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
 
-    // var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    // ground.material = createMaterial(scene, 'images/woodTexture.jpg')
-    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    ground.material = createMaterial(scene, 'images/woodTexture.jpg')
+    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
     return scene;
   }
 
@@ -66,10 +66,15 @@ class Scene {
       ]
 
       tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(40, 40, 40));
-      tanksMeshes.forEach(x => x.position.y += 2);
+      //tanksMeshes.forEach(x => x.position.y += 2);
 
 
-      tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }))
+      //defineBoundingBox(tanksMeshes);
+
+      // tanksMeshes[0].physicsImpostor = new BABYLON.PhysicsImpostor(tanksMeshes[0], BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 })
+
+
+      tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }));
     });
   }
 
