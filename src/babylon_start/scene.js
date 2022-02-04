@@ -69,12 +69,7 @@ class Scene {
       tanksMeshes.forEach(x => x.position.y += 2);
 
 
-      defineBoundingBox(tanksMeshes);
-
-      // tanksMeshes[0].physicsImpostor = new BABYLON.PhysicsImpostor(tanksMeshes[0], BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100 })
-
-
-      // tanksMeshes.forEach(e => e.showBoundingBox = true);
+      tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }))
     });
   }
 
@@ -122,4 +117,8 @@ function defineBoundingBox(eltList) {
   let newBoundingBox = new BABYLON.BoundingInfo(min, max)
   eltList[0].setBoundingInfo(newBoundingBox);
   eltList[0].showBoundingBox = true;
+}
+
+function rotateAxisY(angle, meshesList) {
+  meshesList.forEach(e => e.rotate(new BABYLON.Vector3(0, 1, 0), angle))
 }
