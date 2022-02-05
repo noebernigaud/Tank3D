@@ -14,9 +14,9 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            char.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
+            tankContainer.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
             Char.height / 2,
-            char.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, char.speedAngle);
+            tankContainer.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, char.speedAngle);
         this.live = live;
         this.char = char;
         this.chars = chars;
@@ -44,6 +44,14 @@ class Bullet extends ObjectPos {
             if (this.life === 0) this.dispose();
             return;
         }
+    }
+
+    createShape() {
+        var shape = BABYLON.MeshBuilder.CreateSphere("bullet",
+            { diameter: Bullet.diameter }, scene);
+        shape.material = createMaterial(scene, bulletImage.src);
+
+        return shape;
     }
 
     // move() {
@@ -141,12 +149,4 @@ class Bullet extends ObjectPos {
             this.shape.dispose();
             bullets.splice(position, 1);
         }*/
-
-    createShape() {
-        var shape = BABYLON.MeshBuilder.CreateSphere("bullet",
-            { diameter: Bullet.diameter }, scene);
-        shape.material = createMaterial(scene, bulletImage.src);
-
-        return shape;
-    }
 }

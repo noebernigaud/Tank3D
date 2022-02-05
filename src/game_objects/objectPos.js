@@ -19,8 +19,9 @@ class ObjectPos extends BABYLON.Mesh {
 
     this.type = type;
     /** @type {BABYLON.Mesh} */
+    this.shape = this.createShape()
+    this.addChild(this.shape)
 
-    this.addChild(this.createShape())
     this.defineBoundingBox()
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
@@ -42,9 +43,12 @@ class ObjectPos extends BABYLON.Mesh {
   center_camera() {
     if (this === char1) {
       if (typeof tankContainer !== 'undefined') {
-        camera.position.x = tankContainer.position.x - 100 * Math.sin(camera.rotation.y);
-        camera.position.y = tankContainer.position.y + 100;
-        camera.position.z = tankContainer.position.z - 100 * Math.cos(camera.rotation.y);
+        camera.target = tanksMeshes[3]
+        //camera.alpha += tanksMeshes[3].rotation.z
+        // camera.position.x = tankContainer.position.x - 100 * Math.sin(camera.rotation.y);
+        // camera.position.y = tankContainer.position.y + 100;
+        // camera.position.z = tankContainer.position.z - 120 * Math.cos(camera.rotation.y);
+        //camera.rotation.y = tanksMeshes[3].rotation.y + 20
       }
 
     }

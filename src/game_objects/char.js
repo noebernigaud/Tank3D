@@ -41,7 +41,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      bullets.push(new Bullet(this, 1, 5, this.charsAI));
+      var bullet = new Bullet(this, 1, 5, this.charsAI)
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;

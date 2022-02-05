@@ -15,9 +15,16 @@ function keyListener(evt, is_true) {
     else if (evt.code === "KeyD") {
         inputStates.keyD = is_true;
     }
+    else if (evt.code === "KeyL") {
+        inputStates.keyL = is_true;
+    }
     else if (evt.keyCode == 37) {
         inputStates.rot_minus = is_true; // camera.cameraRotation.y -= 0.05;
     }
+    else if (evt.code === "KeyX") {
+        inputStates.keyX = is_true;
+    }
+
     else if (evt.keyCode == 38) {
         inputStates.foreward = is_true;
         //char1.moveForeward(1)
@@ -33,6 +40,8 @@ function keyListener(evt, is_true) {
 }
 
 function keyApplaier() {
+    var speed_angle = 0.02;
+    if (typeof tankContainer === 'undefined') return;
     // On regarde si on doit poser une mine
     if (inputStates.SPACE) {
         char1.addMine(Date.now());
@@ -46,57 +55,76 @@ function keyApplaier() {
     var coeff = 1;
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
-    if (inputStates.rot_minus) {
-        char1.updateAngle(-0.02)
-        rotateTurretAxisY(-0.02, tanksMeshes)
-        char1.center_camera()
+    if (inputStates.rot_minus && !inputStates.rot_plus) {
+        char1.updateAngle(-speed_angle)
+        rotateTurretAxisY(-speed_angle, tanksMeshes)
+        // camera.inputs.attached.keyboard.detachControl();
+        camera.alpha += speed_angle
+        //camera.alpha += tanksMeshes[3].rotation.z
+        //camera.alpha -= 0.35069471684700826
+        //char1.center_camera()
     }
 
-    if (inputStates.rot_plus) {
-        char1.updateAngle(0.02);
-        rotateTurretAxisY(0.02, tanksMeshes)
-        char1.center_camera()
+    if (inputStates.rot_plus && !inputStates.rot_minus) {
+        char1.updateAngle(speed_angle);
+        rotateTurretAxisY(speed_angle, tanksMeshes)
+        // camera.angularSensibilityY = 0.5
+        // console.log(camera.alpha);
+        // camera.innertialCe
+        // camera.alpha = tanksMeshes[3].rotation.z
+        camera.alpha -= speed_angle
+        //char1.center_camera()
+    }
+
+    if (inputStates.keyA) {
+        rotateAxisY(-speed_angle)
+
+    }
+    if (inputStates.keyD) {
+        rotateAxisY(speed_angle)
     }
 
     if (inputStates.foreward) {
-        var speed = 40;
-
-        moveTankForeward(speed);
-        char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
-                0,
-                speed * Math.cos(char1.rotation.y * x)))
-        char1.center_camera()
+        moveTankForeward();
+        // char1.physicsImpostor.setLinearVelocity(
+        //     new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
+        //         0,
+        //         speed * Math.cos(char1.rotation.y * x)))
+        //char1.center_camera()
         return;
         // char1.moveForeward(2);
-    } else {
-        stabilizeTank()
-        char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(0, 0, 0));
-        char1.physicsImpostor.setAngularVelocity(
-            new BABYLON.Vector3(0, 0, 0));
     }
     if (inputStates.backward) {
-        var speed = 40;
-        moveTankBackward(speed);
-        char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(-speed * Math.sin(char1.rotation.y * x),
-                0,
-                -speed * Math.cos(char1.rotation.y * x)))
+        moveTankBackward();
+        // camera.inputs.attached.keyboard.detachControl();
+        // char1.physicsImpostor.setLinearVelocity(
+        //     new BABYLON.Vector3(-speed * Math.sin(char1.rotation.y * x),
+        //         0,
+        //         -speed * Math.cos(char1.rotation.y * x)))
         // char1.moveBackward(2);
-        char1.center_camera()
-    } else {
+        //char1.center_camera()
+        return;
+    }
+    if (inputStates.keyX) {
+        explode()
+        tanksMeshes.forEach(e => e.setParent(null))
+        tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+
+        tankContainer.dispose()
+    }
+    if (inputStates.keyL) {
+        //smoke()
+        console.log("test1")
+        var smoke = createSmoke(tankContainer)
+        playSmoke(smoke)
+    }
+    else {
         stabilizeTank()
+
         char1.physicsImpostor.setLinearVelocity(
             new BABYLON.Vector3(0, 0, 0));
         char1.physicsImpostor.setAngularVelocity(
             new BABYLON.Vector3(0, 0, 0))
-    }
-    if (inputStates.keyA) {
-        rotateAxisY(-0.02)
-    }
-    if (inputStates.keyD) {
-        rotateAxisY(0.02)
     }
 }
 

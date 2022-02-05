@@ -12,7 +12,7 @@ class Wall extends ObjectPos {
     constructor(x, y, destructable) {
         super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
-            { mass: 0, restitution: 1, friction: 5 });
+            { mass: 0, restitution: 0, friction: 5 });
     }
 
     destroy() {
