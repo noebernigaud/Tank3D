@@ -41,9 +41,12 @@ class ObjectPos extends BABYLON.Mesh {
 
   center_camera() {
     if (this === char1) {
-      camera.position.x = char1.position.x - 100 * Math.sin(camera.rotation.y);
-      camera.position.y = char1.position.y + 100;
-      camera.position.z = char1.position.z - 100 * Math.cos(camera.rotation.y);
+      if (typeof tankContainer !== 'undefined') {
+        camera.position.x = tankContainer.position.x - 100 * Math.sin(camera.rotation.y);
+        camera.position.y = tankContainer.position.y + 100;
+        camera.position.z = tankContainer.position.z - 100 * Math.cos(camera.rotation.y);
+      }
+
     }
   }
 

@@ -48,42 +48,55 @@ function keyApplaier() {
 
     if (inputStates.rot_minus) {
         char1.updateAngle(-0.02)
+        rotateTurretAxisY(-0.02, tanksMeshes)
         char1.center_camera()
     }
 
     if (inputStates.rot_plus) {
         char1.updateAngle(0.02);
+        rotateTurretAxisY(0.02, tanksMeshes)
         char1.center_camera()
     }
 
     if (inputStates.foreward) {
         var speed = 40;
+
+        moveTankForeward(speed);
         char1.physicsImpostor.setLinearVelocity(
             new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
-                char1.physicsImpostor.getLinearVelocity().y,
+                0,
                 speed * Math.cos(char1.rotation.y * x)))
         char1.center_camera()
         return;
         // char1.moveForeward(2);
     } else {
+        stabilizeTank()
         char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
+            new BABYLON.Vector3(0, 0, 0));
         char1.physicsImpostor.setAngularVelocity(
-            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
+            new BABYLON.Vector3(0, 0, 0));
     }
     if (inputStates.backward) {
-        var speed = -40;
+        var speed = 40;
+        moveTankBackward(speed);
         char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
-                char1.physicsImpostor.getLinearVelocity().y,
-                speed * Math.cos(char1.rotation.y * x)))
+            new BABYLON.Vector3(-speed * Math.sin(char1.rotation.y * x),
+                0,
+                -speed * Math.cos(char1.rotation.y * x)))
         // char1.moveBackward(2);
         char1.center_camera()
     } else {
+        stabilizeTank()
         char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0));
+            new BABYLON.Vector3(0, 0, 0));
         char1.physicsImpostor.setAngularVelocity(
-            new BABYLON.Vector3(0, char1.physicsImpostor.getLinearVelocity().y, 0))
+            new BABYLON.Vector3(0, 0, 0))
+    }
+    if (inputStates.keyA) {
+        rotateAxisY(-0.02)
+    }
+    if (inputStates.keyD) {
+        rotateAxisY(0.02)
     }
 }
 

@@ -3,6 +3,8 @@
 var canvas = document.getElementById("myCanvas");
 var tanksMeshes;
 var model;
+var tankContainer;
+var ground;
 
 class Scene {
 
@@ -37,7 +39,7 @@ class Scene {
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
 
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
     ground.material = createMaterial(scene, 'images/woodTexture.jpg')
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0, friction: 5 });
     return scene;
@@ -65,16 +67,28 @@ class Scene {
         scene.getMeshById('LightPreset'),
       ]
 
-      tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(40, 40, 40));
-      //tanksMeshes.forEach(x => x.position.y += 2);
+      tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(10, 10, 10));
+      //tanksMeshes.forEach(e => e.position.x += 100);
 
 
       //defineBoundingBox(tanksMeshes);
 
-      // tanksMeshes[0].physicsImpostor = new BABYLON.PhysicsImpostor(tanksMeshes[0], BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 })
+      tankContainer = BABYLON.MeshBuilder.CreateBox("Box", { height: 25, width: 38, depth: 70 }, scene);
+
+      //tankContainer = BABYLON.Mesh.MergeMeshes(tanksMeshes, true, true, undefined, true)
+
+      tankContainer.position.x += 0
+      tankContainer.position.y += 13
+      tankContainer.position.z += 0
+      tanksMeshes.forEach(e => tankContainer.addChild(e))
+      tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0 })
+      //tankContainer.isVisible = false;
+      tankContainer.visibility = 0.000001
+      tankContainer.showBoundingBox = true;
+      // tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0, pressure: 0 }));
 
 
-      tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0 }));
+
     });
   }
 
@@ -124,6 +138,49 @@ function defineBoundingBox(eltList) {
   eltList[0].showBoundingBox = true;
 }
 
-function rotateAxisY(angle, meshesList) {
-  meshesList.forEach(e => e.rotate(new BABYLON.Vector3(0, 1, 0), angle))
+function rotateAxisY(angle) {
+  tankContainer.rotate(new BABYLON.Vector3(0, 1, 0), angle)
+  tankContainer.rotation.y += angle
+  //tanksMeshes.forEach(e => e.rotate(new BABYLON.Vector3(0, 1, 0), angle))
+}
+
+function rotateTurretAxisY(angle) {
+  tanksMeshes[4].rotate(new BABYLON.Vector3(0, 1, 0), angle)
+}
+
+function moveTankForeward(speed) {
+  tankContainer.physicsImpostor.setLinearVelocity(
+    new BABYLON.Vector3(
+      speed * Math.sin(tankContainer.rotation.y),
+      0,
+      speed * Math.cos(tankContainer.rotation.y)))
+  tankContainer.position.y = 12.501
+  // tanksMeshes.forEach(e => e.physicsImpostor.setLinearVelocity(
+  //   new BABYLON.Vector3(
+  //     speed * Math.sin(e.rotation.y),
+  //     0,
+  //     speed * Math.cos(e.rotation.y))))
+}
+
+function moveTankBackward(speed) {
+  tankContainer.physicsImpostor.setLinearVelocity(
+    new BABYLON.Vector3(
+      -speed * Math.sin(tankContainer.rotation.y),
+      0,
+      -speed * Math.cos(tankContainer.rotation.y)))
+  // tanksMeshes.forEach(e => e.physicsImpostor.setLinearVelocity(
+  //   new BABYLON.Vector3(
+  //     -speed * Math.sin(e.rotation.y),
+  //     0,
+  //     -speed * Math.cos(e.rotation.y))))
+}
+
+function stabilizeTank() {
+  if (typeof tankContainer !== 'undefined') {
+    tankContainer.physicsImpostor.setLinearVelocity(
+      new BABYLON.Vector3(0, 0, 0));
+    tankContainer.physicsImpostor.setAngularVelocity(
+      new BABYLON.Vector3(0, 0, 0))
+  }
+
 }
