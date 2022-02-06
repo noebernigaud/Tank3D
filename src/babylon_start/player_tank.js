@@ -22,7 +22,7 @@ async function addTank() {
         tankContainer.showBoundingBox = true;
         // tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0, pressure: 0 }));
 
-        camera.target = tankMeshes[0];
+        camera.target = tankMeshes[4];
 
     });
 }

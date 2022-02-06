@@ -14,17 +14,23 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
+            //tankContainer.position.x + (Char.width * 1.5 + 10) * Math.sin(char.speedAngle),
+            tankMeshes[4].absolutePosition.x + 50,// * Math.sin(Math.atan(tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[2] / tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[0])),
             Char.height / 2,
-            tankContainer.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, char.speedAngle);
+            //tankContainer.position.z + (Char.width * 1.5 + 10) * Math.cos(char.speedAngle), speed, tankMeshes[4].rotation.y);
+            tankMeshes[4].absolutePosition.z + 50);// * Math.cos(Math.atan(tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[2] / tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[0])));
         this.live = live;
         this.char = char;
         this.chars = chars;
         this.life = 8;
-        speed = 800;
+        speed = 50;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 5, restitution: 0 });
-        this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
+        let frontVec = tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))
+        let moveVec = frontVec.scale(speed)
+        let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
+        this.physicsImpostor.setLinearVelocity(realVec)
+        //this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         this.physicsImpostor.restitution = 1;
         this.physicsImpostor.mass = 1;
 
