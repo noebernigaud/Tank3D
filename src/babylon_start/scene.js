@@ -1,10 +1,14 @@
 /// <reference path="babylon.d.ts" />
 
 var canvas = document.getElementById("myCanvas");
-var tanksMeshes;
 var model;
-var tankContainer;
+var model2;
 var ground;
+var tankContainer;
+var tankMeshes;
+var opponentContainer;
+var opponentMeshes;
+var opponentMaterials;
 
 class Scene {
 
@@ -20,8 +24,9 @@ class Scene {
     );
 
     this.setBackground()
-    this.addTank()
     this.setParticles()
+    addTank()
+    addOpponent()
     init()
   }
 
@@ -71,35 +76,6 @@ class Scene {
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     skybox.material = skyboxMaterial;
-  }
-
-  async addTank() {
-    model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
-      tanksMeshes = [
-        scene.getMeshById('Body_1'),
-        scene.getMeshById('Body_2'),
-        scene.getMeshById('Track'),
-        scene.getMeshById('Turret'),
-        scene.getMeshById('Turret_2'),
-        scene.getMeshById('LightPreset'),
-      ]
-
-      tanksMeshes.forEach(x => x.scaling = new BABYLON.Vector3(10, 10, 10));
-
-      //defineBoundingBox(tanksMeshes);
-
-      tankContainer = BABYLON.MeshBuilder.CreateBox("Box", { height: 25, width: 38, depth: 70 }, scene);
-      tankContainer.position.y += 12.70;
-      tanksMeshes.forEach(e => tankContainer.addChild(e));
-      tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0 })
-      //tankContainer.isVisible = false;
-      tankContainer.visibility = 0.000001;
-      tankContainer.showBoundingBox = true;
-      // tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0, pressure: 0 }));
-
-      camera.target = tanksMeshes[0];
-
-    });
   }
 
   setParticles() {

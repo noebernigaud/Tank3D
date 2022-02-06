@@ -54,12 +54,12 @@ function keyApplaier() {
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
     if (inputStates.rot_minus && !inputStates.rot_plus) {
-        rotateTurretAxisY(-speed_angle, tanksMeshes)
+        rotateTurretAxisY(-speed_angle, tankMeshes)
         camera.alpha += speed_angle
     }
 
     if (inputStates.rot_plus && !inputStates.rot_minus) {
-        rotateTurretAxisY(speed_angle, tanksMeshes)
+        rotateTurretAxisY(speed_angle, tankMeshes)
         camera.alpha -= speed_angle
     }
 
@@ -80,11 +80,8 @@ function keyApplaier() {
         return;
     }
     if (inputStates.keyX) {
-        explode()
-        tanksMeshes.forEach(e => e.setParent(null))
-        tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+        destroyTank(true)
 
-        tankContainer.dispose()
     }
     if (inputStates.keyL) {
         //smoke()

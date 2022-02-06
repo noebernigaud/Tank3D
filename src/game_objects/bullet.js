@@ -37,6 +37,11 @@ class Bullet extends ObjectPos {
             e2.object.dispose();
         })
 
+        this.physicsImpostor.registerOnPhysicsCollide(opponentContainer.physicsImpostor, (e1, e2) => {
+            e1.object.dispose();
+            destroyOpponent(true);
+        })
+
         this.physicsImpostor.onCollideEvent = (b, w) => {
             console.log(b, w);
             this.life -= 1;

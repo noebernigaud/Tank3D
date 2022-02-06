@@ -1,11 +1,11 @@
-function explode() {
+function explode(emitter) {
     BABYLON.ParticleHelper.CreateAsync("explosion", scene).then((set) => {
         set.systems.forEach(s => {
             s.disposeOnStop = true;
         });
 
-        for (const sys of set.systems) {
-            sys.worldOffset = new BABYLON.Vector3(tankContainer.position.x, tankContainer.position.y, tankContainer.position.z);
+        for (var sys of set.systems) {
+            sys.worldOffset = new BABYLON.Vector3(emitter.position.x, emitter.position.y, emitter.position.z);
             sys.maxScaleX = 6;
             sys.maxScaleY = 6;
         }
