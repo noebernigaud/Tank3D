@@ -18,30 +18,28 @@ function keyListener(evt, is_true) {
     else if (evt.code === "KeyL") {
         inputStates.keyL = is_true;
     }
-    else if (evt.keyCode == 37) {
-        inputStates.rot_minus = is_true; // camera.cameraRotation.y -= 0.05;
-    }
     else if (evt.code === "KeyX") {
         inputStates.keyX = is_true;
     }
-
+    else if (evt.keyCode == 37) {
+        inputStates.rot_minus = is_true;
+    }
     else if (evt.keyCode == 38) {
         inputStates.foreward = is_true;
-        //char1.moveForeward(1)
     }
     else if (evt.keyCode == 39) {
         inputStates.rot_plus = is_true;
-        //camera.cameraRotation.y += 0.05;
     }
     else if (evt.keyCode == 40) {
         inputStates.backward = is_true;
-        //camera.cameraRotation.y += 0.05;
     }
 }
 
 function keyApplaier() {
     var speed_angle = 0.02;
+
     if (typeof tankContainer === 'undefined') return;
+
     // On regarde si on doit poser une mine
     if (inputStates.SPACE) {
         char1.addMine(Date.now());
@@ -56,24 +54,13 @@ function keyApplaier() {
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
     if (inputStates.rot_minus && !inputStates.rot_plus) {
-        char1.updateAngle(-speed_angle)
         rotateTurretAxisY(-speed_angle, tanksMeshes)
-        // camera.inputs.attached.keyboard.detachControl();
         camera.alpha += speed_angle
-        //camera.alpha += tanksMeshes[3].rotation.z
-        //camera.alpha -= 0.35069471684700826
-        //char1.center_camera()
     }
 
     if (inputStates.rot_plus && !inputStates.rot_minus) {
-        char1.updateAngle(speed_angle);
         rotateTurretAxisY(speed_angle, tanksMeshes)
-        // camera.angularSensibilityY = 0.5
-        // console.log(camera.alpha);
-        // camera.innertialCe
-        // camera.alpha = tanksMeshes[3].rotation.z
         camera.alpha -= speed_angle
-        //char1.center_camera()
     }
 
     if (inputStates.keyA) {
@@ -86,23 +73,10 @@ function keyApplaier() {
 
     if (inputStates.foreward) {
         moveTankForeward();
-        // char1.physicsImpostor.setLinearVelocity(
-        //     new BABYLON.Vector3(speed * Math.sin(char1.rotation.y * x),
-        //         0,
-        //         speed * Math.cos(char1.rotation.y * x)))
-        //char1.center_camera()
         return;
-        // char1.moveForeward(2);
     }
     if (inputStates.backward) {
         moveTankBackward();
-        // camera.inputs.attached.keyboard.detachControl();
-        // char1.physicsImpostor.setLinearVelocity(
-        //     new BABYLON.Vector3(-speed * Math.sin(char1.rotation.y * x),
-        //         0,
-        //         -speed * Math.cos(char1.rotation.y * x)))
-        // char1.moveBackward(2);
-        //char1.center_camera()
         return;
     }
     if (inputStates.keyX) {
@@ -114,9 +88,8 @@ function keyApplaier() {
     }
     if (inputStates.keyL) {
         //smoke()
-        console.log("test1")
-        var smoke = createSmoke(tankContainer)
-        playSmoke(smoke)
+        var smok = createSmoke(tankContainer)
+        playSmoke(smok)
     }
     else {
         stabilizeTank()
@@ -317,14 +290,14 @@ function anime() {
 }
 
 var inputVitMult = document.getElementById("mutlvit")
-inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
+if (inputVitMult !== null) inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
 
 function changeVitesseChar(value) {
     speedMultUti = value;
 }
 
 var inputReloadMult = document.getElementById("multReload")
-inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
+if (inputReloadMult !== null) inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
 
 function changeCadenceTir(value) {
     reloadMultUti = value;

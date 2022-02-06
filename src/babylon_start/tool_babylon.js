@@ -44,13 +44,13 @@ function create_3d_shape(obj, img_path) {
  */
 function collision(obj) {
   return false;
-  let control = (elt) => elt !== obj && obj.intersectsMesh(elt);
-  return (
-    chars.some(control) ||
-    walls.some(control) ||
-    holes.some(control) ||
-    bullets.some(control)
-  )
+  // let control = (elt) => elt !== obj && obj.intersectsMesh(elt);
+  // return (
+  //   chars.some(control) ||
+  //   walls.some(control) ||
+  //   holes.some(control) ||
+  //   bullets.some(control)
+  // )
 }
 async function loadmodel() {
   //return BABYLON.SceneLoader.ImportMesh("", "./models/", "tank.babylon", scene);
@@ -63,4 +63,20 @@ async function loadmodel() {
   });
   return x;
 
+}
+
+function defineBoundingBox(eltList) {
+  let childMeshes = eltList;
+  let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
+  let max = childMeshes[0].getBoundingInfo().boundingBox.maximumWorld;
+  for (let i = 0; i < childMeshes.length; i++) {
+    let meshMin = childMeshes[i].getBoundingInfo().boundingBox.minimumWorld;
+    let meshMax = childMeshes[i].getBoundingInfo().boundingBox.maximumWorld;
+
+    min = BABYLON.Vector3.Minimize(min, meshMin);
+    max = BABYLON.Vector3.Maximize(max, meshMax);
+  }
+  let newBoundingBox = new BABYLON.BoundingInfo(min, max)
+  eltList[0].setBoundingInfo(newBoundingBox);
+  eltList[0].showBoundingBox = true;
 }

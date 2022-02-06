@@ -127,11 +127,11 @@ function draw_level_map(lvl_number) {
         case 'I':
           char1 = new Char(ObjectEnum.Player, posX, posY, 0, 1.4 * speedMultUti, 800 * reloadMultUti, tankImage);
           chars.push(char1);
-          camera.rotation.x = 0.4854747337923555;
-          camera.rotation.y = 0.6936207932663223
-          camera.rotation.z = 0;
+          // camera.rotation.x = 0.4854747337923555;
+          // camera.rotation.y = 0.6936207932663223
+          // camera.rotation.z = 0;
           char1.updateAngle(0)
-          char1.center_camera();
+          // char1.center_camera();
           break;
         case 'h':
           holes.push(new Hole(posX, posY))
