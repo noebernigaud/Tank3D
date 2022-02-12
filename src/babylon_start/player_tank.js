@@ -1,28 +1,19 @@
-async function addTank() {
-    model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
-        tankMeshes = [
-            scene.getMeshById('Body_1'),
-            scene.getMeshById('Body_2'),
-            scene.getMeshById('Track'),
-            scene.getMeshById('Turret'),
-            scene.getMeshById('Turret_2'),
-            scene.getMeshById('LightPreset'),
-        ]
+function addTank() {
+    BABYLON.SceneLoader.ImportMesh("", "./models/tank/", "tank.babylon", scene, function (meshes) {
+        tankMeshes = meshes
 
         tankMeshes.forEach(x => x.scaling = new BABYLON.Vector3(10, 10, 10));
 
         //defineBoundingBox(tanksMeshes);
 
-        tankContainer = BABYLON.MeshBuilder.CreateBox("Box", { height: 25, width: 38, depth: 70 }, scene);
+        tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: 25, width: 38, depth: 70 }, scene);
         tankContainer.position.y += 12.70;
         tankMeshes.forEach(e => tankContainer.addChild(e));
         tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0 })
         //tankContainer.isVisible = false;
         tankContainer.visibility = 0.000001;
         tankContainer.showBoundingBox = true;
-        // tanksMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0, pressure: 0 }));
-
-        camera.target = tankMeshes[4];
+        camera.target = getTurretTank();
 
     });
 }
@@ -33,7 +24,7 @@ function rotateAxisY(angle) {
 }
 
 function rotateTurretAxisY(angle) {
-    tankMeshes[4].rotate(BABYLON.Axis.Y, angle)
+    tankMeshes[1].rotate(BABYLON.Axis.Y, angle)
 }
 
 function moveTankForeward() {
@@ -71,4 +62,8 @@ function destroyTank(isDisabled) {
 
         tankContainer.dispose()
     }
+}
+
+function getTurretTank() {
+    return tankMeshes[1];
 }

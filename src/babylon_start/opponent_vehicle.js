@@ -1,5 +1,5 @@
 async function addOpponent() {
-    model2 = await BABYLON.SceneLoader.ImportMeshAsync("", "./models2/", "vehicle.babylon").then((meshes) => {
+    model2 = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/vehicle/", "vehicle.babylon").then((meshes) => {
         opponentMeshes = [
             scene.getMeshById('BODY_body')
         ]
@@ -14,7 +14,7 @@ async function addOpponent() {
 
         //defineBoundingBox(opponentMeshes);
 
-        opponentContainer = BABYLON.MeshBuilder.CreateBox("Box", { height: 25, width: 30, depth: 70 }, scene);
+        opponentContainer = BABYLON.MeshBuilder.CreateBox("vehicleContainer", { height: 25, width: 30, depth: 70 }, scene);
         opponentContainer.position.y += 12.70;
         opponentContainer.position.x += 70;
 

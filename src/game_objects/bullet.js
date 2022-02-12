@@ -14,10 +14,10 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + tankMeshes[4].getDirection(BABYLON.Axis.Z).x * 10,//+ 30 * Math.sin(-tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y),
+            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 10,//+ 30 * Math.sin(-tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y),
             //tankMeshes[4].absolutePosition.x + 50,// * Math.sin(Math.atan(tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[2] / tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[0])),
             Char.height / 2,
-            tankContainer.position.z + tankMeshes[4].getDirection(BABYLON.Axis.X).x * 10);//+ 30 * Math.cos(-tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y), speed, tankMeshes[4].rotation.y);
+            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 10);//+ 30 * Math.cos(-tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y), speed, tankMeshes[4].rotation.y);
         //tankMeshes[4].absolutePosition.z + 50);// * Math.cos(Math.atan(tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[2] / tankMeshes[4].getDirection(new BABYLON.Vector3(0, 0, 1))[0])));
         this.live = live;
         this.char = char;
@@ -26,7 +26,7 @@ class Bullet extends ObjectPos {
         this.speed = 50;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
-        let frontVec = tankMeshes[4].getDirection(BABYLON.Axis.Z)
+        let frontVec = getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
         let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite

@@ -25,9 +25,10 @@ class Scene {
 
     this.setBackground()
     this.setParticles()
-    addTank()
-    addOpponent()
-    init()
+    loadModel()
+    // addTank()
+    // addOpponent()
+    // init()
   }
 
   /**
