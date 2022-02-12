@@ -60,6 +60,7 @@ class Scene {
     camera.inertia = 0
     camera.attachControl(canvas, true);
     camera.inputs.attached.keyboard.detachControl();
+    camera.checkCollisions = true;
   }
 
   setGround() {
