@@ -25,15 +25,15 @@ class Bullet extends ObjectPos {
         this.life = 8;
         this.speed = 50;
 
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 5, restitution: 0 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = tankMeshes[4].getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
         let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
         this.physicsImpostor.setLinearVelocity(realVec)
         //this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
-        this.physicsImpostor.restitution = 1;
-        this.physicsImpostor.mass = 1;
+        // this.physicsImpostor.restitution = 1;
+        // this.physicsImpostor.mass = 1;
         this.physicsImpostor.friction = 0;
         this.coolDownCol = 0;
 
