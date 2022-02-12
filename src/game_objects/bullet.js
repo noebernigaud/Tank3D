@@ -14,9 +14,9 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 10,
-            Char.height / 2,
-            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 10);
+            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
+            tankContainer.position.y + 9,
+            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
         this.live = live;
         this.char = char;
         this.chars = chars;
@@ -34,6 +34,7 @@ class Bullet extends ObjectPos {
         // this.physicsImpostor.mass = 1;
         this.physicsImpostor.friction = 0;
         this.coolDownCol = 0;
+        bulletExplode(this.position, false, true).start()
 
         this.createCollider()
     }

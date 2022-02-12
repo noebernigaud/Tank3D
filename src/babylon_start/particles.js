@@ -14,7 +14,9 @@ function explode(emitter) {
     });
 }
 
-function bulletExplode(position, isExploding) {
+function bulletExplode(position, isExploding, isCanonFire) {
+    var isCanonFire = isCanonFire || false;
+
     // Create a particle system
     var particleSystem = new BABYLON.ParticleSystem("bulletParticles", 200, scene);
 
@@ -27,7 +29,7 @@ function bulletExplode(position, isExploding) {
     emitterType.radius = 0.1;
     emitterType.radiusRange = 0;
 
-    particleSystem.particleEmitterType = emitterType;
+    if (!isCanonFire) particleSystem.particleEmitterType = emitterType;
 
     // Colors of all particles
     particleSystem.color1 = isExploding ? new BABYLON.Color4(1, 0, 0, 1) : new BABYLON.Color4(1, 0.5, 0, 1);
@@ -53,16 +55,23 @@ function bulletExplode(position, isExploding) {
     particleSystem.maxAngularSpeed = Math.PI;
 
     // Speed
-    particleSystem.minEmitPower = isExploding ? 1 : 7;
-    particleSystem.maxEmitPower = isExploding ? 15 : 10;
+    particleSystem.minEmitPower = isExploding ? 5 : isCanonFire ? 3 : 7;
+    particleSystem.maxEmitPower = isExploding ? 15 : isCanonFire ? 5 : 10;
     particleSystem.updateSpeed = isExploding ? 0.09 : 0.10;
 
     // Size
-    particleSystem.minSize = isExploding ? 5 : 1;
-    particleSystem.maxSize = isExploding ? 15 : 3;
+    particleSystem.minSize = isExploding ? 5 : isCanonFire ? 2 : 1;
+    particleSystem.maxSize = isExploding ? 15 : isCanonFire ? 4 : 3;
 
-    particleSystem.manualEmitCount = isExploding ? 6000 : 50;
+    particleSystem.manualEmitCount = isExploding ? 6000 : isCanonFire ? 1000 : 50;
     particleSystem.disposeOnStop = true;
+
+    if (isCanonFire) {
+        let d = getTurretTank().getDirection(BABYLON.Axis.Z)
+        let d1 = new BABYLON.Vector3(d.x + 0.5, d.y + 0.5, d.z + 0.5);
+        let d2 = new BABYLON.Vector3(d.x - 0.5, d.y - 0.5, d.z - 0.5);
+        particleSystem.createPointEmitter(d1, d2)
+    }
 
     return particleSystem;
 }
