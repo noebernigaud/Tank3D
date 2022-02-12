@@ -28,13 +28,12 @@ async function addTank() {
 }
 
 function rotateAxisY(angle) {
-    tankContainer.rotate(new BABYLON.Vector3(0, 1, 0), angle)
+    tankContainer.rotate(BABYLON.Axis.Y, angle)
     rotateTurretAxisY(-angle)
-    tankContainer.rotation.y += angle
 }
 
 function rotateTurretAxisY(angle) {
-    tankMeshes[4].rotate(new BABYLON.Vector3(0, 1, 0), angle)
+    tankMeshes[4].rotate(BABYLON.Axis.Y, angle)
 }
 
 function moveTankForeward() {
@@ -48,7 +47,9 @@ function moveTankBackward() {
 }
 
 function moveTank(speed) {
-    let frontVec = tankContainer.getDirection(new BABYLON.Vector3(0, 0, 1))
+    tankContainer.physicsImpostor.setAngularVelocity(
+        new BABYLON.Vector3(0, 0, 0))
+    let frontVec = tankContainer.getDirection(BABYLON.Axis.Z)
     let moveVec = frontVec.scale(speed)
     let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
     tankContainer.physicsImpostor.setLinearVelocity(realVec)

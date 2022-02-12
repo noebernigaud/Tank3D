@@ -55,12 +55,14 @@ function keyApplaier() {
 
     if (inputStates.rot_minus && !inputStates.rot_plus) {
         rotateTurretAxisY(-speed_angle, tankMeshes)
-        camera.alpha += speed_angle
+        //camera.alpha += speed_angle
+        camera.alpha = -tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
     }
 
     if (inputStates.rot_plus && !inputStates.rot_minus) {
         rotateTurretAxisY(speed_angle, tankMeshes)
-        camera.alpha -= speed_angle
+        //camera.alpha -= speed_angle
+        camera.alpha = -tankMeshes[4].rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
     }
 
     if (inputStates.keyA) {
