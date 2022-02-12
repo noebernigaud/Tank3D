@@ -25,32 +25,41 @@ function bulletExplode(position, isExploding, isCanonFire) {
 
     // Where the particles come from
     particleSystem.emitter = position;
-    var emitterType = new BABYLON.SphereParticleEmitter();
-    emitterType.radius = 0.1;
-    emitterType.radiusRange = 0;
 
-    if (!isCanonFire) particleSystem.particleEmitterType = emitterType;
+    // Shape of emission
+    if (!isCanonFire) {
+        var emitterType = new BABYLON.SphereParticleEmitter();
+        emitterType.radius = 0.1;
+        emitterType.radiusRange = 0;
+        particleSystem.particleEmitterType = emitterType;
+    } else {
+        let d = getTurretTank().getDirection(BABYLON.Axis.Z);
+        let r = 0.5;
+        let d1 = new BABYLON.Vector3(d.x + r, d.y + r, d.z + r);
+        let d2 = new BABYLON.Vector3(d.x - r, d.y - r, d.z - r);
+        particleSystem.createPointEmitter(d1, d2)
+    }
 
     // Colors of all particles
     particleSystem.color1 = isExploding ? new BABYLON.Color4(1, 0, 0, 1) : new BABYLON.Color4(1, 0.5, 0, 1);
     particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
     particleSystem.colorDead = isExploding ? new BABYLON.Color4(1, 0.5, 0, 1) : new BABYLON.Color4(0.5, 0.5, 0, 0);
 
-    // Size of each particle (random between...
+    // Size of each particle
     particleSystem.minSize = 0.1;
     particleSystem.maxSize = 0.5;
 
-    // Life time of each particle (random between...
+    // Life time of each particle
     particleSystem.minLifeTime = 0.5;
     particleSystem.maxLifeTime = isExploding ? 1.9 : 1.2;
 
-    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    // Blend mode : BLENDMODE_ONEONE / BLENDMODE_STANDARD
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
     // Set the gravity of all particles
     particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
 
-    // Angular speed, in radians
+    // Angular speed
     particleSystem.minAngularSpeed = 0;
     particleSystem.maxAngularSpeed = Math.PI;
 
@@ -65,13 +74,6 @@ function bulletExplode(position, isExploding, isCanonFire) {
 
     particleSystem.manualEmitCount = isExploding ? 6000 : isCanonFire ? 1000 : 50;
     particleSystem.disposeOnStop = true;
-
-    if (isCanonFire) {
-        let d = getTurretTank().getDirection(BABYLON.Axis.Z)
-        let d1 = new BABYLON.Vector3(d.x + 0.5, d.y + 0.5, d.z + 0.5);
-        let d2 = new BABYLON.Vector3(d.x - 0.5, d.y - 0.5, d.z - 0.5);
-        particleSystem.createPointEmitter(d1, d2)
-    }
 
     return particleSystem;
 }

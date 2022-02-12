@@ -1,7 +1,3 @@
-x = 1;
-y = 1;
-z = 1;
-w = 1;
 class Bullet extends ObjectPos {
 
     static diameter = 5;

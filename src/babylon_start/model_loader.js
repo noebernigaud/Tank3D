@@ -53,7 +53,7 @@ function initModel(meshes, modelName) {
             //tankContainer.isVisible = false;
             tankContainer.visibility = 0.000001;
             tankContainer.showBoundingBox = true;
-            camera.target = tankMeshes[3];
+            camera.target = getTurretTank();
             break;
 
         case "vehicle":
