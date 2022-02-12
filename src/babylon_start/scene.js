@@ -9,11 +9,15 @@ var tankMeshes;
 var opponentContainer;
 var opponentMeshes;
 var opponentMaterials;
+var engine;
 
 class Scene {
 
   constructor() {
     this.engine = new BABYLON.Engine(canvas, true);
+
+    engine = this.engine;
+    engine.displayLoadingUI();
     this.scene = this.createScene();
     this.setPhysic()
     this.setCamera()
@@ -25,10 +29,8 @@ class Scene {
 
     this.setBackground()
     this.setParticles()
+
     loadModel()
-    // addTank()
-    // addOpponent()
-    // init()
   }
 
   /**
