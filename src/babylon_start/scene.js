@@ -27,7 +27,7 @@ class Scene {
       this.scene.render()
     );
 
-    this.setBackground()
+  //  this.setBackground()
     this.setParticles()
 
     loadModel()

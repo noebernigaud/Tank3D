@@ -4,7 +4,8 @@ class ObjectPos extends BABYLON.Mesh {
   speedAngle;
   /** @type {number} */
   speedNorme;
-  /** @type {ObjectPos} */
+  /** @type {BABYLON.Mesh} */
+  shape;
 
   /**
    * @param {ObjectEnum} type 
@@ -19,10 +20,15 @@ class ObjectPos extends BABYLON.Mesh {
 
     this.type = type;
     /** @type {BABYLON.Mesh} */
-    this.shape = this.createShape()
-    this.addChild(this.shape)
-
-    this.defineBoundingBox()
+    if (type.name == ObjectEnum.Player.name) {
+      this.shape = tankContainer;
+      this.position = new BABYLON.Vector3(posX, this.shape.scaling.y, posZ);
+      this.shape.position = this.position;
+    } else {
+      this.shape = this.createShape()
+      this.addChild(this.shape)
+      this.defineBoundingBox()
+    }
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;

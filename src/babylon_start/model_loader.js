@@ -3,6 +3,7 @@ function loadModel() {
     var modelName;
     var remainingLoad = modelsToLoad.length;
 
+
     var loadingDone = function () {
         remainingLoad--;
         if (remainingLoad === 0) {
