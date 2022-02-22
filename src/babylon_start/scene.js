@@ -4,6 +4,8 @@ var canvas = document.getElementById("myCanvas");
 var model;
 var model2;
 var ground;
+
+/** @type {BABYLON.Mesh} */
 var tankContainer;
 var tankMeshes;
 var opponentContainer;
@@ -27,7 +29,7 @@ class Scene {
       this.scene.render()
     );
 
-  //  this.setBackground()
+    //  this.setBackground()
     this.setParticles()
 
     loadModel()
@@ -46,7 +48,7 @@ class Scene {
   }
 
   setPhysic() {
-    var gravityVector = new BABYLON.Vector3(0, 0, 0);
+    var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
   }
@@ -67,7 +69,7 @@ class Scene {
     ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
     ground.material = createMaterial(scene, 'images/woodTexture.jpg')
     ground.checkCollisions = true;
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 5 });
+    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
   }
 
   setBackground() {

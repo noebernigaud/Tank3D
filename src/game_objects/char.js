@@ -21,7 +21,7 @@ class Char extends ObjectPos {
     this.intelligence = new Intelligence(this);
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
-      { mass: 7000, restitution: 0, friction: 5 });
+      { mass: 1, restitution: 0 });
   }
 
   moveForeward(coeff) {

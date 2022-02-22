@@ -100,10 +100,10 @@ function keyApplaier() {
     else {
         stabilizeTank()
 
-        char1.physicsImpostor.setLinearVelocity(
-            new BABYLON.Vector3(0, 0, 0));
-        char1.physicsImpostor.setAngularVelocity(
-            new BABYLON.Vector3(0, 0, 0))
+        // char1.physicsImpostor.setLinearVelocity(
+        //     new BABYLON.Vector3(0, 0, 0));
+        // char1.physicsImpostor.setAngularVelocity(
+        //     new BABYLON.Vector3(0, 0, 0))
     }
 }
 

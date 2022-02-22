@@ -34,6 +34,7 @@ class ObjectPos extends BABYLON.Mesh {
     this.speedAngle = speedAngle;
 
     this.position = new BABYLON.Vector3(posX, posY, posZ);
+    this.checkCollisions = true;
     //this.center_camera()
   }
 
