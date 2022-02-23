@@ -9,7 +9,7 @@ function createMaterial(scene, path) {
 
   return myMaterial;
 }
-
+/*
 // function create_3d_shape(obj, img_path) {
 //   /** @type {BABYLON.Mesh} */
 //   var shape;
@@ -41,7 +41,7 @@ function createMaterial(scene, path) {
 /**
  * @param {BABYLON.Mesh} obj
  * @returns {boolean} if obj touches another Mesh object
- */
+ 
 function collision(obj) {
   return false;
   // let control = (elt) => elt !== obj && obj.intersectsMesh(elt);
@@ -79,4 +79,4 @@ function defineBoundingBox(eltList) {
   let newBoundingBox = new BABYLON.BoundingInfo(min, max)
   eltList[0].setBoundingInfo(newBoundingBox);
   eltList[0].showBoundingBox = true;
-}
+}*/

@@ -32,7 +32,9 @@ class Scene {
     //  this.setBackground()
     this.setParticles()
 
-    loadModel()
+
+    ObjectEnum.initiate_all_models()
+    // loadModel()
   }
 
   /**
@@ -47,8 +49,6 @@ class Scene {
     scene.beforeRender = () => {
       bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
     }
-
-    ObjectEnum.initiate_all_models()
     return scene;
   }
 

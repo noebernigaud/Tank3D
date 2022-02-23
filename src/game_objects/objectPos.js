@@ -45,8 +45,13 @@ class ObjectPos extends BABYLON.Mesh {
       this.addChild(shape)
       this.defineBoundingBox()
       this.position = new BABYLON.Vector3(posX, posY, posZ);
+      // shape.position = this.position;
       this.shape = shape;
+      // this.shape.position = this.position;
     }
+
+    if (this.type.name == ObjectEnum.CharRed.name)
+      console.log(this.position);
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;

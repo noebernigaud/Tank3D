@@ -13,11 +13,14 @@ class Char extends ObjectPos {
    * @param {HTMLImageElement} img 
    */
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
-    super(type, -width / 2 + x, Char.height / 2 + 2, - height / 2 + y, vitesse, angle);
+    super(type, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
-
+    // shape = this.shape
+    // console.log(this.shape, "I'm here");
+    if (type.name !== ObjectEnum.Player.name)
+      this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100, restitution: 0.2 })
   }
 
   moveForeward(coeff) {
