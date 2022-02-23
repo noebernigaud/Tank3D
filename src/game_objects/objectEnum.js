@@ -42,10 +42,10 @@ class ObjectEnum {
     tankContainer.visibility = 0.000001;
     tankContainer.showBoundingBox = true;
     // camera.target = getTurretTank();
-    //tankContainer.visibility = false;
-    //tankMeshes.forEach(e => e.visibility = false)
+    tankContainer.visibility = false;
+    tankMeshes.forEach(e => e.visibility = false)
     this.meshes = this.meshes;
-    this.tankContainer = tankContainer;
+    this.container = tankContainer;
     ObjectEnum.loadingDone();
   }
 

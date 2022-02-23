@@ -28,7 +28,7 @@ class Bullet extends ObjectPos {
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         // this.physicsImpostor.restitution = 1;
         // this.physicsImpostor.mass = 1;
-        this.physicsImpostor.friction = 0;
+        //this.physicsImpostor.friction = 0;
         this.coolDownCol = 0;
         bulletExplode(this.position, false, true).start()
 

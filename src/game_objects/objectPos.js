@@ -7,6 +7,8 @@ class ObjectPos extends BABYLON.Mesh {
   /** @type {BABYLON.Mesh} */
   shape;
 
+  static counter = 0;
+
   /**
    * @param {ObjectEnum} type 
    * @param {number} posX 
@@ -18,14 +20,21 @@ class ObjectPos extends BABYLON.Mesh {
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
 
+    console.log("Passing " + ObjectPos.counter++);
+
     this.type = type;
     /** @type {BABYLON.Mesh} */
     if (type.name == ObjectEnum.Player.name || type.name == ObjectEnum.Hole.name) {
-      console.log("creation of ");
-      this.shape = ObjectEnum.Player.tankContainer.clone(ObjectEnum.Player.name);
+      console.log("creation of ", type.name);
+      this.shape = ObjectEnum.Player.container.clone();
+      this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000000, restitution: 0.2 })
+      this.shape.visibility = 0.000001;
+
+      this.shape.getChildMeshes().forEach(e => e.visibility = true);
+
+      console.log(this.shape, this.shape.physicsImpostor,);
       this.position = new BABYLON.Vector3(posX, this.shape.scaling.y / 2, posZ);
       this.shape.position = this.position;
-      this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000000, restitution: 0.2 })
 
       // this.createShape();
     } else {

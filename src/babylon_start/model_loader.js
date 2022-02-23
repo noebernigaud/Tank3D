@@ -51,7 +51,7 @@ function initModel(meshes, modelName) {
             tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: 25 / 40, width: 38 / 40, depth: 70 / 40 }, scene);
             tankContainer.position.y += 12.70 / 40;
             tankMeshes.forEach(e => tankContainer.addChild(e));
-            tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10000, restitution: 0.2, friction: 0.8 })
+            tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10000, restitution: 0.2 })
 
             //tankContainer.isVisible = false;
             tankContainer.visibility = 0.000001;

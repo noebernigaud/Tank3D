@@ -20,8 +20,6 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
 
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 0 });
   }
 
   moveForeward(coeff) {
@@ -99,5 +97,58 @@ class Char extends ObjectPos {
       // });
       // console.log('this is x', x);
     }
+  }
+
+  rotateAxisY(angle) {
+    this.shape.rotate(BABYLON.Axis.Y, angle)
+    rotateTurretAxisY(-angle)
+  }
+
+  rotateTurretAxisY(angle) {
+    tankMeshes[1].rotate(BABYLON.Axis.Y, angle)
+  }
+
+  moveTankForeward() {
+    var speed = 2.5
+    this.moveTank(speed)
+  }
+
+  moveTankBackward() {
+    var speed = -1.25
+    this.moveTank(speed)
+  }
+
+  moveTank(speed) {
+    console.log(this.shape);
+    this.shape.physicsImpostor.setAngularVelocity(
+      new BABYLON.Vector3(0, 0, 0))
+    //this.shape.physicsImpostor.friction = 0
+    let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
+    let moveVec = frontVec.scale(speed)
+    let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
+    this.shape.physicsImpostor.setLinearVelocity(realVec)
+
+  }
+
+  stabilizeTank() {
+    //this.shape.physicsImpostor.friction = 0.8
+    // this.shape.physicsImpostor.setLinearVelocity(
+    //     new BABYLON.Vector3(0, 0, 0));
+    // this.shape.physicsImpostor.setAngularVelocity(
+    //     new BABYLON.Vector3(0, 0, 0))
+  }
+
+  destroyTank(isDisabled) {
+    if (isDisabled) {
+      explode(this.shape)
+      tankMeshes.forEach(e => e.setParent(null))
+      tankMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+
+      this.shape.dispose()
+    }
+  }
+
+  getTurretTank() {
+    return tankMeshes[1];
   }
 }

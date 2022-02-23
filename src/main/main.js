@@ -54,42 +54,42 @@ function keyApplaier() {
     if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
 
     if (inputStates.rot_minus && !inputStates.rot_plus) {
-        rotateTurretAxisY(-speed_angle, tankMeshes)
+        char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         //camera.alpha += speed_angle
         camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
-        rotateAxisY(-speed_angle)
+        char1.rotateAxisY(-speed_angle)
 
     }
 
     if (inputStates.rot_plus && !inputStates.rot_minus) {
-        rotateTurretAxisY(speed_angle, tankMeshes)
+        char1.rotateTurretAxisY(speed_angle, tankMeshes)
         //camera.alpha -= speed_angle
         camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
-        rotateAxisY(speed_angle)
+        char1.rotateAxisY(speed_angle)
     }
 
     if (inputStates.keyA) {
-        rotateTurretAxisY(-speed_angle, tankMeshes)
+        char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         //camera.alpha += speed_angle
         camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
 
     }
     if (inputStates.keyD) {
-        rotateTurretAxisY(speed_angle, tankMeshes)
+        char1.rotateTurretAxisY(speed_angle, tankMeshes)
         //camera.alpha -= speed_angle
         camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
     }
 
     if (inputStates.foreward) {
-        moveTankForeward();
+        char1.moveTankForeward();
         return;
     }
     if (inputStates.backward) {
-        moveTankBackward();
+        char1.moveTankBackward();
         return;
     }
     if (inputStates.keyX) {
-        destroyTank(true)
+        char1.destroyTank(true)
 
     }
     if (inputStates.keyL) {
@@ -99,7 +99,7 @@ function keyApplaier() {
         createFire(tankContainer);
     }
     else {
-        stabilizeTank()
+        //stabilizeTank()
 
         // char1.physicsImpostor.setLinearVelocity(
         //     new BABYLON.Vector3(0, 0, 0));
@@ -183,19 +183,19 @@ function startgame(level) {
     }
 
     //TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
-    for (var i = 0; i <= cell_x_number; i++) {
-        //top wall
-        walls.push(new Wall(i * Wall.width, 0, false));
-        //bottom wall
-        walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
-    }
+    // for (var i = 0; i <= cell_x_number; i++) {
+    //     //top wall
+    //     walls.push(new Wall(i * Wall.width, 0, false));
+    //     //bottom wall
+    //     walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
+    // }
 
-    for (var i = 1; i < cell_y_number; i++) {
-        //left wall
-        walls.push(new Wall(0, i * Wall.width, false));
-        //right wall
-        walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
-    }
+    // for (var i = 1; i < cell_y_number; i++) {
+    //     //left wall
+    //     walls.push(new Wall(0, i * Wall.width, false));
+    //     //right wall
+    //     walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
+    // }
 }
 
 //BACKGROUND MUSIC
