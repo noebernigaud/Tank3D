@@ -1,5 +1,5 @@
 function loadModel() {
-    var modelsToLoad = ["tank", "vehicle"];
+    var modelsToLoad = ["tank"];
     var modelName;
     var remainingLoad = modelsToLoad.length;
 

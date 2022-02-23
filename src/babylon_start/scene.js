@@ -48,6 +48,7 @@ class Scene {
       bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
     }
 
+    ObjectEnum.initiate_all_models()
     return scene;
   }
 

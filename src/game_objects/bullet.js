@@ -57,29 +57,29 @@ class Bullet extends ObjectPos {
             e2.object.dispose();
         })
 
-        this.physicsImpostor.registerOnPhysicsCollide(opponentContainer.physicsImpostor, (e1, e2) => {
-            var index = bullets.indexOf(this)
-            if (index !== -1) {
-                bullets.splice(index, 1)
-            }
-            e1.object.dispose();
-            destroyOpponent(true);
-        })
-
-        // this.physicsImpostor.onCollideEvent = (b, w) => {
-        //     this.life -= 1;
-        //     bulletExplode(this.position, false).start();
-
-        //     if (this.life === 0) {
-        //         bulletExplode(this.position, true).start();
-        //         var index = bullets.indexOf(this)
-        //         if (index !== -1) {
-        //             bullets.splice(index, 1)
-        //         }
-        //         this.dispose();
+        // this.physicsImpostor.registerOnPhysicsCollide(opponentContainer.physicsImpostor, (e1, e2) => {
+        //     var index = bullets.indexOf(this)
+        //     if (index !== -1) {
+        //         bullets.splice(index, 1)
         //     }
-        //     return;
-        // }
+        //     e1.object.dispose();
+        //     destroyOpponent(true);
+        // })
+
+        this.physicsImpostor.onCollideEvent = (b, w) => {
+            this.life -= 1;
+            bulletExplode(this.position, false).start();
+
+            if (this.life === 0) {
+                bulletExplode(this.position, true).start();
+                var index = bullets.indexOf(this)
+                if (index !== -1) {
+                    bullets.splice(index, 1)
+                }
+                this.dispose();
+            }
+            return;
+        }
     }
 
     createShape() {

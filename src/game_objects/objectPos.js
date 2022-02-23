@@ -24,6 +24,7 @@ class ObjectPos extends BABYLON.Mesh {
       this.shape = tankContainer;
       this.position = new BABYLON.Vector3(posX, this.shape.scaling.y, posZ);
       this.shape.position = this.position;
+      // this.createShape();
     } else {
       this.shape = this.createShape()
       this.addChild(this.shape)
