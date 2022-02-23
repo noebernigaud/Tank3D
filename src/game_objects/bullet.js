@@ -1,6 +1,6 @@
 class Bullet extends ObjectPos {
 
-    static diameter = 5;
+    static diameter = 5 / 40;
     /**
      * 
      * @param {Char} char 
@@ -10,14 +10,14 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            tankContainer.position.y + 9,
-            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
+            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6 / 40,
+            tankContainer.position.y + 9 / 40,
+            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6 / 40);
         this.live = live;
         this.char = char;
         this.chars = chars;
         this.life = 8;
-        this.speed = 50;
+        this.speed = 50 / 40;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = getTurretTank().getDirection(BABYLON.Axis.Z)

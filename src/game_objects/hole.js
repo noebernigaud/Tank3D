@@ -1,7 +1,7 @@
 class Hole extends ObjectPos {
 
-    static height = 1;
-    static diameter = 30;
+    static height = 0.07;
+    static diameter = 0.8;
 
     /**
      * 

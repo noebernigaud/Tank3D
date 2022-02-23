@@ -8,12 +8,12 @@ function rotateTurretAxisY(angle) {
 }
 
 function moveTankForeward() {
-    var speed = 100
+    var speed = 2.5
     moveTank(speed)
 }
 
 function moveTankBackward() {
-    var speed = -50
+    var speed = -1.25
     moveTank(speed)
 }
 
@@ -28,10 +28,10 @@ function moveTank(speed) {
 }
 
 function stabilizeTank() {
-    tankContainer.physicsImpostor.setLinearVelocity(
-        new BABYLON.Vector3(0, 0, 0));
-    tankContainer.physicsImpostor.setAngularVelocity(
-        new BABYLON.Vector3(0, 0, 0))
+    // tankContainer.physicsImpostor.setLinearVelocity(
+    //     new BABYLON.Vector3(0, 0, 0));
+    // tankContainer.physicsImpostor.setAngularVelocity(
+    //     new BABYLON.Vector3(0, 0, 0))
 }
 
 function destroyTank(isDisabled) {

@@ -45,9 +45,9 @@ function initModel(meshes, modelName) {
         case "tank":
             tankMeshes = [...meshes];
 
-            tankMeshes.forEach(x => x.scaling = new BABYLON.Vector3(10, 10, 10));
-            tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: 25, width: 38, depth: 70 }, scene);
-            tankContainer.position.y += 12.70;
+            tankMeshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
+            tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: 25 / 40, width: 38 / 40, depth: 70 / 40 }, scene);
+            tankContainer.position.y += 12.70 / 40;
             tankMeshes.forEach(e => tankContainer.addChild(e));
             tankContainer.physicsImpostor = new BABYLON.PhysicsImpostor(tankContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2 })
 
@@ -66,13 +66,13 @@ function initModel(meshes, modelName) {
                 scene.getMaterialById("vehicle_ifv_dmm08.remote")
             ]
 
-            opponentMeshes.forEach(x => x.scaling = new BABYLON.Vector3(10, 10, 10));
+            opponentMeshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
 
             //defineBoundingBox(opponentMeshes);
 
-            opponentContainer = BABYLON.MeshBuilder.CreateBox("vehicleContainer", { height: 25, width: 30, depth: 70 }, scene);
-            opponentContainer.position.y += 12.70;
-            opponentContainer.position.x += 70;
+            opponentContainer = BABYLON.MeshBuilder.CreateBox("vehicleContainer", { height: 25 / 40, width: 30 / 40, depth: 70 / 40 }, scene);
+            opponentContainer.position.y += 12.70 / 40;
+            opponentContainer.position.x += 70 / 40;
 
             opponentMeshes.forEach(e => opponentContainer.addChild(e));
             opponentContainer.physicsImpostor = new BABYLON.PhysicsImpostor(opponentContainer, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000000, restitution: 0.2 })

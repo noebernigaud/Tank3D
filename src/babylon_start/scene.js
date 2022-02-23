@@ -55,7 +55,7 @@ class Scene {
 
   setCamera() {
     camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 100, -110));
+    camera.setPosition(new BABYLON.Vector3(0, 100 / 40, -110 / 40));
     camera.beta += 0.3
     camera.angularSensibilityX = 250
     camera.angularSensibilityY = 250
@@ -73,7 +73,7 @@ class Scene {
   }
 
   setBackground() {
-    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 1000.0 }, scene);
+    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
