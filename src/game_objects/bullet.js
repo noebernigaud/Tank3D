@@ -10,17 +10,17 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            tankContainer.position.y + 9 / 40,
-            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
+            char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
+            char.shape.position.y + 9 / 40,
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
         this.live = live;
         this.char = char;
         this.chars = chars;
         this.life = 8;
-        this.speed = 40;
+        this.speed = speed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
-        let frontVec = getTurretTank().getDirection(BABYLON.Axis.Z)
+        let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
         let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
@@ -28,7 +28,7 @@ class Bullet extends ObjectPos {
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
         // this.physicsImpostor.restitution = 1;
         // this.physicsImpostor.mass = 1;
-        //this.physicsImpostor.friction = 0;
+        this.physicsImpostor.friction = 0;
         this.coolDownCol = 0;
         bulletExplode(this.position, false, true).start()
 

@@ -52,14 +52,12 @@ class ObjectEnum {
   static initiate_all_models() {
     var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Hole, this.Mine, this.Player, this.Wall, this.WallD]
     this.remainingLoad = list_obj.length
-    console.log(this.remainingLoad + "bonjour");
     list_obj.forEach(e => e.create_model())
 
   }
 
   static loadingDone() {
     this.remainingLoad--;
-    console.log(this.remainingLoad);
     if (this.remainingLoad == 0) {
       engine.hideLoadingUI()
       init()

@@ -20,33 +20,36 @@ class ObjectPos extends BABYLON.Mesh {
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
 
-    console.log("Passing " + ObjectPos.counter++);
 
+    let shape;
     this.type = type;
     /** @type {BABYLON.Mesh} */
-    if (type.name == ObjectEnum.Player.name || type.name == ObjectEnum.Hole.name) {
-      console.log("creation of ", type.name);
-      this.shape = ObjectEnum.Player.container.clone();
-      this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000000, restitution: 0.2 })
-      this.shape.visibility = 0.000001;
+    if (type.name == ObjectEnum.Player.name) {
+      shape = ObjectEnum.Player.container.clone();
+      shape.physicsImpostor = new BABYLON.PhysicsImpostor(shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100, restitution: 0.2 })
+      shape.visibility = 0.000001;
 
-      this.shape.getChildMeshes().forEach(e => e.visibility = true);
+      shape.getChildMeshes().forEach(e => {
+        e.visibility = true
+        e.checkCollisions = true;
+      });
 
-      console.log(this.shape, this.shape.physicsImpostor,);
-      this.position = new BABYLON.Vector3(posX, this.shape.scaling.y / 2, posZ);
-      this.shape.position = this.position;
+      // TODO RENAME OBJECT.PLAYER in this.type
+      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2, posZ);
+      shape.position = this.position;
 
-      // this.createShape();
-    } else {
-      this.shape = this.createShape()
-      this.addChild(this.shape)
+      this.shape = shape;
+    }
+    else {
+      shape = this.createShape()
+      this.addChild(shape)
       this.defineBoundingBox()
       this.position = new BABYLON.Vector3(posX, posY, posZ);
+      this.shape = shape;
     }
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
-
 
     this.checkCollisions = true;
     //this.center_camera()
@@ -92,11 +95,6 @@ class ObjectPos extends BABYLON.Mesh {
 
   modifySpeedAngle(angle) {
 
-  }
-
-  create_3d_shape(img_path) {
-    /** @type {BABYLON.Mesh} */
-    this.createShape();
   }
 
   defineBoundingBox() {

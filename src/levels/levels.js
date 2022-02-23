@@ -3,7 +3,7 @@ const level_map = [
   [
     "-----------------------",
     "-----------------------",
-    "------h----------------",
+    "------h------h---------",
     "-----------------------",
     "-----------------------",
     "-----------------------",
@@ -133,6 +133,7 @@ function draw_level_map(lvl_number) {
           // camera.rotation.z = 0;
           // char1.updateAngle(0)
           // char1.center_camera();
+          camera.target = char1.getTurretTank();
           break;
         case 'h':
           holes.push(new Hole(posX, posY))

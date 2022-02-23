@@ -1,7 +1,5 @@
 
 class Char extends ObjectPos {
-  /** @type {BABYLON.Mesh} */
-  shape;
   static width = cell_size;
   static height = cell_size;
   static depth = cell_size;
@@ -39,7 +37,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 1, 5, this.charsAI)
+      var bullet = new Bullet(this, 1, 80, this.charsAI)
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
@@ -101,11 +99,11 @@ class Char extends ObjectPos {
 
   rotateAxisY(angle) {
     this.shape.rotate(BABYLON.Axis.Y, angle)
-    rotateTurretAxisY(-angle)
+    this.rotateTurretAxisY(-angle)
   }
 
   rotateTurretAxisY(angle) {
-    tankMeshes[1].rotate(BABYLON.Axis.Y, angle)
+    this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
   }
 
   moveTankForeward() {
@@ -119,10 +117,9 @@ class Char extends ObjectPos {
   }
 
   moveTank(speed) {
-    console.log(this.shape);
     this.shape.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
-    //this.shape.physicsImpostor.friction = 0
+    // this.shape.physicsImpostor.friction = 0
     let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
     let moveVec = frontVec.scale(speed)
     let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
@@ -131,7 +128,7 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank() {
-    //this.shape.physicsImpostor.friction = 0.8
+    // this.shape.physicsImpostor.friction = 0.2
     // this.shape.physicsImpostor.setLinearVelocity(
     //     new BABYLON.Vector3(0, 0, 0));
     // this.shape.physicsImpostor.setAngularVelocity(
@@ -143,12 +140,12 @@ class Char extends ObjectPos {
       explode(this.shape)
       tankMeshes.forEach(e => e.setParent(null))
       tankMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
-
+      console.log("Disposing");
       this.shape.dispose()
     }
   }
 
   getTurretTank() {
-    return tankMeshes[1];
+    return this.shape.getChildMeshes()[1];
   }
 }

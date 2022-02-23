@@ -50,7 +50,7 @@ function bulletExplode(position, isExploding, isCanonFire) {
         emitterType.radiusRange = 0;
         particleSystem.particleEmitterType = emitterType;
     } else {
-        let d = getTurretTank().getDirection(BABYLON.Axis.Z);
+        let d = char1.getTurretTank().getDirection(BABYLON.Axis.Z);
         let r = 0.02;
         let d1 = new BABYLON.Vector3(d.x + r, d.y + r, d.z + r);
         let d2 = new BABYLON.Vector3(d.x - r, d.y - r, d.z - r);

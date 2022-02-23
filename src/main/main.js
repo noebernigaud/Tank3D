@@ -38,7 +38,7 @@ function keyListener(evt, is_true) {
 function keyApplaier() {
     var speed_angle = 0.02;
 
-    if (typeof tankContainer === 'undefined') return;
+    if (typeof char1.shape === 'undefined') return;
 
     // On regarde si on doit poser une mine
     if (inputStates.SPACE) {
@@ -56,7 +56,7 @@ function keyApplaier() {
     if (inputStates.rot_minus && !inputStates.rot_plus) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         //camera.alpha += speed_angle
-        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
+        camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
     }
@@ -64,20 +64,20 @@ function keyApplaier() {
     if (inputStates.rot_plus && !inputStates.rot_minus) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         //camera.alpha -= speed_angle
-        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
+        camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)
     }
 
     if (inputStates.keyA) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         //camera.alpha += speed_angle
-        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
+        camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
 
     }
     if (inputStates.keyD) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         //camera.alpha -= speed_angle
-        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - tankContainer.rotationQuaternion.toEulerAngles().y
+        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
     }
 
     if (inputStates.foreward) {
@@ -94,9 +94,9 @@ function keyApplaier() {
     }
     if (inputStates.keyL) {
         //smoke()
-        var smok = createSmoke(tankContainer)
+        var smok = createSmoke(char1.shape)
         playSmoke(smok)
-        createFire(tankContainer);
+        createFire(char1.shape);
     }
     else {
         //stabilizeTank()
@@ -182,20 +182,20 @@ function startgame(level) {
         applauseSound.play();
     }
 
-    //TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
-    // for (var i = 0; i <= cell_x_number; i++) {
-    //     //top wall
-    //     walls.push(new Wall(i * Wall.width, 0, false));
-    //     //bottom wall
-    //     walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
-    // }
+    // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
+    for (var i = 0; i <= cell_x_number; i++) {
+        //top wall
+        walls.push(new Wall(i * Wall.width, 0, false));
+        //bottom wall
+        walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
+    }
 
-    // for (var i = 1; i < cell_y_number; i++) {
-    //     //left wall
-    //     walls.push(new Wall(0, i * Wall.width, false));
-    //     //right wall
-    //     walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
-    // }
+    for (var i = 1; i < cell_y_number; i++) {
+        //left wall
+        walls.push(new Wall(0, i * Wall.width, false));
+        //right wall
+        walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
+    }
 }
 
 //BACKGROUND MUSIC
