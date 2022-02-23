@@ -6,8 +6,25 @@ function explode(emitter) {
 
         for (var sys of set.systems) {
             sys.worldOffset = new BABYLON.Vector3(emitter.position.x, emitter.position.y, emitter.position.z);
-            sys.maxScaleX = 0.1;
-            sys.maxScaleY = 0.1;
+            // sys.minScaleX = 0.1;
+            // sys.minScaleY = 0.1;
+            // sys.maxScaleX = 0.2;
+            // sys.maxScaleY = 0.2;
+            sys.minEmitPower = 0.1;
+            sys.maxEmitPower = 0.1;
+            // sys.minSize = 1;
+            // sys.maxSize = 1.5;
+            // sys.minSize = sys.minSize / 100;
+            // sys.maxSize = sys.maxSize / 100;
+            // sys.minEmitPower = sys.minEmitPower / 100;
+            // sys.maxEmitPower = sys.maxEmitPower / 100;
+            // sys.emitRate = sys.emitRate / 100;
+            // sys.minScaleX = sys.minScaleX / 100;
+            // sys.minScaleY = sys.minScaleY / 100;
+            // sys.minScaleZ = sys.minScaleZ / 100;
+            // sys.maxScaleX = sys.maxScaleX / 100;
+            // sys.maxScaleY = sys.maxScaleY / 100;
+            // sys.maxScaleZ = sys.maxScaleZ / 100;
         }
         set.start();
 
@@ -143,4 +160,20 @@ function playSmoke(particleSystem) {
 
 function stopSmoke(particleSystem) {
     particleSystem.stop();
+}
+
+function createFire(emitter) {
+    BABYLON.ParticleHelper.CreateAsync("fire", scene).then((set) => {
+
+        for (var sys of set.systems) {
+            // sys.minScaleX = .3;
+            // sys.maxScaleX = .3;
+            // sys.minScaleY = ;
+            // sys.maxScaleY = 0.2;
+            sys.minEmitBox = new BABYLON.Vector3(-2, -2, -2);
+            sys.maxEmitBox = new BABYLON.Vector3(2, 2, 2);
+        }
+        set.start(emitter.position);
+
+    });
 }

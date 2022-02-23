@@ -31,7 +31,9 @@ var holes;
 var mines;
 
 /** @type {[Bullet]} */
-var bullets;
+var bullets = []
+
+var gravity = -10
 
 var mousepos = { x: 0, y: 0 };
 

@@ -44,11 +44,15 @@ class Scene {
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.5;
 
+    scene.beforeRender = () => {
+      bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
+    }
+
     return scene;
   }
 
   setPhysic() {
-    var gravityVector = new BABYLON.Vector3(0, -9.81, 0);
+    var gravityVector = new BABYLON.Vector3(0, gravity, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
   }

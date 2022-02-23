@@ -96,6 +96,7 @@ function keyApplaier() {
         //smoke()
         var smok = createSmoke(tankContainer)
         playSmoke(smok)
+        createFire(tankContainer);
     }
     else {
         stabilizeTank()

@@ -17,7 +17,7 @@ class Bullet extends ObjectPos {
         this.char = char;
         this.chars = chars;
         this.life = 8;
-        this.speed = 50 / 40;
+        this.speed = 40;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = getTurretTank().getDirection(BABYLON.Axis.Z)
@@ -33,29 +33,53 @@ class Bullet extends ObjectPos {
         bulletExplode(this.position, false, true).start()
 
         this.createCollider()
+        bullets.push(this)
     }
 
     createCollider() {
         this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.physicsImpostor), (e1, e2) => {
+            var index = bullets.indexOf(this)
+            if (index !== -1) bullets.splice(index, 1)
+            e1.object.dispose();
+            var index = bullets.indexOf(e2)
+            if (index !== -1) bullets.splice(index, 1)
+            e2.object.dispose();
+        })
+        this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
+            console.log(x + " - x, " + bullets + " - bullets ");
+            var index = bullets.indexOf(x)
+            console.log(index + " - index 1");
+            if (x !== -1) bullets.splice(x, 1)
+            var index = bullets.indexOf(this)
+            console.log(index + " - index 2");
+            if (index !== -1) bullets.splice(index, 1)
             e1.object.dispose();
             e2.object.dispose();
         })
 
         this.physicsImpostor.registerOnPhysicsCollide(opponentContainer.physicsImpostor, (e1, e2) => {
+            var index = bullets.indexOf(this)
+            if (index !== -1) {
+                bullets.splice(index, 1)
+            }
             e1.object.dispose();
             destroyOpponent(true);
         })
 
-        this.physicsImpostor.onCollideEvent = (b, w) => {
-            this.life -= 1;
-            bulletExplode(this.position, false).start();
+        // this.physicsImpostor.onCollideEvent = (b, w) => {
+        //     this.life -= 1;
+        //     bulletExplode(this.position, false).start();
 
-            if (this.life === 0) {
-                bulletExplode(this.position, true).start();
-                this.dispose();
-            }
-            return;
-        }
+        //     if (this.life === 0) {
+        //         bulletExplode(this.position, true).start();
+        //         var index = bullets.indexOf(this)
+        //         if (index !== -1) {
+        //             bullets.splice(index, 1)
+        //         }
+        //         this.dispose();
+        //     }
+        //     return;
+        // }
     }
 
     createShape() {
