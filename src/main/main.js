@@ -99,7 +99,7 @@ function keyApplaier() {
         createFire(char1.shape);
     }
     else {
-        //stabilizeTank()
+        char1.stabilizeTank()
 
         // char1.physicsImpostor.setLinearVelocity(
         //     new BABYLON.Vector3(0, 0, 0));
