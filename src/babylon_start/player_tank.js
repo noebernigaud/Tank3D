@@ -20,14 +20,16 @@ function moveTankBackward() {
 function moveTank(speed) {
     tankContainer.physicsImpostor.setAngularVelocity(
         new BABYLON.Vector3(0, 0, 0))
+    tankContainer.physicsImpostor.friction = 0
     let frontVec = tankContainer.getDirection(BABYLON.Axis.Z)
     let moveVec = frontVec.scale(speed)
-    let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
+    let realVec = new BABYLON.Vector3(moveVec.x, tankContainer.physicsImpostor.getLinearVelocity().y, moveVec.z)
     tankContainer.physicsImpostor.setLinearVelocity(realVec)
 
 }
 
 function stabilizeTank() {
+    tankContainer.physicsImpostor.friction = 0.8
     // tankContainer.physicsImpostor.setLinearVelocity(
     //     new BABYLON.Vector3(0, 0, 0));
     // tankContainer.physicsImpostor.setAngularVelocity(
