@@ -55,7 +55,7 @@ class Scene {
 
   setCamera() {
     camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 100 / 40, -110 / 40));
+    camera.setPosition(new BABYLON.Vector3(0, 100 / 20, -110 / 20));
     camera.beta += 0.3
     camera.angularSensibilityX = 250
     camera.angularSensibilityY = 250

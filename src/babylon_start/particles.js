@@ -29,12 +29,12 @@ function bulletExplode(position, isExploding, isCanonFire) {
     // Shape of emission
     if (!isCanonFire) {
         var emitterType = new BABYLON.SphereParticleEmitter();
-        emitterType.radius = 0.1 / 40;
+        emitterType.radius = 0.1;
         emitterType.radiusRange = 0;
         particleSystem.particleEmitterType = emitterType;
     } else {
         let d = getTurretTank().getDirection(BABYLON.Axis.Z);
-        let r = 0.5 / 40;
+        let r = 0.02;
         let d1 = new BABYLON.Vector3(d.x + r, d.y + r, d.z + r);
         let d2 = new BABYLON.Vector3(d.x - r, d.y - r, d.z - r);
         particleSystem.createPointEmitter(d1, d2)
@@ -64,30 +64,18 @@ function bulletExplode(position, isExploding, isCanonFire) {
     particleSystem.maxAngularSpeed = Math.PI;
 
     // Speed
-    particleSystem.minEmitPower = isExploding ? 5 : isCanonFire ? 3 : 7;
-    particleSystem.maxEmitPower = isExploding ? 15 : isCanonFire ? 5 : 10;
+    particleSystem.minEmitPower = isExploding ? 5 / 40 : isCanonFire ? 3 : 7 / 40;
+    particleSystem.maxEmitPower = isExploding ? 15 / 40 : isCanonFire ? 5 : 10 / 40;
     particleSystem.updateSpeed = isExploding ? 0.09 : 0.10;
 
     // Size
-    particleSystem.minSize = isExploding ? 5 : isCanonFire ? 2 : 1;
-    particleSystem.maxSize = isExploding ? 15 : isCanonFire ? 4 : 3;
+    particleSystem.minSize = isExploding ? 5 / 40 : isCanonFire ? 6 / 40 : 4 / 40;
+    particleSystem.maxSize = isExploding ? 15 / 40 : isCanonFire ? 10 / 40 : 6 / 40;
 
     particleSystem.manualEmitCount = isExploding ? 6000 : isCanonFire ? 1000 : 50;
     particleSystem.disposeOnStop = true;
 
     return particleSystem;
-}
-
-function smoke() {
-    var ph = BABYLON.ParticleHelper.CreateAsync("smoke", scene).then((set) => {
-        for (const sys of set.systems) {
-            sys.worldOffset = new BABYLON.Vector3(tankContainer.position.x, tankContainer.position.y, tankContainer.position.z);
-            sys.maxScaleX = 6 / 100;
-            sys.maxScaleY = 6 / 100;
-        }
-        set.start();
-    });
-    ph.emitter = tankContainer
 }
 
 function createSmoke(emitter) {
@@ -102,16 +90,16 @@ function createSmoke(emitter) {
     particleSystem.maxLifeTime = 5;
 
     // Emit rate
-    particleSystem.emitRate = 100;
+    particleSystem.emitRate = 200;
 
     // Gravity
-    particleSystem.gravity = new BABYLON.Vector3(0.25, 9.5, 0);
+    particleSystem.gravity = new BABYLON.Vector3(0.25, 4, 0);
 
     // Size gradient
-    particleSystem.addSizeGradient(0, 0.6, 1);
-    particleSystem.addSizeGradient(0.3, 1, 2);
-    particleSystem.addSizeGradient(0.5, 2, 3);
-    particleSystem.addSizeGradient(1.0, 6, 8);
+    particleSystem.addSizeGradient(0, 0.6 / 20, 1 / 20);
+    particleSystem.addSizeGradient(0.3 / 20, 1 / 20, 2 / 20);
+    particleSystem.addSizeGradient(0.5 / 20, 2 / 20, 3 / 20);
+    particleSystem.addSizeGradient(1.0 / 20, 6 / 20, 8 / 20);
 
     // Color gradient
     particleSystem.addColorGradient(0, new BABYLON.Color4(0.5, 0.5, 0.5, 0), new BABYLON.Color4(0.8, 0.8, 0.8, 0));
@@ -132,19 +120,19 @@ function createSmoke(emitter) {
     particleSystem.maxAngularSpeed = 1;
 
     // Size
-    particleSystem.minSize = 15 / 1000;
-    particleSystem.maxSize = 25 / 1000;
+    particleSystem.minSize = 15 / 40;
+    particleSystem.maxSize = 25 / 40;
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
 
     // Emitter shape
-    var sphereEmitter = particleSystem.createSphereEmitter(0.1);
+    //var sphereEmitter = particleSystem.createSphereEmitter(0.1);
 
     // Where the particles come from
     particleSystem.emitter = emitter; // the starting object
-    particleSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5);
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3);
 
     return particleSystem;
 }
