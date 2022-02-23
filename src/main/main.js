@@ -77,7 +77,7 @@ function keyApplaier() {
     if (inputStates.keyD) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         //camera.alpha -= speed_angle
-        camera.alpha = -getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
+        camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
     }
 
     if (inputStates.foreward) {
