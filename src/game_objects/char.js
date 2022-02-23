@@ -2,9 +2,9 @@
 class Char extends ObjectPos {
   /** @type {BABYLON.Mesh} */
   shape;
-  static width = cell_size - 5;
-  static height = cell_size - 5;
-  static depth = cell_size - 5;
+  static width = cell_size;
+  static height = cell_size;
+  static depth = cell_size;
 
   /**
    * @param {number} x 

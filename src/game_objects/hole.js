@@ -1,6 +1,6 @@
 class Hole extends ObjectPos {
 
-    static height = 0.07;
+    static height = 0.01;
     static diameter = 0.8;
 
     /**
@@ -20,7 +20,7 @@ class Hole extends ObjectPos {
 
     createShape() {
         var shape = BABYLON.MeshBuilder.CreateCylinder("hole",
-            { diameter: Hole.diameter, height: 0 }, scene);
+            { diameter: Hole.diameter, height: Hole.height }, scene);
         shape.material = createMaterial(scene, holeImage.src);
         return shape;
     }

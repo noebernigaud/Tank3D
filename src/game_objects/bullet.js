@@ -10,9 +10,9 @@ class Bullet extends ObjectPos {
     constructor(char, live, speed, chars) {
         super(
             ObjectEnum.Bullet,
-            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6 / 40,
+            tankContainer.position.x + getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
             tankContainer.position.y + 9 / 40,
-            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6 / 40);
+            tankContainer.position.z + getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
         this.live = live;
         this.char = char;
         this.chars = chars;
