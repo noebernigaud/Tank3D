@@ -1,5 +1,6 @@
 function loadModel() {
-    var modelsToLoad = ["tank"];
+    return;
+    var modelsToLoad = ["vehicle"];
     var modelName;
     var remainingLoad = modelsToLoad.length;
 
@@ -41,6 +42,7 @@ function loadModel() {
 }
 
 function initModel(meshes, modelName) {
+    return;
     switch (modelName) {
         case "tank":
             tankMeshes = [...meshes];

@@ -20,21 +20,25 @@ class ObjectPos extends BABYLON.Mesh {
 
     this.type = type;
     /** @type {BABYLON.Mesh} */
-    if (type.name == ObjectEnum.Player.name) {
-      this.shape = tankContainer;
-      this.position = new BABYLON.Vector3(posX, this.shape.scaling.y, posZ);
+    if (type.name == ObjectEnum.Player.name || type.name == ObjectEnum.Hole.name) {
+      console.log("creation of ");
+      this.shape = ObjectEnum.Player.tankContainer.clone(ObjectEnum.Player.name);
+      this.position = new BABYLON.Vector3(posX, this.shape.scaling.y / 2, posZ);
       this.shape.position = this.position;
+      this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000000, restitution: 0.2 })
+
       // this.createShape();
     } else {
       this.shape = this.createShape()
       this.addChild(this.shape)
       this.defineBoundingBox()
+      this.position = new BABYLON.Vector3(posX, posY, posZ);
     }
     this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
 
-    this.position = new BABYLON.Vector3(posX, posY, posZ);
+
     this.checkCollisions = true;
     //this.center_camera()
   }

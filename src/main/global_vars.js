@@ -33,7 +33,7 @@ var mines;
 /** @type {[Bullet]} */
 var bullets = []
 
-var gravity = -10
+var gravity = -9.81
 
 var mousepos = { x: 0, y: 0 };
 

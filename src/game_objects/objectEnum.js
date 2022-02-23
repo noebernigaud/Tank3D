@@ -13,6 +13,10 @@ class ObjectEnum {
   static CharBlue = new ObjectEnum(tankImageBlue.src, "")
   static CharGreen = new ObjectEnum(tankImageGreen.src, "")
 
+  /** @type {BABYLON.Mesh}*/
+  container;
+  remainingLoad;
+
   constructor(name, babylon_model, width, height, depth) {
     this.name = name
     this.babylon_model = babylon_model;
@@ -21,7 +25,7 @@ class ObjectEnum {
     this.depth = depth;
   }
   create_model() {
-    if (this.babylon_model == "") return;
+    if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
     BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
       this.callback(meshes)
     });
@@ -29,6 +33,7 @@ class ObjectEnum {
 
   callback(tankMeshes) {
     tankMeshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
+    //tankMeshes.forEach(x => x.position.y += 30);
     tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: this.height, width: this.width, depth: this.depth }, scene);
     tankContainer.position.y += this.height / 2;
     tankMeshes.forEach(e => tankContainer.addChild(e));
@@ -37,15 +42,27 @@ class ObjectEnum {
     tankContainer.visibility = 0.000001;
     tankContainer.showBoundingBox = true;
     // camera.target = getTurretTank();
-    tankContainer.visibility = false;
-    tankMeshes.forEach(e => e.visibility = false)
+    //tankContainer.visibility = false;
+    //tankMeshes.forEach(e => e.visibility = false)
     this.meshes = this.meshes;
-    this.tankContainer = this.tankContainer;
-    loadingDone();
+    this.tankContainer = tankContainer;
+    ObjectEnum.loadingDone();
   }
 
   static initiate_all_models() {
     var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Hole, this.Mine, this.Player, this.Wall, this.WallD]
+    this.remainingLoad = list_obj.length
+    console.log(this.remainingLoad + "bonjour");
     list_obj.forEach(e => e.create_model())
+
+  }
+
+  static loadingDone() {
+    this.remainingLoad--;
+    console.log(this.remainingLoad);
+    if (this.remainingLoad == 0) {
+      engine.hideLoadingUI()
+      init()
+    }
   }
 }
