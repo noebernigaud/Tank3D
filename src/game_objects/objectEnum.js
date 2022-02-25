@@ -31,21 +31,23 @@ class ObjectEnum {
     });
   }
 
-  callback(tankMeshes) {
-    tankMeshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
-    //tankMeshes.forEach(x => x.position.y += 30);
-    tankContainer = BABYLON.MeshBuilder.CreateBox("tankContainer", { height: this.height, width: this.width, depth: this.depth }, scene);
-    tankContainer.position.y += this.height / 2;
-    tankMeshes.forEach(e => tankContainer.addChild(e));
+  callback(meshes) {
+    this.meshes = [...meshes];
 
-    //tankContainer.isVisible = false;
-    tankContainer.visibility = 0.000001;
-    tankContainer.showBoundingBox = true;
-    // camera.target = getTurretTank();
-    tankContainer.visibility = false;
-    tankMeshes.forEach(e => e.visibility = false)
-    this.meshes = this.meshes;
-    this.container = tankContainer;
+    // Resizing of each meshes
+    this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
+
+    // Parent mesh (the original which we will duplicate to create our objects)
+    this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+    this.container.position.y += this.height / 2;
+    this.meshes.forEach(e => this.container.addChild(e));
+
+    // Hiding of the mesh
+    // this.container.visibility = 0.000001;
+    this.container.visibility = false;
+    // this.container.showBoundingBox = true;
+    this.meshes.forEach(e => e.visibility = false)
+
     ObjectEnum.loadingDone();
   }
 

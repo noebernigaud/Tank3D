@@ -134,6 +134,8 @@ function draw_level_map(lvl_number) {
           // char1.updateAngle(0)
           // char1.center_camera();
           camera.target = char1.getTurretTank();
+          char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
+          camera.alpha -= Math.PI / 2
           break;
         case 'h':
           holes.push(new Hole(posX, posY))

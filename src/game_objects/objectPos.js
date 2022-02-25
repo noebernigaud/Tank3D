@@ -28,6 +28,7 @@ class ObjectPos extends BABYLON.Mesh {
       shape = ObjectEnum.Player.container.clone();
       shape.physicsImpostor = new BABYLON.PhysicsImpostor(shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100, restitution: 0.2 })
       shape.visibility = 0.000001;
+      shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
         e.visibility = true

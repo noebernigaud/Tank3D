@@ -1,12 +1,9 @@
 /// <reference path="babylon.d.ts" />
 
 var canvas = document.getElementById("myCanvas");
-var model;
-var model2;
 var ground;
 
 /** @type {BABYLON.Mesh} */
-var tankContainer;
 var tankMeshes;
 var opponentContainer;
 var opponentMeshes;
@@ -29,7 +26,7 @@ class Scene {
       this.scene.render()
     );
 
-    //  this.setBackground()
+    this.setBackground()
     this.setParticles()
 
 

@@ -132,10 +132,6 @@ class Char extends ObjectPos {
 
   stabilizeTank() {
     this.shape.physicsImpostor.friction = 0.2
-    // this.shape.physicsImpostor.setLinearVelocity(
-    //     new BABYLON.Vector3(0, 0, 0));
-    // this.shape.physicsImpostor.setAngularVelocity(
-    //     new BABYLON.Vector3(0, 0, 0))
   }
 
   destroyTank(isDisabled) {

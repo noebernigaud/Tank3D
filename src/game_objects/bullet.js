@@ -1,6 +1,6 @@
 class Bullet extends ObjectPos {
 
-    static diameter = 10 / 40;
+    static diameter = 6 / 40;
     /**
      * 
      * @param {Char} char 
