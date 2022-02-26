@@ -136,11 +136,14 @@ class Char extends ObjectPos {
 
   destroyTank(isDisabled) {
     if (isDisabled) {
-      explode(this.shape)
-      tankMeshes.forEach(e => e.setParent(null))
-      tankMeshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
-      console.log("Disposing");
-      this.shape.dispose()
+      // explode(this.shape)
+      var smok = createSmoke(char1.shape)
+      playSmoke(smok)
+      createFire(char1.shape);
+      // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
+      // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+      //console.log("Disposing");
+      //this.shape.dispose()
     }
   }
 

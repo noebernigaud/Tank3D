@@ -5,13 +5,15 @@ function explode(emitter) {
         });
 
         for (var sys of set.systems) {
+            sys.emitter = emitter
             sys.worldOffset = new BABYLON.Vector3(emitter.position.x, emitter.position.y, emitter.position.z);
+            console.log(sys.name);
             // sys.minScaleX = 0.1;
             // sys.minScaleY = 0.1;
             // sys.maxScaleX = 0.2;
             // sys.maxScaleY = 0.2;
-            sys.minEmitPower = 0.1;
-            sys.maxEmitPower = 0.1;
+            // sys.minEmitPower = 0.1;
+            // sys.maxEmitPower = 0.1;
             // sys.minSize = 1;
             // sys.maxSize = 1.5;
             // sys.minSize = sys.minSize / 100;
@@ -60,7 +62,7 @@ function bulletExplode(position, isExploding, isCanonFire) {
     // Colors of all particles
     particleSystem.color1 = isExploding ? new BABYLON.Color4(1, 0, 0, 1) : new BABYLON.Color4(1, 0.5, 0, 1);
     particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
-    particleSystem.colorDead = isExploding ? new BABYLON.Color4(1, 0.5, 0, 1) : new BABYLON.Color4(0.5, 0.5, 0.2, 0.5);
+    particleSystem.colorDead = isExploding ? new BABYLON.Color4(1, 0.5, 0, 1) : isCanonFire ? new BABYLON.Color4(0.5, 0.5, 0.2, 0.5) : new BABYLON.Color4(0.75, 0.75, 0.75, 0.75);
 
     // Life time of each particle
     particleSystem.minLifeTime = isExploding ? 0.5 : isCanonFire ? 0.5 : 0.2;
@@ -77,8 +79,8 @@ function bulletExplode(position, isExploding, isCanonFire) {
     particleSystem.maxAngularSpeed = Math.PI;
 
     // Speed
-    particleSystem.minEmitPower = isExploding ? 5 / 40 : isCanonFire ? 3 : 4 / 40;
-    particleSystem.maxEmitPower = isExploding ? 15 / 40 : isCanonFire ? 5 : 8 / 40;
+    particleSystem.minEmitPower = isExploding ? 5 / 40 : isCanonFire ? 3 : 1 / 40;
+    particleSystem.maxEmitPower = isExploding ? 15 / 40 : isCanonFire ? 5 : 10 / 40;
     particleSystem.updateSpeed = isExploding ? 0.09 : isCanonFire ? 0.10 : 0.12;
 
     // Size
@@ -160,16 +162,21 @@ function stopSmoke(particleSystem) {
 
 function createFire(emitter) {
     BABYLON.ParticleHelper.CreateAsync("fire", scene).then((set) => {
-
         for (var sys of set.systems) {
-            // sys.minScaleX = .3;
-            // sys.maxScaleX = .3;
-            // sys.minScaleY = ;
-            // sys.maxScaleY = 0.2;
-            sys.minEmitBox = new BABYLON.Vector3(-2, -2, -2);
-            sys.maxEmitBox = new BABYLON.Vector3(2, 2, 2);
+            if (sys.name != "sparksEdge") {
+                sys.minSize = 0.5
+                sys.maxSize = 2
+
+            } else {
+                sys.minSize = 0.1
+                sys.maxSize = 0.5
+            }
+
+            sys.minEmitBox = new BABYLON.Vector3(-0.1, -0.1, -0.1);
+            sys.maxEmitBox = new BABYLON.Vector3(0.1, 0.1, 0.1);
+            sys.emitter = emitter
         }
-        set.start(emitter.position);
+        set.start();
 
     });
 }

@@ -9,9 +9,9 @@ class ObjectEnum {
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
   static Player = new ObjectEnum(tankImage.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "")
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "")
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "")
+  static CharRed = new ObjectEnum(tankImageRed.src, "vehicle", 25 / 40, 30 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum(tankImageBlue.src, "vehicle", 25 / 40, 30 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum(tankImageGreen.src, "vehicle", 25 / 40, 30 / 40, 70 / 40)
 
   /** @type {BABYLON.Mesh}*/
   container;

@@ -55,7 +55,6 @@ function keyApplaier() {
 
     if (inputStates.rot_minus && !inputStates.rot_plus) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
-        //camera.alpha += speed_angle
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
@@ -63,20 +62,17 @@ function keyApplaier() {
 
     if (inputStates.rot_plus && !inputStates.rot_minus) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
-        //camera.alpha -= speed_angle
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)
     }
 
     if (inputStates.keyA) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
-        //camera.alpha += speed_angle
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
 
     }
     if (inputStates.keyD) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
-        //camera.alpha -= speed_angle
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
     }
 
@@ -100,11 +96,6 @@ function keyApplaier() {
     }
     else {
         char1.stabilizeTank()
-
-        // char1.physicsImpostor.setLinearVelocity(
-        //     new BABYLON.Vector3(0, 0, 0));
-        // char1.physicsImpostor.setAngularVelocity(
-        //     new BABYLON.Vector3(0, 0, 0))
     }
 }
 
