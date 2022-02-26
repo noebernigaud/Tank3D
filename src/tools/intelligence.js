@@ -12,6 +12,7 @@ class Intelligence {
     /**
      * @param {Char} char1 
      */
+    /*
     applyStrategy(char1) {
         this.updateAngle(char1);
         if (this.simulatedBullet.collTarget === true) { this.char.addBullet(Date.now()); }
@@ -54,11 +55,12 @@ class Intelligence {
                 break
             }
         }
-    }
+    }*/
 
     /**
      * @param {Char} char1 
      */
+    /*
     updateAngle(char1) {
         //le char vise droit vers sa cible
         let dx = this.char.x - char1.x;
@@ -110,5 +112,5 @@ class Intelligence {
         if ((this.direction == 3 || this.direction == 6 || this.direction == 7) && this.char.collObjB()) {
             this.direction = Math.round(Math.random() * 7);
         }
-    }
+    }*/
 }

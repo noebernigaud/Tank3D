@@ -60,15 +60,11 @@ function bulletExplode(position, isExploding, isCanonFire) {
     // Colors of all particles
     particleSystem.color1 = isExploding ? new BABYLON.Color4(1, 0, 0, 1) : new BABYLON.Color4(1, 0.5, 0, 1);
     particleSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1);
-    particleSystem.colorDead = isExploding ? new BABYLON.Color4(1, 0.5, 0, 1) : new BABYLON.Color4(0.5, 0.5, 0, 0);
-
-    // Size of each particle
-    particleSystem.minSize = 0.1 / 40;
-    particleSystem.maxSize = 0.5 / 40;
+    particleSystem.colorDead = isExploding ? new BABYLON.Color4(1, 0.5, 0, 1) : new BABYLON.Color4(0.5, 0.5, 0.2, 0.5);
 
     // Life time of each particle
-    particleSystem.minLifeTime = 0.5;
-    particleSystem.maxLifeTime = isExploding ? 1.9 : 1.2;
+    particleSystem.minLifeTime = isExploding ? 0.5 : isCanonFire ? 0.5 : 0.2;
+    particleSystem.maxLifeTime = isExploding ? 1.9 : isCanonFire ? 1.2 : 1.3;
 
     // Blend mode : BLENDMODE_ONEONE / BLENDMODE_STANDARD
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -81,13 +77,13 @@ function bulletExplode(position, isExploding, isCanonFire) {
     particleSystem.maxAngularSpeed = Math.PI;
 
     // Speed
-    particleSystem.minEmitPower = isExploding ? 5 / 40 : isCanonFire ? 3 : 7 / 40;
-    particleSystem.maxEmitPower = isExploding ? 15 / 40 : isCanonFire ? 5 : 10 / 40;
-    particleSystem.updateSpeed = isExploding ? 0.09 : 0.10;
+    particleSystem.minEmitPower = isExploding ? 5 / 40 : isCanonFire ? 3 : 4 / 40;
+    particleSystem.maxEmitPower = isExploding ? 15 / 40 : isCanonFire ? 5 : 8 / 40;
+    particleSystem.updateSpeed = isExploding ? 0.09 : isCanonFire ? 0.10 : 0.12;
 
     // Size
-    particleSystem.minSize = isExploding ? 5 / 40 : isCanonFire ? 6 / 40 : 4 / 40;
-    particleSystem.maxSize = isExploding ? 15 / 40 : isCanonFire ? 10 / 40 : 6 / 40;
+    particleSystem.minSize = isExploding ? 5 / 40 : isCanonFire ? 6 / 40 : 2 / 40;
+    particleSystem.maxSize = isExploding ? 15 / 40 : isCanonFire ? 10 / 40 : 4 / 40;
 
     particleSystem.manualEmitCount = isExploding ? 6000 : isCanonFire ? 1000 : 50;
     particleSystem.disposeOnStop = true;

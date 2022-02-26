@@ -20,6 +20,8 @@ class SimBullet {
         this.simulate();
     }
 
+    /*
+
     simulate() {
         var i = 0;
         while (this.live >= 0 && i < 1000) {
@@ -90,5 +92,5 @@ class SimBullet {
         // LA BALLE AVANCE DE SE VITESSE DANS SA DIRECTION DONNEE PAR L'ANGLE
         this.x -= this.speed * Math.cos(this.angle);
         this.y -= this.speed * Math.sin(this.angle);
-    }
+    }*/
 }
