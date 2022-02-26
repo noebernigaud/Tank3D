@@ -50,6 +50,8 @@ class ObjectPos extends BABYLON.Mesh {
       this.shape = shape;
       // this.shape.position = this.position;
     }
+    shadowGenerator.addShadowCaster(shape)
+    shadowGenerator.getShadowMap().renderList.push(shape)
 
     if (this.type.name == ObjectEnum.CharRed.name)
       console.log(this.position);

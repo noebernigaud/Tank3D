@@ -57,6 +57,7 @@ class ObjectEnum {
     this.meshes.forEach(e => e.visibility = false)
 
     shadowGenerator.getShadowMap().renderList.push(this.container)
+    // shadowGenerator.addShadowCaster(this.container);
 
     ObjectEnum.loadingDone();
   }
