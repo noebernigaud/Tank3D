@@ -37,7 +37,7 @@ class Bullet extends ObjectPos {
     }
 
     createCollider() {
-        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.physicsImpostor), (e1, e2) => {
+        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.shape.physicsImpostor), (e1, e2) => {
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
             e1.object.dispose();
@@ -56,15 +56,20 @@ class Bullet extends ObjectPos {
             e1.object.dispose();
             e2.object.dispose();
         })
-
-        // this.physicsImpostor.registerOnPhysicsCollide(opponentContainer.physicsImpostor, (e1, e2) => {
-        //     var index = bullets.indexOf(this)
-        //     if (index !== -1) {
-        //         bullets.splice(index, 1)
-        //     }
-        //     e1.object.dispose();
-        //     destroyOpponent(true);
-        // })
+        this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.shape.physicsImpostor), (e1, e2) => {
+            var index = bullets.indexOf(x)
+            if (x !== -1) bullets.splice(x, 1)
+            var index = bullets.indexOf(this)
+            if (index !== -1) bullets.splice(index, 1)
+            e1.object.dispose();
+            createFire(e2.object);
+            createSmoke(e2.object);
+            // e2.object._children.forEach(m => {
+            //     if (m.material != null) {
+            //         m.material._albedoColor = new BABYLON.Color3(0, 0, 0)
+            //     }
+            // });
+        })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
             this.life -= 1;

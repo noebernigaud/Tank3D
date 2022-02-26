@@ -149,6 +149,12 @@ function createSmoke(emitter) {
     particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3);
     particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3);
 
+
+    particleSystem.targetStopDuration = 3;
+    particleSystem.disposeOnStop = true;
+
+    particleSystem.start();
+
     return particleSystem;
 }
 
@@ -162,6 +168,10 @@ function stopSmoke(particleSystem) {
 
 function createFire(emitter) {
     BABYLON.ParticleHelper.CreateAsync("fire", scene).then((set) => {
+        set.systems.forEach(s => {
+            s.disposeOnStop = true;
+
+        });
         for (var sys of set.systems) {
             if (sys.name != "sparksEdge") {
                 sys.minSize = 0.5
@@ -171,11 +181,13 @@ function createFire(emitter) {
                 sys.minSize = 0.1
                 sys.maxSize = 0.5
             }
-
+            sys.targetStopDuration = 20;
             sys.minEmitBox = new BABYLON.Vector3(-0.1, -0.1, -0.1);
             sys.maxEmitBox = new BABYLON.Vector3(0.1, 0.1, 0.1);
             sys.emitter = emitter
+
         }
+
         set.start();
 
     });

@@ -4,7 +4,7 @@ y = 0;
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
-  static Hole = new ObjectEnum(holeImage.src, "")
+  static Hole = new ObjectEnum(holeImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
@@ -26,16 +26,24 @@ class ObjectEnum {
   }
   create_model() {
     if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
+    if (this.babylon_model == "barrel") {
+      BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
+        this.callback(meshes, false)
+      });
+      return;
+    }
+    else
+      BABYLON.SceneLoader
     BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
-      this.callback(meshes)
+      this.callback(meshes, true)
     });
   }
 
-  callback(meshes) {
+  callback(meshes, toResize) {
     this.meshes = [...meshes];
 
     // Resizing of each meshes
-    this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
+    if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
 
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
@@ -47,6 +55,8 @@ class ObjectEnum {
     this.container.visibility = false;
     // this.container.showBoundingBox = true;
     this.meshes.forEach(e => e.visibility = false)
+
+    shadowGenerator.getShadowMap().renderList.push(this.container)
 
     ObjectEnum.loadingDone();
   }

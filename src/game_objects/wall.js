@@ -22,44 +22,44 @@ class Wall extends ObjectPos {
             walls.splice(position, 1);
         }
     }
-
-    noWallLeft() {
-        for (let otherWall of walls) {
-            if (collL(this.x, this.y + 10, this.sizex, this.sizey - 20, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
-                return false;
+    /*
+        noWallLeft() {
+            for (let otherWall of walls) {
+                if (collL(this.x, this.y + 10, this.sizex, this.sizey - 20, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
+                    return false;
+                }
+    
             }
-
+            return true;
         }
-        return true;
-    }
-
-    noWallRight() {
-        for (let otherWall of walls) {
-            if (collR(this.x, this.y + 10, this.sizex, this.sizey - 20, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
-                return false;
+    
+        noWallRight() {
+            for (let otherWall of walls) {
+                if (collR(this.x, this.y + 10, this.sizex, this.sizey - 20, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
-
-    noWallBottom() {
-        for (let otherWall of walls) {
-            if (collB(this.x + 10, this.y, this.sizex - 20, this.sizey, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
-                return false;
+    
+        noWallBottom() {
+            for (let otherWall of walls) {
+                if (collB(this.x + 10, this.y, this.sizex - 20, this.sizey, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
-
-    noWallTop() {
-        for (let otherWall of walls) {
-            if (collT(this.x + 10, this.y, this.sizex - 20, this.sizey, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
-                return false;
+    
+        noWallTop() {
+            for (let otherWall of walls) {
+                if (collT(this.x + 10, this.y, this.sizex - 20, this.sizey, otherWall.x, otherWall.y, otherWall.sizex, otherWall.sizey)) {
+                    return false;
+                }
+    
             }
-
-        }
-        return true;
-    }
+            return true;
+        }*/
 
     createShape() {
         var shape = BABYLON.MeshBuilder.CreateBox("box",
@@ -67,5 +67,4 @@ class Wall extends ObjectPos {
         shape.material = createMaterial(scene, this.type.name);
         return shape;
     }
-
 }

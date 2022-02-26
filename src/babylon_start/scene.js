@@ -9,6 +9,7 @@ var opponentContainer;
 var opponentMeshes;
 var opponentMaterials;
 var engine;
+var shadowGenerator;
 
 class Scene {
 
@@ -69,9 +70,30 @@ class Scene {
 
   setGround() {
     ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    ground.material = createMaterial(scene, 'images/woodTexture.jpg')
+    var grass0 = new BABYLON.StandardMaterial("grass0", scene);
+    grass0.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
+    // var material = createMaterial(scene, 'images/grass.png')
+    // material.diffuseColor = new BABYLON.Color3(1, 1, 1)
+
+    // material.ambientColor = new BABYLON.Color3(1, 1, 1)
+    ground.material = grass0
+
+
+    // var furMaterial = new BABYLON.FurMaterial("fur_material", scene)
+    // furMaterial.furLength = 0.1; // Represents the maximum length of the fur, which is then adjusted randomly. Default value is 1.
+    // furMaterial.furAngle = Math.PI / 6; // Represents the angle the fur lies on the mesh from 0 to Math.PI/2. The default angle of 0 gives fur sticking straight up and PI/2 lies along the mesh.
+    // furMaterial.furColor = new BABYLON.Color3(0.07, 0.83, 0.2); // is the default color if furColor is not set.
+    // ground.material = furMaterial
     ground.checkCollisions = true;
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
+    ground.receiveShadows = true
+
+    var light = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(0, -1, 1), scene)
+    light.intensity = 0.5
+    shadowGenerator = new BABYLON.ShadowGenerator(512, light)
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.blurScale = 2;
+    shadowGenerator.setDarkness(0.99);
   }
 
   setBackground() {
