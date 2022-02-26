@@ -30,10 +30,7 @@ class Scene {
       this.scene.render()
     );
 
-
-
     ObjectEnum.initiate_all_models()
-    // loadModel()
   }
 
   /**
@@ -78,7 +75,7 @@ class Scene {
   }
 
   setShadow() {
-    var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(1, -1, 0), scene);
+    var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
     light.intensity = 2;
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)

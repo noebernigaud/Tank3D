@@ -54,8 +54,8 @@ class ObjectPos extends BABYLON.Mesh {
     shadowGenerator.getShadowMap().renderList.push(shape)
 
     if (this.type.name == ObjectEnum.CharRed.name)
-      console.log(this.position);
-    this.showBoundingBox = true;
+      //console.log(this.position);
+      this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
 

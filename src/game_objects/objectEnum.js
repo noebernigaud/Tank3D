@@ -32,9 +32,7 @@ class ObjectEnum {
       });
       return;
     }
-    else
-      BABYLON.SceneLoader
-    BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
+    else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
       this.callback(meshes, true)
     });
   }
@@ -55,9 +53,6 @@ class ObjectEnum {
     this.container.visibility = false;
     // this.container.showBoundingBox = true;
     this.meshes.forEach(e => e.visibility = false)
-
-    shadowGenerator.getShadowMap().renderList.push(this.container)
-    // shadowGenerator.addShadowCaster(this.container);
 
     ObjectEnum.loadingDone();
   }
