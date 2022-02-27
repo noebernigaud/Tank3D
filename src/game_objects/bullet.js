@@ -33,6 +33,15 @@ class Bullet extends ObjectPos {
         bulletExplode(this.position, false, true).start()
 
         this.createCollider()
+
+        this.trail = new BABYLON.TrailMesh('bulletTrail', this, scene, 0.06, 12, true);
+
+        var sourceMat = new BABYLON.StandardMaterial('sourceMat', scene);
+        sourceMat.emissiveColor = new BABYLON.Color3.White();
+        sourceMat.diffuseColor = new BABYLON.Color3.Red();
+        sourceMat.specularColor = new BABYLON.Color3.Yellow();
+
+        this.trail.material = sourceMat;
         bullets.push(this)
     }
 
@@ -40,20 +49,21 @@ class Bullet extends ObjectPos {
         this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.shape.physicsImpostor), (e1, e2) => {
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
-            e1.object.dispose();
+            this.trail.dispose();
+            this.dispose();
             var index = bullets.indexOf(e2)
             if (index !== -1) bullets.splice(index, 1)
             e2.object.dispose();
         })
         this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
-            console.log(x + " - x, " + bullets + " - bullets ");
             var index = bullets.indexOf(x)
-            console.log(index + " - index 1");
             if (x !== -1) bullets.splice(x, 1)
             var index = bullets.indexOf(this)
-            console.log(index + " - index 2");
             if (index !== -1) bullets.splice(index, 1)
+            e1.object.trail.stop();
             e1.object.dispose();
+
+            e2.object.trail.stop();
             e2.object.dispose();
         })
         this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.shape.physicsImpostor), (e1, e2) => {
@@ -61,7 +71,8 @@ class Bullet extends ObjectPos {
             if (x !== -1) bullets.splice(x, 1)
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
-            e1.object.dispose();
+            this.trail.dispose();
+            this.dispose();
             createFire(e2.object);
             createSmoke(e2.object);
             // e2.object._children.forEach(m => {
@@ -81,6 +92,7 @@ class Bullet extends ObjectPos {
                 if (index !== -1) {
                     bullets.splice(index, 1)
                 }
+                this.trail.dispose();
                 this.dispose();
             }
             return;
