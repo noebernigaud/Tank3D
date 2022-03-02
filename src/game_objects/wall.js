@@ -11,7 +11,7 @@ class Wall extends ObjectPos {
      */
     constructor(x, y, destructable) {
         super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
+        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor,
             { mass: 0, restitution: 1, friction: 5 });
     }
 
@@ -65,6 +65,30 @@ class Wall extends ObjectPos {
         var shape = BABYLON.MeshBuilder.CreateBox("box",
             { height: Wall.height, width: Wall.width, depth: Wall.depth }, scene);
         shape.material = createMaterial(scene, this.type.name);
+        return shape;
+    }
+}
+
+class WallPerimeter {
+    constructor(x, y, width, depth) {
+        // super(ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
+        this.width = width * cell_size;
+        this.depth = depth * cell_size;
+        console.log(width, height, depth);
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
+            { mass: 0, restitution: 1, friction: 5 });
+        this.shape = this.createShape();
+        this.shape.position = new BABYLON.Vector3(x * cell_size, Wall.height / 2, y * cell_size)
+        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor,
+            { mass: 0, restitution: 1, friction: 0 });
+        this.shape.showBoundingBox = true
+    }
+
+    createShape() {
+        console.log("creating shape");
+        var shape = BABYLON.MeshBuilder.CreateBox("box",
+            { height: Wall.height, width: this.width, depth: this.depth }, scene);
+        shape.material = createMaterial(scene, ObjectEnum.Wall.name);
         return shape;
     }
 }

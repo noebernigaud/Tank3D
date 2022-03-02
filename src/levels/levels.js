@@ -142,6 +142,11 @@ function draw_level_map(lvl_number) {
           break;
       }
     }
+    // Creation de l'enceinte 
+    walls.push(new WallPerimeter(-width / 2, 0, 1, height + 1))
+    walls.push(new WallPerimeter(width / 2, 0, 1, height + 1))
+    walls.push(new WallPerimeter(0, height / 2, width - 1, 1))
+    walls.push(new WallPerimeter(0, -height / 2, width - 1, 1))
   }
 }
 

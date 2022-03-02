@@ -16,7 +16,7 @@ class Bullet extends ObjectPos {
         this.live = live;
         this.char = char;
         this.chars = chars;
-        this.life = 8;
+        this.life = 64;
         this.speed = speed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });

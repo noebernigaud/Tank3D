@@ -174,19 +174,19 @@ function startgame(level) {
     }
 
     // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
-    for (var i = 0; i <= cell_x_number; i++) {
-        //top wall
-        walls.push(new Wall(i * Wall.width, 0, false));
-        //bottom wall
-        walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
-    }
+    // for (var i = 0; i <= cell_x_number; i++) {
+    //     //top wall
+    //     walls.push(new Wall(i * Wall.width, 0, false));
+    //     //bottom wall
+    //     walls.push(new Wall(i * Wall.width, cell_y_number * Wall.depth, false));
+    // }
 
-    for (var i = 1; i < cell_y_number; i++) {
-        //left wall
-        walls.push(new Wall(0, i * Wall.width, false));
-        //right wall
-        walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
-    }
+    // for (var i = 1; i < cell_y_number; i++) {
+    //     //left wall
+    //     walls.push(new Wall(0, i * Wall.width, false));
+    //     //right wall
+    //     walls.push(new Wall(cell_x_number * Wall.depth, i * Wall.width, false));
+    // }
 }
 
 //BACKGROUND MUSIC
