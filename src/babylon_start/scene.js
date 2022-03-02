@@ -41,6 +41,19 @@ class Scene {
 
     scene.beforeRender = () => {
       bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
+
+      bullets.forEach(bullet => {
+        if (bullet.position.x <= ground.position.x - width / 2
+          || bullet.position.x >= ground.position.x + width / 2
+          || bullet.position.z <= ground.position.z - height / 2
+          || bullet.position.z >= ground.position.z + height / 2) {
+
+          let index = bullets.indexOf(bullet)
+          if (index !== -1) bullets.splice(index, 1)
+          bullet.trail.dispose()
+          bullet.dispose()
+        }
+      })
     }
     return scene;
   }

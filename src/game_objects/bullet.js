@@ -60,10 +60,10 @@ class Bullet extends ObjectPos {
             if (x !== -1) bullets.splice(x, 1)
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
-            e1.object.trail.stop();
+            e1.object.trail.dispose();
             e1.object.dispose();
 
-            e2.object.trail.stop();
+            e2.object.trail.dispose();
             e2.object.dispose();
         })
         this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.shape.physicsImpostor), (e1, e2) => {
