@@ -12,6 +12,7 @@ class Hole extends ObjectPos {
         super(ObjectEnum.Hole, -width / 2 + x, Hole.height / 2, -height / 2 + y, 0, 0)
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor,
             { mass: 0, restitution: 1, friction: 5 });
+        // this.shape.getChildMeshes().forEach(e => e.material.emissiveColor = new BABYLON.Color3(1, 1, 1))
     }
 
     draw3d() {

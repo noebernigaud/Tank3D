@@ -25,6 +25,7 @@ class Scene {
     this.setShadow()
     this.setBackground()
     this.setParticles()
+    this.setGizmo()
 
     this.engine.runRenderLoop(() =>
       this.scene.render()
@@ -81,6 +82,7 @@ class Scene {
     var grass = new BABYLON.StandardMaterial("groundMat", scene);
     grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
     ground.material = grass
+    grass.specularColor = new BABYLON.Color3.Black
 
     ground.checkCollisions = true;
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
@@ -89,7 +91,7 @@ class Scene {
 
   setShadow() {
     var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 2;
+    light.intensity = 1;
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)
     shadowGenerator.useBlurExponentialShadowMap = true;
@@ -124,6 +126,14 @@ class Scene {
     pipeline.bloomWeight = 0.3;
     pipeline.bloomKernel = 64;
     pipeline.bloomScale = 0.5;
+  }
+
+  setGizmo() {
+    var gizmoManager = new BABYLON.GizmoManager(scene);
+    gizmoManager.positionGizmoEnabled = true;
+    gizmoManager.rotationGizmoEnabled = true;
+    gizmoManager.scaleGizmoEnabled = true;
+    gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
   // old() {
