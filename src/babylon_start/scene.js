@@ -25,7 +25,7 @@ class Scene {
     this.setShadow()
     this.setBackground()
     this.setParticles()
-    this.setGizmo()
+    //this.setGizmo()
 
     this.engine.runRenderLoop(() =>
       this.scene.render()

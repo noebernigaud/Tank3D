@@ -16,7 +16,7 @@ class Bullet extends ObjectPos {
         this.live = live;
         this.char = char;
         this.chars = chars;
-        this.life = 64;
+        this.life = 2;
         this.speed = speed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
@@ -42,6 +42,7 @@ class Bullet extends ObjectPos {
         sourceMat.specularColor = new BABYLON.Color3.Yellow();
 
         this.trail.material = sourceMat;
+        this.collision = false;
         bullets.push(this)
     }
 
@@ -83,6 +84,14 @@ class Bullet extends ObjectPos {
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
+            if (this.collision == false) {
+
+                this.collision = true
+                setTimeout(() => {
+                    this.collision = false
+                },
+                    10);
+            } else return
             this.life -= 1;
             bulletExplode(this.position, false).start();
 
