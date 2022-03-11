@@ -122,7 +122,9 @@ class Char extends ObjectPos {
   moveTank(speed) {
     this.shape.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
-    this.shape.physicsImpostor.friction = 0
+    // this.shape.physicsImpostor.friction = 0
+    this.shape.physicsImpostor.dispose()
+    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2, friction: 0 });
     let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
     let moveVec = frontVec.scale(speed)
     let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
@@ -131,7 +133,9 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank() {
-    this.shape.physicsImpostor.friction = 0.2
+    // this.shape.physicsImpostor.friction = 0.2
+    this.shape.physicsImpostor.dispose()
+    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2, friction: 0.2 });
   }
 
   destroyTank(isDisabled) {
