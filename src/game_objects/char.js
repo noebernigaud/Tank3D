@@ -154,16 +154,16 @@ class Char extends ObjectPos {
     //we give back the force for previous velocity in the right direction using the current
     //direction's normalized vector and multiplying it by the previous velocity's power
     this.shape.physicsImpostor.applyForce(new BABYLON.Vector3(
-      coeff * 280000 * normalizedDir.x,
+      coeff * 260000 * normalizedDir.x,
       0,
-      coeff * 280000 * normalizedDir.z
+      coeff * 260000 * normalizedDir.z
     ), this.shape.position)
 
     //END
 
     //add new force when asking the tank to move
     let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
-    let moveVec = frontVec.scale(speed * 50000)
+    let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.shape.physicsImpostor.applyForce(realVec, this.shape.position)
     console.log("linear velocity: ", this.shape.physicsImpostor.getLinearVelocity())
