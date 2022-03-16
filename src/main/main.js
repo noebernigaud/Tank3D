@@ -1,38 +1,53 @@
 // INITIALISATION
-function keyListener(evt, is_true) {
+function keyListener(evt, isPressed) {
+    // tirer
     if (evt.code === "Space") {
-        inputStates.mouseclick = is_true;
+        inputStates.mouseclick = isPressed;
     }
+    // tourelle
     else if (evt.code === "KeyA") {
-        inputStates.keyA = is_true;
-    }
-    else if (evt.code === "KeyW") {
-        inputStates.keyW = is_true;
-    }
-    else if (evt.code === "KeyS") {
-        inputStates.keyS = is_true;
+        inputStates.keyA = isPressed;
     }
     else if (evt.code === "KeyD") {
-        inputStates.keyD = is_true;
+        inputStates.keyD = isPressed;
     }
+    // ??
+    else if (evt.code === "KeyW") {
+        inputStates.keyW = isPressed;
+    }
+    else if (evt.code === "KeyS") {
+        inputStates.keyS = isPressed;
+    }
+    // POUR S'ENFLAMER
     else if (evt.code === "KeyL") {
-        inputStates.keyL = is_true;
+        inputStates.keyL = isPressed;
     }
+    // POUR S'ENFLAMER
     else if (evt.code === "KeyX") {
-        inputStates.keyX = is_true;
+        inputStates.keyX = isPressed;
     }
+    // rotation 
     else if (evt.keyCode == 37) {
-        inputStates.rot_minus = is_true;
-    }
-    else if (evt.keyCode == 38) {
-        inputStates.foreward = is_true;
+        inputStates.rot_minus = isPressed;
     }
     else if (evt.keyCode == 39) {
-        inputStates.rot_plus = is_true;
+        inputStates.rot_plus = isPressed;
+    }
+    // deplacement du char
+    else if (evt.keyCode == 38) {
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.foreward) char1.stabilizeTank(false)
+        inputStates.foreward = isPressed;
     }
     else if (evt.keyCode == 40) {
-        inputStates.backward = is_true;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.backward) char1.stabilizeTank(false)
+        inputStates.backward = isPressed;
     }
+}
+
+function stabilizeIfNotMoving() {
+
 }
 
 function keyApplaier() {
@@ -49,23 +64,19 @@ function keyApplaier() {
         char1.addBullet(Date.now());
     }
 
-    //DEPLACEMENTS DU CHAR
-    var coeff = 1;
-    if (inputStates.keyA + inputStates.keyW + inputStates.keyS + inputStates.keyD >= 2) coeff = 0.7;
-
+    // TOURNER LE TANK
     if (inputStates.rot_minus && !inputStates.rot_plus) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
     }
-
     if (inputStates.rot_plus && !inputStates.rot_minus) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)
     }
-
+    // TOUNER LA TOURELLE
     if (inputStates.keyA) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
@@ -75,7 +86,7 @@ function keyApplaier() {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
     }
-
+    // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
         return;
@@ -84,18 +95,17 @@ function keyApplaier() {
         char1.moveTankBackward();
         return;
     }
+    // destroy
     if (inputStates.keyX) {
         char1.destroyTank(true)
 
     }
+    // destroy
     if (inputStates.keyL) {
         //smoke()
         var smok = createSmoke(char1.shape)
         playSmoke(smok)
         createFire(char1.shape);
-    }
-    else {
-        char1.stabilizeTank()
     }
 }
 

@@ -17,10 +17,7 @@ class Char extends ObjectPos {
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);
-    // shape = this.shape
-    // console.log(this.shape, "I'm here");
-    if (type.name !== ObjectEnum.Player.name)
-      this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 100, restitution: 0.2 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.5 })
   }
 
   moveForeward(coeff) {
@@ -123,19 +120,19 @@ class Char extends ObjectPos {
     this.shape.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
     // this.shape.physicsImpostor.friction = 0
-    this.shape.physicsImpostor.dispose()
-    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2, friction: 0 });
+    // this.shape.physicsImpostor.dispose()
+    // this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2, friction: 0 });
     let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
-    let moveVec = frontVec.scale(speed)
+    let moveVec = frontVec.scale(speed * 10000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
-    this.shape.physicsImpostor.setLinearVelocity(realVec)
-
+    this.shape.physicsImpostor.applyForce(realVec, this.shape.position)
   }
 
-  stabilizeTank() {
+  stabilizeTank(hasFriction = true) {
+    console.log("Stabilize", hasFriction);
     // this.shape.physicsImpostor.friction = 0.2
     this.shape.physicsImpostor.dispose()
-    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1000, restitution: 0.2, friction: 0.2 });
+    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
   }
 
   destroyTank(isDisabled) {
