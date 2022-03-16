@@ -128,14 +128,9 @@ function draw_level_map(lvl_number) {
         case 'P':
           char1 = new Char(ObjectEnum.Player, posX, posY, 0, 1.4 * speedMultUti, 800 * reloadMultUti, tankImage);
           chars.push(char1);
-          // camera.rotation.x = 0.4854747337923555;
-          // camera.rotation.y = 0.6936207932663223
-          // camera.rotation.z = 0;
-          // char1.updateAngle(0)
-          // char1.center_camera();
-          camera.target = char1.getTurretTank();
+          // camera.target = char1.getTurretTank();
           char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
-          camera.alpha -= Math.PI / 2
+          // camera.alpha -= Math.PI / 2
           break;
         case 'h':
           holes.push(new Hole(posX, posY))

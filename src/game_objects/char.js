@@ -14,6 +14,19 @@ class Char extends ObjectPos {
    */
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
     super(type, -width / 2 + x, Char.height / 2, - height / 2 + y, vitesse, angle);
+
+    if (type.name == tankImage.src) {
+      camera = new BABYLON.FollowCamera("tankCamera", this.shape.getChildMeshes()[1].position, scene, this.shape.getChildMeshes()[1]);
+      camera.radius = 10;
+      camera.heightOffset = 5;
+      camera.rotationOffset = 180;
+      camera.cameraAcceleration = .1;
+      camera.maxCameraSpeed = 10;
+      engine.runRenderLoop(() =>
+        scene.render()
+      )
+    }
+
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.intelligence = new Intelligence(this);

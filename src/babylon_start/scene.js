@@ -20,18 +20,22 @@ class Scene {
     engine.displayLoadingUI();
     this.scene = this.createScene();
     this.setPhysic()
-    this.setCamera()
     this.setGround()
     this.setShadow()
     this.setBackground()
     this.setParticles()
-    //this.setGizmo()
+    // this.setGizmo()
+    // this.setCamera()
 
-    this.engine.runRenderLoop(() =>
-      this.scene.render()
-    );
+
 
     ObjectEnum.initiate_all_models()
+    // this.setCamera()
+    // this.engine.runRenderLoop(() =>
+    //   this.scene.render()
+    // )
+
+
   }
 
   /**
@@ -66,15 +70,21 @@ class Scene {
   }
 
   setCamera() {
-    camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    camera.setPosition(new BABYLON.Vector3(0, 100 / 20, -110 / 20));
-    camera.beta += 0.3
-    camera.angularSensibilityX = 250
-    camera.angularSensibilityY = 250
-    camera.inertia = 0
-    camera.attachControl(canvas, true);
-    camera.inputs.attached.keyboard.detachControl();
-    camera.checkCollisions = true;
+    // camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
+    // camera.setPosition(new BABYLON.Vector3(0, 100 / 20, -110 / 20));
+    // camera.beta += 0.3
+    // camera.angularSensibilityX = 250
+    // camera.angularSensibilityY = 250
+    // camera.inertia = 0
+    // camera.attachControl(canvas, true);
+    // camera.inputs.attached.keyboard.detachControl();
+    // camera.checkCollisions = true;
+    camera = new BABYLON.FollowCamera("tankCamera", ground.position, scene, ground);
+    camera.radius = 40;
+    camera.heightOffset = 14;
+    camera.rotationOffset = 50;
+    camera.cameraAcceleration = .1;
+    camera.maxCameraSpeed = 10;
   }
 
   setGround() {

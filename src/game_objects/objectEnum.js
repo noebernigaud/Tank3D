@@ -34,6 +34,7 @@ class ObjectEnum {
     }
     else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
       this.callback(meshes, true)
+
     });
   }
 
