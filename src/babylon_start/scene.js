@@ -92,7 +92,7 @@ class Scene {
     var grass = new BABYLON.StandardMaterial("groundMat", scene);
     grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
     ground.material = grass
-    grass.specularColor = new BABYLON.Color3(0, 0, 0)
+    grass.specularColor = new BABYLON.Color3(1, 1, 1)
 
     ground.checkCollisions = true;
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
