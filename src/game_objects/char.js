@@ -188,6 +188,16 @@ class Char extends ObjectPos {
     }
 
     getTurretTank() {
-        return this.shape.getChildMeshes()[1];
+        if (this.type.name == ObjectEnum.Player.name)
+            return this.shape.getChildMeshes()[1];
+        else return this.shape.getChildMeshes()[0]
+    }
+
+    setStrategy(strategy) {
+        this.strategy = strategy;
+    }
+
+    applyStrategy() {
+        this.strategy.applyStrategy()
     }
 }
