@@ -1,3 +1,4 @@
+canTire = true;
 // INITIALISATION
 function keyListener(evt, isPressed) {
     // tirer
@@ -7,15 +8,13 @@ function keyListener(evt, isPressed) {
     // tourelle
     else if (evt.code === "KeyA") {
         inputStates.keyA = isPressed;
-    }
-    else if (evt.code === "KeyD") {
+    } else if (evt.code === "KeyD") {
         inputStates.keyD = isPressed;
     }
     // ??
     else if (evt.code === "KeyW") {
         inputStates.keyW = isPressed;
-    }
-    else if (evt.code === "KeyS") {
+    } else if (evt.code === "KeyS") {
         inputStates.keyS = isPressed;
     }
     // POUR S'ENFLAMER
@@ -29,8 +28,7 @@ function keyListener(evt, isPressed) {
     // rotation 
     else if (evt.keyCode == 37) {
         inputStates.rot_minus = isPressed;
-    }
-    else if (evt.keyCode == 39) {
+    } else if (evt.keyCode == 39) {
         inputStates.rot_plus = isPressed;
     }
     // deplacement du char
@@ -38,11 +36,32 @@ function keyListener(evt, isPressed) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
         inputStates.foreward = isPressed;
-    }
-    else if (evt.keyCode == 40) {
+    } else if (evt.keyCode == 40) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
         inputStates.backward = isPressed;
+    } else if (evt.code == "KeyQ" && canTire) {
+        canTire = false
+        let length = 1000;
+        let ray = new BABYLON.Ray(new BABYLON.Vector3(
+            char1.shape.position.x + char1.getTurretTank().getDirection(BABYLON.Axis.Z).x * 10,
+            char1.shape.position.y + 3 / 40,
+            char1.shape.position.z + char1.getTurretTank().getDirection(BABYLON.Axis.X).x * 10), char1.getTurretTank().getDirection(BABYLON.Axis.Z), length);
+
+        setTimeout(() => canTire = true, 300);
+        let pickInfo = scene.pickWithRay(ray, (mesh) => {
+            return mesh.name;
+        });
+        if (pickInfo.pickedMesh) {
+            console.log(pickInfo.pickedMesh.name);
+            let bounder = pickInfo.pickedMesh;
+        }
+
+        let rayHelper = new BABYLON.RayHelper(ray);
+        rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
+        setTimeout(() => {
+            rayHelper.dispose(ray);
+        }, 200);
     }
 }
 
@@ -67,24 +86,24 @@ function keyApplaier() {
     // TOURNER LE TANK
     if (inputStates.rot_minus && !inputStates.rot_plus) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
-        // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
+            // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
     }
     if (inputStates.rot_plus && !inputStates.rot_minus) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
-        // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
+            // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)
     }
     // TOUNER LA TOURELLE
     if (inputStates.keyA) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
-        // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
+            // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
 
     }
     if (inputStates.keyD) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
-        // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
+            // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
     }
     // DEPLACEMENT
     if (inputStates.foreward) {
@@ -298,14 +317,14 @@ function anime() {
 }
 
 var inputVitMult = document.getElementById("mutlvit")
-if (inputVitMult !== null) inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
+if (inputVitMult !== null) inputVitMult.oninput = function() { changeVitesseChar(inputVitMult.value) };
 
 function changeVitesseChar(value) {
     speedMultUti = value;
 }
 
 var inputReloadMult = document.getElementById("multReload")
-if (inputReloadMult !== null) inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
+if (inputReloadMult !== null) inputReloadMult.oninput = function() { changeCadenceTir(inputReloadMult.value) };
 
 function changeCadenceTir(value) {
     reloadMultUti = value;
