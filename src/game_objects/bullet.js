@@ -37,9 +37,9 @@ class Bullet extends ObjectPos {
         this.trail = new BABYLON.TrailMesh('bulletTrail', this, scene, 0.06, 12, true);
 
         var sourceMat = new BABYLON.StandardMaterial('sourceMat', scene);
-        sourceMat.emissiveColor = new BABYLON.Color3.White();
-        sourceMat.diffuseColor = new BABYLON.Color3.Red();
-        sourceMat.specularColor = new BABYLON.Color3.Yellow();
+        sourceMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        sourceMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+        sourceMat.specularColor = new BABYLON.Color3(1, 1, 0);
 
         this.trail.material = sourceMat;
         this.collision = false;
