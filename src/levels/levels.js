@@ -110,18 +110,22 @@ function draw_level_map(lvl_number) {
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
+
+                    char.applyStrategy()
                     break;
                 case 'B':
                     var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 5, 10000, tankImageBlue);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
+                    char.applyStrategy()
                     break;
                 case 'G':
                     var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 5, 4000, tankImageGreen);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
+                    char.applyStrategy()
                     break;
                 case 'W':
                     walls.push(new Wall(posX, posY, false));
@@ -134,7 +138,7 @@ function draw_level_map(lvl_number) {
                     chars.push(char1);
                     // camera.target = char1.getTurretTank();
                     char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
-                        // camera.alpha -= Math.PI / 2
+                    // camera.alpha -= Math.PI / 2
                     break;
                 case 'h':
                     holes.push(new Hole(posX, posY))

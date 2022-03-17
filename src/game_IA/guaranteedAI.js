@@ -2,14 +2,16 @@ class guaranteedAI {
 
     /** @type {Char} */
     tank;
+    intervalStratShoot;
     constructor(tank) {
         this.tank = tank;
     }
 
     applyStrategy() {
-        let target = ShootAI.targetPlayer(this.tank);
-        if (char1.shape == target) {
-            this.tank.addBullet(Date.now())
-        }
+        this.intervalStratShoot = setInterval(() => {
+            if (char1.shape == ShootAI.targetPlayer(this.tank)) {
+                this.tank.addBullet(Date.now())
+            }
+        }, 200);
     }
 }

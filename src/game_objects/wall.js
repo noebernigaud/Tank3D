@@ -12,7 +12,7 @@ class Wall {
     constructor(x, y, destructable) {
         this.type = destructable ? ObjectEnum.WallD : ObjectEnum.Wall
         this.destructable = destructable
-            // super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
+        // super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2, -height / 2 + y)
         this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
@@ -20,7 +20,6 @@ class Wall {
     }
 
     destroy() {
-        console.log(123);
         if (this.destructable === true) {
             let position = walls.indexOf(this);
             this.shape.dispose();

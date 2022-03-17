@@ -7,7 +7,6 @@ function explode(emitter) {
         for (var sys of set.systems) {
             sys.emitter = emitter
             sys.worldOffset = new BABYLON.Vector3(emitter.position.x, emitter.position.y, emitter.position.z);
-            console.log(sys.name);
             // sys.minScaleX = 0.1;
             // sys.minScaleY = 0.1;
             // sys.maxScaleX = 0.2;
