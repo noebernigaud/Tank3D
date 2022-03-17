@@ -125,7 +125,7 @@ class Char extends ObjectPos {
   }
 
   moveTankBackward() {
-    var speed = -1.25
+    var speed = -12
     this.moveTank(speed)
   }
 
