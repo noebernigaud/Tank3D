@@ -23,11 +23,11 @@ class Bullet extends ObjectPos {
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
         let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
-        // pourquoi la balle part un peu à gauche ou a droite
+            // pourquoi la balle part un peu à gauche ou a droite
         this.physicsImpostor.setLinearVelocity(realVec)
-        // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
-        // this.physicsImpostor.restitution = 1;
-        // this.physicsImpostor.mass = 1;
+            // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
+            // this.physicsImpostor.restitution = 1;
+            // this.physicsImpostor.mass = 1;
         this.physicsImpostor.friction = 0;
         this.coolDownCol = 0;
         bulletExplode(this.position, false, true).start()
@@ -85,7 +85,10 @@ class Bullet extends ObjectPos {
 
         this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.shape.physicsImpostor), (e1, e2) => {
             console.log(e1.object, e2.object)
-            e2.destroy()
+            let wall = walls.find(e => e.shape == e2.object)
+            console.log(wall);
+            if (wall)
+                wall.destroy()
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
@@ -93,8 +96,8 @@ class Bullet extends ObjectPos {
 
                 this.collision = true
                 setTimeout(() => {
-                    this.collision = false
-                },
+                        this.collision = false
+                    },
                     10);
             } else return
             this.life -= 1;
@@ -114,8 +117,7 @@ class Bullet extends ObjectPos {
     }
 
     createShape() {
-        var shape = BABYLON.MeshBuilder.CreateSphere("bullet",
-            { diameter: Bullet.diameter }, scene);
+        var shape = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: Bullet.diameter }, scene);
         shape.material = createMaterial(scene, bulletImage.src);
 
         return shape;
