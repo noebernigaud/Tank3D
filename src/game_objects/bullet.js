@@ -83,6 +83,11 @@ class Bullet extends ObjectPos {
             // });
         })
 
+        this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.shape.physicsImpostor), (e1, e2) => {
+            console.log(e1.object, e2.object)
+            e2.destroy()
+        })
+
         this.physicsImpostor.onCollideEvent = (b, w) => {
             if (this.collision == false) {
 
