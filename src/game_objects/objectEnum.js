@@ -42,7 +42,9 @@ class ObjectEnum {
     this.meshes = [...meshes];
 
     // Resizing of each meshes
-    if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25));
+    if (toResize) this.meshes.forEach(x => {
+      x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+    });
 
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);

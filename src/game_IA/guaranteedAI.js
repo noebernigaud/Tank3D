@@ -9,9 +9,15 @@ class guaranteedAI {
 
     applyStrategy() {
         this.intervalStratShoot = setInterval(() => {
+
             if (char1.shape == ShootAI.targetPlayer(this.tank)) {
                 this.tank.addBullet(Date.now())
             }
         }, 200);
     }
+
+    applyMovement() {
+        MoveAI.rotate(this.tank)
+    }
+
 }

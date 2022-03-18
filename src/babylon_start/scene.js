@@ -11,10 +11,12 @@ var opponentMeshes;
 var opponentMaterials;
 var engine;
 var shadowGenerator;
+var tanksAIReady;
 
 class Scene {
 
   constructor() {
+    tanksAIReady = false;
     this.engine = new BABYLON.Engine(canvas, true);
 
     engine = this.engine;
@@ -35,6 +37,8 @@ class Scene {
     // this.engine.runRenderLoop(() =>
     //   this.scene.render()
     // )
+
+
 
 
   }
@@ -60,8 +64,7 @@ class Scene {
           bullet.dispose()
         }
       })
-      // if (canShoot)
-      //   charsAI.forEach(c => c.applyStrategy())
+      if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
     }
     return scene;
   }

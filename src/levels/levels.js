@@ -106,7 +106,7 @@ function draw_level_map(lvl_number) {
                 case '-':
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 0, 0, tankImageGreen);
+                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 0, 2000, tankImageGreen);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
@@ -146,6 +146,8 @@ function draw_level_map(lvl_number) {
             }
         }
     }
+
+    tanksAIReady = true;
 
     // Creation de l'enceinte 
     walls.push(new WallPerimeter(-width / 2, 0, 1, height + 1))
