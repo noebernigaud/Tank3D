@@ -35,6 +35,8 @@ var bullets = []
 
 var gravity = -9.81
 
+level = 0;
+
 var mousepos = { x: 0, y: 0 };
 
 var inputStates = {};

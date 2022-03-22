@@ -28,7 +28,7 @@ class Scene {
     this.setBackground()
     this.setParticles()
     // this.setGizmo()
-    // this.setCamera()
+    this.setCamera()
 
 
 
@@ -64,9 +64,15 @@ class Scene {
           bullet.dispose()
         }
       })
+      // charsAI.forEach(c => MoveAI.move(c));
       // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
       anime()
-      charsAI.forEach(c => MoveAI.move(c));
+      //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
+      if (charsAI.length == 0) {
+        level += 1;
+        remove_all_objects()
+        startgame(level);
+      }
     }
     return scene;
   }

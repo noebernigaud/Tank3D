@@ -32,6 +32,10 @@ class Wall {
         shape.material = createMaterial(scene, this.type.name);
         return shape;
     }
+
+    dispose() {
+        this.shape.dispose()
+    }
 }
 
 class WallPerimeter {
@@ -50,7 +54,9 @@ class WallPerimeter {
         return shape;
     }
 
-    destroy() {
-
+    dispose() {
+        this.shape.dispose()
     }
+
+    destroy() { }
 }

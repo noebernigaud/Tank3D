@@ -20,16 +20,22 @@ class ObjectPos extends BABYLON.Mesh {
   constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
     super('')
 
-
+    var meshBabylon = true;
     let shape;
     this.type = type;
+
+    switch (type.name) {
+      case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
+      case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
+      case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
+      case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
+      case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      default: meshBabylon = false;
+    }
+
     /** @type {BABYLON.Mesh} */
-    if (type.name == ObjectEnum.Player.name || type.name == ObjectEnum.CharRed.name || type.name == ObjectEnum.Hole.name) {
-      switch (type.name) {
-        case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-        case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
-        case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
-      }
+
+    if (meshBabylon) {
 
       shape.visibility = 0.000001;
       shape.showBoundingBox = true;
@@ -130,5 +136,9 @@ class ObjectPos extends BABYLON.Mesh {
     child.setParent(this)
     super.addChild(child)
     child.rotation = this.rotation
+  }
+
+  dispose() {
+    this.shape.dispose();
   }
 }

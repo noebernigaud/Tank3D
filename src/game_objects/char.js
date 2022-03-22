@@ -15,7 +15,7 @@ class Char extends ObjectPos {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle);
 
     if (type.name == tankImage.src) {
-      camera = new BABYLON.FollowCamera("tankCamera", this.shape.getChildMeshes()[1].position, scene, this.shape.getChildMeshes()[1]);
+      camera.lockedTarget = this.shape;
       camera.radius = 10;
       camera.heightOffset = 5;
       camera.rotationOffset = 180;

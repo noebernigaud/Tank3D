@@ -134,7 +134,7 @@ function init() {
 
     playing = 0;
 
-    level = 0;
+    // level = 0;
 
     // canvas.addEventListener('mousemove', (evt) => {
     //     mousepos = getMousePos(canvas, evt);
@@ -234,12 +234,15 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    walls.forEach(wall => wall.dispose());
-    holes.forEach(hole => hole.dispose());
-    bullets.forEach(bullet => bullet.dispose());
-
-    mines.forEach(mine => mine.dispose());
-    chars.forEach(char => char.dispose());
+    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars]
+    allElts.forEach(e => e.dispose())
+    walls = [];
+    holes = [];
+    bullets = [];
+    mines = [];
+    chars = [];
+    charsAI = [];
+    engine.stopRenderLoop()
 }
 
 //ANIMATION
@@ -300,13 +303,6 @@ function anime() {
         // chars.forEach(char => char.draw(ctx));
         // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
         // char1.updateAngle(mousepos);
-
-        //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
-        if (charsAI.length == 0) {
-            level += 1;
-            remove_all_objects()
-            startgame(level);
-        }
 
         // ctx.font = "30px Arial";
         // ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
