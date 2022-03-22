@@ -73,6 +73,8 @@ class Scene {
         remove_all_objects()
         startgame(level);
       }
+      //charsAI.forEach(c => MoveAI.move(c));
+      charsAI.forEach(c => c.strategy.applyStrategy())
     }
     return scene;
   }

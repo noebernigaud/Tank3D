@@ -4,7 +4,7 @@ class MoveAI {
   /**
    * @param {Char} tank 
    */
-  static rotate(tank) {
+  static rotateTurret(tank) {
     tank.getTurretTank().setDirection(char1.shape.position.subtract(tank.shape.position));
   }
 
