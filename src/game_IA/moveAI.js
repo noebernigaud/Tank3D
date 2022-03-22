@@ -5,7 +5,13 @@ class MoveAI {
    * @param {Char} tank 
    */
   static rotateTurret(tank) {
-    tank.getTurretTank().setDirection(char1.shape.position.subtract(tank.shape.position));
+    //tank.getTurretTank().setDirection(char1.shape.position.subtract(tank.shape.position));
+    var turretDir = tank.getTurretTank().getDirection(new BABYLON.Vector3(1, 1, 1));
+    var currentAngle = Math.atan2(turretDir.z, turretDir.x);
+    var targetDir = char1.shape.position.subtract(tank.shape.position);
+    var targetAngle = Math.atan2(targetDir.z, targetDir.x);
+    tank.getTurretTank().rotate(BABYLON.Axis.Y, currentAngle - targetAngle);
+    tank.getTurretTank().rotate(BABYLON.Axis.Y, Math.PI / 4);
   }
 
   /**
