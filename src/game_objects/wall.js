@@ -15,7 +15,7 @@ class Wall {
         // super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2, -height / 2 + y)
-        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
+        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.1, friction: 0 });
         this.shape.showBoundingBox = true
     }
 

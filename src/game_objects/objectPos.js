@@ -25,8 +25,12 @@ class ObjectPos extends BABYLON.Mesh {
     this.type = type;
     /** @type {BABYLON.Mesh} */
     if (type.name == ObjectEnum.Player.name || type.name == ObjectEnum.CharRed.name || type.name == ObjectEnum.Hole.name) {
-      shape = type.name == ObjectEnum.Player.name ? ObjectEnum.Player.container.clone() : type.name == ObjectEnum.Hole.name ? ObjectEnum.Hole.container.clone() : ObjectEnum.CharRed.container.clone();
-      shape.physicsImpostor = new BABYLON.PhysicsImpostor(shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: (type.name == ObjectEnum.Hole.name ? 3000 : 300000), restitution: 0.2 })
+      switch (type.name) {
+        case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
+        case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
+        case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
+      }
+
       shape.visibility = 0.000001;
       shape.showBoundingBox = true;
 

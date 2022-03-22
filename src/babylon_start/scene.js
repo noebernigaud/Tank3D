@@ -64,7 +64,9 @@ class Scene {
           bullet.dispose()
         }
       })
-      if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
+      // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
+      anime()
+      charsAI.forEach(c => MoveAI.move(c));
     }
     return scene;
   }
@@ -82,10 +84,10 @@ class Scene {
     // camera.angularSensibilityX = 250
     // camera.angularSensibilityY = 250
     // camera.inertia = 0
-    // camera.attachControl(canvas, true);
     // camera.inputs.attached.keyboard.detachControl();
     // camera.checkCollisions = true;
     camera = new BABYLON.FollowCamera("tankCamera", ground.position, scene, ground);
+    // camera.attachControl(canvas, true);
     camera.radius = 40;
     camera.heightOffset = 14;
     camera.rotationOffset = 50;

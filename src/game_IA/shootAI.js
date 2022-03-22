@@ -1,7 +1,7 @@
 class ShootAI {
     /**
      * @param {Char} tank 
-     * @returns {boolean}
+     * @returns {BABYLON.Mesh} the mesh targeted
      */
     static targetPlayer(tank) {
 

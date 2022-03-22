@@ -29,6 +29,8 @@ class Char extends ObjectPos {
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
 
+    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
+
     //this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2 })
 
     //this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.1 })
@@ -51,7 +53,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 1, 80, this.charsAI)
+      var bullet = new Bullet(this, 1, 80)
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
@@ -119,8 +121,7 @@ class Char extends ObjectPos {
   }
 
   moveTankForeward() {
-    var speed = 2.5
-    this.moveTank(speed)
+    this.moveTank(this.speedNorme)
   }
 
   moveTankBackward() {
@@ -186,9 +187,7 @@ class Char extends ObjectPos {
   }
 
   getTurretTank() {
-    if (this.type.name == ObjectEnum.Player.name)
-      return this.shape.getChildMeshes()[1];
-    else return this.shape.getChildMeshes()[0]
+    return this.shape.getChildMeshes()[1];
   }
 
   setStrategy(strategy) {
