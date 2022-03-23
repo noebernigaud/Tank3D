@@ -130,6 +130,7 @@ function keyApplaier() {
 }
 
 function init() {
+
     canvas = document.querySelector("#myCanvas");
 
     playing = 0;
