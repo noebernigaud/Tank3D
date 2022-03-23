@@ -16,7 +16,7 @@ class Wall {
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2, -height / 2 + y)
         this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.1, friction: 0 });
-        this.shape.showBoundingBox = true
+        // this.shape.showBoundingBox = true
     }
 
     destroy() {
@@ -45,7 +45,7 @@ class WallPerimeter {
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(x * cell_size, Wall.height / 2, y * cell_size)
         this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
-        this.shape.showBoundingBox = true
+        // this.shape.showBoundingBox = true
     }
 
     createShape() {

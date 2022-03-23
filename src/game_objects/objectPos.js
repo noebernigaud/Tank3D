@@ -38,7 +38,7 @@ class ObjectPos extends BABYLON.Mesh {
     if (meshBabylon) {
 
       shape.visibility = 0.000001;
-      shape.showBoundingBox = true;
+      // shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
         e.visibility = true
@@ -63,9 +63,9 @@ class ObjectPos extends BABYLON.Mesh {
     shadowGenerator.addShadowCaster(shape)
     shadowGenerator.getShadowMap().renderList.push(shape)
 
-    if (this.type.name == ObjectEnum.CharRed.name)
-      //console.log(this.position);
-      this.showBoundingBox = true;
+    // if (this.type.name == ObjectEnum.CharRed.name)
+    //   //console.log(this.position);
+    //   this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
 

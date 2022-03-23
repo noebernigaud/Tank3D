@@ -57,11 +57,12 @@ function createRay(origin, dir, length, disposeTime = 5) {
         let bounder = pickInfo.pickedMesh;
     }
 
-    let rayHelper = new BABYLON.RayHelper(ray);
-    rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
-    setTimeout(() => {
-        rayHelper.dispose(ray);
-    }, disposeTime);
+
+    // let rayHelper = new BABYLON.RayHelper(ray);
+    // rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
+    // setTimeout(() => {
+    //     rayHelper.dispose(ray);
+    // }, disposeTime);
 
     return pickInfo.pickedMesh
 }

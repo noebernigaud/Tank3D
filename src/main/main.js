@@ -56,11 +56,11 @@ function keyListener(evt, isPressed) {
             let bounder = pickInfo.pickedMesh;
         }
 
-        let rayHelper = new BABYLON.RayHelper(ray);
-        rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
-        setTimeout(() => {
-            rayHelper.dispose(ray);
-        }, 200);
+        // let rayHelper = new BABYLON.RayHelper(ray);
+        // rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
+        // setTimeout(() => {
+        //     rayHelper.dispose(ray);
+        // }, 200);
     }
 }
 
