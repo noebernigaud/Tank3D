@@ -97,6 +97,7 @@ const level_map = [
  */
 function draw_level_map(lvl_number) {
     current_level = level_map[lvl_number];
+    char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
 
     for (var [l_index, line] of current_level.entries()) {
         for (var [ch_index, ch] of line.split('').entries()) {
@@ -134,7 +135,8 @@ function draw_level_map(lvl_number) {
                     walls.push(new Wall(posX, posY, true));
                     break;
                 case 'P':
-                    char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+                    char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2, -height / 2 + posY)
+                    // char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
                     chars.push(char1);
                     // camera.target = char1.getTurretTank();
                     char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
