@@ -106,7 +106,7 @@ function draw_level_map(lvl_number) {
                 case '-':
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 3, 2000, tankImageGreen);
+                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 3, 2000, 40);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
@@ -114,14 +114,14 @@ function draw_level_map(lvl_number) {
                     char.applyStrategy()
                     break;
                 case 'B':
-                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 3, 10000, tankImageBlue);
+                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 3, 10000, 20);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     char.applyStrategy()
                     break;
                 case 'G':
-                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 3, 4000, tankImageGreen);
+                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 3, 4000, 10);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
@@ -134,7 +134,7 @@ function draw_level_map(lvl_number) {
                     walls.push(new Wall(posX, posY, true));
                     break;
                 case 'P':
-                    char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, tankImage);
+                    char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
                     chars.push(char1);
                     // camera.target = char1.getTurretTank();
                     char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)

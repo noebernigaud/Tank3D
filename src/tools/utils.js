@@ -46,3 +46,22 @@ function collT(xhitbox, yhitbox, xsize, ysize, xhitbox2, yhitbox2, xsize2, ysize
     }
     return false;
 }*/
+
+function createRay(origin, dir, length, disposeTime = 5) {
+    let ray = new BABYLON.Ray(origin, dir, length);
+
+    let pickInfo = scene.pickWithRay(ray, (mesh) => {
+        return mesh;
+    });
+    if (pickInfo.pickedMesh) {
+        let bounder = pickInfo.pickedMesh;
+    }
+
+    let rayHelper = new BABYLON.RayHelper(ray);
+    rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
+    setTimeout(() => {
+        rayHelper.dispose(ray);
+    }, disposeTime);
+
+    return pickInfo.pickedMesh
+}

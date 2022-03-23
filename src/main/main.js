@@ -52,9 +52,7 @@ function keyListener(evt, isPressed) {
         let pickInfo = scene.pickWithRay(ray, (mesh) => {
             return mesh;
         });
-        console.log(pickInfo);
         if (pickInfo.pickedMesh) {
-            console.log(pickInfo.pickedMesh.name);
             let bounder = pickInfo.pickedMesh;
         }
 

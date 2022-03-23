@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle);
 
     if (type.name == tankImage.src) {
@@ -30,6 +30,7 @@ class Char extends ObjectPos {
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
+    this.bulletSpeed = bulletSpeed;
 
     this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
 
@@ -55,7 +56,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 1, 80)
+      var bullet = new Bullet(this, 1)
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;

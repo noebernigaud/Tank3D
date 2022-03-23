@@ -7,7 +7,7 @@ class Bullet extends ObjectPos {
      * @param {number} live 
      * @param {number} speed 
      */
-    constructor(char, live, speed) {
+    constructor(char, live) {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
@@ -16,7 +16,7 @@ class Bullet extends ObjectPos {
         this.live = live;
         this.char = char;
         this.life = 2;
-        this.speed = speed;
+        this.speed = char.bulletSpeed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
@@ -47,7 +47,6 @@ class Bullet extends ObjectPos {
 
     createCollider() {
         this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.shape.physicsImpostor), (e1, e2) => {
-            console.log("JJJJJJ");
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
             let char = chars.find(e => e.shape == e2.object)
@@ -56,17 +55,12 @@ class Bullet extends ObjectPos {
             index = charsAI.indexOf(char)
             if (index !== -1) charsAI.splice(index, 1)
             // clearInterval(char.strategy.intervalStratShoot)
-            console.log("A");
             this.trail.dispose();
-            console.log("B");
             this.dispose();
-            console.log("C");
             var index = bullets.indexOf(e2)
             if (index !== -1) bullets.splice(index, 1)
 
-            console.log("D");
             e2.object.dispose();
-            console.log("E");
         })
         this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
             var index = bullets.indexOf(x)
