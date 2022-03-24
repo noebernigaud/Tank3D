@@ -27,13 +27,13 @@ class Char extends ObjectPos {
 
         scene.render()
 
-        if (current_level_number == 0) {
+        if (level == 0) {
           setTimeout(() => {
 
             engine.stopRenderLoop()
           },
 
-            500);
+            40);
         }
 
       }
@@ -58,6 +58,7 @@ class Char extends ObjectPos {
   }
 
   addBullet(time) {
+    if (this.life <= 0) return;
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire
     var tempEcoule = 0;
 

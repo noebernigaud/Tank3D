@@ -81,8 +81,9 @@ class Scene {
           c.dispose()
         }
       })
-      if (char1.life <= 0 || current_level_number == 5) {
+      if (char1.life <= 0 || level == 5) {
         level = 0;
+        engine.stopRenderLoop()
         remove_all_objects()
         startgame(level);
         this.menu.createButton()

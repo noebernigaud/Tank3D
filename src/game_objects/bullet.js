@@ -104,10 +104,12 @@ class Bullet extends ObjectPos {
         return shape;
     }
 
-    dispose() {
-        super.dispose()
-        bulletExplode(this.position, this.life == 0).start();
+    dispose(forceDispose = false) {
+        super.dispose(forceDispose)
         this.trail.dispose()
+        if (forceDispose) return;
+        bulletExplode(this.position, this.life == 0).start();
+
     }
 
     // move() {

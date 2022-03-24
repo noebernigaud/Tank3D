@@ -92,14 +92,12 @@ const level_map = [
     ],
 ]
 
-var current_level_number;
 
 /**
  * @param {number} lvl_number 
  */
 function draw_level_map(lvl_number) {
     current_level = level_map[lvl_number];
-    current_level_number = lvl_number;
     char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
 
     for (var [l_index, line] of current_level.entries()) {
