@@ -74,7 +74,7 @@ class guaranteedAI {
         // Shoot simulation
         if (this.updateTir <= 0) {
             if (char1.shape == ShootAI.targetPlayer(this.tank)) {
-                // this.tank.addBullet(Date.now())
+                this.tank.addBullet(Date.now())
             }
             this.updateTir = 12;
         }
