@@ -81,7 +81,7 @@ class Scene {
           c.dispose()
         }
       })
-      if (char1.life <= 0 || level == 5) {
+      if (char1.life <= 0 || level == level_map.length) {
         level = 0;
         engine.stopRenderLoop()
         remove_all_objects()
