@@ -235,7 +235,13 @@ function pausebackgroundMusic() {
 
 function remove_all_objects() {
     let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars]
-    allElts.forEach(e => e.dispose())
+
+    allElts.forEach(e => {
+        if (e.type == ObjectEnum.Bullet.name) {
+            e.shape.physicsImpostor.dispose()
+        }
+        e.dispose()
+    })
     walls = [];
     holes = [];
     bullets = [];

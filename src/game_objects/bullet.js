@@ -7,15 +7,15 @@ class Bullet extends ObjectPos {
      * @param {number} live 
      * @param {number} speed 
      */
-    constructor(char, live) {
+    constructor(char, live = 2) {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
             char.shape.position.y + 9 / 40,
             char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
-        this.live = live;
+
         this.char = char;
-        this.life = 2;
+        this.life = live;
         this.speed = char.bulletSpeed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
@@ -57,6 +57,9 @@ class Bullet extends ObjectPos {
             // if (index !== -1) charsAI.splice(index, 1)
             // clearInterval(char.strategy.intervalStratShoot)
             this.trail.dispose();
+
+            this.shape.dispose();
+            e1.dispose()
             this.dispose();
             var index = bullets.indexOf(e2)
             if (index !== -1) bullets.splice(index, 1)
@@ -70,9 +73,13 @@ class Bullet extends ObjectPos {
             if (index !== -1) bullets.splice(index, 1)
             e1.object.trail.dispose();
             e1.object.dispose();
+            e1.dispose()
+
+            this.shape.dispose();
 
             e2.object.trail.dispose();
             e2.object.dispose();
+            e2.dispose()
         })
         this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.shape.physicsImpostor), (e1, e2) => {
             var index = bullets.indexOf(x)
@@ -80,7 +87,10 @@ class Bullet extends ObjectPos {
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
             this.trail.dispose();
+
+            this.shape.dispose();
             this.dispose();
+            e1.dispose()
             createFire(e2.object);
             createSmoke(e2.object);
             // e2.object._children.forEach(m => {
@@ -97,6 +107,7 @@ class Bullet extends ObjectPos {
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
+            console.log(b._isDisposed, w._isDisposed)
             if (this.collision == false) {
 
                 this.collision = true
@@ -115,7 +126,10 @@ class Bullet extends ObjectPos {
                     bullets.splice(index, 1)
                 }
                 this.trail.dispose();
+
+                this.shape.dispose();
                 this.dispose();
+                b.dispose()
             }
             return;
         }
