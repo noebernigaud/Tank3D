@@ -1,21 +1,20 @@
 class Bullet extends ObjectPos {
 
-    static diameter = 6 / 40;
+    static diameter = 20 / 40;
     /**
      * 
      * @param {Char} char 
-     * @param {number} live 
-     * @param {number} speed 
+     * @param {number} life 
+     * @param {number} speed
      */
-    constructor(char, live = 2) {
+    constructor(char, life = 2) {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
             char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6);
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, life);
 
         this.char = char;
-        this.life = live;
         this.speed = char.bulletSpeed;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
@@ -46,51 +45,62 @@ class Bullet extends ObjectPos {
     }
 
     createCollider() {
-        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.shape.physicsImpostor), (e1, e2) => {
-            var index = bullets.indexOf(this)
-            if (index !== -1) bullets.splice(index, 1)
-            let char = chars.find(e => e.shape == e2.object)
-            char.life -= 1;
-            // index = chars.indexOf(char)
-            // if (index !== -1) chars.splice(index, 1)
-            // index = charsAI.indexOf(char)
-            // if (index !== -1) charsAI.splice(index, 1)
-            // clearInterval(char.strategy.intervalStratShoot)
-            this.trail.dispose();
+        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.physicsImpostor), (e1, e2) => {
+            let b1 = bullets.find(e => e == e1.object)
+            let c1 = chars.find(e => e.shape == e2.object)
 
-            this.shape.dispose();
-            e1.dispose()
-            this.dispose();
-            var index = bullets.indexOf(e2)
-            if (index !== -1) bullets.splice(index, 1)
 
-            // e2.object.dispose();
+
+            if (b1) b1.dispose()
+            if (c1) c1.dispose()
+            // return;
+            // var index = bullets.indexOf(this)
+            // if (index !== -1) bullets.splice(index, 1)
+            // let char = chars.find(e => e.shape == e2.object)
+            // char.life -= 1;
+            // // index = chars.indexOf(char)
+            // // if (index !== -1) chars.splice(index, 1)
+            // // index = charsAI.indexOf(char)
+            // // if (index !== -1) charsAI.splice(index, 1)
+            // // clearInterval(char.strategy.intervalStratShoot)
+            // this.trail.dispose();
+
+            // this.shape.dispose();
+            // e1.dispose()
+            // this.dispose();
+            // // var index = bullets.indexOf(e2)
+            // // if (index !== -1) bullets.splice(index, 1)
+
+            // // e2.object.dispose();
         })
         this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
-            var index = bullets.indexOf(x)
-            if (x !== -1) bullets.splice(x, 1)
-            var index = bullets.indexOf(this)
-            if (index !== -1) bullets.splice(index, 1)
-            e1.object.trail.dispose();
-            e1.object.dispose();
-            e1.dispose()
+            // var index = bullets.indexOf(x)
+            // if (x !== -1) bullets.splice(x, 1)
 
-            this.shape.dispose();
 
-            e2.object.trail.dispose();
-            e2.object.dispose();
-            e2.dispose()
+            // var index = bullets.indexOf(this)
+            // if (index !== -1) bullets.splice(index, 1)
+
+            // e1.object.dispose();
+            // e1.dispose()
+
+            // this.shape.dispose();
+
+            // this.dispose();
+            // e2.object.dispose();
+            // e2.dispose()
+
+            let b1 = bullets.find(e => e == e1.object)
+            let b2 = bullets.find(e => e == e2.object)
+
+            if (b1) b1.dispose()
+            if (b2) b2.dispose()
+
         })
-        this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.shape.physicsImpostor), (e1, e2) => {
-            var index = bullets.indexOf(x)
-            if (x !== -1) bullets.splice(x, 1)
-            var index = bullets.indexOf(this)
-            if (index !== -1) bullets.splice(index, 1)
-            this.trail.dispose();
+        this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.physicsImpostor), (e1, e2) => {
+            let b1 = bullets.find(e => e == e1.object)
+            if (b1) b1.dispose()
 
-            this.shape.dispose();
-            this.dispose();
-            e1.dispose()
             createFire(e2.object);
             createSmoke(e2.object);
             // e2.object._children.forEach(m => {
@@ -100,13 +110,14 @@ class Bullet extends ObjectPos {
             // });
         })
 
-        this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.shape.physicsImpostor), (e1, e2) => {
+        this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.physicsImpostor), (e1, e2) => {
             let wall = walls.find(e => e.shape == e2.object)
             if (wall)
                 wall.destroy()
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
+
             if (this.collision == false) {
 
                 this.collision = true
@@ -115,21 +126,7 @@ class Bullet extends ObjectPos {
                 },
                     10);
             } else return
-            this.life -= 1;
-            bulletExplode(this.position, false).start();
-
-            if (this.life === 0) {
-                bulletExplode(this.position, true).start();
-                var index = bullets.indexOf(this)
-                if (index !== -1) {
-                    bullets.splice(index, 1)
-                }
-                this.trail.dispose();
-
-                this.shape.dispose();
-                this.dispose();
-                b.dispose()
-            }
+            this.dispose()
             return;
         }
     }
@@ -139,6 +136,12 @@ class Bullet extends ObjectPos {
         shape.material = createMaterial(scene, bulletImage.src);
 
         return shape;
+    }
+
+    dispose() {
+        super.dispose()
+        bulletExplode(this.position, this.life == 0).start();
+        this.trail.dispose()
     }
 
     // move() {

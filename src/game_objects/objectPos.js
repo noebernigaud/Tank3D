@@ -6,6 +6,9 @@ class ObjectPos extends BABYLON.Mesh {
   speedNorme;
   /** @type {BABYLON.Mesh} */
   shape;
+  /** @type {number} */
+  life;
+
 
   static counter = 0;
 
@@ -17,12 +20,13 @@ class ObjectPos extends BABYLON.Mesh {
    * @param {number} speedNorme 
    * @param {number} speedAngle 
    */
-  constructor(type, posX, posY, posZ, speedNorme, speedAngle) {
+  constructor(type, posX, posY, posZ, speedNorme, speedAngle, life = 1) {
     super('')
 
     var meshBabylon = true;
     let shape;
     this.type = type;
+    this.life = life;
 
     switch (type.name) {
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
@@ -138,7 +142,29 @@ class ObjectPos extends BABYLON.Mesh {
     child.rotation = this.rotation
   }
 
-  dispose() {
-    this.shape.dispose();
+  dispose(forceDispose) {
+    this.life--
+    if (forceDispose || this.life <= 0) {
+      let remove = (list) => {
+        var index = list.indexOf(this)
+        if (index !== -1) list.splice(index, 1)
+      }
+
+      switch (this.type.name) {
+        case ObjectEnum.Player.name: { remove(chars); break; }
+        case ObjectEnum.Hole.name: { remove(holes); break; }
+        case ObjectEnum.Bullet.name: { remove(bullets); break; }
+        case ObjectEnum.Wall.name:
+        case ObjectEnum.WallD.name: { remove(walls); break; }
+        case ObjectEnum.CharRed.name:
+        case ObjectEnum.CharBlue.name:
+        case ObjectEnum.CharGreen.name: { remove(charsAI); remove(chars); break; }
+        default: throw "Unknown object type (ObjectPos.dispose)";
+      }
+      this.physicsImpostor.dispose()
+      this.shape.dispose();
+    }
   }
+
+
 }

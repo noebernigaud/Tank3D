@@ -60,7 +60,6 @@ class Scene {
 
           let index = bullets.indexOf(bullet)
           if (index !== -1) bullets.splice(index, 1)
-          bullet.trail.dispose()
           bullet.dispose()
         }
       })

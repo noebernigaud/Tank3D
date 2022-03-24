@@ -10,7 +10,7 @@ class Hole extends ObjectPos {
      */
     constructor(x, y) {
         super(ObjectEnum.Hole, -width / 2 + x, Hole.height / 2, -height / 2 + y, 0, 0)
-        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 3000, restitution: 0.2 })
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 3000, restitution: 0.2 })
         // this.shape.getChildMeshes().forEach(e => e.material.emissiveColor = new BABYLON.Color3(1, 1, 1))
     }
 

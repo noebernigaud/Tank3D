@@ -12,8 +12,7 @@ class Char extends ObjectPos {
    * @param {HTMLImageElement} img 
    */
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
-    super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle);
-    this.life = life;
+    super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
@@ -46,7 +45,7 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
 
-    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
 
     //this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2 })
 
@@ -147,15 +146,15 @@ class Char extends ObjectPos {
   }
 
   moveTank(speed) {
-    this.shape.physicsImpostor.setAngularVelocity(
+    this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
     //BEGIN: CODE TO ADJUST THE VELOCITY TO OUR NEW DIRECTION
 
     //we register the linear velocity and apply an opposing force to stop it
-    let prevVel = this.shape.physicsImpostor.getLinearVelocity()
+    let prevVel = this.physicsImpostor.getLinearVelocity()
 
-    this.shape.physicsImpostor.applyForce(new BABYLON.Vector3(-prevVel.x * 300000,
+    this.physicsImpostor.applyForce(new BABYLON.Vector3(-prevVel.x * 300000,
       0, -prevVel.z * 300000
     ), this.shape.position)
 
@@ -168,7 +167,7 @@ class Char extends ObjectPos {
 
     //we give back the force for previous velocity in the right direction using the current
     //direction's normalized vector and multiplying it by the previous velocity's power
-    this.shape.physicsImpostor.applyForce(new BABYLON.Vector3(
+    this.physicsImpostor.applyForce(new BABYLON.Vector3(
       coeff * 260000 * normalizedDir.x,
       0,
       coeff * 260000 * normalizedDir.z
@@ -179,15 +178,15 @@ class Char extends ObjectPos {
     //add new force when asking the tank to move
     let frontVec = this.shape.getDirection(BABYLON.Axis.Z)
     let moveVec = frontVec.scale(speed * 80000)
-    let realVec = new BABYLON.Vector3(moveVec.x, this.shape.physicsImpostor.getLinearVelocity().y, moveVec.z)
-    this.shape.physicsImpostor.applyForce(realVec, this.shape.position)
+    let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
+    this.physicsImpostor.applyForce(realVec, this.shape.position)
     // console.log("linear velocity: ", this.shape.physicsImpostor.getLinearVelocity())
   }
 
   stabilizeTank(hasFriction = true) {
     // this.shape.physicsImpostor.friction = 0.2
-    this.shape.physicsImpostor.dispose()
-    this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
+    this.physicsImpostor.dispose()
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
   }
 
   destroyTank(isDisabled) {

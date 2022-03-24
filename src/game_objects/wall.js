@@ -15,16 +15,12 @@ class Wall {
         // super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2, -height / 2 + y)
-        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.1, friction: 0 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.1, friction: 0 });
         // this.shape.showBoundingBox = true
     }
 
     destroy() {
-        if (this.destructable === true) {
-            let position = walls.indexOf(this);
-            this.shape.dispose();
-            walls.splice(position, 1);
-        }
+        if (this.destructable) this.dispose()
     }
 
     createShape() {
@@ -34,7 +30,10 @@ class Wall {
     }
 
     dispose() {
-        this.shape.dispose()
+        let position = walls.indexOf(this);
+        this.shape.dispose();
+        this.physicsImpostor.dispose();
+        walls.splice(position, 1);
     }
 }
 
@@ -44,7 +43,7 @@ class WallPerimeter {
         this.depth = depth * cell_size;
         this.shape = this.createShape();
         this.shape.position = new BABYLON.Vector3(x * cell_size, Wall.height / 2, y * cell_size)
-        this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
         // this.shape.showBoundingBox = true
     }
 
@@ -55,7 +54,11 @@ class WallPerimeter {
     }
 
     dispose() {
-        this.shape.dispose()
+
+        let position = walls.indexOf(this);
+        this.shape.dispose();
+        this.physicsImpostor.dispose();
+        walls.splice(position, 1);
     }
 
     destroy() { }
