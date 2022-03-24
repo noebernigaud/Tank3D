@@ -106,7 +106,7 @@ class Bullet extends ObjectPos {
 
     dispose(forceDispose = false) {
         super.dispose(forceDispose)
-        this.trail.dispose()
+        if (this.life <= 0 || forceDispose) this.trail.dispose()
         if (forceDispose) return;
         bulletExplode(this.position, this.life == 0).start();
 
