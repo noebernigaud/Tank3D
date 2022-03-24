@@ -92,11 +92,14 @@ const level_map = [
     ],
 ]
 
+var current_level_number;
+
 /**
  * @param {number} lvl_number 
  */
 function draw_level_map(lvl_number) {
     current_level = level_map[lvl_number];
+    current_level_number = lvl_number;
     char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
 
     for (var [l_index, line] of current_level.entries()) {
@@ -156,4 +159,5 @@ function draw_level_map(lvl_number) {
     walls.push(new WallPerimeter(width / 2, 0, 1, height + 1))
     walls.push(new WallPerimeter(0, height / 2, width - 1, 1))
     walls.push(new WallPerimeter(0, -height / 2, width - 1, 1))
+
 }

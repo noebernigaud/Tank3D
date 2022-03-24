@@ -22,7 +22,7 @@ class Scene {
     engine = this.engine;
     engine.displayLoadingUI();
     this.scene = this.createScene();
-    new Menu()
+    this.menu = new Menu()
     this.setPhysic()
     this.setGround()
     this.setShadow()
@@ -40,8 +40,6 @@ class Scene {
     // )
 
 
-
-
   }
 
   /**
@@ -49,6 +47,7 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
+
 
     scene.beforeRender = () => {
       bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
@@ -73,6 +72,21 @@ class Scene {
         level += 1;
         remove_all_objects()
         startgame(level);
+      }
+      charsAI.forEach(c => {
+        if (c.life <= 0) {
+          let index = chars.indexOf(c)
+          if (index !== -1) chars.splice(index, 1)
+          index = charsAI.indexOf(c)
+          if (index !== -1) charsAI.splice(index, 1)
+          c.dispose()
+        }
+      })
+      if (char1.life <= 0) {
+        level = 0;
+        remove_all_objects()
+        startgame(level);
+        this.menu.createButton()
       }
       //charsAI.forEach(c => MoveAI.move(c));
       charsAI.forEach(c => c.strategy.applyStrategy())

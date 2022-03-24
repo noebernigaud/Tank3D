@@ -11,8 +11,9 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle);
+    this.life = life;
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
@@ -23,9 +24,22 @@ class Char extends ObjectPos {
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
-      engine.runRenderLoop(() =>
+      engine.runRenderLoop(() => {
+
         scene.render()
+
+        //A corriger !!!!
+
+        if (current_level_number == 0) {
+          setTimeout(() => {
+            engine.stopRenderLoop()
+          },
+            1000);
+        }
+
+      }
       )
+
     }
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;

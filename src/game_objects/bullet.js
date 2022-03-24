@@ -50,17 +50,18 @@ class Bullet extends ObjectPos {
             var index = bullets.indexOf(this)
             if (index !== -1) bullets.splice(index, 1)
             let char = chars.find(e => e.shape == e2.object)
-            index = chars.indexOf(char)
-            if (index !== -1) chars.splice(index, 1)
-            index = charsAI.indexOf(char)
-            if (index !== -1) charsAI.splice(index, 1)
+            char.life -= 1;
+            // index = chars.indexOf(char)
+            // if (index !== -1) chars.splice(index, 1)
+            // index = charsAI.indexOf(char)
+            // if (index !== -1) charsAI.splice(index, 1)
             // clearInterval(char.strategy.intervalStratShoot)
             this.trail.dispose();
             this.dispose();
             var index = bullets.indexOf(e2)
             if (index !== -1) bullets.splice(index, 1)
 
-            e2.object.dispose();
+            // e2.object.dispose();
         })
         this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
             var index = bullets.indexOf(x)

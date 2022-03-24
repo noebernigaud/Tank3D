@@ -133,6 +133,7 @@ function init() {
 
     playing = 0;
 
+
     // level = 0;
 
     // canvas.addEventListener('mousemove', (evt) => {
