@@ -107,7 +107,6 @@ class Bullet extends ObjectPos {
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
-            console.log(b._isDisposed, w._isDisposed)
             if (this.collision == false) {
 
                 this.collision = true

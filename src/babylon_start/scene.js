@@ -82,7 +82,7 @@ class Scene {
           c.dispose()
         }
       })
-      if (char1.life <= 0) {
+      if (char1.life <= 0 || current_level_number == 5) {
         level = 0;
         remove_all_objects()
         startgame(level);

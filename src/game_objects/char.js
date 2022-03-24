@@ -28,13 +28,13 @@ class Char extends ObjectPos {
 
         scene.render()
 
-        //A corriger !!!!
-
         if (current_level_number == 0) {
           setTimeout(() => {
+
             engine.stopRenderLoop()
           },
-            1000);
+
+            500);
         }
 
       }

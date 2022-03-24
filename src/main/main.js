@@ -239,6 +239,7 @@ function remove_all_objects() {
     allElts.forEach(e => {
         if (e.type == ObjectEnum.Bullet.name) {
             e.shape.physicsImpostor.dispose()
+            e.shape.trail.dispose()
         }
         e.dispose()
     })
