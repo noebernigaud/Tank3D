@@ -92,3 +92,5 @@ let bulletDestroyedSound = new Audio('audio/Collision8-Bit.ogg');
 let minePlacedSound = new Audio('audio/mineplace.wav');
 
 let applauseSound = new Audio('audio/Human-Applause-LargeCrowd01.mp3');
+
+var impostorCharList = [];

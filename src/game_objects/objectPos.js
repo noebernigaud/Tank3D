@@ -145,20 +145,16 @@ class ObjectPos extends BABYLON.Mesh {
   dispose(forceDispose) {
     this.life--
     if (forceDispose || this.life <= 0) {
-      let remove = (list) => {
-        var index = list.indexOf(this)
-        if (index !== -1) list.splice(index, 1)
-      }
 
       switch (this.type.name) {
-        case ObjectEnum.Player.name: { remove(chars); break; }
-        case ObjectEnum.Hole.name: { remove(holes); break; }
-        case ObjectEnum.Bullet.name: { remove(bullets); break; }
+        case ObjectEnum.Hole.name: { remove(holes, this); break; }
+        case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
         case ObjectEnum.Wall.name:
-        case ObjectEnum.WallD.name: { remove(walls); break; }
+        case ObjectEnum.WallD.name: { remove(walls, this); break; }
         case ObjectEnum.CharRed.name:
         case ObjectEnum.CharBlue.name:
-        case ObjectEnum.CharGreen.name: { remove(charsAI); remove(chars); break; }
+        case ObjectEnum.CharGreen.name: { remove(charsAI, this); }
+        case ObjectEnum.Player.name: { remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         default: throw "Unknown object type (ObjectPos.dispose)";
       }
       this.physicsImpostor.dispose()

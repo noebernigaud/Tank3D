@@ -66,3 +66,8 @@ function createRay(origin, dir, length, disposeTime = 5) {
 
     return pickInfo.pickedMesh
 }
+
+var remove = (list, elt) => {
+    var index = list.indexOf(elt)
+    if (index !== -1) list.splice(index, 1)
+}

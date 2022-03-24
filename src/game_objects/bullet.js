@@ -1,5 +1,6 @@
 class Bullet extends ObjectPos {
 
+
     static diameter = 20 / 40;
     /**
      * 
@@ -45,51 +46,15 @@ class Bullet extends ObjectPos {
     }
 
     createCollider() {
-        this.physicsImpostor.registerOnPhysicsCollide(chars.map(x => x.physicsImpostor), (e1, e2) => {
+        this.physicsImpostor.registerOnPhysicsCollide(impostorCharList, (e1, e2) => {
             let b1 = bullets.find(e => e == e1.object)
             let c1 = chars.find(e => e.shape == e2.object)
 
-
-
             if (b1) b1.dispose()
             if (c1) c1.dispose()
-            // return;
-            // var index = bullets.indexOf(this)
-            // if (index !== -1) bullets.splice(index, 1)
-            // let char = chars.find(e => e.shape == e2.object)
-            // char.life -= 1;
-            // // index = chars.indexOf(char)
-            // // if (index !== -1) chars.splice(index, 1)
-            // // index = charsAI.indexOf(char)
-            // // if (index !== -1) charsAI.splice(index, 1)
-            // // clearInterval(char.strategy.intervalStratShoot)
-            // this.trail.dispose();
-
-            // this.shape.dispose();
-            // e1.dispose()
-            // this.dispose();
-            // // var index = bullets.indexOf(e2)
-            // // if (index !== -1) bullets.splice(index, 1)
-
-            // // e2.object.dispose();
         })
+
         this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
-            // var index = bullets.indexOf(x)
-            // if (x !== -1) bullets.splice(x, 1)
-
-
-            // var index = bullets.indexOf(this)
-            // if (index !== -1) bullets.splice(index, 1)
-
-            // e1.object.dispose();
-            // e1.dispose()
-
-            // this.shape.dispose();
-
-            // this.dispose();
-            // e2.object.dispose();
-            // e2.dispose()
-
             let b1 = bullets.find(e => e == e1.object)
             let b2 = bullets.find(e => e == e2.object)
 
@@ -97,6 +62,7 @@ class Bullet extends ObjectPos {
             if (b2) b2.dispose()
 
         })
+
         this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.physicsImpostor), (e1, e2) => {
             let b1 = bullets.find(e => e == e1.object)
             if (b1) b1.dispose()

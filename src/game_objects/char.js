@@ -46,10 +46,7 @@ class Char extends ObjectPos {
     this.bulletSpeed = bulletSpeed;
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
-
-    //this.shape.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2 })
-
-    //this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.1 })
+    impostorCharList.push(this.physicsImpostor)
   }
 
   moveForeward(coeff) {
@@ -128,12 +125,13 @@ class Char extends ObjectPos {
   }
 
   rotateAxisY(angle) {
+    if (this.life <= 0) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
     this.rotateTurretAxisY(-angle)
   }
 
   rotateTurretAxisY(angle) {
-    this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    if (this.life > 0) this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
   }
 
   moveTankForeward() {
@@ -146,6 +144,7 @@ class Char extends ObjectPos {
   }
 
   moveTank(speed) {
+    if (this.life <= 0) return
     this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
@@ -184,9 +183,10 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank(hasFriction = true) {
-    // this.shape.physicsImpostor.friction = 0.2
+    remove(impostorCharList, this.physicsImpostor)
     this.physicsImpostor.dispose()
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
+    impostorCharList.push(this.physicsImpostor)
   }
 
   destroyTank(isDisabled) {
