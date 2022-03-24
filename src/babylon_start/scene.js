@@ -22,6 +22,7 @@ class Scene {
     engine = this.engine;
     engine.displayLoadingUI();
     this.scene = this.createScene();
+    new Menu()
     this.setPhysic()
     this.setGround()
     this.setShadow()

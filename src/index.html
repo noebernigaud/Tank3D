@@ -23,6 +23,7 @@
     <script src="babylon_start/particles.js"></script>
     <script src="babylon_start/opponent_vehicle.js"></script>
     <script src="babylon_start/model_loader.js"></script>
+    <script src="babylon_start/GUI.js"></script>
 
     <script src="levels/levels.js"></script>
 
@@ -50,20 +51,11 @@
 
     <!-- <body> -->
     <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
-    <canvas id="myCanvas" width="1000" height="600"></canvas>
-    <canvas id="myCanvas1" width="1000" height="600" style="display:none;"></canvas>
-    <p>Tir avec click souris, mines avec espace, déplacement avec ZQSD.</p>
-    <label>Multiplicateur temps de rechargement entre les tirs :
-        <input id="multReload" type="number" value="1" step="0.2" min="0" max="4">
-    </label>
-    <label>Multiplicateur vitesse tank hero:
-        <input id="mutlvit" type="number" value="1" step="0.2" min="0.2" max="4">
-    </label>
+    <canvas id="myCanvas" style="height: 100%; width: 100%; display: block;"></canvas>
     <script src="babylon_start/scene.js">
     </script>
     <script>
         new Scene();
-        //init();
     </script>
 </body>
 
