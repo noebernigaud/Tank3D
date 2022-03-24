@@ -33,7 +33,7 @@ class Char extends ObjectPos {
             engine.stopRenderLoop()
           },
 
-            40);
+            400);
         }
 
       }
