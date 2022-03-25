@@ -24,7 +24,9 @@ class Bullet extends ObjectPos {
         let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
         this.physicsImpostor.setLinearVelocity(realVec)
+
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
+
         // this.physicsImpostor.restitution = 1;
         // this.physicsImpostor.mass = 1;
         this.physicsImpostor.friction = 0;
@@ -83,15 +85,15 @@ class Bullet extends ObjectPos {
         })
 
         this.physicsImpostor.onCollideEvent = (b, w) => {
-
             if (this.collision == false) {
-
                 this.collision = true
                 setTimeout(() => {
                     this.collision = false
-                },
-                    10);
+                }, 10);
             } else return
+            if (bullets.includes(w.object)) {
+                return;
+            }
             this.dispose()
             return;
         }

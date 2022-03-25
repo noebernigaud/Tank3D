@@ -243,7 +243,6 @@ function remove_all_objects() {
     mines = [];
     chars = [];
     charsAI = [];
-    engine.stopRenderLoop()
 }
 
 //ANIMATION

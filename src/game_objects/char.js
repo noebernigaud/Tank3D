@@ -23,22 +23,7 @@ class Char extends ObjectPos {
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
-      engine.runRenderLoop(() => {
-
-        scene.render()
-
-        if (level == 0) {
-          setTimeout(() => {
-
-            engine.stopRenderLoop()
-          },
-
-            400);
-        }
-
-      }
-      )
-
+      // engine.runRenderLoop(() => scene.render())
     }
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
