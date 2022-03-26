@@ -16,8 +16,8 @@ class Char extends ObjectPos {
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
-      camera1.radius = 10;
-      camera1.heightOffset = 5;
+      camera1.radius = 5;
+      camera1.heightOffset = 2;
       camera1.rotationOffset = 180;
       camera1.cameraAcceleration = .1;
       camera1.maxCameraSpeed = 10;
