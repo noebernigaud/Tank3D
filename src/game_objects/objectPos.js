@@ -50,7 +50,7 @@ class ObjectPos extends BABYLON.Mesh {
       });
 
       // TODO RENAME OBJECT.PLAYER in this.type
-      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2, posZ);
+      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2 + 5, posZ);
       shape.position = this.position;
 
       this.shape = shape;

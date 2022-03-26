@@ -136,15 +136,52 @@ class Scene {
   }
 
   setGround() {
-    ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    var grass = new BABYLON.StandardMaterial("groundMat", scene);
-    grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
-    ground.material = grass
-    grass.specularColor = new BABYLON.Color3(0, 0, 0)
+    // ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    // var grass = new BABYLON.StandardMaterial("groundMat", scene);
+    // grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
+    // ground.material = grass
+    // grass.specularColor = new BABYLON.Color3(0, 0, 0)
 
-    ground.checkCollisions = true;
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
-    ground.receiveShadows = true
+    // ground.checkCollisions = true;
+    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
+    // ground.receiveShadows = true
+
+    const groundOptions = {
+      width: width + cell_size,
+      height: height + cell_size,
+      subdivisions: 4,
+      minHeight: -1,
+      maxHeight: 0,
+      onReady: onGroundCreated,
+    };
+    //scene is optional and defaults to the current scene
+    ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      "images/hmap2.jpg",
+      groundOptions,
+      scene
+    );
+
+    function onGroundCreated() {
+      const groundMaterial = new BABYLON.StandardMaterial(
+        "groundMaterial",
+        scene
+      );
+      groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.png");
+      ground.material = groundMaterial;
+      // to be taken into account by collision detection
+      ground.checkCollisions = true;
+      //groundMaterial.wireframe=true;
+
+      // for physic engine
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(
+        ground,
+        BABYLON.PhysicsImpostor.HeightmapImpostor,
+        { mass: 0 },
+        scene
+      );
+    }
+    return ground;
   }
 
   setShadow() {

@@ -1,5 +1,5 @@
-var cell_x_number = 25;
-var cell_y_number = 15;
+var cell_x_number = 40;
+var cell_y_number = 40;
 
 var cell_size = 1;
 
