@@ -144,12 +144,11 @@ class Scene {
 
     // ground.checkCollisions = true;
     // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
-    // ground.receiveShadows = true
 
     const groundOptions = {
       width: width + cell_size,
       height: height + cell_size,
-      subdivisions: 4,
+      subdivisions: 32,
       minHeight: -1,
       maxHeight: 0,
       onReady: onGroundCreated,
@@ -169,6 +168,9 @@ class Scene {
       );
       groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.png");
       ground.material = groundMaterial;
+
+      ground.receiveShadows = true
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
       // to be taken into account by collision detection
       ground.checkCollisions = true;
       //groundMaterial.wireframe=true;
@@ -181,6 +183,7 @@ class Scene {
         scene
       );
     }
+
     return ground;
   }
 
