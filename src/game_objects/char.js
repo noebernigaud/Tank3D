@@ -47,6 +47,8 @@ class Char extends ObjectPos {
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
     impostorCharList.push(this.physicsImpostor)
+    this.exhaustPipeLeft = createSmoke(this.shape, false, true)
+    this.exhaustPipeRight = createSmoke(this.shape, true, true)
   }
 
   moveForeward(coeff) {
@@ -146,6 +148,7 @@ class Char extends ObjectPos {
 
   moveTank(speed) {
     if (this.life <= 0) return
+    this.movingSmoke(true)
     this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
@@ -188,6 +191,7 @@ class Char extends ObjectPos {
     this.physicsImpostor.dispose()
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
     impostorCharList.push(this.physicsImpostor)
+    this.movingSmoke(false)
   }
 
   destroyTank(isDisabled) {
@@ -214,4 +218,19 @@ class Char extends ObjectPos {
   applyStrategy() {
     this.strategy.applyStrategy()
   }
+
+  movingSmoke(isMoving) {
+    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.1 : 0.005;
+    this.exhaustPipeRight.updateSpeed = isMoving ? 0.1 : 0.005;
+    this.exhaustPipeLeft.maxLifeTime = isMoving ? 0.4 : 0.2;
+    this.exhaustPipeRight.maxLifeTime = isMoving ? 0.4 : 0.2;
+
+    this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
+    this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
+    this.exhaustPipeLeft.emitRate = isMoving ? 500 : 300;
+    this.exhaustPipeRight.emitRate = isMoving ? 500 : 300;
+    this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
+    this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
+  }
+
 }
