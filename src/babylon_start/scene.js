@@ -148,7 +148,7 @@ class Scene {
     const groundOptions = {
       width: width + cell_size,
       height: height + cell_size,
-      subdivisions: 32,
+      subdivisions: 80,
       minHeight: -1,
       maxHeight: 0,
       onReady: onGroundCreated,
@@ -156,7 +156,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "images/hmap2.jpg",
+      "textures/ground.png",
       groundOptions,
       scene
     );
@@ -166,7 +166,7 @@ class Scene {
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.png");
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse.png");
       ground.material = groundMaterial;
 
       ground.receiveShadows = true

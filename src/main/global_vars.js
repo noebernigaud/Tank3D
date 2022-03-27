@@ -82,8 +82,8 @@ mineImage.src = './images/minemine.png';
 let explosionSound = new Audio('audio/Explosion2.wav');
 explosionSound.volume = 0.2;
 
-let bulletFiredSound = new Audio('audio/Crush8-Bit.ogg');
-bulletFiredSound.volume = 0.5;
+let bulletFiredSound = new Audio('audio/Explosion2.wav');
+bulletFiredSound.volume = 0.2;
 
 let bulletBounceSound = new Audio('audio/plop.mp3');
 
