@@ -34,6 +34,7 @@ class Char extends ObjectPos {
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
+    this.dust = createDust(this.shape)
   }
 
   moveForeward(coeff) {
@@ -134,6 +135,7 @@ class Char extends ObjectPos {
   moveTank(speed) {
     if (this.life <= 0) return
     this.movingSmoke(true)
+    this.dust.start();
     this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
@@ -177,6 +179,7 @@ class Char extends ObjectPos {
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
+    this.dust.stop();
   }
 
   destroyTank(isDisabled) {
