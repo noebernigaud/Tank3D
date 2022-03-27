@@ -92,34 +92,55 @@ function bulletExplode(position, isExploding, isCanonFire) {
     return particleSystem;
 }
 
-function createSmoke(emitter) {
+function createSmoke(emitter, isRight = false, isMoving = false) {
+    const box = BABYLON.MeshBuilder.CreateBox("smokeTank", { size: 0.05 });
+    box.parent = emitter
+    box.position.z -= 0.95
+    box.position.y += 0.18
+    box.position.x += isRight ? 0.12 : -0.08
+    box.isVisible = false
     // Create a particle system
-    var particleSystem = new BABYLON.ParticleSystem("particles", 8000);
+    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 500 : 8000);
 
     // Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/smoke.png");
 
     // lifetime
-    particleSystem.minLifeTime = 2;
-    particleSystem.maxLifeTime = 5;
+    particleSystem.minLifeTime = isMoving ? 0.1 : 2;
+    particleSystem.maxLifeTime = isMoving ? 0.2 : 5;
 
     // Emit rate
-    particleSystem.emitRate = 200;
+    particleSystem.emitRate = isMoving ? 300 : 200;
 
     // Gravity
-    particleSystem.gravity = new BABYLON.Vector3(0.25, 4, 0);
+    particleSystem.gravity = new BABYLON.Vector3(0.25, isMoving ? 8 : 4, 0);
 
     // Size gradient
-    particleSystem.addSizeGradient(0, 0.6 / 20, 1 / 20);
-    particleSystem.addSizeGradient(0.3 / 20, 1 / 20, 2 / 20);
-    particleSystem.addSizeGradient(0.5 / 20, 2 / 20, 3 / 20);
-    particleSystem.addSizeGradient(1.0 / 20, 6 / 20, 8 / 20);
+    if (isMoving) {
+        particleSystem.addSizeGradient(0, 0.1 / 20, 0.2 / 20);
+        particleSystem.addSizeGradient(0.05 / 20, 0.15 / 20, 0.3 / 20);
+        particleSystem.addSizeGradient(0.1 / 20, 0.3 / 20, 0.5 / 20);
+        particleSystem.addSizeGradient(0.15 / 20, 1 / 20, 1.2 / 20);
+    } else {
+        particleSystem.addSizeGradient(0, 0.6 / 20, 1 / 20);
+        particleSystem.addSizeGradient(0.3 / 20, 1 / 20, 2 / 20);
+        particleSystem.addSizeGradient(0.5 / 20, 2 / 20, 3 / 20);
+        particleSystem.addSizeGradient(1.0 / 20, 6 / 20, 8 / 20);
+    }
 
     // Color gradient
-    particleSystem.addColorGradient(0, new BABYLON.Color4(0.5, 0.5, 0.5, 0), new BABYLON.Color4(0.8, 0.8, 0.8, 0));
-    particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.1, 0.1, 0.1, 0.1), new BABYLON.Color4(0.4, 0.4, 0.4, 0.4));
-    particleSystem.addColorGradient(0.7, new BABYLON.Color4(0.03, 0.03, 0.03, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.4));
-    particleSystem.addColorGradient(1.0, new BABYLON.Color4(0.0, 0.0, 0.0, 0), new BABYLON.Color4(0.03, 0.03, 0.03, 0));
+
+    if (isMoving) {
+        particleSystem.addColorGradient(0, new BABYLON.Color4(0.4, 0.4, 0.4, 0), new BABYLON.Color4(0.6, 0.6, 0.6, 0.5));
+        particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.2, 0.2, 0.2, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.1));
+        particleSystem.updateSpeed = 0.005;
+    }
+    else {
+        particleSystem.addColorGradient(0, new BABYLON.Color4(0.5, 0.5, 0.5, 0), new BABYLON.Color4(0.8, 0.8, 0.8, 0));
+        particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.1, 0.1, 0.1, 0.1), new BABYLON.Color4(0.4, 0.4, 0.4, 0.4));
+        particleSystem.addColorGradient(0.7, new BABYLON.Color4(0.03, 0.03, 0.03, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.4));
+        particleSystem.addColorGradient(1.0, new BABYLON.Color4(0.0, 0.0, 0.0, 0), new BABYLON.Color4(0.03, 0.03, 0.03, 0));
+    }
 
     // Speed gradient
     particleSystem.addVelocityGradient(0, 1, 1.5);
@@ -134,8 +155,8 @@ function createSmoke(emitter) {
     particleSystem.maxAngularSpeed = 1;
 
     // Size
-    particleSystem.minSize = 15 / 40;
-    particleSystem.maxSize = 25 / 40;
+    particleSystem.minSize = isMoving ? 0.1 : 0.375;
+    particleSystem.maxSize = isMoving ? 0.2 : 0.625;
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
@@ -144,12 +165,12 @@ function createSmoke(emitter) {
     //var sphereEmitter = particleSystem.createSphereEmitter(0.1);
 
     // Where the particles come from
-    particleSystem.emitter = emitter; // the starting object
-    particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3);
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3);
+    particleSystem.emitter = isMoving ? box : emitter; // the starting object
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3).scale(isMoving ? 0.08 : 1);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3).scale(isMoving ? 0.08 : 1);
 
 
-    particleSystem.targetStopDuration = 3;
+    if (!isMoving) particleSystem.targetStopDuration = 12;
     particleSystem.disposeOnStop = true;
 
     particleSystem.start();
