@@ -193,8 +193,8 @@ class Scene {
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)
     shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurScale = 1;
-    shadowGenerator.setDarkness(0.2);
+    shadowGenerator.blurScale = 0.5;
+    shadowGenerator.setDarkness(0.3);
   }
 
 
