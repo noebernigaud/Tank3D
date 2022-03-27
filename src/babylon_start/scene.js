@@ -12,6 +12,7 @@ var opponentMaterials;
 var engine;
 var shadowGenerator;
 var tanksAIReady;
+var inMenu = true;
 
 class Scene {
 
@@ -20,6 +21,19 @@ class Scene {
     this.engine = new BABYLON.Engine(canvas, true);
 
     engine = this.engine;
+
+    // window.addEventListener("resize", () => {
+    //   engine.resize()
+    // })
+
+    window.onresize = function () {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      engine.resize();
+    }
+
+    window.onresize()
+
     engine.displayLoadingUI();
     this.scene = this.createScene();
     this.menu = new Menu()
@@ -47,49 +61,52 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
+    engine.runRenderLoop(() => scene.render())
 
 
     scene.beforeRender = () => {
-      bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
-      bullets.forEach(bullet => {
-        if (bullet.position.x <= ground.position.x - width / 2 ||
-          bullet.position.x >= ground.position.x + width / 2 ||
-          bullet.position.z <= ground.position.z - height / 2 ||
-          bullet.position.z >= ground.position.z + height / 2) {
+      if (!inMenu) {
+        bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
-          let index = bullets.indexOf(bullet)
-          if (index !== -1) bullets.splice(index, 1)
-          bullet.dispose()
+        bullets.forEach(bullet => {
+          if (bullet.position.x <= ground.position.x - width / 2 ||
+            bullet.position.x >= ground.position.x + width / 2 ||
+            bullet.position.z <= ground.position.z - height / 2 ||
+            bullet.position.z >= ground.position.z + height / 2) {
+
+            let index = bullets.indexOf(bullet)
+            if (index !== -1) bullets.splice(index, 1)
+            bullet.dispose()
+          }
+        })
+        // charsAI.forEach(c => MoveAI.move(c));
+        // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
+        anime()
+        //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
+        if (charsAI.length == 0) {
+          level += 1;
+          remove_all_objects()
+          startgame(level);
         }
-      })
-      // charsAI.forEach(c => MoveAI.move(c));
-      // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
-      anime()
-      //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
-      if (charsAI.length == 0) {
-        level += 1;
-        remove_all_objects()
-        startgame(level);
-      }
-      charsAI.forEach(c => {
-        if (c.life <= 0) {
-          let index = chars.indexOf(c)
-          if (index !== -1) chars.splice(index, 1)
-          index = charsAI.indexOf(c)
-          if (index !== -1) charsAI.splice(index, 1)
-          c.dispose()
+        charsAI.forEach(c => {
+          if (c.life <= 0) {
+            let index = chars.indexOf(c)
+            if (index !== -1) chars.splice(index, 1)
+            index = charsAI.indexOf(c)
+            if (index !== -1) charsAI.splice(index, 1)
+            c.dispose()
+          }
+        })
+        if (char1.life <= 0 || level == level_map.length) {
+          level = 0;
+          remove_all_objects()
+          startgame(level);
+          this.menu.createButton()
         }
-      })
-      if (char1.life <= 0 || level == level_map.length) {
-        level = 0;
-        engine.stopRenderLoop()
-        remove_all_objects()
-        startgame(level);
-        this.menu.createButton()
+        //charsAI.forEach(c => MoveAI.move(c));
+        charsAI.forEach(c => c.strategy.applyStrategy())
       }
-      //charsAI.forEach(c => MoveAI.move(c));
-      charsAI.forEach(c => c.strategy.applyStrategy())
     }
     return scene;
   }
@@ -205,3 +222,9 @@ class Scene {
   //   });
   // }
 }
+// /** @type{BABYLON.Scene} */
+// let scene2;
+// let createScene2 = () => {
+//   scene2 = new BABYLON.Scene(engine);
+//   camera2 = new BABYLON.CAMERA("camera2", new )
+// }

@@ -5,6 +5,7 @@ class Menu {
     }
 
     createButton() {
+        inMenu = true;
         let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         let button1 = BABYLON.GUI.Button.CreateSimpleButton("button1", "Play");
 
@@ -16,7 +17,7 @@ class Menu {
         button1.background = "green";
         button1.onPointerUpObservable.add(function () {
             button.dispose()
-            engine.runRenderLoop(() => scene.render())
+            inMenu = false;
         });
         advancedTexture.addControl(button1);
     }
