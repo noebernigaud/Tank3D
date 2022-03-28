@@ -236,7 +236,7 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars, ...bonuses]
+    let allElts = [...walls, ...holes, ...bullets, ...mines, ...bonuses]
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
