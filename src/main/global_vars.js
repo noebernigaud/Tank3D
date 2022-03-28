@@ -6,6 +6,13 @@ var cell_size = 1;
 var width = cell_x_number * cell_size;
 var height = cell_y_number * cell_size;
 
+var char1_status = {
+    bonus_speed: 0,
+    bonus_life: 0,
+    bonus_speedBullet: 0,
+    bonus_timeBetweenBullet: 0
+}
+
 /** @type {BABYLON.Scene} */
 var scene;
 

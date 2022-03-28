@@ -24,7 +24,7 @@ const level_map = [
         "--------W--W-----------",
         "-----P-----w------R----",
         "-----------w-----------",
-        "--------W--W-----------",
+        "-----c--W--W-----------",
         "-----------------------",
         "-----------------------",
         "-----------------------",
@@ -135,6 +135,9 @@ function draw_level_map(lvl_number) {
                     break;
                 case 'w':
                     walls.push(new Wall(posX, posY, true));
+                    break;
+                case 'c':
+                    bonuses.push(new Bonus(posX, posY));
                     break;
                 case 'P':
                     char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2, -height / 2 + posY)
