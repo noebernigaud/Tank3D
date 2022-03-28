@@ -1,45 +1,45 @@
 canTire = true;
 // INITIALISATION
-function keyListener(evt, isPressed) {
+function keyListener(evt, isDown) {
     // tirer
     if (evt.code === "Space") {
-        inputStates.mouseclick = isPressed;
+        inputStates.mouseclick = isDown;
     }
     // tourelle
     else if (evt.code === "KeyA") {
-        inputStates.keyA = isPressed;
+        inputStates.keyA = isDown;
     } else if (evt.code === "KeyD") {
-        inputStates.keyD = isPressed;
+        inputStates.keyD = isDown;
     }
     // ??
     else if (evt.code === "KeyW") {
-        inputStates.keyW = isPressed;
+        inputStates.keyW = isDown;
     } else if (evt.code === "KeyS") {
-        inputStates.keyS = isPressed;
+        inputStates.keyS = isDown;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyL") {
-        inputStates.keyL = isPressed;
+        inputStates.keyL = isDown;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyX") {
-        inputStates.keyX = isPressed;
+        inputStates.keyX = isDown;
     }
     // rotation 
     else if (evt.keyCode == 37) {
-        inputStates.rot_minus = isPressed;
+        inputStates.rot_minus = isDown;
     } else if (evt.keyCode == 39) {
-        inputStates.rot_plus = isPressed;
+        inputStates.rot_plus = isDown;
     }
     // deplacement du char
     else if (evt.keyCode == 38) {
-        if (!isPressed) char1.stabilizeTank()
+        if (!isDown) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
-        inputStates.foreward = isPressed;
+        inputStates.foreward = isDown;
     } else if (evt.keyCode == 40) {
-        if (!isPressed) char1.stabilizeTank()
+        if (!isDown) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
-        inputStates.backward = isPressed;
+        inputStates.backward = isDown;
     } else if (evt.code == "KeyQ" && canTire) {
         canTire = false
         let length = 1000;
@@ -61,6 +61,14 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (evt.keyCode === 27) {
+        if (isDown && scene.menu.canBeSwitched) {
+            scene.menu.show(!scene.menu.isShown)
+            scene.menu.canBeSwitched = false
+        }
+        if (!isDown) {
+            scene.menu.canBeSwitched = true
+        }
     }
 }
 
@@ -125,6 +133,8 @@ function keyApplaier() {
         playSmoke(smok)
         createFire(char1.shape);
     }
+
+
 }
 
 function init() {
