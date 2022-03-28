@@ -103,7 +103,7 @@ class Scene {
           level = 0;
           remove_all_objects()
           startgame(level);
-          this.menu.createButton()
+          this.scene.menu.createButton()
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())

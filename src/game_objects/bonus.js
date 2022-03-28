@@ -23,11 +23,22 @@ class Bonus extends ObjectPos {
             let b1 = bonuses.find(e => e == e1.object)
             if (e2.object == char1.shape) {
                 if (b1) {
-                    scene.menu.bonusChoice(["a", "b", "c"])
+                    scene.menu.bonusChoice(this.randomBonus(3))
                     b1.dispose(true);
                 }
             }
         }
+    }
+
+    randomBonus(num) {
+        var res = []
+        var copy_bonusEnum = BonusEnum.bonusEnumList.slice()
+        for (var i = 0; i < num; i++) {
+            var rand = Math.floor(Math.random() * copy_bonusEnum.length)
+            res.push(copy_bonusEnum[rand])
+            copy_bonusEnum.splice(rand, 1)
+        }
+        return res
     }
 
     createShape() {

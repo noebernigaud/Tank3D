@@ -35,7 +35,7 @@ class Menu {
         advancedTexture.addControl(panel);
 
         bonusListe.forEach(bonus => {
-            var button_bonus = BABYLON.GUI.Button.CreateSimpleButton("bonus", bonus);
+            var button_bonus = BABYLON.GUI.Button.CreateSimpleButton("bonus", bonus.name);
             button_bonus.width = "400px";
             button_bonus.height = "300px";
             button_bonus.color = "white";
@@ -44,7 +44,7 @@ class Menu {
             button_bonus.paddingRight = "20px";
             panel.addControl(button_bonus);
             button_bonus.onPointerUpObservable.add(function () {
-                char1.speedNorme *= 2
+                bonus.effect();
                 panel.dispose();
                 inMenu = false;
                 engine.runRenderLoop(() => scene.render())

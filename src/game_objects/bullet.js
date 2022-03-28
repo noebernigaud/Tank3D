@@ -64,7 +64,7 @@ class Bullet extends ObjectPos {
                     if (b2) b2.dispose(true, true)
                 } else if (b2 = chars.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose(true, true)
-                    if (b2) b2.dispose(true)
+                    if (b2) b2.dispose(false)
                 } else if (b2 = walls.find(e => e.shape == e2.object)) {
                     b1.dispose()
                     if (b2) b2.destroy()
