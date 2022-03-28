@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 10 / 40;
+    static diameter = 10 / 20;
     /**
      * 
      * @param {Char} char 
@@ -48,54 +48,35 @@ class Bullet extends ObjectPos {
     }
 
     createCollider() {
-        this.physicsImpostor.registerOnPhysicsCollide(impostorCharList, (e1, e2) => {
+        this.physicsImpostor.onCollideEvent = (e1, e2) => {
+
             let b1 = bullets.find(e => e == e1.object)
-            let c1 = chars.find(e => e.shape == e2.object)
-
-            if (b1) b1.dispose()
-            if (c1) c1.dispose()
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
-            let b1 = bullets.find(e => e == e1.object)
-            let b2 = bullets.find(e => e == e2.object)
-
-            if (b1) b1.dispose()
-            if (b2) b2.dispose()
-
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.physicsImpostor), (e1, e2) => {
-            let b1 = bullets.find(e => e == e1.object)
-            if (b1) b1.dispose()
-
-            createFire(e2.object);
-            createSmoke(e2.object);
-            // e2.object._children.forEach(m => {
-            //     if (m.material != null) {
-            //         m.material._albedoColor = new BABYLON.Color3(0, 0, 0)
-            //     }
-            // });
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.physicsImpostor), (e1, e2) => {
-            let wall = walls.find(e => e.shape == e2.object)
-            if (wall)
-                wall.destroy()
-        })
-
-        this.physicsImpostor.onCollideEvent = (b, w) => {
+            let b2;
             if (this.collision == false) {
                 this.collision = true
                 setTimeout(() => {
                     this.collision = false
                 }, 10);
             } else return
-            if (bullets.includes(w.object)) {
-                return;
+            if (this.collision) {
+                if (b2 = bullets.find(e => e == e2.object)) {
+                    if (b1) b1.dispose(true, true)
+                    if (b2) b2.dispose(true, true)
+                } else if (b2 = chars.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose(true, true)
+                    if (b2) b2.dispose(true)
+                } else if (b2 = walls.find(e => e.shape == e2.object)) {
+                    b1.dispose()
+                    if (b2) b2.destroy()
+                }
+                else if (b2 = holes.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose()
+                    createFire(e2.object);
+                    createSmoke(e2.object);
+                }
+                else this.dispose()
             }
-            this.dispose()
-            return;
+
         }
     }
 
@@ -106,10 +87,10 @@ class Bullet extends ObjectPos {
         return shape;
     }
 
-    dispose(forceDispose = false) {
+    dispose(forceDispose = false, explosion = false) {
         super.dispose(forceDispose)
         if (this.life <= 0 || forceDispose) this.trail.dispose()
-        if (forceDispose) return;
+        if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
             bulletDestroyedSound.pause();
