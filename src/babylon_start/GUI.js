@@ -36,12 +36,12 @@ class Menu {
 
         bonusListe.forEach(bonus => {
             var button_bonus = BABYLON.GUI.Button.CreateSimpleButton("bonus", bonus);
-            button_bonus.width = "150px";
-            button_bonus.height = "150px";
+            button_bonus.width = "400px";
+            button_bonus.height = "300px";
             button_bonus.color = "white";
-            button_bonus.background = "green";
-            button_bonus.paddingLeft = "5px";
-            button_bonus.paddingRight = "5px";
+            button_bonus.background = "black";
+            button_bonus.paddingLeft = "20px";
+            button_bonus.paddingRight = "20px";
             panel.addControl(button_bonus);
             button_bonus.onPointerUpObservable.add(function () {
                 char1.speedNorme *= 2
