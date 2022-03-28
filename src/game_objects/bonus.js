@@ -23,7 +23,7 @@ class Bonus extends ObjectPos {
             let b1 = bonuses.find(e => e == e1.object)
             if (e2.object == char1.shape) {
                 if (b1) {
-                    char1.speedNorme *= 2;
+                    scene.menu.bonusChoice(["a", "b", "c"])
                     b1.dispose(true);
                 }
             }

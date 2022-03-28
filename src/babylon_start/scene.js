@@ -9,6 +9,7 @@ var tankMeshes;
 var opponentContainer;
 var opponentMeshes;
 var opponentMaterials;
+/** @type {BABYLON.Engine} */
 var engine;
 var shadowGenerator;
 var tanksAIReady;
@@ -36,7 +37,7 @@ class Scene {
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
-    this.menu = new Menu()
+    this.scene.menu = new Menu()
     this.setPhysic()
     this.setGround()
     this.setShadow()
