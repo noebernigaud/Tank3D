@@ -6,13 +6,6 @@ var cell_size = 1;
 var width = cell_x_number * cell_size;
 var height = cell_y_number * cell_size;
 
-var char1_status = {
-    bonus_speed: 0,
-    bonus_life: 0,
-    bonus_speedBullet: 0,
-    bonus_timeBetweenBullet: 0
-}
-
 /** @type {BABYLON.Scene} */
 var scene;
 
@@ -27,6 +20,9 @@ var charsAI;
 
 /** @type {[Char]} */
 var chars;
+
+/** @type {[Bonus]} */
+var bonuses;
 
 /** @type {[Wall]} */
 var walls;
@@ -82,6 +78,9 @@ tankImageGreen.src = './images/tankGreen.png';
 
 var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
+
+var bonusImage = new Image();
+bonusImage.src = './images/bullet.png';
 
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';

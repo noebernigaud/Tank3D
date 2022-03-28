@@ -195,6 +195,8 @@ function startgame(level) {
     bullets = new Array();
     mines = new Array();
 
+    bonuses = new Array();
+
     if (level < level_map.length) {
         draw_level_map(level)
     } else {
@@ -234,7 +236,7 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars]
+    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars, ...bonuses]
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
@@ -243,6 +245,7 @@ function remove_all_objects() {
     mines = [];
     chars = [];
     charsAI = [];
+    bonuses = [];
 }
 
 //ANIMATION
