@@ -31,7 +31,7 @@ class Menu {
 
         var panel = new BABYLON.GUI.StackPanel();
         panel.isVertical = false;
-        panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        // panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
         advancedTexture.addControl(panel);
 
         bonusListe.forEach(bonus => {
@@ -45,6 +45,7 @@ class Menu {
             panel.addControl(button_bonus);
             button_bonus.onPointerUpObservable.add(function () {
                 bonus.effect();
+                selected_bonuses.push(bonus.name);
                 panel.dispose();
                 inMenu = false;
                 engine.runRenderLoop(() => scene.render())

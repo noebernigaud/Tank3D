@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     if (type.name == tankImage.src) {
@@ -29,6 +29,7 @@ class Char extends ObjectPos {
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
+    this.bulletLife = bulletLife;
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0 })
     impostorCharList.push(this.physicsImpostor)
@@ -55,7 +56,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 2)
+      var bullet = new Bullet(this)
       bulletFiredSound.pause();
       bulletFiredSound.currentTime = 0;
       bulletFiredSound.play();

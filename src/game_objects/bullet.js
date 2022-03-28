@@ -13,7 +13,7 @@ class Bullet extends ObjectPos {
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
             char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, life);
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;

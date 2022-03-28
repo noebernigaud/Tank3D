@@ -24,6 +24,9 @@ var chars;
 /** @type {[Bonus]} */
 var bonuses;
 
+/** @type {[Bonus]} */
+var selected_bonuses;
+
 /** @type {[Wall]} */
 var walls;
 

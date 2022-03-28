@@ -100,8 +100,10 @@ function draw_level_map(lvl_number) {
     current_level = level_map[lvl_number];
     //char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
 
-    if (lvl_number == 0)
+    if (lvl_number == 0) {
         char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+        selected_bonuses = []
+    }
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
     for (var [l_index, line] of current_level.entries()) {
