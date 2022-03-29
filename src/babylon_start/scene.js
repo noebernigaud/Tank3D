@@ -36,6 +36,7 @@ class Scene {
     this.setPhysic()
     this.setGround()
     this.setShadow()
+    // this.setFog()
     this.setBackground()
     this.setParticles()
     // this.setGizmo()
@@ -228,12 +229,23 @@ class Scene {
 
   setShadow() {
     var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 1;
+    light.intensity = 1.5;
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.blurScale = 0.5;
     shadowGenerator.setDarkness(0.3);
+  }
+
+  setFog() {
+    // scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    //BABYLON.Scene.FOGMODE_NONE;
+    //BABYLON.Scene.FOGMODE_EXP2;
+    scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+    scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.9);
+    scene.fogDensity = 0.01;
+    scene.fogStart = 15.0;
+    scene.fogEnd = 60.0;
   }
 
 

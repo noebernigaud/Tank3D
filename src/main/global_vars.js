@@ -83,7 +83,7 @@ var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
 
 var bonusImage = new Image();
-bonusImage.src = './images/bullet.png';
+bonusImage.src = './models/box/9452.jpg';
 
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';

@@ -4,7 +4,7 @@ y = 0;
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
-  static Bonus = new ObjectEnum(bonusImage.src, "")
+  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.5, 0.5, 0.5)
   static Hole = new ObjectEnum(holeImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
@@ -37,17 +37,22 @@ class ObjectEnum {
       return;
     }
     else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
-      this.callback(meshes, true)
+      this.callback(meshes, true, this.babylon_model == "box")
 
     });
   }
 
-  callback(meshes, toResize) {
+  callback(meshes, toResize, isBox = false) {
+
     this.meshes = [...meshes];
 
     // Resizing of each meshes
     if (toResize) this.meshes.forEach(x => {
-      x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+      if (isBox) {
+        x.position.y -= 0.225
+      }
+      x.scaling = isBox ? new BABYLON.Vector3(0.50, 0.50, 0.50) : new BABYLON.Vector3(0.25, 0.25, 0.25)
+
     });
 
     // Parent mesh (the original which we will duplicate to create our objects)
@@ -65,7 +70,7 @@ class ObjectEnum {
   }
 
   static initiate_all_models() {
-    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Hole, this.Mine, this.Player, this.Wall, this.WallD]
+    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Hole, this.Mine, this.Player, this.Wall, this.WallD, this.Bonus]
     this.remainingLoad = list_obj.length + 1
     list_obj.forEach(e => e.create_model())
 

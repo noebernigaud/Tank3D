@@ -29,6 +29,8 @@ class ObjectPos extends BABYLON.Mesh {
     this.life = life;
 
     switch (type.name) {
+
+      case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
       case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
@@ -42,6 +44,7 @@ class ObjectPos extends BABYLON.Mesh {
     if (meshBabylon) {
 
       shape.visibility = 0.000001;
+      shape.isVisible = false
       // shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
