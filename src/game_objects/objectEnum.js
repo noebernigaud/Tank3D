@@ -4,6 +4,7 @@ y = 0;
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
+  static Bonus = new ObjectEnum(bonusImage.src, "")
   static Hole = new ObjectEnum(holeImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")

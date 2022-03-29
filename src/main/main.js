@@ -1,45 +1,47 @@
 canTire = true;
 // INITIALISATION
-function keyListener(evt, isDown) {
+function keyListener(evt, isPressed) {
     // tirer
     if (evt.code === "Space") {
-        inputStates.mouseclick = isDown;
+        inputStates.mouseclick = isPressed;
     }
     // tourelle
     else if (evt.code === "KeyA") {
-        inputStates.keyA = isDown;
+        inputStates.rot_minus = isPressed;
     } else if (evt.code === "KeyD") {
-        inputStates.keyD = isDown;
+        inputStates.rot_plus = isPressed;
     }
     // ??
     else if (evt.code === "KeyW") {
-        inputStates.keyW = isDown;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.foreward) char1.stabilizeTank(false)
+        inputStates.foreward = isPressed;
     } else if (evt.code === "KeyS") {
-        inputStates.keyS = isDown;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.backward) char1.stabilizeTank(false)
+        inputStates.backward = isPressed;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyL") {
-        inputStates.keyL = isDown;
+        inputStates.keyL = isPressed;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyX") {
-        inputStates.keyX = isDown;
+        inputStates.keyX = isPressed;
     }
     // rotation 
     else if (evt.keyCode == 37) {
-        inputStates.rot_minus = isDown;
+        inputStates.keyA = isPressed;
     } else if (evt.keyCode == 39) {
-        inputStates.rot_plus = isDown;
+        inputStates.keyD = isPressed;
     }
     // deplacement du char
     else if (evt.keyCode == 38) {
-        if (!isDown) char1.stabilizeTank()
-        else if (!inputStates.foreward) char1.stabilizeTank(false)
-        inputStates.foreward = isDown;
+        // turret up
+        inputStates.turretUp = isPressed;
     } else if (evt.keyCode == 40) {
-        if (!isDown) char1.stabilizeTank()
-        else if (!inputStates.backward) char1.stabilizeTank(false)
-        inputStates.backward = isDown;
+        // turret down
+        inputStates.turretDown = isPressed;
     } else if (evt.code == "KeyQ" && canTire) {
         canTire = false
         let length = 1000;
@@ -61,14 +63,6 @@ function keyListener(evt, isDown) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
-    } else if (evt.keyCode === 27) {
-        if (isDown && scene.menu.canBeSwitched) {
-            scene.menu.show(!scene.menu.isShown)
-            scene.menu.canBeSwitched = false
-        }
-        if (!isDown) {
-            scene.menu.canBeSwitched = true
-        }
     }
 }
 
@@ -89,6 +83,14 @@ function keyApplaier() {
     if (inputStates.mouseclick) {
         char1.addBullet(Date.now());
     }
+
+    // if (inputStates.turretUp) {
+    //     char1.rotateTurretUpDown(true);
+    // }
+
+    // if (inputStates.turretDown) {
+    //     char1.rotateTurretUpDown(false);
+    // }
 
     // TOURNER LE TANK
     if (inputStates.rot_minus && !inputStates.rot_plus) {
@@ -133,8 +135,6 @@ function keyApplaier() {
         playSmoke(smok)
         createFire(char1.shape);
     }
-
-
 }
 
 function init() {
@@ -205,6 +205,8 @@ function startgame(level) {
     bullets = new Array();
     mines = new Array();
 
+    bonuses = new Array();
+
     if (level < level_map.length) {
         draw_level_map(level)
     } else {
@@ -244,7 +246,8 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars]
+    let allElts = [...walls, ...holes, ...bullets, ...mines, ...bonuses]
+    if (level == 0) allElts.push(...chars)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
@@ -253,6 +256,7 @@ function remove_all_objects() {
     mines = [];
     chars = [];
     charsAI = [];
+    bonuses = [];
 }
 
 //ANIMATION

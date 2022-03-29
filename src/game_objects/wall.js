@@ -1,6 +1,6 @@
 class Wall {
 
-    static height = cell_size + 1;
+    static height = cell_size + 1.2;
     static width = cell_size;
     static depth = cell_size;
     /**

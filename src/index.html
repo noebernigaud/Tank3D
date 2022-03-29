@@ -20,18 +20,20 @@
     <script src="../lib/babylon.inspector.bundle.js"></script>
 
     <script src="babylon_start/tool_babylon.js"></script>
+    <script src="levels/levels.js"></script>
+    <script src="main/global_vars.js"></script>
     <script src="babylon_start/particles.js"></script>
     <script src="babylon_start/opponent_vehicle.js"></script>
     <script src="babylon_start/model_loader.js"></script>
     <script src="babylon_start/GUI.js"></script>
 
-    <script src="levels/levels.js"></script>
 
-    <script src="main/global_vars.js"></script>
     <script src="game_objects/objectPos.js"></script>
     <script src="game_objects/objectEnum.js"></script>
     <script src="game_objects/char.js"></script>
     <script src="game_objects/bullet.js"></script>
+    <script src="game_objects/bonus.js"></script>
+    <script src="game_objects/bonusEnum.js"></script>
     <script src="game_objects/hole.js"></script>
     <script src="tools/intelligence.js"></script>
     <script src="game_objects/mine.js"></script>
@@ -43,6 +45,8 @@
     <script src="game_IA/shootAI.js"></script>
     <script src="game_IA/moveAI.js"></script>
     <script src="game_IA/guaranteedAI.js"></script>
+    <script src="game_IA/noStrategy.js"></script>
+    <script src="tools/minimap.js"></script>
 
     <link rel="shortcut icon" href="images/tankGreen.png">
 </head>
@@ -51,16 +55,9 @@
 
     <!-- <body> -->
     <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
-    <canvas id="myCanvas"></canvas>
-    <div id="src"></div>
-    <div id="main" class="divb">
-        <div id="play" class='button' onclick="scene.menu.show(false)">
-            <span>Play</span>
-        </div>
-        <div id="opt" class='button' onclick="scene.menu.show(false)">
-            <span>Options</span>
-        </div>
-    </div>
+    <canvas id="myCanvas">
+    </canvas>
+    <canvas id="minimap" width="100" height="100"></canvas>
     <script src="babylon_start/scene.js">
     </script>
     <script>

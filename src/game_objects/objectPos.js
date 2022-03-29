@@ -50,7 +50,7 @@ class ObjectPos extends BABYLON.Mesh {
       });
 
       // TODO RENAME OBJECT.PLAYER in this.type
-      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2 + 5, posZ);
+      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2 + 1, posZ);
       shape.position = this.position;
 
       this.shape = shape;
@@ -149,6 +149,7 @@ class ObjectPos extends BABYLON.Mesh {
       switch (this.type.name) {
         case ObjectEnum.Hole.name: { remove(holes, this); break; }
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
+        case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
         case ObjectEnum.CharRed.name:

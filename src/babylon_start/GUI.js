@@ -1,27 +1,9 @@
+var button;
+var button_list;
+
 class Menu {
-    canBeSwitched = true;
-    isFirst = true;
-    isReallyFirst = true;
     constructor() {
-        this.isShown = true;
-
-        this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-        this.buttons = []
-        this.createButton("Play")
-        this.buttons[0].onPointerUpObservable.add(() => {
-            this.show(false)
-        });
-
-        this.createButton("Restart")
-        this.buttons[1].onPointerUpObservable.add(() => {
-            this.show(false)
-            level = 0;
-            remove_all_objects()
-            startgame(level);
-        });
-
-        this.show(true, true)
+        this.createButton();
     }
 
     createButton(name) {
@@ -72,23 +54,33 @@ class Menu {
         document.getElementById("main").style.display = "block"
     }
 
-    takeScreenshot() {
-        if (char1.life <= 0) {
-            this.prettyBG()
-        } else
-            BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, { width: canvas.width, height: canvas.height }, function (data) {
-                document.getElementById("src").style.backgroundImage = `url('${data}')`;
-                canvas.style.display = "none";
-                document.getElementById("src").style.display = "block"
-                document.getElementById("main").style.display = "block"
-                document.getElementById("src").style.filter = "blur(5px)"
-            });
-    };
+    bonusChoice(bonusListe) {
+        inMenu = true;
+        let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        engine.stopRenderLoop();
 
-    hideMenu() {
-        canvas.style.display = "block";
-        document.getElementById("src").style.display = "none"
-        document.getElementById("main").style.display = "none"
+        var panel = new BABYLON.GUI.StackPanel();
+        panel.isVertical = false;
+        // panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+        advancedTexture.addControl(panel);
+
+        bonusListe.forEach(bonus => {
+            var button_bonus = BABYLON.GUI.Button.CreateSimpleButton("bonus", bonus.name);
+            button_bonus.width = "400px";
+            button_bonus.height = "300px";
+            button_bonus.color = "white";
+            button_bonus.background = "black";
+            button_bonus.paddingLeft = "20px";
+            button_bonus.paddingRight = "20px";
+            panel.addControl(button_bonus);
+            button_bonus.onPointerUpObservable.add(function () {
+                bonus.effect();
+                selected_bonuses.push(bonus.name);
+                panel.dispose();
+                inMenu = false;
+                engine.runRenderLoop(() => scene.render())
+            });
+        })
     }
 
 }

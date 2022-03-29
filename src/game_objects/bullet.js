@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 10 / 40;
+    static diameter = 4 / 20;
     /**
      * 
      * @param {Char} char 
@@ -12,8 +12,8 @@ class Bullet extends ObjectPos {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, life);
+            char.shape.position.y + char.getTurretTank().getDirection(BABYLON.Axis.Y).y * 4,
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;
@@ -21,9 +21,9 @@ class Bullet extends ObjectPos {
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
-        let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
+        // let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
-        this.physicsImpostor.setLinearVelocity(realVec)
+        this.physicsImpostor.setLinearVelocity(moveVec)
 
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
 
@@ -48,54 +48,35 @@ class Bullet extends ObjectPos {
     }
 
     createCollider() {
-        this.physicsImpostor.registerOnPhysicsCollide(impostorCharList, (e1, e2) => {
+        this.physicsImpostor.onCollideEvent = (e1, e2) => {
+
             let b1 = bullets.find(e => e == e1.object)
-            let c1 = chars.find(e => e.shape == e2.object)
-
-            if (b1) b1.dispose()
-            if (c1) c1.dispose()
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(bullets.map(x => x.physicsImpostor), (e1, e2) => {
-            let b1 = bullets.find(e => e == e1.object)
-            let b2 = bullets.find(e => e == e2.object)
-
-            if (b1) b1.dispose()
-            if (b2) b2.dispose()
-
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(holes.map(x => x.physicsImpostor), (e1, e2) => {
-            let b1 = bullets.find(e => e == e1.object)
-            if (b1) b1.dispose()
-
-            createFire(e2.object);
-            createSmoke(e2.object);
-            // e2.object._children.forEach(m => {
-            //     if (m.material != null) {
-            //         m.material._albedoColor = new BABYLON.Color3(0, 0, 0)
-            //     }
-            // });
-        })
-
-        this.physicsImpostor.registerOnPhysicsCollide(walls.map(x => x.physicsImpostor), (e1, e2) => {
-            let wall = walls.find(e => e.shape == e2.object)
-            if (wall)
-                wall.destroy()
-        })
-
-        this.physicsImpostor.onCollideEvent = (b, w) => {
+            let b2;
             if (this.collision == false) {
                 this.collision = true
                 setTimeout(() => {
                     this.collision = false
                 }, 10);
             } else return
-            if (bullets.includes(w.object)) {
-                return;
+            if (this.collision) {
+                if (b2 = bullets.find(e => e == e2.object)) {
+                    if (b1) b1.dispose(true, true)
+                    if (b2) b2.dispose(true, true)
+                } else if (b2 = chars.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose(true, true)
+                    if (b2) b2.dispose(false)
+                } else if (b2 = walls.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose()
+                    if (b2) b2.destroy()
+                }
+                else if (b2 = holes.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose()
+                    createFire(e2.object);
+                    createSmoke(e2.object);
+                }
+                else this.dispose()
             }
-            this.dispose()
-            return;
+
         }
     }
 
@@ -106,10 +87,10 @@ class Bullet extends ObjectPos {
         return shape;
     }
 
-    dispose(forceDispose = false) {
+    dispose(forceDispose = false, explosion = false) {
         super.dispose(forceDispose)
         if (this.life <= 0 || forceDispose) this.trail.dispose()
-        if (forceDispose) return;
+        if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
             bulletDestroyedSound.pause();

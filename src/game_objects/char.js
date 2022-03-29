@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     if (type.name == tankImage.src) {
@@ -24,13 +24,17 @@ class Char extends ObjectPos {
       camera.dispose();
       camera = camera1;
       // engine.runRenderLoop(() => scene.render())
+    } else {
+      this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
+      MoveAI.rotateTurret(this)
     }
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
+    this.bulletLife = bulletLife;
 
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
@@ -55,7 +59,7 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 2)
+      var bullet = new Bullet(this)
       bulletFiredSound.pause();
       bulletFiredSound.currentTime = 0;
       bulletFiredSound.play();
@@ -122,7 +126,14 @@ class Char extends ObjectPos {
   }
 
   rotateTurretAxisY(angle) {
-    if (this.life > 0) this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    if (this.life <= 0) return
+    // let oldDir = this.getTurretTank().rotationQuaternion.x;
+    this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    // this.getTurretTank().rotationQuaternion.x = (oldDir);
+  }
+
+  rotateTurretUpDown(isUp) {
+    if (this.life > 0) this.getTurretTank().rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
   }
 
   moveTankForeward() {

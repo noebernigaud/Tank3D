@@ -14,6 +14,15 @@ class MoveAI {
     tank.getTurretTank().rotate(BABYLON.Axis.Y, Math.PI / 4);
   }
 
+  static rotateTankBody(tank) {
+    var turretDir = tank.getTurretTank().getDirection(new BABYLON.Vector3(1, 1, 1));
+    var currentAngle = Math.atan2(turretDir.z, turretDir.x);
+    var targetDir = char1.shape.position.subtract(tank.shape.position);
+    var targetAngle = Math.atan2(targetDir.z, targetDir.x);
+    tank.rotate(BABYLON.Axis.Y, currentAngle - targetAngle);
+    tank.rotate(BABYLON.Axis.Y, Math.PI / 4);
+  }
+
   /**
    * @param {Char} tank 
    */
