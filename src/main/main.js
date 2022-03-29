@@ -16,6 +16,7 @@ function keyListener(evt, isPressed) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
         inputStates.foreward = isPressed;
+        console.log("here");
     } else if (evt.code === "KeyS") {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
@@ -63,6 +64,14 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (evt.keyCode === 27) {
+        if (isPressed && scene.menu.canBeSwitched) {
+            scene.menu.show(!scene.menu.isShown)
+            scene.menu.canBeSwitched = false
+        }
+        if (!isPressed) {
+            scene.menu.canBeSwitched = true
+        }
     }
 }
 
@@ -117,6 +126,7 @@ function keyApplaier() {
     // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
+        console.log("HERE");
         return;
     }
     if (inputStates.backward) {

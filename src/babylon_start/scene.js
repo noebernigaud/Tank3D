@@ -31,6 +31,7 @@ class Scene {
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
+    this.scene.minimap = new MiniMap()
     this.scene.menu = new Menu()
     this.setPhysic()
     this.setGround()
@@ -41,7 +42,6 @@ class Scene {
     this.setCamera()
     setCurrentLevelDico()
 
-    this.scene.minimap = new MiniMap()
 
 
 
@@ -54,6 +54,9 @@ class Scene {
     window.onresize = function () {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      document.getElementById("src").style.width = window.innerWidth + "pt";
+      document.getElementById("src").style.height = window.innerHeight + "pt";
+
       scene.minimap.resize()
       engine.resize();
     }
@@ -71,8 +74,7 @@ class Scene {
 
     scene.beforeRender = () => {
 
-      if (!inMenu) {
-        this.scene.minimap.show()
+      if (!this.scene.menu.isShown) {
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         bullets.forEach(bullet => {

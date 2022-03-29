@@ -188,7 +188,8 @@ function draw_level_map() {
                     bonuses.push(new Bonus(posX, posY));
                     break;
                 case 'P':
-                    char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2, -height / 2 + posY)
+                    char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2 + 1
+                        , -height / 2 + posY)
                     // char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
                     chars.push(char1);
                     // camera.target = char1.getTurretTank();
