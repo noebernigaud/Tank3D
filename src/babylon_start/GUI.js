@@ -14,10 +14,10 @@ class Menu {
         button.color = "white";
         button.cornerRadius = 20;
         button.background = "green";
-        button.top = `${(42 * this.buttons.length)}px`
+        //button.top = `${(42 * this.buttons.length)}px`
 
-        this.advancedTexture.addControl(button);
-        this.buttons.push(button)
+        //this.advancedTexture.addControl(button);
+        //this.buttons.push(button)
     }
 
     show(toShow) {
