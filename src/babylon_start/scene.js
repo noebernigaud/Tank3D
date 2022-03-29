@@ -86,11 +86,17 @@ class Scene {
           if (bullet.position.x <= ground.position.x - width / 2 ||
             bullet.position.x >= ground.position.x + width / 2 ||
             bullet.position.z <= ground.position.z - height / 2 ||
-            bullet.position.z >= ground.position.z + height / 2) {
+            bullet.position.z >= ground.position.z + height / 2 ||
+            bullet.position.y < ground.position.y - 3) {
 
             let index = bullets.indexOf(bullet)
             if (index !== -1) bullets.splice(index, 1)
-            bullet.dispose()
+            bullet.dispose(true, true)
+          }
+        })
+        chars.forEach(c => {
+          if (c.shape.position.y < ground.position.y - 5) {
+            c.life = 0;
           }
         })
         // charsAI.forEach(c => MoveAI.move(c));
@@ -270,33 +276,6 @@ class Scene {
     gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
-  // old() {
-
-  //   window.initFunction = async function () {
-
-  //     var asyncEngineCreation = async function () {
-  //       try {
-  //         return createDefaultEngine();
-  //       } catch (e) {
-
-  //         return createDefaultEngine();
-  //       }
-  //     }
-
-  //     window.engine = await asyncEngineCreation();
-  //     if (!engine) throw 'engine should not be null.';
-  //     startRenderLoop(engine, canvas);
-  //     window.scene = createScene();
-  //   };
-  //   initFunction().then(() => {
-  //     sceneToRender = scene
-  //   });
-
-  //   // Resize
-  //   window.addEventListener("resize", function () {
-  //     engine.resize();
-  //   });
-  // }
 }
 // /** @type{BABYLON.Scene} */
 // let scene2;

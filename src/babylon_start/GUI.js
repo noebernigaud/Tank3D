@@ -47,7 +47,6 @@ class Menu {
             }
             else {
                 if (!this.isReallyFirst) {
-                    console.log("test");
                     engine.runRenderLoop(() => scene.render())
 
                 } else this.isReallyFirst = false
