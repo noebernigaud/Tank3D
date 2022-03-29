@@ -51,15 +51,12 @@ class Menu {
             }
             else {
                 if (!this.isReallyFirst) {
-                    console.log("test");
                     engine.runRenderLoop(() => scene.render())
 
                 } else this.isReallyFirst = false
                 this.hideMenu()
 
             }
-
-            // this.buttons.forEach(e => e.isVisible = toShow)
             this.isShown = toShow
             chars.forEach(e => e.stabilizeTank(toShow))
         } else {

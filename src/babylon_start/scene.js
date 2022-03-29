@@ -82,7 +82,8 @@ class Scene {
             bullet.position.x >= ground.position.x + width / 2 ||
             bullet.position.z <= ground.position.z - height / 2 ||
             bullet.position.z >= ground.position.z + height / 2 ||
-            bullet.shape.position.y < ground.position.y - 5) {
+            bullet.position.y < ground.position.y - 3) {
+
             let index = bullets.indexOf(bullet)
             if (index !== -1) bullets.splice(index, 1)
             bullet.dispose(true, true)
@@ -167,7 +168,7 @@ class Scene {
       subdivisions: 80,
       minHeight: current_level_dico.minHeightMap,
       maxHeight: 0,
-      onReady: onGroundCreated,
+      onReady: () => onGroundCreated(this),
     };
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
@@ -177,12 +178,14 @@ class Scene {
       scene
     );
 
-    function onGroundCreated() {
+    function onGroundCreated(myScene) {
       const groundMaterial = new BABYLON.StandardMaterial(
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture(current_level_dico.sol);
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse8k.png", scene, null, true, null, function () {
+        ObjectEnum.loadingDone();
+      });
       ground.material = groundMaterial;
 
       ground.receiveShadows = true
@@ -198,9 +201,30 @@ class Scene {
         { mass: 0 },
         scene
       );
+
+      myScene.setWater(ground);
     }
 
+
     return ground;
+  }
+
+  setWater(gr) {
+    var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
+    waterMesh.position.y = gr.position.y - 2.7
+    var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
+    water.backFaceCulling = true;
+    water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+    water.windForce = -5;
+    water.waveHeight = 0.5;
+    water.bumpHeight = 0.3;
+    water.waveLength = 0.1;
+    water.colorBlendFactor = 0;
+
+    water.addToRenderList(gr);
+    water.addToRenderList(this.skybox);
+
+    waterMesh.material = water;
   }
 
   setShadow() {
@@ -215,14 +239,14 @@ class Scene {
 
 
   setBackground() {
-    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
+    this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    skybox.material = skyboxMaterial;
+    this.skybox.material = skyboxMaterial;
   }
 
   setParticles() {
@@ -250,33 +274,6 @@ class Scene {
     gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
-  // old() {
-
-  //   window.initFunction = async function () {
-
-  //     var asyncEngineCreation = async function () {
-  //       try {
-  //         return createDefaultEngine();
-  //       } catch (e) {
-
-  //         return createDefaultEngine();
-  //       }
-  //     }
-
-  //     window.engine = await asyncEngineCreation();
-  //     if (!engine) throw 'engine should not be null.';
-  //     startRenderLoop(engine, canvas);
-  //     window.scene = createScene();
-  //   };
-  //   initFunction().then(() => {
-  //     sceneToRender = scene
-  //   });
-
-  //   // Resize
-  //   window.addEventListener("resize", function () {
-  //     engine.resize();
-  //   });
-  // }
 }
 // /** @type{BABYLON.Scene} */
 // let scene2;
