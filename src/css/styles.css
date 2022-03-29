@@ -69,6 +69,6 @@ html, body {
     right: 0pt;
     top: 0;
     border-radius: 150pt;
-    border: 3px solid #d88;
+    border: 3px solid rgb(55, 55, 55);
     background-image: url("../images/woodTexture.jpg");
 }
