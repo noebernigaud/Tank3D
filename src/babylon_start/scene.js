@@ -38,6 +38,7 @@ class Scene {
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
+    setMapSize()
 
     this.scene.minimap = new MiniMap()
 
@@ -156,7 +157,7 @@ class Scene {
       width: width + cell_size,
       height: height + cell_size,
       subdivisions: 80,
-      minHeight: -1,
+      minHeight: current_level_dico.minHeightMap,
       maxHeight: 0,
       onReady: onGroundCreated,
     };
@@ -173,7 +174,7 @@ class Scene {
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse.png");
+      groundMaterial.diffuseTexture = new BABYLON.Texture(current_level_dico.sol);
       ground.material = groundMaterial;
 
       ground.receiveShadows = true
