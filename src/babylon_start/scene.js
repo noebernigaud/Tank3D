@@ -12,9 +12,10 @@ var opponentMaterials;
 var engine;
 var shadowGenerator;
 var tanksAIReady;
-var inMenu = true;
 
 class Scene {
+  /** @type {Menu} */
+  menu;
 
   constructor() {
     canvas.width = window.innerWidth;
@@ -30,7 +31,6 @@ class Scene {
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
-    this.menu = new Menu()
     this.setPhysic()
     this.setGround()
     this.setShadow()
@@ -45,6 +45,8 @@ class Scene {
 
 
     ObjectEnum.initiate_all_models()
+
+    this.scene.menu = new Menu()
     // this.setCamera()
     // this.engine.runRenderLoop(() =>
     //   this.scene.render()
@@ -56,6 +58,15 @@ class Scene {
       scene.minimap.resize()
       engine.resize();
     }
+    scene.onPointerDown = () => {
+      if (!scene.alreadyLocked) {
+        // camera.attachControl(canvas)
+        camera.inputs.remove(camera.inputs.attached.keyboard)
+        canvas.requestPointerLock();
+        this.scene.alreadyLocked = true;
+      }
+    }
+
 
     window.onresize()
   }
@@ -70,8 +81,7 @@ class Scene {
 
     scene.beforeRender = () => {
 
-      if (!inMenu) {
-        this.scene.minimap.show()
+      if (!this.scene.menu.isShown) {
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         bullets.forEach(bullet => {
@@ -105,9 +115,9 @@ class Scene {
         })
         if (char1.life <= 0 || level == level_map.length) {
           level = 0;
+          scene.menu.show(true)
           remove_all_objects()
           startgame(level);
-          this.menu.createButton()
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())

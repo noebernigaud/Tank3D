@@ -63,6 +63,14 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (evt.keyCode === 27) {
+        if (isPressed && scene.menu.canBeSwitched) {
+            scene.menu.show(!scene.menu.isShown)
+            scene.menu.canBeSwitched = false
+        }
+        if (!isPressed) {
+            scene.menu.canBeSwitched = true
+        }
     }
 }
 
@@ -135,6 +143,8 @@ function keyApplaier() {
         playSmoke(smok)
         createFire(char1.shape);
     }
+
+
 }
 
 function init() {
