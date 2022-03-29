@@ -38,7 +38,7 @@ class Scene {
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
-    setMapSize()
+    setCurrentLevelDico()
 
     this.scene.minimap = new MiniMap()
 

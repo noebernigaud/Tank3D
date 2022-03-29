@@ -25,13 +25,16 @@ class Char extends ObjectPos {
       camera = camera1;
       this.inclinaisonTurretIncrement = inclinaisonTurretIncrement
       // engine.runRenderLoop(() => scene.render())
+    } else {
+      this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
+      MoveAI.rotateTurret(this)
     }
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
 
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)

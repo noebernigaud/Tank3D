@@ -31,13 +31,15 @@ class MiniMap {
   }
 
   redraw() {
+    setCurrentLevelDico()
     this.clear()
     let resize = (x, y) => ({
-      x: (1 - (x + width / 2) / width) * this.canvas.width * 0.7 + this.canvas.width * 0.3 / 2,
-      y: (1 - (y + height / 2) / height) * this.canvas.height * 0.7 + this.canvas.height * 0.3 / 2
+      x: (1 - (x + height / 2) / height) * this.canvas.width * 0.6 + this.canvas.width * 0.4 / 2,
+      y: (1 - (y + width / 2) / width) * this.canvas.height * 0.6 + this.canvas.height * 0.4 / 2
     })
     chars.forEach(c => {
       let point = resize(c.shape.position.z, c.shape.position.x);
+      // console.log(point);
       this.drawPoint(point.x, point.y, c == char1 ? 'rgb(0,255,0)' : 'rgb(255, 0, 0)')
     })
     walls.forEach(w => {

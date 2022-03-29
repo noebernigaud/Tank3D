@@ -1,4 +1,35 @@
 const level_map = [
+    // {
+    //     level: [
+    //         "----------h------h-----",
+    //         "----------h---B--h--B--",
+    //         "----------h------h-----",
+    //         "hhhhhhh---h------------",
+    //         "----------h------------",
+    //         "----------h--hhhhhhhhhh",
+    //         "----------h-------B----",
+    //         "-----------------------",
+    //         "------------B--h-------",
+    //         "hhhhhhhhhhh----h-------",
+    //         "--P------------h---hhhh",
+    //         "----------h----h-------",
+    //         "----------h----h-------",
+    //     ],
+    //     sol: "textures/ground_diffuse.png",
+    //     minHeightMap: -1,
+    // },
+    {
+        level:
+            [
+                "---------------",
+                "---------------",
+                "--P--------N---",
+                "---------------",
+                "---------------",
+            ],
+        sol: "textures/ground_diffuse.png",
+        minHeightMap: -0.1,
+    },
     {
         level:
             [
@@ -40,25 +71,6 @@ const level_map = [
     },
     {
         level: [
-            "-----------------------",
-            "-------B---------------",
-            "---WWwwwwwwW-----------",
-            "-----------W-----------",
-            "-----------W-----------",
-            "-----------W-----------",
-            "-----------WW-----R----",
-            "------------W----------",
-            "------------W----------",
-            "------------W----------",
-            "--P---------WwwwwwwWW--",
-            "-----------------------",
-            "------------------B----",
-        ],
-        sol: "textures/ground_diffuse.png",
-        minHeightMap: -1,
-    },
-    {
-        level: [
             "----------h------h-----",
             "----------h---B--h--B--",
             "----------h------h-----",
@@ -72,6 +84,25 @@ const level_map = [
             "--P------------h---hhhh",
             "----------h----h-------",
             "----------h----h-------",
+        ],
+        sol: "textures/ground_diffuse.png",
+        minHeightMap: -1,
+    },
+    {
+        level: [
+            "-----------------------",
+            "-------B---------------",
+            "---WWwwwwwwW-----------",
+            "-----------W-----------",
+            "-----------W-----------",
+            "-----------W-----------",
+            "-----------WW-----R----",
+            "------------W----------",
+            "------------W----------",
+            "------------W----------",
+            "--P---------WwwwwwwWW--",
+            "-----------------------",
+            "------------------B----",
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
@@ -102,9 +133,8 @@ let current_level_dico = level_map[0]
 /**
  * @param {number} lvl_number 
  */
-function draw_level_map(lvl_number) {
-    current_level_dico = level_map[lvl_number]
-    current_level = current_level_dico.level;
+function draw_level_map() {
+    setCurrentLevelDico()
     char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
@@ -114,6 +144,14 @@ function draw_level_map(lvl_number) {
             var posY = (current_level.length - l_index) * cell_size + heightOffset;
             switch (ch) {
                 case '-':
+                    break;
+                case 'N':
+                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 0, 0, 0);
+                    charsAI.push(char);
+                    char.setStrategy(new noStrategy(char))
+                    chars.push(char);
+
+                    char.applyStrategy()
                     break;
                 case 'R':
                     var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 3, 2000, 40);
@@ -161,14 +199,16 @@ function draw_level_map(lvl_number) {
     tanksAIReady = true;
 
     // Creation de l'enceinte 
-    walls.push(new WallPerimeter(-width / 2, 0, 1, height + 1))
-    walls.push(new WallPerimeter(width / 2, 0, 1, height + 1))
-    walls.push(new WallPerimeter(0, height / 2, width - 1, 1))
-    walls.push(new WallPerimeter(0, -height / 2, width - 1, 1))
+    walls.push(new WallPerimeter(-width / 2, 0.5, 1, height + 2))
+    walls.push(new WallPerimeter(width / 2 + 1, 0.5, 1, height + 2))
+    walls.push(new WallPerimeter(0.5, height / 2 + 1, width, 1))
+    walls.push(new WallPerimeter(0.5, -height / 2, width, 1))
 
 }
 
-function setMapSize() {
+function setCurrentLevelDico() {
+    current_level_dico = level_map[level]
+    current_level = current_level_dico.level;
     cell_x_number = current_level_dico.level.length;
     cell_y_number = current_level_dico.level[0].length;
 
