@@ -74,11 +74,16 @@ class Scene {
           if (bullet.position.x <= ground.position.x - width / 2 ||
             bullet.position.x >= ground.position.x + width / 2 ||
             bullet.position.z <= ground.position.z - height / 2 ||
-            bullet.position.z >= ground.position.z + height / 2) {
-
+            bullet.position.z >= ground.position.z + height / 2 ||
+            bullet.shape.position.y < ground.position.y - 5) {
             let index = bullets.indexOf(bullet)
             if (index !== -1) bullets.splice(index, 1)
-            bullet.dispose()
+            bullet.dispose(true, true)
+          }
+        })
+        chars.forEach(c => {
+          if (c.shape.position.y < ground.position.y - 5) {
+            c.life = 0;
           }
         })
         // charsAI.forEach(c => MoveAI.move(c));
