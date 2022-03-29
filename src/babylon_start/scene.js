@@ -79,11 +79,10 @@ class Scene {
 
         bullets.forEach(bullet => {
           if (bullet.position.x <= ground.position.x - width / 2 ||
-            bullet.position.x >= ground.position.x + width / 2 ||
+            bullet.position.x >= ground.position.x + width / 2 + 1 ||
             bullet.position.z <= ground.position.z - height / 2 ||
-            bullet.position.z >= ground.position.z + height / 2 ||
+            bullet.position.z >= ground.position.z + height / 2 + 1 ||
             bullet.position.y < ground.position.y - 3) {
-
             let index = bullets.indexOf(bullet)
             if (index !== -1) bullets.splice(index, 1)
             bullet.dispose(true, true)

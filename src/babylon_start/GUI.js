@@ -41,7 +41,7 @@ class Menu {
     }
 
     show(toShow) {
-        if (toShow) { console.log("HEREEEEE"); scene.minimap.hide() }
+        if (toShow) { scene.minimap.hide() }
         else scene.minimap.show()
         if (!this.isFirst) {
 

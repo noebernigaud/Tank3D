@@ -16,7 +16,7 @@ function keyListener(evt, isPressed) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
         inputStates.foreward = isPressed;
-        console.log("here");
+        // console.log("here");
     } else if (evt.code === "KeyS") {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
@@ -126,7 +126,7 @@ function keyApplaier() {
     // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
-        console.log("HERE");
+        // console.log("HERE");
         return;
     }
     if (inputStates.backward) {
