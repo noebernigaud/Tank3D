@@ -24,7 +24,7 @@ const level_map = [
                 "---------------",
                 "---------------",
                 "--P--------N---",
-                "---------------",
+                "------c--------",
                 "---------------",
             ],
         sol: "textures/ground_diffuse.png",
@@ -135,7 +135,10 @@ let current_level_dico = level_map[0]
  */
 function draw_level_map() {
     setCurrentLevelDico()
-    char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+    if (level == 0) {
+        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+        selected_bonuses = []
+    }
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
     for (var [l_index, line] of current_level.entries()) {
@@ -180,6 +183,9 @@ function draw_level_map() {
                     break;
                 case 'w':
                     walls.push(new Wall(posX, posY, true));
+                    break;
+                case 'c':
+                    bonuses.push(new Bonus(posX, posY));
                     break;
                 case 'P':
                     char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2, -height / 2 + posY)

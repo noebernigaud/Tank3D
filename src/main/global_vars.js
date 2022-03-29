@@ -21,6 +21,12 @@ var charsAI;
 /** @type {[Char]} */
 var chars;
 
+/** @type {[Bonus]} */
+var bonuses;
+
+/** @type {[Bonus]} */
+var selected_bonuses;
+
 /** @type {[Wall]} */
 var walls;
 
@@ -75,6 +81,9 @@ tankImageGreen.src = './images/tankGreen.png';
 
 var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
+
+var bonusImage = new Image();
+bonusImage.src = './images/bullet.png';
 
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';

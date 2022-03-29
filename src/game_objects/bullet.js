@@ -12,8 +12,8 @@ class Bullet extends ObjectPos {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, life);
+            char.shape.position.y + char.getTurretTank().getDirection(BABYLON.Axis.Y).y * 4,
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;
@@ -21,9 +21,9 @@ class Bullet extends ObjectPos {
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
-        let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
+        // let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
-        this.physicsImpostor.setLinearVelocity(realVec)
+        this.physicsImpostor.setLinearVelocity(moveVec)
 
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
 
@@ -64,7 +64,7 @@ class Bullet extends ObjectPos {
                     if (b2) b2.dispose(true, true)
                 } else if (b2 = chars.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose(true, true)
-                    if (b2) b2.dispose(true)
+                    if (b2) b2.dispose(false)
                 } else if (b2 = walls.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     if (b2) b2.destroy()
