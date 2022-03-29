@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1, inclinaisonTurretIncrement = 0.02) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     if (type.name == tankImage.src) {
@@ -23,6 +23,7 @@ class Char extends ObjectPos {
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
+      this.inclinaisonTurretIncrement = inclinaisonTurretIncrement
       // engine.runRenderLoop(() => scene.render())
     }
 
@@ -119,7 +120,14 @@ class Char extends ObjectPos {
   }
 
   rotateTurretAxisY(angle) {
-    if (this.life > 0) this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    if (this.life <= 0) return
+    // let oldDir = this.getTurretTank().rotationQuaternion.x;
+    this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    // this.getTurretTank().rotationQuaternion.x = (oldDir);
+  }
+
+  rotateTurretUpDown(isUp) {
+    if (this.life > 0) this.getTurretTank().rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
   }
 
   moveTankForeward() {

@@ -17,6 +17,8 @@ var inMenu = true;
 class Scene {
 
   constructor() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     tanksAIReady = false;
     this.engine = new BABYLON.Engine(canvas, true);
 
@@ -25,14 +27,6 @@ class Scene {
     // window.addEventListener("resize", () => {
     //   engine.resize()
     // })
-
-    window.onresize = function () {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      engine.resize();
-    }
-
-    window.onresize()
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
@@ -45,6 +39,8 @@ class Scene {
     // this.setGizmo()
     this.setCamera()
 
+    this.scene.minimap = new MiniMap()
+
 
 
     ObjectEnum.initiate_all_models()
@@ -53,7 +49,14 @@ class Scene {
     //   this.scene.render()
     // )
 
+    window.onresize = function () {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      scene.minimap.resize()
+      engine.resize();
+    }
 
+    window.onresize()
   }
 
   /**
@@ -67,6 +70,7 @@ class Scene {
     scene.beforeRender = () => {
 
       if (!inMenu) {
+        this.scene.minimap.show()
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         bullets.forEach(bullet => {
@@ -106,6 +110,9 @@ class Scene {
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
+        this.scene.minimap.redraw()
+      } else {
+        this.scene.minimap.hide()
       }
     }
     return scene;

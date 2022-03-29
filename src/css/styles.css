@@ -1,5 +1,13 @@
 html, body {
     padding:0px;
     margin:0px;
-     overflow: hidden;
+    overflow: hidden;
+}
+
+#minimap{
+    position: absolute;
+    right: 0pt;
+    border-radius: 150pt;
+    border: 3px solid #d88;
+    background-image: url("../images/woodTexture.jpg");
 }

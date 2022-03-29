@@ -7,15 +7,19 @@ function keyListener(evt, isPressed) {
     }
     // tourelle
     else if (evt.code === "KeyA") {
-        inputStates.keyA = isPressed;
+        inputStates.rot_minus = isPressed;
     } else if (evt.code === "KeyD") {
-        inputStates.keyD = isPressed;
+        inputStates.rot_plus = isPressed;
     }
     // ??
     else if (evt.code === "KeyW") {
-        inputStates.keyW = isPressed;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.foreward) char1.stabilizeTank(false)
+        inputStates.foreward = isPressed;
     } else if (evt.code === "KeyS") {
-        inputStates.keyS = isPressed;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.backward) char1.stabilizeTank(false)
+        inputStates.backward = isPressed;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyL") {
@@ -27,19 +31,17 @@ function keyListener(evt, isPressed) {
     }
     // rotation 
     else if (evt.keyCode == 37) {
-        inputStates.rot_minus = isPressed;
+        inputStates.keyA = isPressed;
     } else if (evt.keyCode == 39) {
-        inputStates.rot_plus = isPressed;
+        inputStates.keyD = isPressed;
     }
     // deplacement du char
     else if (evt.keyCode == 38) {
-        if (!isPressed) char1.stabilizeTank()
-        else if (!inputStates.foreward) char1.stabilizeTank(false)
-        inputStates.foreward = isPressed;
+        // turret up
+        inputStates.turretUp = isPressed;
     } else if (evt.keyCode == 40) {
-        if (!isPressed) char1.stabilizeTank()
-        else if (!inputStates.backward) char1.stabilizeTank(false)
-        inputStates.backward = isPressed;
+        // turret down
+        inputStates.turretDown = isPressed;
     } else if (evt.code == "KeyQ" && canTire) {
         canTire = false
         let length = 1000;
@@ -81,6 +83,14 @@ function keyApplaier() {
     if (inputStates.mouseclick) {
         char1.addBullet(Date.now());
     }
+
+    // if (inputStates.turretUp) {
+    //     char1.rotateTurretUpDown(true);
+    // }
+
+    // if (inputStates.turretDown) {
+    //     char1.rotateTurretUpDown(false);
+    // }
 
     // TOURNER LE TANK
     if (inputStates.rot_minus && !inputStates.rot_plus) {
