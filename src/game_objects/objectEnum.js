@@ -65,7 +65,7 @@ class ObjectEnum {
 
   static initiate_all_models() {
     var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Hole, this.Mine, this.Player, this.Wall, this.WallD]
-    this.remainingLoad = list_obj.length
+    this.remainingLoad = list_obj.length + 1
     list_obj.forEach(e => e.create_model())
 
   }
