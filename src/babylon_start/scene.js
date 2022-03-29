@@ -207,7 +207,7 @@ class Scene {
 
   setWater(gr) {
     var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
-    waterMesh.position.y = gr.position.y - 3
+    waterMesh.position.y = gr.position.y - 2.7
     var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
     water.backFaceCulling = true;
     water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
