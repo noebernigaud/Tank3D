@@ -92,6 +92,11 @@ class Bullet extends ObjectPos {
         if (this.life <= 0 || forceDispose) this.trail.dispose()
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
+        if (this.life > 0) {
+            bulletDestroyedSound.pause();
+            bulletDestroyedSound.currentTime = 0;
+            bulletDestroyedSound.play();
+        }
 
     }
 

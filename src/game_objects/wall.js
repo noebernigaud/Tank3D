@@ -1,6 +1,6 @@
 class Wall {
 
-    static height = cell_size;
+    static height = cell_size + 1;
     static width = cell_size;
     static depth = cell_size;
     /**
@@ -14,7 +14,7 @@ class Wall {
         this.destructable = destructable
         // super(destructable ? ObjectEnum.WallD : ObjectEnum.Wall, -width / 2 + x, Wall.height / 2, - height / 2 + y, 0, 0)
         this.shape = this.createShape();
-        this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2, -height / 2 + y)
+        this.shape.position = new BABYLON.Vector3(-width / 2 + x, Wall.height / 2 - 1, -height / 2 + y)
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.1, friction: 0 });
         // this.shape.showBoundingBox = true
         shadowGenerator.addShadowCaster(this.shape)
@@ -44,7 +44,7 @@ class WallPerimeter {
         this.width = width * cell_size;
         this.depth = depth * cell_size;
         this.shape = this.createShape();
-        this.shape.position = new BABYLON.Vector3(x * cell_size, Wall.height / 2, y * cell_size)
+        this.shape.position = new BABYLON.Vector3(x * cell_size, Wall.height / 2 - 1, y * cell_size)
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 1, friction: 0 });
         // this.shape.showBoundingBox = true
         shadowGenerator.addShadowCaster(this.shape)

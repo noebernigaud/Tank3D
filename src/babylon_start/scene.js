@@ -143,15 +143,55 @@ class Scene {
   }
 
   setGround() {
-    ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    var grass = new BABYLON.StandardMaterial("groundMat", scene);
-    grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
-    ground.material = grass
-    grass.specularColor = new BABYLON.Color3(0, 0, 0)
+    // ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    // var grass = new BABYLON.StandardMaterial("groundMat", scene);
+    // grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
+    // ground.material = grass
+    // grass.specularColor = new BABYLON.Color3(0, 0, 0)
 
-    ground.checkCollisions = true;
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
-    ground.receiveShadows = true
+    // ground.checkCollisions = true;
+    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
+
+    const groundOptions = {
+      width: width + cell_size,
+      height: height + cell_size,
+      subdivisions: 80,
+      minHeight: -1,
+      maxHeight: 0,
+      onReady: onGroundCreated,
+    };
+    //scene is optional and defaults to the current scene
+    ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      "textures/ground.png",
+      groundOptions,
+      scene
+    );
+
+    function onGroundCreated() {
+      const groundMaterial = new BABYLON.StandardMaterial(
+        "groundMaterial",
+        scene
+      );
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse.png");
+      ground.material = groundMaterial;
+
+      ground.receiveShadows = true
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
+      // to be taken into account by collision detection
+      ground.checkCollisions = true;
+      //groundMaterial.wireframe=true;
+
+      // for physic engine
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(
+        ground,
+        BABYLON.PhysicsImpostor.HeightmapImpostor,
+        { mass: 0 },
+        scene
+      );
+    }
+
+    return ground;
   }
 
   setShadow() {
@@ -160,8 +200,8 @@ class Scene {
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)
     shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurScale = 1;
-    shadowGenerator.setDarkness(0.2);
+    shadowGenerator.blurScale = 0.5;
+    shadowGenerator.setDarkness(0.3);
   }
 
 

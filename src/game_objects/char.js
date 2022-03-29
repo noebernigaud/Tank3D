@@ -16,8 +16,8 @@ class Char extends ObjectPos {
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
-      camera1.radius = 10;
-      camera1.heightOffset = 5;
+      camera1.radius = 5;
+      camera1.heightOffset = 2;
       camera1.rotationOffset = 180;
       camera1.cameraAcceleration = .1;
       camera1.maxCameraSpeed = 10;
@@ -31,10 +31,11 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
 
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
+    this.dust = createDust(this.shape)
   }
 
   moveForeward(coeff) {
@@ -56,6 +57,8 @@ class Char extends ObjectPos {
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
       var bullet = new Bullet(this, 2)
+      bulletFiredSound.pause();
+      bulletFiredSound.currentTime = 0;
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
@@ -142,6 +145,7 @@ class Char extends ObjectPos {
   moveTank(speed) {
     if (this.life <= 0) return
     this.movingSmoke(true)
+    this.dust.start();
     this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
@@ -185,6 +189,7 @@ class Char extends ObjectPos {
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
+    this.dust.stop();
   }
 
   destroyTank(isDisabled) {
