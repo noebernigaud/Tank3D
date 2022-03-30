@@ -18,18 +18,18 @@ const level_map = [
     //     sol: "textures/ground_diffuse.png",
     //     minHeightMap: -1,
     // },
-    {
-        level:
-            [
-                "---------------",
-                "---------------",
-                "--P--------N---",
-                "------c--------",
-                "---------------",
-            ],
-        sol: "textures/ground_diffuse.png",
-        minHeightMap: -0.1,
-    },
+    // {
+    //     level:
+    //         [
+    //             "---------------",
+    //             "---------------",
+    //             "--P--------N---",
+    //             "------c--------",
+    //             "---------------",
+    //         ],
+    //     sol: "textures/ground_diffuse.png",
+    //     minHeightMap: -0.1,
+    // },
     {
         level:
             [
@@ -43,7 +43,7 @@ const level_map = [
                 "-----------w-----------",
                 "--------W--W-----------",
                 "-----------------------",
-                "-----------------------",
+                "------c----------------",
                 "-----------------------",
                 "-----------------------",
             ],
@@ -206,10 +206,10 @@ function draw_level_map() {
     tanksAIReady = true;
 
     // Creation de l'enceinte 
-    walls.push(new WallPerimeter(-width / 2, 0.5, 1, height + 2))
-    walls.push(new WallPerimeter(width / 2 + 1, 0.5, 1, height + 2))
-    walls.push(new WallPerimeter(0.5, height / 2 + 1, width, 1))
-    walls.push(new WallPerimeter(0.5, -height / 2, width, 1))
+    // walls.push(new WallPerimeter(-width / 2, 0.5, 1, height + 2))
+    // walls.push(new WallPerimeter(width / 2 + 1, 0.5, 1, height + 2))
+    // walls.push(new WallPerimeter(0.5, height / 2 + 1, width, 1))
+    // walls.push(new WallPerimeter(0.5, -height / 2, width, 1))
 
 }
 

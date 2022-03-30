@@ -80,10 +80,10 @@ class Scene {
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         bullets.forEach(bullet => {
-          if (bullet.position.x <= ground.position.x - width / 2 ||
-            bullet.position.x >= ground.position.x + width / 2 + 1 ||
-            bullet.position.z <= ground.position.z - height / 2 ||
-            bullet.position.z >= ground.position.z + height / 2 + 1 ||
+          if (bullet.position.x <= ground.position.x - 100 ||
+            bullet.position.x >= ground.position.x + 101 ||
+            bullet.position.z <= ground.position.z - 100 ||
+            bullet.position.z >= ground.position.z + 101 ||
             bullet.position.y < ground.position.y - 3) {
             let index = bullets.indexOf(bullet)
             if (index !== -1) bullets.splice(index, 1)
@@ -171,7 +171,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/ground.png",
+      "textures/heightmap5.png",
       groundOptions,
       scene
     );
@@ -208,21 +208,46 @@ class Scene {
   }
 
   setWater(gr) {
-    var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
-    waterMesh.position.y = gr.position.y - 2.7
-    var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
+    //sand ground
+    var groundTexture = new BABYLON.Texture("textures/sand.jpg", scene);
+    groundTexture.vScale = groundTexture.uScale = 4.0;
+
+    var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    groundMaterial.diffuseTexture = groundTexture;
+
+    var groundSand = BABYLON.MeshBuilder.CreateGround("groundSand", { height: 128, width: 128, subdivisions: 32 }, scene);
+    groundSand.position.y = gr.position.y - 0.1
+    groundSand.material = groundMaterial;
+
+    //water ground
+    var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 256, width: 256, subdivisions: 32 }, scene);
+    waterMesh.position.y = gr.position.y - 0.1
+    var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(256, 256));
     water.backFaceCulling = true;
     water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
     water.windForce = -5;
-    water.waveHeight = 0.5;
-    water.bumpHeight = 0.3;
+    water.waveHeight = 0.1;
+    water.bumpHeight = 0.1;
     water.waveLength = 0.1;
     water.colorBlendFactor = 0;
-
-    water.addToRenderList(gr);
     water.addToRenderList(this.skybox);
-
+    water.addToRenderList(groundSand);
     waterMesh.material = water;
+    // var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
+    // waterMesh.position.y = gr.position.y - 2.2
+    // var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
+    // water.backFaceCulling = true;
+    // water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+    // water.windForce = -5;
+    // water.waveHeight = 0.5;
+    // water.bumpHeight = 0.3;
+    // water.waveLength = 0.1;
+    // water.colorBlendFactor = 0;
+
+    // water.addToRenderList(gr);
+    // water.addToRenderList(this.skybox);
+
+    // waterMesh.material = water;
   }
 
   setShadow() {
@@ -248,13 +273,24 @@ class Scene {
 
 
   setBackground() {
-    this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
+    // this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
+    // var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    // skyboxMaterial.backFaceCulling = false;
+    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
+    // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    // this.skybox.material = skyboxMaterial;
+
+    this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
+    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    skyboxMaterial.disableLighting = true;
     this.skybox.material = skyboxMaterial;
   }
 
