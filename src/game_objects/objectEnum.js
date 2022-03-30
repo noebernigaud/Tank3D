@@ -1,19 +1,16 @@
-var TREE_MESHES;
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
   static Bonus = new ObjectEnum(bonusImage.src, "box", 0.5, 0.5, 0.5)
+  static Tree = new ObjectEnum(treeImage, "tree", 0.8, 1, 0.8)
   static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
   static Player = new ObjectEnum(tankImage.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "tank", 38 / 40, 25 / 40, 70 / 40
-  )
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "tank", 38 / 40, 25 / 40, 70 / 40
-  )
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "tank", 38 / 40, 25 / 40, 70 / 40
-  )
+  static CharRed = new ObjectEnum(tankImageRed.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum(tankImageBlue.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum(tankImageGreen.src, "tank", 38 / 40, 25 / 40, 70 / 40)
 
   /** @type {BABYLON.Mesh}*/
   container;
@@ -30,46 +27,59 @@ class ObjectEnum {
     if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
     if (this.babylon_model == "barrel" || this.babylon_model == "tree") {
       BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
-        this.callback(meshes, false, false, this.babylon_model)
+        this.callback(meshes, false, this.babylon_model)
       });
       return;
     }
     else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
-      this.callback(meshes, true, this.babylon_model == "box", this.babylon_model)
+      this.callback(meshes, true, this.babylon_model)
 
     });
   }
 
-  callback(meshes, toResize, isBox = false, model) {
+  callback(meshes, toResize, model) {
 
     this.meshes = [...meshes];
 
     // Resizing of each meshes
     if (model == "tree") {
+      this.treeMeshes = [];
+      let tempTreesList;
+      let cont;
 
-      this.meshes.forEach(x => {
-        x.isVisible = TREES_LIST[0].includes(x.name)
-      })
-    }
-    if (toResize) this.meshes.forEach(x => {
-      if (isBox) {
-        x.position.y -= 0.225
+      for (let i = 0; i < TREES_LIST.length; i++) {
+        tempTreesList = []
+        for (let j = 0; j < TREES_LIST[i].length; j++) {
+          let m = this.meshes.filter(e => e.name == TREES_LIST[i][j])[0]
+          tempTreesList.push(m)
+        }
+        cont = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+        cont.position.y += this.height / 2;
+        cont.visibility = false;
+
+        tempTreesList.forEach(e => {
+          e.parent = null
+          cont.addChild(e)
+        });
+        tempTreesList.forEach(e => e.visibility = false)
+        this.treeMeshes.push(cont)
       }
-      x.scaling = isBox ? new BABYLON.Vector3(0.50, 0.50, 0.50) : new BABYLON.Vector3(0.25, 0.25, 0.25)
+      ObjectEnum.loadingDone();
+      return;
+    }
 
-    });
+    if (model == "box") {
+      this.meshes.forEach(x => {
+        x.position.y -= 0.225
+        x.scaling = new BABYLON.Vector3(0.50, 0.50, 0.50)
+      })
+
+    } else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
+
 
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     this.container.position.y += this.height / 2;
-    if (model == "tree") {
-
-      this.meshes.forEach(e => {
-        e.position.x = this.container.position.x
-        e.position.y = this.container.position.y
-        e.position.z = this.container.position.z
-      })
-    }
     this.meshes.forEach(e => this.container.addChild(e));
 
     // Hiding of the mesh
@@ -82,7 +92,7 @@ class ObjectEnum {
   }
 
   static initiate_all_models() {
-    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Barrel, this.Mine, this.Player, this.Wall, this.WallD, this.Bonus]
+    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Barrel, this.Mine, this.Player, this.Wall, this.WallD, this.Bonus, this.Tree]
     this.remainingLoad = list_obj.length + 1
     list_obj.forEach(e => e.create_model())
 

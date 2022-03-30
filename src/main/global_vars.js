@@ -39,6 +39,9 @@ var mines;
 /** @type {[Bullet]} */
 var bullets = []
 
+/** @type {[Tree]} */
+var trees = []
+
 var gravity = -9.81
 
 level = 0;
@@ -87,6 +90,8 @@ bonusImage.src = './models/box/9452.jpg';
 
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';
+
+var treeImage = 'no tree image'
 
 let explosionSound = new Audio('audio/Explosion2.wav');
 explosionSound.volume = 0.2;

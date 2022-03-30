@@ -36,6 +36,7 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
       case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
       case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      case ObjectEnum.Tree.name: { shape = ObjectEnum.Tree.treeMeshes[parseInt(Math.random() * 29)].clone(); break; }
       default: meshBabylon = false;
     }
 
@@ -44,11 +45,12 @@ class ObjectPos extends BABYLON.Mesh {
     if (meshBabylon) {
 
       shape.visibility = 0.000001;
-      shape.isVisible = false
+      shape.isVisible = false;
       // shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
         e.visibility = true
+        e.isVisible = true
         e.checkCollisions = true;
       });
 
