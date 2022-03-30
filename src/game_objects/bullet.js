@@ -69,7 +69,7 @@ class Bullet extends ObjectPos {
                     if (b1) b1.dispose()
                     if (b2) b2.destroy()
                 }
-                else if (b2 = holes.find(e => e.shape == e2.object)) {
+                else if (b2 = barrels.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);

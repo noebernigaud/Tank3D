@@ -206,7 +206,7 @@ function startgame(level) {
 
     playing = 1;
 
-    holes = new Array();
+    barrels = new Array();
     walls = new Array();
     chars = new Array();
     charsAI = new Array();
@@ -256,12 +256,12 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...holes, ...bullets, ...mines, ...bonuses]
+    let allElts = [...walls, ...barrels, ...bullets, ...mines, ...bonuses]
     if (level == 0) allElts.push(...chars)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
-    holes = [];
+    barrels = [];
     bullets = [];
     mines = [];
     chars = [];

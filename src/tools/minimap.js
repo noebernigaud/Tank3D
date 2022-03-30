@@ -47,7 +47,7 @@ class MiniMap {
       let point = resize(w.shape.position.z, w.shape.position.x);
       this.drawPoint(point.x, point.y, 'rgb(165,42,42)')
     })
-    holes.forEach(w => {
+    barrels.forEach(w => {
       let point = resize(w.shape.position.z, w.shape.position.x);
       this.drawPoint(point.x, point.y, 'rgb(165,42,42)')
     })

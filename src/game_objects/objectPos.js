@@ -32,7 +32,7 @@ class ObjectPos extends BABYLON.Mesh {
 
       case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-      case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
+      case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
       case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
       case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
@@ -150,7 +150,7 @@ class ObjectPos extends BABYLON.Mesh {
     if (forceDispose || this.life <= 0) {
 
       switch (this.type.name) {
-        case ObjectEnum.Hole.name: { remove(holes, this); break; }
+        case ObjectEnum.Barrel.name: { remove(barrels, this); break; }
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:

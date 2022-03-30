@@ -197,7 +197,7 @@ function draw_level_map() {
                     // camera.alpha -= Math.PI / 2
                     break;
                 case 'h':
-                    holes.push(new Hole(posX, posY))
+                    barrels.push(new Barrel(posX, posY))
                     break;
             }
         }

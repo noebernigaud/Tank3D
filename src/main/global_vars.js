@@ -30,8 +30,8 @@ var selected_bonuses;
 /** @type {[Wall]} */
 var walls;
 
-/** @type {[Hole]} */
-var holes;
+/** @type {[Barrel]} */
+var barrels;
 
 /** @type {[Mine]} */
 var mines;
@@ -64,8 +64,8 @@ wallTexture.src = './images/wallTexture.jpg';
 var wallDTexture = new Image();
 wallDTexture.src = './images/wallDTexture.jpg';
 
-var holeImage = new Image();
-holeImage.src = './images/hole.png';
+var barrelImage = new Image();
+barrelImage.src = './images/hole.png';
 
 var tankImage = new Image();
 tankImage.src = './images/tank.png';
