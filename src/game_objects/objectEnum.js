@@ -28,7 +28,7 @@ class ObjectEnum {
   }
   create_model() {
     if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
-    if (this.babylon_model == "barrel") {
+    if (this.babylon_model == "barrel" || this.babylon_model == "tree") {
       BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
         this.callback(meshes, false, false, this.babylon_model)
       });
@@ -48,7 +48,7 @@ class ObjectEnum {
     if (model == "tree") {
 
       this.meshes.forEach(x => {
-        x.isVisible = TREES_LIST[3].includes(x.name)
+        x.isVisible = TREES_LIST[0].includes(x.name)
       })
     }
     if (toResize) this.meshes.forEach(x => {
@@ -62,6 +62,14 @@ class ObjectEnum {
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     this.container.position.y += this.height / 2;
+    if (model == "tree") {
+
+      this.meshes.forEach(e => {
+        e.position.x = this.container.position.x
+        e.position.y = this.container.position.y
+        e.position.z = this.container.position.z
+      })
+    }
     this.meshes.forEach(e => this.container.addChild(e));
 
     // Hiding of the mesh
