@@ -117,7 +117,7 @@ class Menu {
                 this.bonusPanel.style.display = "none";
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
-                this.bonusPanel.innerHTML = "";
+                this.clearBonus()
             }
             this.bonusPanel.appendChild(b);
         }
@@ -164,5 +164,10 @@ class Menu {
         scene.menu = new Menu()
         level = 0;
         remove_all_objects()
+        this.clearBonus()
+    }
+
+    clearBonus() {
+        this.bonusPanel.innerHTML = "";
     }
 }

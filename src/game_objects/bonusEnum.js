@@ -12,7 +12,7 @@ class BonusEnum {
         new BonusEnum(
             "Bullets speed",
             function () { char1.bulletSpeed *= 2 },
-            "Now your bullets will go 2 time faster !"),
+            "Now your bullets will go two time faster !"),
         new BonusEnum(
             "Bonus life",
             function () { char1.life += 3 },
