@@ -58,7 +58,6 @@ class Menu {
 
             }
             this.isShown = toShow
-            chars.forEach(e => e.stabilizeTank(toShow))
         } else {
             this.prettyBG()
             this.isFirst = false;

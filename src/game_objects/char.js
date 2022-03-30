@@ -146,7 +146,11 @@ class Char extends ObjectPos {
   }
 
   moveTank(speed) {
+
     if (this.life <= 0) return
+    if (this.physicsImpostor.friction != 0) {
+      this.stabilizeTank(false)
+    }
     this.movingSmoke(true)
     this.dust.start();
     this.physicsImpostor.setAngularVelocity(
