@@ -49,12 +49,12 @@ class Menu {
         if (this.inBonus)
             if (toShow) this.bonusPanel.style.display = "none"
             else this.bonusPanel.style.removeProperty("display")
-        this.toggleNotMenuElement(!toShow)
+        toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
             document.getElementById("restart").style.removeProperty("display")
             if (toShow) {
                 engine.stopRenderLoop()
-                this.takeScreenshot()
+                this.setBackground()
             } else {
                 if (!this.inBonus) {
                     engine.runRenderLoop(() => scene.render())
@@ -76,18 +76,11 @@ class Menu {
         document.getElementById("main").style.display = "block"
     }
 
-    takeScreenshot() {
+    setBackground() {
         if (char1.life <= 0) {
             this.prettyBG()
         } else {
-            engine.runRenderLoop(() => scene.render())
-            BABYLON.Tools.CreateScreenshotUsingRenderTarget(engine, camera, { width: canvas.width, height: canvas.height }, function (data) {
-                document.getElementById("src").style.backgroundImage = `url('${data}')`;
-                document.getElementById("src").style.display = "block"
-                document.getElementById("src").style.filter = "blur(5px)"
-                canvas.style.display = "none";
-            });
-            engine.stopRenderLoop()
+
         }
     };
 
@@ -152,13 +145,6 @@ class Menu {
         // })
     }
 
-    toggleNotMenuElement(toShow) {
-        Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
-            if (toShow) e.style.display = "initial"
-            else e.style.display = "none"
-        })
-    }
-
     restart() {
         document.getElementById("restart").style.display = "none"
         scene.menu = new Menu()
@@ -170,4 +156,11 @@ class Menu {
     clearBonus() {
         this.bonusPanel.innerHTML = "";
     }
+}
+
+function toggleNotMenuElement(toShow) {
+    Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
+        if (toShow) e.style.display = "initial"
+        else e.style.display = "none"
+    })
 }

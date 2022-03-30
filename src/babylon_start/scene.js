@@ -100,9 +100,9 @@ class Scene {
         anime()
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
         if (charsAI.length == 0) {
-          level += 1;
-          remove_all_objects()
-          startgame(level);
+          if (level + 1 == level_map.length)
+            this.scene.menu.restart()
+          else startTimer()
         }
         charsAI.forEach(c => {
           if (c.life <= 0) {

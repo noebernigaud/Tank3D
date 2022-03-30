@@ -18,14 +18,34 @@ const level_map = [
     //     sol: "textures/ground_diffuse.png",
     //     minHeightMap: -1,
     // },
+    {
+        level:
+            [
+                "---------------",
+                "---------------",
+                "--P--------N---",
+                "------c--------",
+                "---------------",
+            ],
+        sol: "textures/ground_diffuse8k.png",
+        minHeightMap: -0.1,
+    },
     // {
     //     level:
     //         [
-    //             "---------------",
-    //             "---------------",
-    //             "--P--------N---",
-    //             "------c--------",
-    //             "---------------",
+    //             "-----------------------",
+    //             "-----------------------",
+    //             "------h----------------",
+    //             "-----------------------",
+    //             "-----------------------",
+    //             "--------W--W-----------",
+    //             "-----P-----w------R----",
+    //             "-----------w-----------",
+    //             "--------W--W-----------",
+    //             "-----------------------",
+    //             "------c----------------",
+    //             "-----------------------",
+    //             "-----------------------",
     //         ],
     //     sol: "textures/ground_diffuse.png",
     //     minHeightMap: -0.1,
@@ -136,6 +156,7 @@ let current_level_dico = level_map[0]
 function draw_level_map() {
     setCurrentLevelDico()
     if (level == 0) {
+        if (char1) char1.dispose(true);
         char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
@@ -213,7 +234,6 @@ function draw_level_map() {
     // walls.push(new WallPerimeter(width / 2 + 1, 0.5, 1, height + 2))
     // walls.push(new WallPerimeter(0.5, height / 2 + 1, width, 1))
     // walls.push(new WallPerimeter(0.5, -height / 2, width, 1))
-
 }
 
 function setCurrentLevelDico() {
