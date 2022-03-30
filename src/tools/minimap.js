@@ -56,12 +56,4 @@ class MiniMap {
       this.drawPoint(point.x, point.y, 'rgb(0,0,0)', true)
     })
   }
-
-  hide() {
-    this.canvas.style.display = "none"
-  }
-
-  show() {
-    this.canvas.style.removeProperty("display")
-  }
 }

@@ -41,8 +41,7 @@ class Menu {
     }
 
     show(toShow) {
-        if (toShow) { scene.minimap.hide() }
-        else scene.minimap.show()
+        this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
 
             if (toShow) {
@@ -52,7 +51,6 @@ class Menu {
             else {
                 if (!this.isReallyFirst) {
                     engine.runRenderLoop(() => scene.render())
-
                 } else this.isReallyFirst = false
                 this.hideMenu()
 
@@ -121,4 +119,10 @@ class Menu {
         })
     }
 
+    toggleNotMenuElement(toShow) {
+        Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
+            if (toShow) e.style.display = "initial"
+            else e.style.display = "none"
+        })
+    }
 }

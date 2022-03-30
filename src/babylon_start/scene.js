@@ -76,6 +76,7 @@ class Scene {
     scene.beforeRender = () => {
 
       if (!this.scene.menu.isShown) {
+        scene.minimap.redraw()
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         bullets.forEach(bullet => {
@@ -120,9 +121,6 @@ class Scene {
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
-        this.scene.minimap.redraw()
-      } else {
-        this.scene.minimap.hide()
       }
     }
     return scene;
