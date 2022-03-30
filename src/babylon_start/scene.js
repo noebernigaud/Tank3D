@@ -55,8 +55,8 @@ class Scene {
     window.onresize = function () {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      document.getElementById("src").style.width = window.innerWidth + "pt";
-      document.getElementById("src").style.height = window.innerHeight + "pt";
+      document.getElementById("src").style.width = window.innerWidth + "px";
+      document.getElementById("src").style.height = window.innerHeight + "px";
 
       scene.minimap.resize()
       engine.resize();
