@@ -70,7 +70,7 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
-    engine.runRenderLoop(() => scene.render())
+    // engine.runRenderLoop(() => scene.render())
 
 
     scene.beforeRender = () => {

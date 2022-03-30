@@ -51,13 +51,14 @@ class Menu {
             else this.bonusPanel.style.removeProperty("display")
         this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
+            document.getElementById("restart").style.removeProperty("display")
             if (toShow) {
                 engine.stopRenderLoop()
                 this.takeScreenshot()
             } else {
-                if (!this.isReallyFirst && !this.inBonus) {
+                if (!this.inBonus) {
                     engine.runRenderLoop(() => scene.render())
-                } else this.isReallyFirst = false
+                }
             }
             this.isShown = toShow
         } else {
@@ -116,11 +117,12 @@ class Menu {
                 this.bonusPanel.style.display = "none";
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
+                this.bonusPanel.innerHTML = "";
             }
             this.bonusPanel.appendChild(b);
         }
         bonusListe.forEach(b => createButton(b));
-        // engine.stopRenderLoop();
+        engine.stopRenderLoop();
 
         // inMenu = true;
         // let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
@@ -155,5 +157,12 @@ class Menu {
             if (toShow) e.style.display = "initial"
             else e.style.display = "none"
         })
+    }
+
+    restart() {
+        document.getElementById("restart").style.display = "none"
+        scene.menu = new Menu()
+        level = 0;
+        remove_all_objects()
     }
 }
