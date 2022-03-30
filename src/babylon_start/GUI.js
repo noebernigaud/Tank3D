@@ -102,15 +102,15 @@ class Menu {
      */
     bonusChoice(bonusListe) {
         this.inBonus = true;
+        this.bonusPanel.style.removeProperty("display")
         /**
          * @param {BonusEnum} bEnum 
          * @returns 
         */
-        this.bonusPanel.style.removeProperty("display")
         let createButton = (bEnum) => {
             let b = document.createElement("button")
-            b.innerHTML = `<span>${bEnum.name}</span>`;
-            b.className = "button"
+            b.innerHTML = `<span>${bEnum.name}</span><span class="tooltiptext">${bEnum.description}</span>`;
+            b.className = "button tooltip"
             b.onclick = () => {
                 bEnum.effect()
                 selected_bonuses.push(bEnum.name);
