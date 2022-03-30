@@ -173,7 +173,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/heightmap3.png",
+      "textures/heightmap5.png",
       groundOptions,
       scene
     );
@@ -218,12 +218,12 @@ class Scene {
     groundMaterial.diffuseTexture = groundTexture;
 
     var groundSand = BABYLON.MeshBuilder.CreateGround("groundSand", { height: 128, width: 128, subdivisions: 32 }, scene);
-    groundSand.position.y = gr.position.y - 0.2
+    groundSand.position.y = gr.position.y - 0.1
     groundSand.material = groundMaterial;
 
     //water ground
     var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 256, width: 256, subdivisions: 32 }, scene);
-    waterMesh.position.y = gr.position.y - 0.2
+    waterMesh.position.y = gr.position.y - 0.1
     var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(256, 256));
     water.backFaceCulling = true;
     water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
