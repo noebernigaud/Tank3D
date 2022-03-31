@@ -244,7 +244,7 @@ class Scene {
 
   setShadow() {
     var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 1.5;
+    light.intensity = 2.0;
     light.position = new BABYLON.Vector3(0, 100, 0);
     shadowGenerator = new BABYLON.ShadowGenerator(256, light)
     shadowGenerator.useBlurExponentialShadowMap = true;
