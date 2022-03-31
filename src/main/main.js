@@ -80,7 +80,7 @@ function stabilizeIfNotMoving() {
 }
 
 function keyApplaier() {
-    var speed_angle = 0.02;
+    var speed_angle = 0.05;
 
     if (typeof char1.shape === 'undefined') return;
 
