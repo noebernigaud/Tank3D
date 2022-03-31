@@ -14,6 +14,9 @@ class Char extends ObjectPos {
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, inclinaisonTurretIncrement = 0.02) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
+    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
+    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
+
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
       camera1.radius = 5;
@@ -40,9 +43,6 @@ class Char extends ObjectPos {
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape)
-
-    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
-    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
   }
 
   moveForeward(coeff) {
@@ -128,14 +128,10 @@ class Char extends ObjectPos {
   rotateTurretAxisY(angle) {
     if (this.life <= 0) return
     var turret = this.getTurretTank()
-    // let oldDir = this.getTurretTank().rotationQuaternion.x;
-    // var turretDir = turret.getDirection(new BABYLON.Vector3(0, 1, 1))
-    // var prevAngle = Math.atan2(turretDir.z, turretDir.y);
     var prevAngle = turret.rotationQuaternion.toEulerAngles().x;
     turret.rotate(BABYLON.Axis.X, -prevAngle)
     turret.rotate(BABYLON.Axis.Y, angle)
     turret.rotate(BABYLON.Axis.X, prevAngle)
-    // this.getTurretTank().rotationQuaternion.x = (oldDir);
   }
 
   rotateTurretUpDown(isUp) {
@@ -148,6 +144,7 @@ class Char extends ObjectPos {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
     }
   }
+
 
   moveTankForeward() {
     this.moveTank(this.speedNorme)

@@ -5,13 +5,26 @@ class MoveAI {
    * @param {Char} tank 
    */
   static rotateTurret(tank) {
-    //tank.getTurretTank().setDirection(char1.shape.position.subtract(tank.shape.position));
-    var turretDir = tank.getTurretTank().getDirection(new BABYLON.Vector3(1, 1, 1));
+    var turret = tank.getTurretTank()
+
+    var turretDir = turret.getDirection(new BABYLON.Vector3(1, 1, 1));
     var currentAngle = Math.atan2(turretDir.z, turretDir.x);
     var targetDir = char1.shape.position.subtract(tank.shape.position);
     var targetAngle = Math.atan2(targetDir.z, targetDir.x);
-    tank.getTurretTank().rotate(BABYLON.Axis.Y, currentAngle - targetAngle);
-    tank.getTurretTank().rotate(BABYLON.Axis.Y, Math.PI / 4);
+    tank.rotateTurretAxisY(currentAngle - targetAngle)
+    tank.rotateTurretAxisY(Math.PI / 4)
+
+    //char ennemi nous vise en hauteur:
+    // var currentAngleY = turret.rotationQuaternion.toEulerAngles().x;
+    // targetDir = char1.shape.position.subtract(tank.shape.position);
+    // var targetAngleY = Math.atan2(targetDir.x, targetDir.y);
+    // console.log("currentAngleY :", currentAngleY);
+    // console.log("targetAngleY :", targetAngleY);
+    // console.log(currentAngleY - targetAngleY);
+    // // tank.rotateTurretUpDown((currentAngleY >= targetAngleY), Math.min(0.04, Math.abs(currentAngleY - targetAngleY)))
+    // if (Math.abs(currentAngleY - targetAngleY) > 0.01 && (currentAngleY - targetAngleY) < 3.13) {
+    //   tank.rotateTurretUpDown((currentAngleY <= targetAngleY), 0.01)
+    // }
   }
 
   static rotateTankBody(tank) {
