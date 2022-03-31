@@ -141,17 +141,6 @@ class Scene {
     camera.cameraAcceleration = .1;
     camera.maxCameraSpeed = 10;
 
-    light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 2, 0), scene);
-    light1.emissive = new BABYLON.Color3(0, 0, 0);
-    light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
-
-    light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
-    light1.intensity = 3
-
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
-    shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurScale = 1;
-    shadowGenerator.setDarkness(0.9);
   }
 
   setGround() {
@@ -175,7 +164,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/heightmap5.png",
+      "textures/ground3.png",
       groundOptions,
       scene
     );
@@ -256,9 +245,21 @@ class Scene {
   }
 
   setShadow() {
-    var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 0;
-    light.position = new BABYLON.Vector3(0, 100, 0);
+    // var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
+    // light.intensity = 0;
+    // light.position = new BABYLON.Vector3(0, 100, 0);
+
+    light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 10, 0), scene);
+    light1.emissive = new BABYLON.Color3(0, 0, 0);
+    light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+    light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
+    light1.intensity = 4
+
+    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.blurScale = 1;
+    shadowGenerator.setDarkness(0.1);
   }
 
   setFog() {
