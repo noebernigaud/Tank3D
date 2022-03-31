@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, inclinaisonTurretIncrement = 0.02) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     if (type.name == tankImage.src) {
@@ -33,12 +33,16 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
+    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape)
+
+    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
+    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
   }
 
   moveForeward(coeff) {
@@ -123,13 +127,26 @@ class Char extends ObjectPos {
 
   rotateTurretAxisY(angle) {
     if (this.life <= 0) return
+    var turret = this.getTurretTank()
     // let oldDir = this.getTurretTank().rotationQuaternion.x;
-    this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    // var turretDir = turret.getDirection(new BABYLON.Vector3(0, 1, 1))
+    // var prevAngle = Math.atan2(turretDir.z, turretDir.y);
+    var prevAngle = turret.rotationQuaternion.toEulerAngles().x;
+    turret.rotate(BABYLON.Axis.X, -prevAngle)
+    turret.rotate(BABYLON.Axis.Y, angle)
+    turret.rotate(BABYLON.Axis.X, prevAngle)
     // this.getTurretTank().rotationQuaternion.x = (oldDir);
   }
 
   rotateTurretUpDown(isUp) {
-    if (this.life > 0) this.getTurretTank().rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+    if (this.life <= 0) return;
+    var turret = this.getTurretTank()
+    if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+    }
+    if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+    }
   }
 
   moveTankForeward() {

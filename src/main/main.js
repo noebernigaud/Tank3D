@@ -93,13 +93,13 @@ function keyApplaier() {
         char1.addBullet(Date.now());
     }
 
-    // if (inputStates.turretUp) {
-    //     char1.rotateTurretUpDown(true);
-    // }
+    if (inputStates.turretUp) {
+        char1.rotateTurretUpDown(true);
+    }
 
-    // if (inputStates.turretDown) {
-    //     char1.rotateTurretUpDown(false);
-    // }
+    if (inputStates.turretDown) {
+        char1.rotateTurretUpDown(false);
+    }
 
     // TOURNER LE TANK
     if (inputStates.rot_minus && !inputStates.rot_plus) {
