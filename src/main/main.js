@@ -222,6 +222,7 @@ function startgame(level) {
 
     barrels = new Array();
     walls = new Array();
+    delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
 
@@ -282,11 +283,12 @@ function remove_all_objects() {
     charsAI = [];
     bonuses = [];
     trees = [];
+    delimiters = [];
 }
 
 
 function getAllMeshList() {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees]
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...delimiters]
 }
 
 //ANIMATION
