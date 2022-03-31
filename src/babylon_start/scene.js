@@ -2,7 +2,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ground;
-
+var lightCam;
 canShoot = false;
 /** @type {BABYLON.Mesh} */
 var tankMeshes;
@@ -14,6 +14,7 @@ var engine;
 var shadowGenerator;
 var tanksAIReady;
 var inMenu = true;
+var light1;
 
 class Scene {
 
@@ -139,6 +140,18 @@ class Scene {
     camera.rotationOffset = 50;
     camera.cameraAcceleration = .1;
     camera.maxCameraSpeed = 10;
+
+    light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 2, 0), scene);
+    light1.emissive = new BABYLON.Color3(0, 0, 0);
+    light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+    light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
+    light1.intensity = 3
+
+    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.blurScale = 1;
+    shadowGenerator.setDarkness(0.9);
   }
 
   setGround() {
@@ -178,7 +191,6 @@ class Scene {
       ground.material = groundMaterial;
 
       ground.receiveShadows = true
-      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
       // to be taken into account by collision detection
       ground.checkCollisions = true;
       //groundMaterial.wireframe=true;
@@ -190,10 +202,12 @@ class Scene {
         { mass: 0 },
         scene
       );
+      groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
+      groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
 
       myScene.setWater(ground);
     }
-
 
     return ground;
   }
@@ -243,12 +257,8 @@ class Scene {
 
   setShadow() {
     var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 1.5;
+    light.intensity = 0;
     light.position = new BABYLON.Vector3(0, 100, 0);
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light)
-    shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurScale = 0.5;
-    shadowGenerator.setDarkness(0.3);
   }
 
   setFog() {

@@ -76,6 +76,12 @@ class ObjectEnum {
 
     } else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
 
+    if (model == "tank" || model == "box") {
+      meshes.forEach(x => { if (x.material) x.material.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3) })
+      meshes.forEach(x => { if (x.material) x.material.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9) })
+      meshes.forEach(x => { if (x.material) x.material.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2) })
+    }
+
 
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
