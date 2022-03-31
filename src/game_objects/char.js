@@ -107,12 +107,8 @@ class Char extends ObjectPos {
       //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
       //     // meshes[i].rotation = v
       //   }
-      //   console.log('hereeeee');
-      //   console.log(this.scene.getMeshByName('german_panzer_ww2_ausf_b.Turret_2'));
       //   x = meshes[0]
 
-      //   console.log(x.rotation);
-      //   console.log('this is x in call', x);
       //   x.position.x = 100
       // });
       // console.log('this is x', x);
@@ -187,7 +183,6 @@ class Char extends ObjectPos {
     let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
-    // console.log("linear velocity: ", this.shape.physicsImpostor.getLinearVelocity())
   }
 
   stabilizeTank(hasFriction = true) {

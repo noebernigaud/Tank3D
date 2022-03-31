@@ -61,7 +61,6 @@ class Scene {
 
 
     scene.beforeRender = () => {
-
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
@@ -89,11 +88,7 @@ class Scene {
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
-        if (charsAI.length == 0) {
-          if (level + 1 == level_map.length)
-            this.scene.menu.restart()
-          else startTimer()
-        }
+
         charsAI.forEach(c => {
           if (c.life <= 0) {
             let index = chars.indexOf(c)
@@ -108,6 +103,12 @@ class Scene {
           remove_all_objects()
           startgame(level);
           this.scene.menu.createButton()
+        } else if (charsAI.length == 0) {
+          if (level + 1 == level_map.length)
+            this.scene.menu.restart()
+          else {
+            startTimer()
+          }
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
