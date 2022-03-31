@@ -31,7 +31,6 @@ class Scene {
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
-    this.scene.minimap = new MiniMap()
     this.scene.menu = new Menu()
     this.setPhysic()
     this.setGround()
@@ -51,18 +50,6 @@ class Scene {
     // this.engine.runRenderLoop(() =>
     //   this.scene.render()
     // )
-
-    window.onresize = function () {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      document.getElementById("src").style.width = window.innerWidth + "px";
-      document.getElementById("src").style.height = window.innerHeight + "px";
-
-      scene.minimap.resize()
-      engine.resize();
-    }
-
-    window.onresize()
   }
 
   /**
@@ -79,17 +66,20 @@ class Scene {
         scene.minimap.redraw()
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
-        bullets.forEach(bullet => {
-          if (bullet.position.x <= ground.position.x - 100 ||
-            bullet.position.x >= ground.position.x + 101 ||
-            bullet.position.z <= ground.position.z - 100 ||
-            bullet.position.z >= ground.position.z + 101 ||
-            bullet.position.y < ground.position.y - 3) {
-            let index = bullets.indexOf(bullet)
-            if (index !== -1) bullets.splice(index, 1)
-            bullet.dispose(true, true)
+        getAllMeshList().forEach(obj => {
+          if (obj.shape.position.x <= width / 2 - 100 ||
+            obj.shape.position.x >= width / 2 + 100 ||
+            obj.shape.position.z <= height / 2 - 100 ||
+            obj.shape.position.z >= height / 2 + 100 ||
+            obj.shape.position.y < current_level_dico.minHeightMap - 0.8 ||
+            obj.shape.position.y >= +8) {
+            obj.dispose(true, true)
           }
         })
+        let velocity = char1.physicsImpostor.getLinearVelocity()
+        let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
+        document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
+
         chars.forEach(c => {
           if (c.shape.position.y < ground.position.y - 5) {
             c.life = 0;

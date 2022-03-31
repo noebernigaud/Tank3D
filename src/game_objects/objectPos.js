@@ -161,7 +161,10 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.CharBlue.name:
         case ObjectEnum.CharGreen.name: { remove(charsAI, this); }
         case ObjectEnum.Player.name: { remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
-        default: throw "Unknown object type (ObjectPos.dispose)";
+        case ObjectEnum.Tree.name: { remove(trees, this); break }
+        default:
+          console.log(this.type.name, this);
+          throw `Unknown object type (ObjectPos.dispose)`;
       }
       this.physicsImpostor.dispose()
       this.shape.dispose();

@@ -188,12 +188,6 @@ class Char extends ObjectPos {
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
     // console.log("linear velocity: ", this.shape.physicsImpostor.getLinearVelocity())
-
-    if (this == char1) {
-      let velocity = char1.physicsImpostor.getLinearVelocity()
-      speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
-      document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
-    }
   }
 
   stabilizeTank(hasFriction = true) {

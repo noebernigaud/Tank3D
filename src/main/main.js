@@ -149,6 +149,20 @@ function keyApplaier() {
 
 function init() {
 
+    scene.minimap = new MiniMap()
+
+    window.onresize = function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.getElementById("src").style.width = window.innerWidth + "px";
+        document.getElementById("src").style.height = window.innerHeight + "px";
+
+        scene.minimap.resize()
+        engine.resize();
+    }
+
+    window.onresize()
+
     canvas = document.querySelector("#myCanvas");
 
     playing = 0;
@@ -256,7 +270,7 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...barrels, ...bullets, ...mines, ...bonuses]
+    let allElts = getAllMeshList()
     if (level == 0) allElts.push(...chars)
 
     allElts.forEach(e => e.dispose(true))
@@ -267,6 +281,12 @@ function remove_all_objects() {
     chars = [];
     charsAI = [];
     bonuses = [];
+    trees = [];
+}
+
+
+function getAllMeshList() {
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees]
 }
 
 //ANIMATION
