@@ -1,16 +1,16 @@
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
-  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.5, 0.5, 0.5)
+  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.4, 0.4, 0.4)
   static Tree = new ObjectEnum(treeImage, "tree", 0.8, 1, 0.8)
   static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
-  static Player = new ObjectEnum(tankImage.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum(tankImage.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum(tankImageRed.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum(tankImageBlue.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum(tankImageGreen.src, "tank", 38 / 40, 25 / 40, 70 / 40)
 
   /** @type {BABYLON.Mesh}*/
   container;
@@ -31,7 +31,7 @@ class ObjectEnum {
       });
       return;
     }
-    else if (this.babylon_model == "tankObj") {
+    else if (this.babylon_model == "tank" || this.babylon_model == "box") {
       BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".obj", scene, (meshes) => {
         this.callback(meshes, false, this.babylon_model)
         return;
@@ -76,22 +76,18 @@ class ObjectEnum {
 
     if (model == "box") {
       this.meshes.forEach(x => {
-        x.position.y -= 0.225
-        x.scaling = new BABYLON.Vector3(0.50, 0.50, 0.50)
+        x.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008)
       })
 
-    } else if (model == "tank") {
-      this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5))
     }
-
-    else if (model == "tankObj") {
+    else if (model == "tank") {
       this.meshes.forEach(x => {
         x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
       })
     }
     else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
 
-    if (model == "tank" || model == "box") {
+    if (model == "box") {
       meshes.forEach(x => { if (x.material) x.material.emissiveColor = new BABYLON.Color3(0, 0, 0) })
       meshes.forEach(x => { if (x.material) x.material.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9) })
       meshes.forEach(x => { if (x.material) x.material.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2) })

@@ -217,7 +217,6 @@ function stopgame() {
 //DEBUT D'UNE NOUVELLE PARTIE
 
 function startgame(level) {
-    console.log(level);
     playing = 1;
 
     barrels = new Array();
