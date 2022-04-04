@@ -7,10 +7,10 @@ class ObjectEnum {
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
-  static Player = new ObjectEnum(tankImage.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum(tankImage.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum(tankImageRed.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum(tankImageBlue.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum(tankImageGreen.src, "tankObj", 38 / 40, 25 / 40, 70 / 40)
 
   /** @type {BABYLON.Mesh}*/
   container;
@@ -30,6 +30,12 @@ class ObjectEnum {
         this.callback(meshes, false, this.babylon_model)
       });
       return;
+    }
+    else if (this.babylon_model == "tankObj") {
+      BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".obj", scene, (meshes) => {
+        this.callback(meshes, false, this.babylon_model)
+        return;
+      });
     }
     else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
       this.callback(meshes, true, this.babylon_model)
@@ -74,13 +80,24 @@ class ObjectEnum {
         x.scaling = new BABYLON.Vector3(0.50, 0.50, 0.50)
       })
 
-    } else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
+    } else if (model == "tank") {
+      this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5))
+    }
+
+    else if (model == "tankObj") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+      })
+    }
+    else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
 
     if (model == "tank" || model == "box") {
-      meshes.forEach(x => { if (x.material) x.material.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3) })
+      meshes.forEach(x => { if (x.material) x.material.emissiveColor = new BABYLON.Color3(0, 0, 0) })
       meshes.forEach(x => { if (x.material) x.material.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9) })
       meshes.forEach(x => { if (x.material) x.material.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2) })
     }
+
+
 
 
     // Parent mesh (the original which we will duplicate to create our objects)

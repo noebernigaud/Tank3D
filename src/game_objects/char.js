@@ -225,7 +225,7 @@ class Char extends ObjectPos {
   }
 
   getTurretTank() {
-    return this.shape.getChildMeshes()[1];
+    return this.shape.getChildMeshes()[3];
   }
 
   setStrategy(strategy) {
