@@ -25,13 +25,13 @@ class ObjectEnum {
   }
   create_model() {
     if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
-    if (this.babylon_model == "barrel" || this.babylon_model == "tree") {
+    if (this.babylon_model == "tree") {
       BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
         this.callback(meshes, false, this.babylon_model)
       });
       return;
     }
-    else if (this.babylon_model == "tank" || this.babylon_model == "box") {
+    else if (this.babylon_model == "tank" || this.babylon_model == "box" || this.babylon_model == "barrel") {
       BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".obj", scene, (meshes) => {
         this.callback(meshes, false, this.babylon_model)
         return;
@@ -86,12 +86,6 @@ class ObjectEnum {
       })
     }
     else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
-
-    if (model == "box") {
-      meshes.forEach(x => { if (x.material) x.material.emissiveColor = new BABYLON.Color3(0, 0, 0) })
-      meshes.forEach(x => { if (x.material) x.material.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9) })
-      meshes.forEach(x => { if (x.material) x.material.specularColor = new BABYLON.Color3(0.2, 0.2, 0.2) })
-    }
 
 
 

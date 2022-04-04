@@ -254,7 +254,7 @@ class Scene {
     light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
 
     light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
-    light1.intensity = 4
+    light1.intensity = 3
 
     shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
     shadowGenerator.useBlurExponentialShadowMap = true;
