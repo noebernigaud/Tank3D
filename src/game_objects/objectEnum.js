@@ -2,7 +2,7 @@ class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
   static Bonus = new ObjectEnum(bonusImage.src, "box", 0.4, 0.4, 0.4)
-  static Tree = new ObjectEnum(treeImage, "palm_trees", 0.8, 1, 0.8)
+  static Tree = new ObjectEnum(treeImage, "ground_palm", 0.8, 1, 0.8)
   static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
@@ -27,7 +27,7 @@ class ObjectEnum {
     let name = this.babylon_model
     if (name == "") { ObjectEnum.loadingDone(); return; }
 
-    BABYLON.SceneLoader.ImportMesh("", "models/" + name + "/", name + ((name == "tree") ? ".gltf" : ".obj"), scene, (meshes) => {
+    BABYLON.SceneLoader.ImportMesh("", "models/" + name + "/", name + ".obj", scene, (meshes) => {
       this.callback(meshes, this.babylon_model)
     })
 
@@ -84,6 +84,11 @@ class ObjectEnum {
     else if (model == "tank") {
       this.meshes.forEach(x => {
         x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+      })
+    }
+    else if (model == "modern_tank") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.25, 0.25, -0.25)
       })
     }
 
