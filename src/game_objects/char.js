@@ -39,6 +39,7 @@ class Char extends ObjectPos {
     this.bulletDamage = bulletDamage;
     this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
     this.health = health
+    this.maxHealth = health
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
