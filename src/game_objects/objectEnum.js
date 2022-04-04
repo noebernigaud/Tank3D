@@ -75,6 +75,12 @@ class ObjectEnum {
         x.scaling = new BABYLON.Vector3(0.002, 0.002, 0.002)
       })
     }
+
+    else if (model == "coconut_tree") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02)
+      })
+    }
     else if (model == "tank") {
       this.meshes.forEach(x => {
         x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
