@@ -251,3 +251,35 @@ class Char extends ObjectPos {
   }
 
 }
+
+function lights() {
+  var gui = new dat.GUI();
+  gui.domElement.style.marginTop = "100px";
+  gui.domElement.id = "datGUI";
+  var options = {
+    Emissive: 0.3,
+    Specular: 0.3,
+    Diffuse: 0.3,
+    Ambient: 0.3
+  }
+
+  gui.add(options, "Emissive", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Specular", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Ambient", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
+  });
+
+  // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+  // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+  // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
+
+
+}

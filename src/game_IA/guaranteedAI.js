@@ -66,7 +66,7 @@ class guaranteedAI {
 
         this.tank.shape.rotate(BABYLON.Axis.Y, this.angleChange);
 
-        this.tank.moveTankForeward();
+        // this.tank.moveTankForeward();
 
         //Rotate turret
         MoveAI.rotateTurret(this.tank);
