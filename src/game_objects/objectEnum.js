@@ -1,6 +1,3 @@
-x = 0;
-y = 0;
-
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
