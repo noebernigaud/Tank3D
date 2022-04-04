@@ -45,7 +45,8 @@ class Char extends ObjectPos {
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
-    this.dust = createDust(this.shape)
+    this.dust = createDust(this.shape);
+    this.healtBar = new Healthbar(this);
   }
 
   moveForeward(coeff) {

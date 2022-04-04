@@ -84,6 +84,7 @@ class Scene {
           if (c.shape.position.y < ground.position.y - 5) {
             c.life = 0;
           }
+          c.healtBar.updatePartition()
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
