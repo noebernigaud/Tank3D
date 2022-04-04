@@ -2,7 +2,7 @@ class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
   static Bonus = new ObjectEnum(bonusImage.src, "box", 0.4, 0.4, 0.4)
-  static Tree = new ObjectEnum(treeImage, "tree", 0.8, 1, 0.8)
+  static Tree = new ObjectEnum(treeImage, "palm_trees", 0.8, 1, 0.8)
   static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
@@ -69,6 +69,11 @@ class ObjectEnum {
         x.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008)
       })
 
+    }
+    else if (model == "palm_trees") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.002, 0.002, 0.002)
+      })
     }
     else if (model == "tank") {
       this.meshes.forEach(x => {
