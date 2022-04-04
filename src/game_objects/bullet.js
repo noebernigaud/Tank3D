@@ -18,6 +18,7 @@ class Bullet extends ObjectPos {
 
         this.char = char;
         this.speed = char.bulletSpeed;
+        this.damage = char.bulletDamage;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
@@ -65,7 +66,7 @@ class Bullet extends ObjectPos {
                     if (b2) b2.dispose(true, true)
                 } else if (b2 = chars.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose(true, true)
-                    if (b2) b2.dispose(false)
+                    if (b2) b2.healthLoss(this.damage)
                 } else if (b2 = walls.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     if (b2) b2.destroy()

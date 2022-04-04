@@ -11,7 +11,7 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, inclinaisonTurretIncrement = 0.002) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, health = 10, bulletDamage = 5, inclinaisonTurretIncrement = 0.002) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
@@ -36,7 +36,9 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
+    this.bulletDamage = bulletDamage;
     this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
+    this.health = health
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
@@ -245,6 +247,14 @@ class Char extends ObjectPos {
     this.exhaustPipeRight.emitRate = isMoving ? 500 : 300;
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
+  }
+
+  healthLoss(damage) {
+    if (damage < this.health) this.health -= damage
+    else {
+      this.health = 0
+      this.dispose(false)
+    }
   }
 
 }
