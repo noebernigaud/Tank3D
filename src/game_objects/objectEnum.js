@@ -24,26 +24,16 @@ class ObjectEnum {
     this.depth = depth;
   }
   create_model() {
-    if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
-    if (this.babylon_model == "tree") {
-      BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
-        this.callback(meshes, false, this.babylon_model)
-      });
-      return;
-    }
-    else if (this.babylon_model == "tank" || this.babylon_model == "box" || this.babylon_model == "barrel") {
-      BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".obj", scene, (meshes) => {
-        this.callback(meshes, false, this.babylon_model)
-        return;
-      });
-    }
-    else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
-      this.callback(meshes, true, this.babylon_model)
+    let name = this.babylon_model
+    if (name == "") { ObjectEnum.loadingDone(); return; }
 
-    });
+    BABYLON.SceneLoader.ImportMesh("", "models/" + name + "/", name + ((name == "tree") ? ".gltf" : ".obj"), scene, (meshes) => {
+      this.callback(meshes, this.babylon_model)
+    })
+
   }
 
-  callback(meshes, toResize, model) {
+  callback(meshes, model) {
 
     this.meshes = [...meshes];
 
@@ -74,7 +64,7 @@ class ObjectEnum {
       return;
     }
 
-    if (model == "box") {
+    else if (model == "box") {
       this.meshes.forEach(x => {
         x.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008)
       })
@@ -85,7 +75,6 @@ class ObjectEnum {
         x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
       })
     }
-    else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
 
 
 
