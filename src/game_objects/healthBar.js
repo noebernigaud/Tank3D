@@ -34,13 +34,13 @@ class Healthbar {
     this.healthBarContainer.getChildMeshes().forEach(e => e.dispose())
     var paddingBar = 0.02;
     let barsToDisplay = Math.round(this.tank.health / this.tank.maxHealth * this.partitions)
-    let partitionWidth = (this.barWidth + paddingBar) / this.partitions - paddingBar + paddingBar / this.partitions;
+    let partitionWidth = (this.barWidth - (this.partitions + 1) * paddingBar) / this.partitions;
     var healthBarTextMaterial = new BABYLON.StandardMaterial("hb3mat", scene);
     healthBarTextMaterial.diffuseColor = BABYLON.Color3.Black();
 
     let createSmallBar = (offset, i) => {
-      let xPos = offset * this.barWidth / 2 - offset * (i * (partitionWidth + paddingBar) + partitionWidth / 2);
-      var healthBarText = BABYLON.MeshBuilder.CreatePlane("hb3", { width: partitionWidth, height: 0.1, subdivisions: 4, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+      let xPos = offset * this.barWidth / 2 - offset * (i * (partitionWidth + paddingBar) + partitionWidth / 2) + paddingBar;
+      var healthBarText = BABYLON.MeshBuilder.CreatePlane("hb3", { width: partitionWidth, height: 0.08, subdivisions: 4, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
       healthBarText.position = new BABYLON.Vector3(xPos, 0, offset * 0.01);
       healthBarText.material = healthBarTextMaterial;
       healthBarText.parent = this.healthBarContainer
