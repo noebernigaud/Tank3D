@@ -225,7 +225,6 @@ function createDust(emitter) {
     particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.45, -0.5)
     particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, -0.35, 0.5)
 
-    particleSystem.disposeOnStop = true;
 
     return particleSystem;
 }

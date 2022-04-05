@@ -91,6 +91,17 @@ class ObjectEnum {
         x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
       })
     }
+    else if (model == "snowy_tree") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.025, 0.025, 0.025)
+        x.backFaceCulling = false
+      })
+    }
+    else if (model == "wintercabin") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01)
+      })
+    }
 
 
 

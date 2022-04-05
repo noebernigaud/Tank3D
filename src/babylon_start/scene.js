@@ -269,10 +269,10 @@ class Scene {
     //BABYLON.Scene.FOGMODE_NONE;
     //BABYLON.Scene.FOGMODE_EXP2;
     scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-    scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.9);
-    scene.fogDensity = 0.01;
-    scene.fogStart = 15.0;
-    scene.fogEnd = 60.0;
+    scene.fogColor = new BABYLON.Color3(1, 1, 1);
+    scene.fogDensity = 0.3;
+    scene.fogStart = 0.1;
+    scene.fogEnd = 30.0;
   }
 
 
