@@ -167,6 +167,9 @@ function init() {
 
     playing = 0;
 
+    musicBackground.play()
+    musicBackground.loop = true
+
 
     // level = 0;
 

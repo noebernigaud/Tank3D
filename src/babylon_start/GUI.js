@@ -102,9 +102,13 @@ class Menu {
         */
         let createButton = (bEnum) => {
             let b = document.createElement("button")
+            b.onmouseenter = () => scene.menu.soundHover()
             b.innerHTML = `<span>${bEnum.name}</span><span class="tooltiptext">${bEnum.description}</span>`;
             b.className = "button tooltip"
             b.onclick = () => {
+                bonusTookSound.currentTime = 0
+                bonusTookSound.play()
+                console.log("bonus was taken");
                 bEnum.effect()
                 selected_bonuses.push(bEnum.name);
                 this.bonusPanel.style.display = "none";
@@ -155,6 +159,12 @@ class Menu {
 
     clearBonus() {
         this.bonusPanel.innerHTML = "";
+    }
+
+    soundHover() {
+        menuHoverSound.currentTime = 0
+        menuHoverSound.play()
+        console.log("button was hovered");
     }
 }
 

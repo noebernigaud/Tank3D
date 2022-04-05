@@ -47,6 +47,12 @@ class Char extends ObjectPos {
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape);
     this.healtBar = new Healthbar(this);
+
+    this.mouveSound = new Audio('audio/electricFerry.wav');
+    this.mouveSound.volume = 0.2
+    this.bulletFiredSound = new Audio('audio/Explosion2.wav');
+    this.bulletFiredSound.volume = 0.2;
+
   }
 
   moveForeward(coeff) {
@@ -68,9 +74,9 @@ class Char extends ObjectPos {
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
       var bullet = new Bullet(this)
-      bulletFiredSound.pause();
-      bulletFiredSound.currentTime = 0;
-      bulletFiredSound.play();
+      this.bulletFiredSound.pause();
+      this.bulletFiredSound.currentTime = 0;
+      this.bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
     }
@@ -201,6 +207,8 @@ class Char extends ObjectPos {
     let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
+
+    this.mouveSound.play();
   }
 
   stabilizeTank(hasFriction = true) {
@@ -210,6 +218,8 @@ class Char extends ObjectPos {
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
     this.dust.stop();
+    this.mouveSound.pause();
+    this.mouveSound.currentTime = 0;
   }
 
   destroyTank(isDisabled) {
