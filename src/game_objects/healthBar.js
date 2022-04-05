@@ -22,6 +22,7 @@ class Healthbar {
     healthBarContainer.position = new BABYLON.Vector3(0, 0.7, 0);     // Position above player.
 
     healthBarContainer.parent = tank.shape;
+    healthBarContainer.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
     healthBarContainer.material = healthBarContainerMaterial;
     this.healthBarContainerMaterial = healthBarContainerMaterial;
     this.healthBarContainer = healthBarContainer;
