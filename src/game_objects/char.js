@@ -11,8 +11,11 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, inclinaisonTurretIncrement = 0.02) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, health = 10, bulletDamage = 5, inclinaisonTurretIncrement = 0.002) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
+
+    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
+    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
@@ -33,16 +36,17 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
+    this.bulletDamage = bulletDamage;
     this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
+    this.health = health
+    this.maxHealth = health
 
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
-    this.dust = createDust(this.shape)
-
-    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
-    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
+    this.dust = createDust(this.shape);
+    this.healtBar = new Healthbar(this);
   }
 
   moveForeward(coeff) {
@@ -128,14 +132,10 @@ class Char extends ObjectPos {
   rotateTurretAxisY(angle) {
     if (this.life <= 0) return
     var turret = this.getTurretTank()
-    // let oldDir = this.getTurretTank().rotationQuaternion.x;
-    // var turretDir = turret.getDirection(new BABYLON.Vector3(0, 1, 1))
-    // var prevAngle = Math.atan2(turretDir.z, turretDir.y);
     var prevAngle = turret.rotationQuaternion.toEulerAngles().x;
     turret.rotate(BABYLON.Axis.X, -prevAngle)
     turret.rotate(BABYLON.Axis.Y, angle)
     turret.rotate(BABYLON.Axis.X, prevAngle)
-    // this.getTurretTank().rotationQuaternion.x = (oldDir);
   }
 
   rotateTurretUpDown(isUp) {
@@ -148,6 +148,7 @@ class Char extends ObjectPos {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
     }
   }
+
 
   moveTankForeward() {
     this.moveTank(this.speedNorme)
@@ -249,6 +250,16 @@ class Char extends ObjectPos {
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
+
+
+  healthLoss(damage) {
+    if (damage < this.health) this.health -= damage
+    else {
+      this.health = 0
+      this.dispose(false)
+    }
+  }
+
 
 }
 

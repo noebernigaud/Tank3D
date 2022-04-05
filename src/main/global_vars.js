@@ -30,6 +30,9 @@ var selected_bonuses;
 /** @type {[Wall]} */
 var walls;
 
+/** @type {[DelimiterMesh]} */
+var delimiters;
+
 /** @type {[Barrel]} */
 var barrels;
 

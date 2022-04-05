@@ -64,6 +64,7 @@ class Scene {
     scene.beforeRender = () => {
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
+        // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
         getAllMeshList().forEach(obj => {
@@ -84,6 +85,7 @@ class Scene {
           if (c.shape.position.y < ground.position.y - 5) {
             c.life = 0;
           }
+          c.healtBar.updatePartition()
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())

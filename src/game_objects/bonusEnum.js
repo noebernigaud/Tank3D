@@ -21,6 +21,17 @@ class BonusEnum {
             "Bonus bullet life",
             function () { char1.bulletLife += 2 },
             "With this bonus your bullets will have 2 more lives"),
+        new BonusEnum(
+            "Bonus bullet damage",
+            function () { char1.bulletDamage += 5 },
+            "With this bonus your bullets will deal 5 more damage"),
+        new BonusEnum(
+            "Bonus char health",
+            function () {
+                char1.maxHealth += 5
+                char1.health += 5
+            },
+            "With this bonus your char gains 5 maximum health"),
     ]
 
     constructor(name, effect, description) {

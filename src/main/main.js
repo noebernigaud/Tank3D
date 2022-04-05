@@ -80,7 +80,7 @@ function stabilizeIfNotMoving() {
 }
 
 function keyApplaier() {
-    var speed_angle = 0.02;
+    var speed_angle = 0.03;
 
     if (typeof char1.shape === 'undefined') return;
 
@@ -221,6 +221,7 @@ function startgame(level) {
 
     barrels = new Array();
     walls = new Array();
+    delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
 
@@ -281,11 +282,12 @@ function remove_all_objects() {
     charsAI = [];
     bonuses = [];
     trees = [];
+    delimiters = [];
 }
 
 
 function getAllMeshList() {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees]
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...delimiters]
 }
 
 //ANIMATION

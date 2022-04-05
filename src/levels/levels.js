@@ -18,38 +18,44 @@ const level_map = [
     //     sol: "textures/ground_diffuse.png",
     //     minHeightMap: -1,
     // },
-    {
-        level:
-            [
-                "---------------",
-                "---------------",
-                "--P--------N---",
-                "------c--------",
-                "---------------",
-            ],
-        sol: "textures/ground_diffuse8k.png",
-        minHeightMap: -0.1,
-    },
     // {
     //     level:
     //         [
-    //             "-----------------------",
-    //             "-----------------------",
-    //             "------h----------------",
-    //             "-----------------------",
-    //             "-----------------------",
-    //             "--------W--W-----------",
-    //             "-----P-----w------R----",
-    //             "-----------w-----------",
-    //             "--------W--W-----------",
-    //             "-----------------------",
-    //             "------c----------------",
-    //             "-----------------------",
-    //             "-----------------------",
+    //             "---------------",
+    //             "---------------",
+    //             "--P--------N---",
+    //             "------c--------",
+    //             "---------------",
     //         ],
-    //     sol: "textures/ground_diffuse.png",
+    //     sol: "textures/ground_diffuse8k.png",
     //     minHeightMap: -0.1,
     // },
+    {
+        level:
+            [
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "---------h-------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------W--W--------------",
+                "--------P-----w------R-------",
+                "--------------w--------------",
+                "-----------W--W--------------",
+                "-----------------------------",
+                "---------c-------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+                "-----------------------------",
+            ],
+        sol: "textures/ground_diffuse.png",
+        minHeightMap: -0.1,
+    },
     {
         level:
             [
@@ -160,6 +166,7 @@ function draw_level_map() {
         char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
+    char1.health = char1.maxHealth
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
     for (var [l_index, line] of current_level.entries()) {
@@ -234,6 +241,10 @@ function draw_level_map() {
     // walls.push(new WallPerimeter(width / 2 + 1, 0.5, 1, height + 2))
     // walls.push(new WallPerimeter(0.5, height / 2 + 1, width, 1))
     // walls.push(new WallPerimeter(0.5, -height / 2, width, 1))
+    delimiters.push(new DelimiterMesh(-width / 2, 0.5, 2, height + 2))
+    delimiters.push(new DelimiterMesh(width / 2 + 1, 0.5, 2, height + 2))
+    delimiters.push(new DelimiterMesh(0.5, height / 2 + 2, width, 2))
+    delimiters.push(new DelimiterMesh(0.5, -height / 2, width, 2))
 }
 
 function setCurrentLevelDico() {
