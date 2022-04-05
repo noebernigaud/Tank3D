@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 10 / 20;
+    static diameter = 4 / 20;
     /**
      * 
      * @param {Char} char 
@@ -12,18 +12,20 @@ class Bullet extends ObjectPos {
         super(
             ObjectEnum.Bullet,
             char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
+            // char.shape.position.y + char.getTurretTank().getDirection(BABYLON.Axis.Y).y * 4,
             char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, life);
+            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;
+        this.damage = char.bulletDamage;
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
-        let realVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
+        // let moveVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         // pourquoi la balle part un peu à gauche ou a droite
-        this.physicsImpostor.setLinearVelocity(realVec)
+        this.physicsImpostor.setLinearVelocity(moveVec)
 
         // this.physicsImpostor.setLinearVelocity(new BABYLON.Vector3(speed * Math.sin(char.rotation.y * x), 0, speed * Math.cos(char.rotation.y * x)));
 
@@ -64,12 +66,12 @@ class Bullet extends ObjectPos {
                     if (b2) b2.dispose(true, true)
                 } else if (b2 = chars.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose(true, true)
-                    if (b2) b2.dispose(true)
+                    if (b2) b2.healthLoss(this.damage)
                 } else if (b2 = walls.find(e => e.shape == e2.object)) {
-                    b1.dispose()
+                    if (b1) b1.dispose()
                     if (b2) b2.destroy()
                 }
-                else if (b2 = holes.find(e => e.shape == e2.object)) {
+                else if (b2 = barrels.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);
@@ -92,6 +94,11 @@ class Bullet extends ObjectPos {
         if (this.life <= 0 || forceDispose) this.trail.dispose()
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
+        if (this.life > 0) {
+            bulletDestroyedSound.pause();
+            bulletDestroyedSound.currentTime = 0;
+            bulletDestroyedSound.play();
+        }
 
     }
 

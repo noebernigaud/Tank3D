@@ -7,15 +7,20 @@ function keyListener(evt, isPressed) {
     }
     // tourelle
     else if (evt.code === "KeyA") {
-        inputStates.keyA = isPressed;
+        inputStates.rot_minus = isPressed;
     } else if (evt.code === "KeyD") {
-        inputStates.keyD = isPressed;
+        inputStates.rot_plus = isPressed;
     }
     // ??
     else if (evt.code === "KeyW") {
-        inputStates.keyW = isPressed;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.foreward) char1.stabilizeTank(false)
+        inputStates.foreward = isPressed;
+        // console.log("here");
     } else if (evt.code === "KeyS") {
-        inputStates.keyS = isPressed;
+        if (!isPressed) char1.stabilizeTank()
+        else if (!inputStates.backward) char1.stabilizeTank(false)
+        inputStates.backward = isPressed;
     }
     // POUR S'ENFLAMER
     else if (evt.code === "KeyL") {
@@ -27,19 +32,17 @@ function keyListener(evt, isPressed) {
     }
     // rotation 
     else if (evt.keyCode == 37) {
-        inputStates.rot_minus = isPressed;
+        inputStates.keyA = isPressed;
     } else if (evt.keyCode == 39) {
-        inputStates.rot_plus = isPressed;
+        inputStates.keyD = isPressed;
     }
     // deplacement du char
     else if (evt.keyCode == 38) {
-        if (!isPressed) char1.stabilizeTank()
-        else if (!inputStates.foreward) char1.stabilizeTank(false)
-        inputStates.foreward = isPressed;
+        // turret up
+        inputStates.turretUp = isPressed;
     } else if (evt.keyCode == 40) {
-        if (!isPressed) char1.stabilizeTank()
-        else if (!inputStates.backward) char1.stabilizeTank(false)
-        inputStates.backward = isPressed;
+        // turret down
+        inputStates.turretDown = isPressed;
     } else if (evt.code == "KeyQ" && canTire) {
         canTire = false
         let length = 1000;
@@ -61,6 +64,14 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (evt.keyCode === 27) {
+        if (isPressed && scene.menu.canBeSwitched) {
+            scene.menu.show(!scene.menu.isShown)
+            scene.menu.canBeSwitched = false
+        }
+        if (!isPressed) {
+            scene.menu.canBeSwitched = true
+        }
     }
 }
 
@@ -69,7 +80,7 @@ function stabilizeIfNotMoving() {
 }
 
 function keyApplaier() {
-    var speed_angle = 0.02;
+    var speed_angle = 0.03;
 
     if (typeof char1.shape === 'undefined') return;
 
@@ -80,6 +91,14 @@ function keyApplaier() {
     // On regarde si on doit tirer
     if (inputStates.mouseclick) {
         char1.addBullet(Date.now());
+    }
+
+    if (inputStates.turretUp) {
+        char1.rotateTurretUpDown(true);
+    }
+
+    if (inputStates.turretDown) {
+        char1.rotateTurretUpDown(false);
     }
 
     // TOURNER LE TANK
@@ -107,6 +126,7 @@ function keyApplaier() {
     // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
+        // console.log("HERE");
         return;
     }
     if (inputStates.backward) {
@@ -128,6 +148,20 @@ function keyApplaier() {
 }
 
 function init() {
+
+    scene.minimap = new MiniMap()
+
+    window.onresize = function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.getElementById("src").style.width = window.innerWidth + "px";
+        document.getElementById("src").style.height = window.innerHeight + "px";
+
+        scene.minimap.resize()
+        engine.resize();
+    }
+
+    window.onresize()
 
     canvas = document.querySelector("#myCanvas");
 
@@ -183,17 +217,19 @@ function stopgame() {
 //DEBUT D'UNE NOUVELLE PARTIE
 
 function startgame(level) {
-
     playing = 1;
 
-    holes = new Array();
+    barrels = new Array();
     walls = new Array();
+    delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
 
     //BULLETS AND MINES INIT
     bullets = new Array();
     mines = new Array();
+
+    bonuses = new Array();
 
     if (level < level_map.length) {
         draw_level_map(level)
@@ -234,15 +270,24 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects() {
-    let allElts = [...walls, ...holes, ...bullets, ...mines, ...chars]
+    let allElts = getAllMeshList()
+    if (level == 0) allElts.push(...chars)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
-    holes = [];
+    barrels = [];
     bullets = [];
     mines = [];
     chars = [];
     charsAI = [];
+    bonuses = [];
+    trees = [];
+    delimiters = [];
+}
+
+
+function getAllMeshList() {
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...delimiters]
 }
 
 //ANIMATION

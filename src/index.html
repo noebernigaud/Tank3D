@@ -5,6 +5,7 @@
     <meta charset=utf-8 />
     <title>Tank 3D</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/timer.css">
 
     <script src="../lib/ammo.js"></script>
     <script src="../lib/cannon.js"></script>
@@ -18,31 +19,40 @@
     <script src="../lib/babylonjs.serializers.min.js"></script>
     <script src="../lib/babylon.gui.min.js"></script>
     <script src="../lib/babylon.inspector.bundle.js"></script>
+    <script src="../lib/dat.gui.min.js"></script>
 
     <script src="babylon_start/tool_babylon.js"></script>
+    <script src="levels/levels.js"></script>
+    <script src="main/global_vars.js"></script>
     <script src="babylon_start/particles.js"></script>
     <script src="babylon_start/opponent_vehicle.js"></script>
     <script src="babylon_start/model_loader.js"></script>
     <script src="babylon_start/GUI.js"></script>
 
-    <script src="levels/levels.js"></script>
 
-    <script src="main/global_vars.js"></script>
     <script src="game_objects/objectPos.js"></script>
     <script src="game_objects/objectEnum.js"></script>
     <script src="game_objects/char.js"></script>
     <script src="game_objects/bullet.js"></script>
-    <script src="game_objects/hole.js"></script>
+    <script src="game_objects/bonus.js"></script>
+    <script src="game_objects/bonusEnum.js"></script>
+    <script src="game_objects/barrel.js"></script>
+    <script src="game_objects/tree.js"></script>
+    <script src="game_objects/healthBar.js"></script>
     <script src="tools/intelligence.js"></script>
     <script src="game_objects/mine.js"></script>
     <script src="tools/SimBullet.js"></script>
     <script src="tools/utils.js"></script>
     <script src="game_objects/wall.js"></script>
+    <script src="game_objects/delimiterMesh.js"></script>
     <script src="main/main.js"></script>
 
     <script src="game_IA/shootAI.js"></script>
     <script src="game_IA/moveAI.js"></script>
     <script src="game_IA/guaranteedAI.js"></script>
+    <script src="game_IA/noStrategy.js"></script>
+    <script src="tools/minimap.js"></script>
+    <script src="tools/counter.js"></script>
 
     <link rel="shortcut icon" href="images/tankGreen.png">
 </head>
@@ -52,6 +62,23 @@
     <!-- <body> -->
     <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
     <canvas id="myCanvas"></canvas>
+    <div id="src"></div>
+    <div id="bonusPanel" class="divb" style="display: none;">
+    </div>
+    <canvas id="minimap" class="hideOnMenu"></canvas>
+    <div id="main" class="divb">
+        <div id="play" class='button' onclick="scene.menu.show(false)">
+            <span>Play</span>
+        </div>
+        <div id="opt" class='button' onclick="scene.menu.show(false)">
+            <span>Options</span>
+        </div>
+        <div id="restart" class="button" onclick="scene.menu.restart()" style="display: none;">
+            <span>Main menu</span>
+        </div>
+    </div>
+    <div id="speed" class="hideOnMenu">0 km/h</div>
+    <div id="timer" style="display: none;"></div>
     <script src="babylon_start/scene.js">
     </script>
     <script>

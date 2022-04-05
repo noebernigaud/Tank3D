@@ -1,5 +1,5 @@
-var cell_x_number = 25;
-var cell_y_number = 15;
+var cell_x_number = 40;
+var cell_y_number = 40;
 
 var cell_size = 1;
 
@@ -21,17 +21,29 @@ var charsAI;
 /** @type {[Char]} */
 var chars;
 
+/** @type {[Bonus]} */
+var bonuses;
+
+/** @type {[Bonus]} */
+var selected_bonuses;
+
 /** @type {[Wall]} */
 var walls;
 
-/** @type {[Hole]} */
-var holes;
+/** @type {[DelimiterMesh]} */
+var delimiters;
+
+/** @type {[Barrel]} */
+var barrels;
 
 /** @type {[Mine]} */
 var mines;
 
 /** @type {[Bullet]} */
 var bullets = []
+
+/** @type {[Tree]} */
+var trees = []
 
 var gravity = -9.81
 
@@ -58,8 +70,8 @@ wallTexture.src = './images/wallTexture.jpg';
 var wallDTexture = new Image();
 wallDTexture.src = './images/wallDTexture.jpg';
 
-var holeImage = new Image();
-holeImage.src = './images/hole.png';
+var barrelImage = new Image();
+barrelImage.src = './images/hole.png';
 
 var tankImage = new Image();
 tankImage.src = './images/tank.png';
@@ -76,14 +88,19 @@ tankImageGreen.src = './images/tankGreen.png';
 var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
 
+var bonusImage = new Image();
+bonusImage.src = './models/box/Material_51_baseColor.png';
+
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';
+
+var treeImage = 'no tree image'
 
 let explosionSound = new Audio('audio/Explosion2.wav');
 explosionSound.volume = 0.2;
 
-let bulletFiredSound = new Audio('audio/Crush8-Bit.ogg');
-bulletFiredSound.volume = 0.5;
+let bulletFiredSound = new Audio('audio/Explosion2.wav');
+bulletFiredSound.volume = 0.2;
 
 let bulletBounceSound = new Audio('audio/plop.mp3');
 

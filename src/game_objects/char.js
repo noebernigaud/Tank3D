@@ -11,29 +11,42 @@ class Char extends ObjectPos {
    * @param {number} tempsMinEntreTirsEnMillisecondes 
    * @param {HTMLImageElement} img 
    */
-  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, life = 1) {
+  constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, health = 10, bulletDamage = 5, inclinaisonTurretIncrement = 0.002) {
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
+
+    this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
+    this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
 
     if (type.name == tankImage.src) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
-      camera1.radius = 10;
-      camera1.heightOffset = 5;
+      camera1.radius = 5;
+      camera1.heightOffset = 2;
       camera1.rotationOffset = 180;
       camera1.cameraAcceleration = .1;
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
       // engine.runRenderLoop(() => scene.render())
+    } else {
+      this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
+      MoveAI.rotateTurret(this)
     }
 
     this.delayMinBetweenBullets = tempsMinEntreTirsEnMillisecondes;
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
+    this.bulletLife = bulletLife;
+    this.bulletDamage = bulletDamage;
+    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
+    this.health = health
+    this.maxHealth = health
 
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: 0 })
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == tankImage.src) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
+    this.dust = createDust(this.shape);
+    this.healtBar = new Healthbar(this);
   }
 
   moveForeward(coeff) {
@@ -54,7 +67,9 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
-      var bullet = new Bullet(this, 2)
+      var bullet = new Bullet(this)
+      bulletFiredSound.pause();
+      bulletFiredSound.currentTime = 0;
       bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
@@ -100,12 +115,8 @@ class Char extends ObjectPos {
       //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
       //     // meshes[i].rotation = v
       //   }
-      //   console.log('hereeeee');
-      //   console.log(this.scene.getMeshByName('german_panzer_ww2_ausf_b.Turret_2'));
       //   x = meshes[0]
 
-      //   console.log(x.rotation);
-      //   console.log('this is x in call', x);
       //   x.position.x = 100
       // });
       // console.log('this is x', x);
@@ -119,8 +130,25 @@ class Char extends ObjectPos {
   }
 
   rotateTurretAxisY(angle) {
-    if (this.life > 0) this.shape.getChildMeshes()[1].rotate(BABYLON.Axis.Y, angle)
+    if (this.life <= 0) return
+    var turret = this.getTurretTank()
+    var prevAngle = turret.rotationQuaternion.toEulerAngles().x;
+    turret.rotate(BABYLON.Axis.X, -prevAngle)
+    turret.rotate(BABYLON.Axis.Y, angle)
+    turret.rotate(BABYLON.Axis.X, prevAngle)
   }
+
+  rotateTurretUpDown(isUp) {
+    if (this.life <= 0) return;
+    var turret = this.getTurretTank()
+    if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+    }
+    if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+    }
+  }
+
 
   moveTankForeward() {
     this.moveTank(this.speedNorme)
@@ -132,8 +160,13 @@ class Char extends ObjectPos {
   }
 
   moveTank(speed) {
+
     if (this.life <= 0) return
+    if (this.physicsImpostor.friction != 0) {
+      this.stabilizeTank(false)
+    }
     this.movingSmoke(true)
+    this.dust.start();
     this.physicsImpostor.setAngularVelocity(
       new BABYLON.Vector3(0, 0, 0))
 
@@ -168,7 +201,6 @@ class Char extends ObjectPos {
     let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
-    // console.log("linear velocity: ", this.shape.physicsImpostor.getLinearVelocity())
   }
 
   stabilizeTank(hasFriction = true) {
@@ -177,6 +209,7 @@ class Char extends ObjectPos {
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
+    this.dust.stop();
   }
 
   destroyTank(isDisabled) {
@@ -193,7 +226,7 @@ class Char extends ObjectPos {
   }
 
   getTurretTank() {
-    return this.shape.getChildMeshes()[1];
+    return this.shape.getChildMeshes()[0];
   }
 
   setStrategy(strategy) {
@@ -217,5 +250,47 @@ class Char extends ObjectPos {
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
+
+
+  healthLoss(damage) {
+    if (damage < this.health) this.health -= damage
+    else {
+      this.health = 0
+      this.dispose(false)
+    }
+  }
+
+
+}
+
+function lights() {
+  var gui = new dat.GUI();
+  gui.domElement.style.marginTop = "100px";
+  gui.domElement.id = "datGUI";
+  var options = {
+    Emissive: 0.3,
+    Specular: 0.3,
+    Diffuse: 0.3,
+    Ambient: 0.3
+  }
+
+  gui.add(options, "Emissive", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Specular", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Ambient", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
+  });
+
+  // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+  // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+  // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
+
 
 }

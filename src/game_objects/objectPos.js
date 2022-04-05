@@ -29,11 +29,14 @@ class ObjectPos extends BABYLON.Mesh {
     this.life = life;
 
     switch (type.name) {
+
+      case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-      case ObjectEnum.Hole.name: { shape = ObjectEnum.Hole.container.clone(); break; }
+      case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
       case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
       case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      case ObjectEnum.Tree.name: { shape = ObjectEnum.Tree.container.clone(); break; }
       default: meshBabylon = false;
     }
 
@@ -42,15 +45,17 @@ class ObjectPos extends BABYLON.Mesh {
     if (meshBabylon) {
 
       shape.visibility = 0.000001;
+      shape.isVisible = false;
       // shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
         e.visibility = true
+        e.isVisible = true
         e.checkCollisions = true;
       });
 
       // TODO RENAME OBJECT.PLAYER in this.type
-      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2, posZ);
+      this.position = new BABYLON.Vector3(posX, ObjectEnum.Player.height / 2 + 1, posZ);
       shape.position = this.position;
 
       this.shape = shape;
@@ -147,15 +152,19 @@ class ObjectPos extends BABYLON.Mesh {
     if (forceDispose || this.life <= 0) {
 
       switch (this.type.name) {
-        case ObjectEnum.Hole.name: { remove(holes, this); break; }
+        case ObjectEnum.Barrel.name: { remove(barrels, this); break; }
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
+        case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
         case ObjectEnum.CharRed.name:
         case ObjectEnum.CharBlue.name:
         case ObjectEnum.CharGreen.name: { remove(charsAI, this); }
         case ObjectEnum.Player.name: { remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
-        default: throw "Unknown object type (ObjectPos.dispose)";
+        case ObjectEnum.Tree.name: { remove(trees, this); break }
+        default:
+          console.log(this.type.name, this);
+          throw `Unknown object type (ObjectPos.dispose)`;
       }
       this.physicsImpostor.dispose()
       this.shape.dispose();

@@ -2,21 +2,25 @@
 
 var canvas = document.getElementById("myCanvas");
 var ground;
-
+var lightCam;
 canShoot = false;
 /** @type {BABYLON.Mesh} */
 var tankMeshes;
 var opponentContainer;
 var opponentMeshes;
 var opponentMaterials;
+/** @type {BABYLON.Engine} */
 var engine;
 var shadowGenerator;
 var tanksAIReady;
 var inMenu = true;
+var light1;
 
 class Scene {
 
   constructor() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     tanksAIReady = false;
     this.engine = new BABYLON.Engine(canvas, true);
 
@@ -26,24 +30,19 @@ class Scene {
     //   engine.resize()
     // })
 
-    window.onresize = function () {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      engine.resize();
-    }
-
-    window.onresize()
-
     engine.displayLoadingUI();
     this.scene = this.createScene();
-    this.menu = new Menu()
+    this.scene.menu = new Menu()
     this.setPhysic()
     this.setGround()
     this.setShadow()
+    // this.setFog()
     this.setBackground()
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
+    setCurrentLevelDico()
+
 
 
 
@@ -52,8 +51,6 @@ class Scene {
     // this.engine.runRenderLoop(() =>
     //   this.scene.render()
     // )
-
-
   }
 
   /**
@@ -61,34 +58,40 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
-    engine.runRenderLoop(() => scene.render())
+    // engine.runRenderLoop(() => scene.render())
 
 
     scene.beforeRender = () => {
-
-      if (!inMenu) {
+      if (!this.scene.menu.isShown) {
+        scene.minimap.redraw()
+        // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
-        bullets.forEach(bullet => {
-          if (bullet.position.x <= ground.position.x - width / 2 ||
-            bullet.position.x >= ground.position.x + width / 2 ||
-            bullet.position.z <= ground.position.z - height / 2 ||
-            bullet.position.z >= ground.position.z + height / 2) {
-
-            let index = bullets.indexOf(bullet)
-            if (index !== -1) bullets.splice(index, 1)
-            bullet.dispose()
+        getAllMeshList().forEach(obj => {
+          if (obj.shape.position.x <= width / 2 - 100 ||
+            obj.shape.position.x >= width / 2 + 100 ||
+            obj.shape.position.z <= height / 2 - 100 ||
+            obj.shape.position.z >= height / 2 + 100 ||
+            obj.shape.position.y < current_level_dico.minHeightMap - 0.8 ||
+            obj.shape.position.y >= +8) {
+            obj.dispose(true, true)
           }
+        })
+        let velocity = char1.physicsImpostor.getLinearVelocity()
+        let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
+        document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
+
+        chars.forEach(c => {
+          if (c.shape.position.y < ground.position.y - 5) {
+            c.life = 0;
+          }
+          c.healtBar.updatePartition()
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
-        if (charsAI.length == 0) {
-          level += 1;
-          remove_all_objects()
-          startgame(level);
-        }
+
         charsAI.forEach(c => {
           if (c.life <= 0) {
             let index = chars.indexOf(c)
@@ -102,7 +105,13 @@ class Scene {
           level = 0;
           remove_all_objects()
           startgame(level);
-          this.menu.createButton()
+          this.scene.menu.createButton()
+        } else if (charsAI.length == 0) {
+          if (level + 1 == level_map.length)
+            this.scene.menu.restart()
+          else {
+            startTimer()
+          }
         }
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
@@ -133,40 +142,160 @@ class Scene {
     camera.rotationOffset = 50;
     camera.cameraAcceleration = .1;
     camera.maxCameraSpeed = 10;
+
   }
 
   setGround() {
-    ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    var grass = new BABYLON.StandardMaterial("groundMat", scene);
-    grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
-    ground.material = grass
-    grass.specularColor = new BABYLON.Color3(0, 0, 0)
+    // ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
+    // var grass = new BABYLON.StandardMaterial("groundMat", scene);
+    // grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
+    // ground.material = grass
+    // grass.specularColor = new BABYLON.Color3(0, 0, 0)
 
-    ground.checkCollisions = true;
-    ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
-    ground.receiveShadows = true
+    // ground.checkCollisions = true;
+    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
+
+    const groundOptions = {
+      width: width + cell_size,
+      height: height + cell_size,
+      subdivisions: 80,
+      minHeight: current_level_dico.minHeightMap,
+      maxHeight: 0,
+      onReady: () => onGroundCreated(this),
+    };
+    //scene is optional and defaults to the current scene
+    ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      "textures/ground3.png",
+      groundOptions,
+      scene
+    );
+
+    function onGroundCreated(myScene) {
+      const groundMaterial = new BABYLON.StandardMaterial(
+        "groundMaterial",
+        scene
+      );
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse8k.png", scene, null, true, null, function () {
+        ObjectEnum.loadingDone();
+      });
+      ground.material = groundMaterial;
+
+      ground.receiveShadows = true
+      // to be taken into account by collision detection
+      ground.checkCollisions = true;
+      //groundMaterial.wireframe=true;
+
+      // for physic engine
+      ground.physicsImpostor = new BABYLON.PhysicsImpostor(
+        ground,
+        BABYLON.PhysicsImpostor.HeightmapImpostor,
+        { mass: 0 },
+        scene
+      );
+      groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
+      groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
+
+      myScene.setWater(ground);
+    }
+
+    return ground;
+  }
+
+  setWater(gr) {
+    //sand ground
+    var groundTexture = new BABYLON.Texture("textures/sand.jpg", scene);
+    groundTexture.vScale = groundTexture.uScale = 4.0;
+
+    var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    groundMaterial.diffuseTexture = groundTexture;
+
+    var groundSand = BABYLON.MeshBuilder.CreateGround("groundSand", { height: 128, width: 128, subdivisions: 32 }, scene);
+    groundSand.position.y = gr.position.y - 0.1
+    groundSand.material = groundMaterial;
+
+    //water ground
+    var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 256, width: 256, subdivisions: 32 }, scene);
+    waterMesh.position.y = gr.position.y - 0.1
+    var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(256, 256));
+    water.backFaceCulling = true;
+    water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+    water.windForce = -5;
+    water.waveHeight = 0.1;
+    water.bumpHeight = 0.1;
+    water.waveLength = 0.1;
+    water.colorBlendFactor = 0;
+    water.addToRenderList(this.skybox);
+    water.addToRenderList(groundSand);
+    waterMesh.material = water;
+    // var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
+    // waterMesh.position.y = gr.position.y - 2.2
+    // var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
+    // water.backFaceCulling = true;
+    // water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+    // water.windForce = -5;
+    // water.waveHeight = 0.5;
+    // water.bumpHeight = 0.3;
+    // water.waveLength = 0.1;
+    // water.colorBlendFactor = 0;
+
+    // water.addToRenderList(gr);
+    // water.addToRenderList(this.skybox);
+
+    // waterMesh.material = water;
   }
 
   setShadow() {
-    var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 1;
-    light.position = new BABYLON.Vector3(0, 100, 0);
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light)
+    // var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
+    // light.intensity = 0;
+    // light.position = new BABYLON.Vector3(0, 100, 0);
+
+    light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 10, 0), scene);
+    light1.emissive = new BABYLON.Color3(0, 0, 0);
+    light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+    light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
+    light1.intensity = 3
+
+    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.blurScale = 1;
-    shadowGenerator.setDarkness(0.2);
+    shadowGenerator.setDarkness(0.1);
+  }
+
+  setFog() {
+    // scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+    //BABYLON.Scene.FOGMODE_NONE;
+    //BABYLON.Scene.FOGMODE_EXP2;
+    scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+    scene.fogColor = new BABYLON.Color3(0.9, 0.9, 0.9);
+    scene.fogDensity = 0.01;
+    scene.fogStart = 15.0;
+    scene.fogEnd = 60.0;
   }
 
 
   setBackground() {
-    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
+    // this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
+    // var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    // skyboxMaterial.backFaceCulling = false;
+    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
+    // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    // this.skybox.material = skyboxMaterial;
+
+    this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
+    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    skybox.material = skyboxMaterial;
+    skyboxMaterial.disableLighting = true;
+    this.skybox.material = skyboxMaterial;
   }
 
   setParticles() {
@@ -194,33 +323,6 @@ class Scene {
     gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
-  // old() {
-
-  //   window.initFunction = async function () {
-
-  //     var asyncEngineCreation = async function () {
-  //       try {
-  //         return createDefaultEngine();
-  //       } catch (e) {
-
-  //         return createDefaultEngine();
-  //       }
-  //     }
-
-  //     window.engine = await asyncEngineCreation();
-  //     if (!engine) throw 'engine should not be null.';
-  //     startRenderLoop(engine, canvas);
-  //     window.scene = createScene();
-  //   };
-  //   initFunction().then(() => {
-  //     sceneToRender = scene
-  //   });
-
-  //   // Resize
-  //   window.addEventListener("resize", function () {
-  //     engine.resize();
-  //   });
-  // }
 }
 // /** @type{BABYLON.Scene} */
 // let scene2;
