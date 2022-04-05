@@ -48,7 +48,7 @@ class Healthbar {
 
     for (let i = 0; i < barsToDisplay; i++) {
       createSmallBar(-1, i)
-      createSmallBar(1, i)
+      // createSmallBar(1, i)
     }
   }
 }
