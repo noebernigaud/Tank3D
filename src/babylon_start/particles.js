@@ -294,6 +294,9 @@ function createBonusEffect(emitter) {
     particleSystem.minAngularSpeed = -1;
     particleSystem.maxAngularSpeed = 1;
 
+    particleSystem.color2 = new BABYLON.Color3(0.81, 0.71, 0.23);
+    particleSystem.color1 = new BABYLON.Color3(1, 0.87, 0);
+
 
 
     particleSystem.updateSpeed = 0.005;
