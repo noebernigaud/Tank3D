@@ -99,6 +99,7 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
     box.position.y += 0.18
     box.position.x += isRight ? 0.12 : -0.08
     box.isVisible = false
+
     // Create a particle system
     var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 500 : 8000);
 
@@ -262,4 +263,41 @@ function createFire(emitter) {
         set.start();
 
     });
+}
+
+function createBonusEffect(emitter) {
+    const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
+
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png");
+
+    //Gravity
+    particleSystem.gravity = new BABYLON.Vector3(0, -4, 0);
+
+    // Size
+    particleSystem.minSize = 0.05;
+    particleSystem.maxSize = 0.2;
+
+    // Position where the particles are emiited from
+    particleSystem.emitter = emitter;
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.40, -0.4, -0.4)
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.40, -0.5, 0.4)
+
+    // Emit rate
+    particleSystem.emitRate = 50;
+
+    particleSystem.minEmitPower = 3
+
+    // Rotation
+    particleSystem.minInitialRotation = 0;
+    particleSystem.maxInitialRotation = Math.PI;
+    particleSystem.minAngularSpeed = -1;
+    particleSystem.maxAngularSpeed = 1;
+
+
+
+    particleSystem.updateSpeed = 0.005;
+    particleSystem.start();
+
+    return particleSystem
 }

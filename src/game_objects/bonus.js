@@ -12,6 +12,7 @@ class Bonus extends ObjectPos {
         super(ObjectEnum.Bonus, -width / 2 + posX, Bonus.diameter / 2, -height / 2 + posY, 0, 0, 1);
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10000, restitution: 0.5 });
         this.createCollider()
+        this.bonusEffect = createBonusEffect(this.shape)
     }
 
     createCollider() {
@@ -46,5 +47,6 @@ class Bonus extends ObjectPos {
 
     dispose(forceDispose = false) {
         super.dispose(forceDispose)
+        this.bonusEffect.dispose()
     }
 }
