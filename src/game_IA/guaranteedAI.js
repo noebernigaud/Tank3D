@@ -17,6 +17,7 @@ class guaranteedAI {
 
         var dirZ = this.tank.shape.getDirection(BABYLON.Axis.Z);
         var dirX = this.tank.shape.getDirection(BABYLON.Axis.X);
+
         // Move tank
         var objAhead = createRay(new BABYLON.Vector3(
             this.tank.shape.position.x + dirZ.x,
@@ -46,16 +47,9 @@ class guaranteedAI {
             }
             this.goRight = 0
         } else {
-            // var goLeft = true;
-            // if (!objRight && !objLeft) { goLeft = Math.random() > 0.5; }
-            // else if (!objLeft) goLeft = false;
-            // this.angleChange = 0.020 * (objRight ? -1 : 1)
             if (this.goRight == 0) {
-                // this.goRight = objRight != null ? 1 : -1;
                 if ((!objRight && !objLeft) || (objRight && objLeft)) { this.goRight = Math.random() > 0.5 ? -1 : 1; }
                 else this.goRight = objRight != null ? 1 : -1;
-                // else if (!objLeft) goLeft = false;
-                // this.angleChange = 0.020 * (objRight ? -1 : 1)
             }
             this.angleChange = 0.02 * this.goRight
         }

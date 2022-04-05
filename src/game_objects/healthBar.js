@@ -7,7 +7,7 @@ class Healthbar {
   constructor(tank) {
     this.tank = tank;
     if (tank.type.name == ObjectEnum.Player.name) return;
-    this.barWidth = 2;
+    this.barWidth = 1;
     var dynamicTexture = new BABYLON.DynamicTexture("dt1", 512, scene, true);
     dynamicTexture.hasAlpha = true;
 
@@ -19,7 +19,7 @@ class Healthbar {
     healthBarContainerMaterial.backFaceCulling = false;
 
 
-    healthBarContainer.position = new BABYLON.Vector3(0, 1.2, 0);     // Position above player.
+    healthBarContainer.position = new BABYLON.Vector3(0, 0.7, 0);     // Position above player.
 
     healthBarContainer.parent = tank.shape;
     healthBarContainer.material = healthBarContainerMaterial;
