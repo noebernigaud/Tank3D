@@ -55,7 +55,7 @@ const level_map = [
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
-        functionNextLevel: () => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
     new Level({
         level:
@@ -76,7 +76,7 @@ const level_map = [
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
-        functionNextLevel: () => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
     new Level({
         level: [
@@ -96,7 +96,7 @@ const level_map = [
         ],
         sol: "textures/ground.png",
         minHeightMap: -1,
-        functionNextLevel: (e) => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
     new Level({
         level: [
@@ -116,7 +116,7 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-        functionNextLevel: (e) => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
     new Level({
         level: [
@@ -136,7 +136,7 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-        functionNextLevel: (e) => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
     new Level({
         level: [
@@ -156,7 +156,7 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-        functionNextLevel: (e) => charsAI.length == 0
+        lvlObjective: levelObjectives.killAllTank,
     }),
 ]
 
@@ -166,15 +166,37 @@ let current_level_dico = level_map[0]
  * @param {number} lvl_number 
  */
 function draw_level_map() {
+
+    let widthOffset = (cell_x_number - current_level.length) / 2
+    let heightOffset = (cell_y_number - current_level[0].length) / 2
+
     setCurrentLevelDico()
     if (level == 0) {
         if (char1) char1.dispose(true);
         char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
-    char1.health = char1.maxHealth
-    let widthOffset = (cell_x_number - current_level.length) / 2
-    let heightOffset = (cell_y_number - current_level[0].length) / 2
+
+    let setPlayerPosition = () => {
+        for (var [l_index, line] of current_level.entries()) {
+            for (var [ch_index, ch] of line.split('').entries()) {
+                if (ch == "P") {
+                    var posX = (ch_index + 1) * cell_size + widthOffset;
+                    var posY = (current_level.length - l_index) * cell_size + heightOffset;
+                    char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2 + 1
+                        , -height / 2 + posY)
+                    // char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+                    chars.push(char1);
+                    // camera.target = char1.getTurretTank();
+                    char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
+                    // camera.alpha -= Math.PI / 2
+                    char1.health = char1.maxHealth
+                    return
+                }
+            }
+        }
+    }
+    setPlayerPosition()
     for (var [l_index, line] of current_level.entries()) {
         for (var [ch_index, ch] of line.split('').entries()) {
             var posX = (ch_index + 1) * cell_size + widthOffset;
@@ -221,15 +243,6 @@ function draw_level_map() {
                 case 'c':
                     bonuses.push(new Bonus(posX, posY));
                     break;
-                case 'P':
-                    char1.shape.position = new BABYLON.Vector3(-width / 2 + posX, Char.height / 2 + 1
-                        , -height / 2 + posY)
-                    // char1 = new Char(ObjectEnum.Player, posX, posY, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
-                    chars.push(char1);
-                    // camera.target = char1.getTurretTank();
-                    char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
-                    // camera.alpha -= Math.PI / 2
-                    break;
                 case 'h':
                     barrels.push(new Barrel(posX, posY))
                     break;
@@ -255,10 +268,12 @@ function draw_level_map() {
 
 function setCurrentLevelDico() {
     current_level_dico = level_map[level]
-    current_level = current_level_dico.level;
-    cell_x_number = current_level_dico.level.length;
-    cell_y_number = current_level_dico.level[0].length;
+    if (current_level_dico) {
+        current_level = current_level_dico.level;
+        cell_x_number = current_level_dico.level.length;
+        cell_y_number = current_level_dico.level[0].length;
 
-    height = cell_x_number * cell_size;
-    width = cell_y_number * cell_size;
+        height = cell_x_number * cell_size;
+        width = cell_y_number * cell_size;
+    }
 }

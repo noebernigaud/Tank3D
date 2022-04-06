@@ -125,7 +125,7 @@ class Scene {
             this.scene.menu.restart()
           } else {
             if (sceneInterval) clearInterval(sceneInterval)
-            startTimer()
+            // startTimer()
           }
         }
         //charsAI.forEach(c => MoveAI.move(c));

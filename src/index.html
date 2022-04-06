@@ -6,6 +6,7 @@
     <title>Tank 3D</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="css/levelStat.css">
 
     <script src="../lib/ammo.js"></script>
     <script src="../lib/cannon.js"></script>
@@ -22,6 +23,7 @@
     <script src="../lib/dat.gui.min.js"></script>
 
     <script src="babylon_start/tool_babylon.js"></script>
+    <script src="levels/levelObjectives.js"></script>
     <script src="levels/level.js"></script>
     <script src="levels/levels.js"></script>
     <script src="main/global_vars.js"></script>
@@ -60,33 +62,36 @@
 
 <body>
 
-    <!-- <body> -->
-    <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
-    <canvas id="myCanvas"></canvas>
-    <div id="src"></div>
-    <div id="bonusPanel" class="divb" style="display: none;">
-    </div>
-    <canvas id="minimap" class="hideOnMenu"></canvas>
-    <div id="main" class="divb">
-        <div id="play" class='button' onclick="scene.menu.show(false); canvas.requestPointerLock();"
-            onmouseenter="scene.menu.soundHover()">
-            <span>Play</span>
+    <body>
+        <audio src="https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/humbug.mp3" id="audioPlayer"></audio>
+        <canvas id="myCanvas"></canvas>
+        <div id="src"></div>
+        <div id="bonusPanel" class="divb" style="display: none;">
         </div>
-        <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
-            <span>Options</span>
+        <canvas id="minimap" class="hideOnMenu"></canvas>
+        <div id="main" class="divb">
+            <div id="play" class='button' onclick="scene.menu.show(false); canvas.requestPointerLock();"
+                onmouseenter="scene.menu.soundHover()">
+                <span>Play</span>
+            </div>
+            <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
+                <span>Options</span>
+            </div>
+            <div id="restart" class="button" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()"
+                style="display: none;">
+                <span>Main menu</span>
+            </div>
         </div>
-        <div id="restart" class="button" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()"
-            style="display: none;">
-            <span>Main menu</span>
+        <div class="divb hideOnMenu" id="endLevelStat">
+            <table id="tableStat"></table>
         </div>
-    </div>
-    <div id="speed" class="hideOnMenu">0 km/h</div>
-    <div id="timer" style="display: none;"></div>
-    <script src="babylon_start/scene.js">
-    </script>
-    <script>
-        new Scene();
-    </script>
-</body>
+        <div id="speed" class="hideOnMenu">0 km/h</div>
+        <div id="timer" style="display: none;"></div>
+        <script src="babylon_start/scene.js">
+        </script>
+        <script>
+            new Scene();
+        </script>
+    </body>
 
 </html>

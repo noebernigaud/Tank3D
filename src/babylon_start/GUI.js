@@ -8,8 +8,10 @@ class Menu {
         this.isReallyFirst = true;
         this.isShown = true;
         this.inBonus = false;
+        this.inNextLevel = false;
 
         this.bonusPanel = document.getElementById("bonusPanel")
+        this.nextLevelPanel = document.getElementById("endLevelStat")
 
         this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         // this.buttons = []
@@ -49,7 +51,7 @@ class Menu {
         if (this.inBonus)
             if (toShow) this.bonusPanel.style.display = "none"
             else this.bonusPanel.style.removeProperty("display")
-        toggleNotMenuElement(!toShow)
+        this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
             document.getElementById("restart").style.removeProperty("display")
             if (toShow) {
@@ -155,6 +157,7 @@ class Menu {
         document.getElementById("restart").style.display = "none"
         scene.menu = new Menu()
         level = 0;
+        char1.dispose(true)
         remove_all_objects()
         this.clearBonus()
     }
@@ -168,11 +171,19 @@ class Menu {
         menuHoverSound.play()
         console.log("button was hovered");
     }
-}
 
-function toggleNotMenuElement(toShow) {
-    Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
-        if (toShow) e.style.display = "initial"
-        else e.style.display = "none"
-    })
+    inOtherMenu() {
+        return scene.menu.inBonus || scene.menu.inNextLevel
+    }
+
+    toggleNotMenuElement(toShow) {
+        if (!toShow) Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
+            e.style.display = "none"
+        })
+        if (toShow) {
+            if (this.inBonusus) this.bonusPanel.style.display = "initial"
+            else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
+        }
+    }
+
 }
