@@ -106,7 +106,7 @@ menuHoverSound.volume = 0.2
 let bonusTookSound = new Audio('audio/hammer.wav');
 bonusTookSound.volume = 0.2
 
-let musicBackground = new Audio('audio/robotikLove.mp3')
-musicBackground.volume = 0.03
+let musicBackground = new Audio('audio/warmusic.mp3')
+musicBackground.volume = 0.2
 
 var impostorCharList = [];
