@@ -89,25 +89,24 @@ var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
 
 var bonusImage = new Image();
-bonusImage.src = './models/box/9452.jpg';
+bonusImage.src = './models/box/Material_51_baseColor.png';
 
 var mineImage = new Image();
 mineImage.src = './images/minemine.png';
 
 var treeImage = 'no tree image'
 
-let explosionSound = new Audio('audio/Explosion2.wav');
-explosionSound.volume = 0.2;
-
-let bulletFiredSound = new Audio('audio/Explosion2.wav');
-bulletFiredSound.volume = 0.2;
-
-let bulletBounceSound = new Audio('audio/plop.mp3');
-
-let bulletDestroyedSound = new Audio('audio/Collision8-Bit.ogg');
-
 let minePlacedSound = new Audio('audio/mineplace.wav');
 
 let applauseSound = new Audio('audio/Human-Applause-LargeCrowd01.mp3');
+
+let menuHoverSound = new Audio('audio/hoverMenu.wav');
+menuHoverSound.volume = 0.2
+
+let bonusTookSound = new Audio('audio/hammer.wav');
+bonusTookSound.volume = 0.2
+
+let musicBackground = new Audio('audio/warmusic.mp3')
+musicBackground.volume = 0.1
 
 var impostorCharList = [];

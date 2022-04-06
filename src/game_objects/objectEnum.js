@@ -1,16 +1,16 @@
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
-  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.5, 0.5, 0.5)
-  static Tree = new ObjectEnum(treeImage, "tree", 0.8, 1, 0.8)
+  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.4, 0.4, 0.4)
+  static Tree = new ObjectEnum(treeImage, "ground_palm", 0.8, 1, 0.8)
   static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Mine = new ObjectEnum(mineImage.src, "")
-  static Player = new ObjectEnum(tankImage.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum(tankImage.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum(tankImageRed.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum(tankImageBlue.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum(tankImageGreen.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
 
   /** @type {BABYLON.Mesh}*/
   container;
@@ -24,20 +24,16 @@ class ObjectEnum {
     this.depth = depth;
   }
   create_model() {
-    if (this.babylon_model == "") { ObjectEnum.loadingDone(); return };
-    if (this.babylon_model == "barrel" || this.babylon_model == "tree") {
-      BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".gltf", scene, (meshes) => {
-        this.callback(meshes, false, this.babylon_model)
-      });
-      return;
-    }
-    else BABYLON.SceneLoader.ImportMesh("", "models/" + this.babylon_model + "/", this.babylon_model + ".babylon", scene, (meshes) => {
-      this.callback(meshes, true, this.babylon_model)
+    let name = this.babylon_model
+    if (name == "") { ObjectEnum.loadingDone(); return; }
 
-    });
+    BABYLON.SceneLoader.ImportMesh("", "models/" + name + "/", name + ".obj", scene, (meshes) => {
+      this.callback(meshes, this.babylon_model)
+    })
+
   }
 
-  callback(meshes, toResize, model) {
+  callback(meshes, model) {
 
     this.meshes = [...meshes];
 
@@ -68,13 +64,35 @@ class ObjectEnum {
       return;
     }
 
-    if (model == "box") {
+    else if (model == "box") {
       this.meshes.forEach(x => {
-        x.position.y -= 0.225
-        x.scaling = new BABYLON.Vector3(0.50, 0.50, 0.50)
+        x.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008)
       })
 
-    } else if (toResize) this.meshes.forEach(x => x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25))
+    }
+    else if (model == "palm_trees") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.002, 0.002, 0.002)
+      })
+    }
+
+    else if (model == "coconut_tree") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02)
+      })
+    }
+    else if (model == "tank") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+      })
+    }
+    else if (model == "modern_tank") {
+      this.meshes.forEach(x => {
+        x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
+      })
+    }
+
+
 
 
     // Parent mesh (the original which we will duplicate to create our objects)

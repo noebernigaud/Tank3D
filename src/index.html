@@ -19,6 +19,7 @@
     <script src="../lib/babylonjs.serializers.min.js"></script>
     <script src="../lib/babylon.gui.min.js"></script>
     <script src="../lib/babylon.inspector.bundle.js"></script>
+    <script src="../lib/dat.gui.min.js"></script>
 
     <script src="babylon_start/tool_babylon.js"></script>
     <script src="levels/levels.js"></script>
@@ -66,13 +67,14 @@
     </div>
     <canvas id="minimap" class="hideOnMenu"></canvas>
     <div id="main" class="divb">
-        <div id="play" class='button' onclick="scene.menu.show(false)">
+        <div id="play" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
             <span>Play</span>
         </div>
-        <div id="opt" class='button' onclick="scene.menu.show(false)">
+        <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
             <span>Options</span>
         </div>
-        <div id="restart" class="button" onclick="scene.menu.restart()" style="display: none;">
+        <div id="restart" class="button" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()"
+            style="display: none;">
             <span>Main menu</span>
         </div>
     </div>

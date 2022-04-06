@@ -47,6 +47,13 @@ class Char extends ObjectPos {
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape);
     this.healtBar = new Healthbar(this);
+
+    this.mouveSound = new Audio('audio/electricFerry.wav');
+    this.mouveSound.volume = 0.4
+    this.mouveSound.loop = true
+    this.bulletFiredSound = new Audio('audio/Explosion2.wav');
+    this.bulletFiredSound.volume = 0.2;
+
   }
 
   moveForeward(coeff) {
@@ -68,9 +75,9 @@ class Char extends ObjectPos {
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
       var bullet = new Bullet(this)
-      bulletFiredSound.pause();
-      bulletFiredSound.currentTime = 0;
-      bulletFiredSound.play();
+      this.bulletFiredSound.pause();
+      this.bulletFiredSound.currentTime = 0;
+      this.bulletFiredSound.play();
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
     }
@@ -138,14 +145,14 @@ class Char extends ObjectPos {
     turret.rotate(BABYLON.Axis.X, prevAngle)
   }
 
-  rotateTurretUpDown(isUp) {
+  rotateTurretUpDown(isUp, angle = 1) {
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
     if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
     }
     if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
     }
   }
 
@@ -201,6 +208,8 @@ class Char extends ObjectPos {
     let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
+
+    this.mouveSound.play();
   }
 
   stabilizeTank(hasFriction = true) {
@@ -226,7 +235,7 @@ class Char extends ObjectPos {
   }
 
   getTurretTank() {
-    return this.shape.getChildMeshes()[1];
+    return this.shape.getChildMeshes()[0];
   }
 
   setStrategy(strategy) {
@@ -251,6 +260,7 @@ class Char extends ObjectPos {
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
 
+
   healthLoss(damage) {
     if (damage < this.health) this.health -= damage
     else {
@@ -258,5 +268,38 @@ class Char extends ObjectPos {
       this.dispose(false)
     }
   }
+
+
+}
+
+function lights() {
+  var gui = new dat.GUI();
+  gui.domElement.style.marginTop = "100px";
+  gui.domElement.id = "datGUI";
+  var options = {
+    Emissive: 0.3,
+    Specular: 0.3,
+    Diffuse: 0.3,
+    Ambient: 0.3
+  }
+
+  gui.add(options, "Emissive", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Specular", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Ambient", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
+  });
+
+  // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+  // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+  // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
+
 
 }

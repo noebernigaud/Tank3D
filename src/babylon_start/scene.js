@@ -2,7 +2,7 @@
 
 var canvas = document.getElementById("myCanvas");
 var ground;
-
+var lightCam;
 canShoot = false;
 /** @type {BABYLON.Mesh} */
 var tankMeshes;
@@ -14,6 +14,7 @@ var engine;
 var shadowGenerator;
 var tanksAIReady;
 var inMenu = true;
+var light1;
 
 class Scene {
 
@@ -80,11 +81,23 @@ class Scene {
         let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
         document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
 
+        let posChar1 = char1.shape.position
+
         chars.forEach(c => {
           if (c.shape.position.y < ground.position.y - 5) {
             c.life = 0;
           }
           c.healtBar.updatePartition()
+
+          let velocityc = c.physicsImpostor.getLinearVelocity()
+          let speedc = Math.sqrt(velocityc.x ** 2 + velocityc.y ** 2 + velocityc.z ** 2) * 10
+          c.mouveSound.volume = Math.max(Math.min(1, 0.01 * speedc), 0.2)
+          // c.mouveSound.volume = Math.min(1, 0.01 * speedc)
+
+          let posc = c.shape.position
+          let distanceCtoChar1 = Math.sqrt((posc.x - posChar1.x) ** 2 + (posc.y - posChar1.y) ** 2 + (posc.z - posChar1.z) ** 2)
+          console.log(distanceCtoChar1);
+          c.mouveSound.volume *= 1 / (Math.max(1, distanceCtoChar1) ** 0.5)
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
@@ -141,6 +154,7 @@ class Scene {
     camera.rotationOffset = 50;
     camera.cameraAcceleration = .1;
     camera.maxCameraSpeed = 10;
+
   }
 
   setGround() {
@@ -164,7 +178,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/heightmap5.png",
+      "textures/ground3.png",
       groundOptions,
       scene
     );
@@ -180,7 +194,6 @@ class Scene {
       ground.material = groundMaterial;
 
       ground.receiveShadows = true
-      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
       // to be taken into account by collision detection
       ground.checkCollisions = true;
       //groundMaterial.wireframe=true;
@@ -192,10 +205,12 @@ class Scene {
         { mass: 0 },
         scene
       );
+      groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
+      groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
 
       myScene.setWater(ground);
     }
-
 
     return ground;
   }
@@ -244,13 +259,21 @@ class Scene {
   }
 
   setShadow() {
-    var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    light.intensity = 2.0;
-    light.position = new BABYLON.Vector3(0, 100, 0);
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light)
+    // var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
+    // light.intensity = 0;
+    // light.position = new BABYLON.Vector3(0, 100, 0);
+
+    light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 10, 0), scene);
+    light1.emissive = new BABYLON.Color3(0, 0, 0);
+    light1.specular = new BABYLON.Color3(0.2, 0.2, 0.2);
+
+    light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
+    light1.intensity = 3
+
+    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
     shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.blurScale = 0.5;
-    shadowGenerator.setDarkness(0.3);
+    shadowGenerator.blurScale = 1;
+    shadowGenerator.setDarkness(0.1);
   }
 
   setFog() {
