@@ -45,6 +45,9 @@ var bullets = []
 /** @type {[Tree]} */
 var trees = []
 
+/** @type {[Rock]} */
+var rocks = []
+
 var gravity = -9.81
 
 level = 0;

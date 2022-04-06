@@ -26,7 +26,7 @@ class ObjectEnum {
   static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.8, 1, 0.8)
   static Cactus2 = new ObjectEnum("cactus2", "cactus2", 0.8, 1, 0.8)
   static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.8, 1, 0.8)
-  static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.4, 0.4, 0.4)
+  static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.8, 0.8, 0.8)
   static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 0.4, 0.4, 0.4)
 
   //Snowy Biome items
@@ -73,14 +73,20 @@ class ObjectEnum {
       case "wintercabin": resize = 0.01; break;
       case "cactus1": resize = 0.5; break;
       case "cactus2": resize = 0.2; break;
-      case "cactus2": resize = 0.15; break;
+      case "cactus3": resize = 0.15; break;
       case "snowy_rock": resize = 0.15; break;
       case "snowy_fence": resize = 0.015; break;
-      case "desert_rock": resize = 0.5; break; //to center
+      case "desert_rock": {
+        resize = 0.5;
+        this.meshes.forEach(x => { x.position.z += 2.5 })
+        break;
+      }
       case "barrel":
       case "rock":
       case "ground_palm":
-      case "tumbleweed": //to center
+      case "tumbleweed": {
+
+      } //to center
       default: resize = 1;
 
     }

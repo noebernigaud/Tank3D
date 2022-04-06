@@ -29,14 +29,25 @@ class ObjectPos extends BABYLON.Mesh {
     this.life = life;
 
     switch (type.name) {
-
+      case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-      case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
       case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
       case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      case ObjectEnum.Rock.name: { shape = ObjectEnum.Rock.container.clone(); break; }
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
+      case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
+      case ObjectEnum.PalmTree3.name: { shape = ObjectEnum.PalmTree3.container.clone(); break; }
+      case ObjectEnum.Cactus1.name: { shape = ObjectEnum.Cactus1.container.clone(); break; }
+      case ObjectEnum.Cactus2.name: { shape = ObjectEnum.Cactus2.container.clone(); break; }
+      case ObjectEnum.Cactus3.name: { shape = ObjectEnum.Cactus3.container.clone(); break; }
+      case ObjectEnum.DesertRock.name: { shape = ObjectEnum.DesertRock.container.clone(); break; }
+      case ObjectEnum.Tumbleweed.name: { shape = ObjectEnum.Tumbleweed.container.clone(); break; }
+      case ObjectEnum.SnowyTree.name: { shape = ObjectEnum.SnowyTree.container.clone(); break; }
+      case ObjectEnum.SnowyRock.name: { shape = ObjectEnum.SnowyRock.container.clone(); break; }
+      case ObjectEnum.SnowyFence.name: { shape = ObjectEnum.Cactus2.SnowyFence.clone(); break; }
+      case ObjectEnum.SnowyHut.name: { shape = ObjectEnum.SnowyHut.container.clone(); break; }
       default: meshBabylon = false;
     }
 
@@ -44,8 +55,8 @@ class ObjectPos extends BABYLON.Mesh {
 
     if (meshBabylon) {
 
-      shape.visibility = 0.000001;
-      shape.isVisible = false;
+      // shape.visibility = 1;
+      shape.isVisible = true;
       // shape.showBoundingBox = true;
 
       shape.getChildMeshes().forEach(e => {
@@ -161,7 +172,19 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.CharBlue.name: { this.moveSound.pause(); break; }
         case ObjectEnum.CharGreen.name: { this.moveSound.pause(); remove(charsAI, this); }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
-        case ObjectEnum.Tree.name: { remove(trees, this); break }
+        case ObjectEnum.Rock.name:
+        case ObjectEnum.SnowyRock.name:
+        case ObjectEnum.DesertRock.name: { remove(rocks, this); break }
+        case ObjectEnum.PalmTree1.name:
+        case ObjectEnum.PalmTree2.name:
+        case ObjectEnum.PalmTree3.name:
+        case ObjectEnum.Cactus1.name:
+        case ObjectEnum.Cactus2.name:
+        case ObjectEnum.Cactus3.name:
+        case ObjectEnum.Tumbleweed.name:
+        case ObjectEnum.SnowyTree.name: { remove(trees, this); break }
+        case ObjectEnum.SnowyFence.name:
+        case ObjectEnum.SnowyHut.name: { remove(others, this); break; }
         default:
           console.log(this.type.name, this);
           throw `Unknown object type (ObjectPos.dispose)`;

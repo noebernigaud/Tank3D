@@ -335,12 +335,13 @@ function remove_all_objects() {
     charsAI = [];
     bonuses = [];
     trees = [];
+    rocks = [];
     delimiters = [];
 }
 
 
 function getAllMeshList() {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...delimiters]
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters]
 }
 
 //ANIMATION
