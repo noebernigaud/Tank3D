@@ -49,7 +49,8 @@ class Char extends ObjectPos {
     this.healtBar = new Healthbar(this);
 
     this.mouveSound = new Audio('audio/electricFerry.wav');
-    this.mouveSound.volume = 0.3
+    this.mouveSound.volume = 0.4
+    this.mouveSound.loop = true
     this.bulletFiredSound = new Audio('audio/Explosion2.wav');
     this.bulletFiredSound.volume = 0.2;
 
@@ -218,8 +219,6 @@ class Char extends ObjectPos {
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
     this.dust.stop();
-    this.mouveSound.pause();
-    this.mouveSound.currentTime = 0;
   }
 
   destroyTank(isDisabled) {

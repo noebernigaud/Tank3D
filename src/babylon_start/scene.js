@@ -86,6 +86,11 @@ class Scene {
             c.life = 0;
           }
           c.healtBar.updatePartition()
+
+          let velocityc = c.physicsImpostor.getLinearVelocity()
+          let speedc = Math.sqrt(velocityc.x ** 2 + velocityc.y ** 2 + velocityc.z ** 2) * 10
+          c.mouveSound.volume = Math.max(Math.min(1, 0.01 * speedc), 0.2)
+
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
