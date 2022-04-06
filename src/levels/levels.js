@@ -30,7 +30,7 @@ const level_map = [
     //     sol: "textures/ground_diffuse8k.png",
     //     minHeightMap: -0.1,
     // },
-    {
+    new Level({
         level:
             [
                 "-----------------------------",
@@ -55,8 +55,9 @@ const level_map = [
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
-    },
-    {
+        functionNextLevel: () => charsAI.length == 0
+    }),
+    new Level({
         level:
             [
                 "--t----------------t---",
@@ -75,8 +76,9 @@ const level_map = [
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
-    },
-    {
+        functionNextLevel: () => charsAI.length == 0
+    }),
+    new Level({
         level: [
             "-----------------------",
             "-----------------------",
@@ -94,8 +96,9 @@ const level_map = [
         ],
         sol: "textures/ground.png",
         minHeightMap: -1,
-    },
-    {
+        functionNextLevel: (e) => charsAI.length == 0
+    }),
+    new Level({
         level: [
             "----------h------h-----",
             "----------h---B--h--B--",
@@ -113,8 +116,9 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-    },
-    {
+        functionNextLevel: (e) => charsAI.length == 0
+    }),
+    new Level({
         level: [
             "-----------------------",
             "-------B---------------",
@@ -132,8 +136,9 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-    },
-    {
+        functionNextLevel: (e) => charsAI.length == 0
+    }),
+    new Level({
         level: [
             "-----------------------",
             "---WWWWW-------W----G--",
@@ -151,7 +156,8 @@ const level_map = [
         ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
-    },
+        functionNextLevel: (e) => charsAI.length == 0
+    }),
 ]
 
 let current_level_dico = level_map[0]

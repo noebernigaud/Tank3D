@@ -49,6 +49,8 @@ class Bullet extends ObjectPos {
         bullets.push(this)
 
         this.bulletReboundSound = new Audio('audio/Collision8-Bit.ogg');
+
+        if (char1 == char) current_level_dico.addBulletFired()
     }
 
     createCollider() {
@@ -69,9 +71,13 @@ class Bullet extends ObjectPos {
                 } else if (b2 = chars.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose(true, true)
                     if (b2) b2.healthLoss(this.damage)
+                    if (this.char == char1 && b2 != char1 && b2.life <= 0)
+                        current_level_dico.addKilledChar()
                 } else if (b2 = walls.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     if (b2) b2.destroy()
+                    if (this.char == char1 && b2.destructable)
+                        current_level_dico.addWallDestroyed()
                 }
                 else if (b2 = barrels.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()

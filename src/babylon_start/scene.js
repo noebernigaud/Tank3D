@@ -119,7 +119,7 @@ class Scene {
           startgame(level);
           this.scene.menu.createButton()
           exitPointerLoc()
-        } else if (charsAI.length == 0) {
+        } else if (current_level_dico.goNextLevel()) {
           if (level + 1 == level_map.length) {
             exitPointerLoc()
             this.scene.menu.restart()
