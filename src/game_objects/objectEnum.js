@@ -1,16 +1,15 @@
 class ObjectEnum {
   // Create new instances of the same class as static attributes
   static Bullet = new ObjectEnum(bulletImage.src, "")
-  static Bonus = new ObjectEnum(bonusImage.src, "box", 0.4, 0.4, 0.4)
-  static Tree = new ObjectEnum(treeImage, "ground_palm", 0.8, 1, 0.8)
-  static Barrel = new ObjectEnum(barrelImage.src, "barrel", 24 / 40, 35 / 40, 24 / 40)
+  static Bonus = new ObjectEnum("bonus", "box", 0.4, 0.4, 0.4)
+  static Tree = new ObjectEnum("tree", "ground_palm", 0.8, 1, 0.8)
+  static Barrel = new ObjectEnum("barrel", "barrel", 24 / 40, 35 / 40, 24 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
-  static Mine = new ObjectEnum(mineImage.src, "")
-  static Player = new ObjectEnum(tankImage.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharRed = new ObjectEnum(tankImageRed.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharBlue = new ObjectEnum(tankImageBlue.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum(tankImageGreen.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum("player", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum("redTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum("blueTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum("greenTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
 
   /*
 
@@ -144,7 +143,7 @@ class ObjectEnum {
   }
 
   static initiate_all_models() {
-    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Barrel, this.Mine, this.Player, this.Wall, this.WallD, this.Bonus, this.Tree]
+    var list_obj = [this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus, this.Tree]
     this.remainingLoad = list_obj.length + 1
     list_obj.forEach(e => e.create_model())
 

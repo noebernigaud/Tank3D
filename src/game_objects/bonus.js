@@ -39,12 +39,6 @@ class Bonus extends ObjectPos {
         return res
     }
 
-    createShape() {
-        var shape = BABYLON.MeshBuilder.CreateBox("bonus", { size: Bonus.diameter }, scene);
-        shape.material = createMaterial(scene, bonusImage.src);
-        return shape;
-    }
-
     dispose(forceDispose = false) {
         super.dispose(forceDispose)
         this.bonusEffect.dispose()

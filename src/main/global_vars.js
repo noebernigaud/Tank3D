@@ -61,41 +61,20 @@ var level;
 var speedMultUti = 1;
 var reloadMultUti = 1;
 
-var backgroundTexture = new Image();
-backgroundTexture.src = './images/woodTexture.jpg';
+var impostorCharList = [];
 
+
+//Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';
 
 var wallDTexture = new Image();
 wallDTexture.src = './images/wallDTexture.jpg';
 
-var barrelImage = new Image();
-barrelImage.src = './images/hole.png';
-
-var tankImage = new Image();
-tankImage.src = './images/tank.png';
-
-var tankImageRed = new Image();
-tankImageRed.src = './images/tankRed.png';
-
-var tankImageBlue = new Image();
-tankImageBlue.src = './images/tankBlue.png';
-
-var tankImageGreen = new Image();
-tankImageGreen.src = './images/tankGreen.png';
-
 var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
 
-var bonusImage = new Image();
-bonusImage.src = './models/box/Material_51_baseColor.png';
-
-var mineImage = new Image();
-mineImage.src = './images/minemine.png';
-
-var treeImage = 'no tree image'
-
+//Sound effects
 let explosionSound = new Audio('audio/Explosion2.wav');
 explosionSound.volume = 0.2;
 
@@ -109,5 +88,3 @@ let bulletDestroyedSound = new Audio('audio/Collision8-Bit.ogg');
 let minePlacedSound = new Audio('audio/mineplace.wav');
 
 let applauseSound = new Audio('audio/Human-Applause-LargeCrowd01.mp3');
-
-var impostorCharList = [];
