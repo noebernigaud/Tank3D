@@ -48,7 +48,7 @@ class Healthbar {
 
     let createSmallBar = (offset, i) => {
       let xPos = offset * this.barWidth / 2 - offset * (i * (partitionWidth + paddingBar) + partitionWidth / 2) + paddingBar;
-      console.log(xPos, xPos + paddingBar);
+      // console.log(xPos, xPos + paddingBar);
       var healthBarText = BABYLON.MeshBuilder.CreatePlane("hb3", { width: partitionWidth, height: 0.07, subdivisions: 4, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
       healthBarText.position = new BABYLON.Vector3(xPos, 0, offset * 0.01);
       healthBarText.material = this.healthBarTextMaterial;

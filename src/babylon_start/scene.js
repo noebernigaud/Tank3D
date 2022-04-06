@@ -96,7 +96,7 @@ class Scene {
 
           let posc = c.shape.position
           let distanceCtoChar1 = Math.sqrt((posc.x - posChar1.x) ** 2 + (posc.y - posChar1.y) ** 2 + (posc.z - posChar1.z) ** 2)
-          console.log(distanceCtoChar1);
+          // console.log(distanceCtoChar1);
           c.mouveSound.volume *= 1 / (Math.max(1, distanceCtoChar1) ** 0.5)
         })
         // charsAI.forEach(c => MoveAI.move(c));
@@ -118,10 +118,13 @@ class Scene {
           remove_all_objects()
           startgame(level);
           this.scene.menu.createButton()
+          exitPointerLoc()
         } else if (charsAI.length == 0) {
-          if (level + 1 == level_map.length)
+          if (level + 1 == level_map.length) {
+            exitPointerLoc()
             this.scene.menu.restart()
-          else {
+          } else {
+            if (sceneInterval) clearInterval(sceneInterval)
             startTimer()
           }
         }

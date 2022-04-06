@@ -64,7 +64,7 @@ class Char extends ObjectPos {
     this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
   }
 
-  addBullet(time) {
+  addBullet(time = Date.now()) {
     if (this.life <= 0) return;
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire
     var tempEcoule = 0;
