@@ -166,7 +166,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/ground3.png",
+      "textures/sandy_ground.png",
       groundOptions,
       scene
     );
@@ -176,7 +176,7 @@ class Scene {
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/ground_diffuse8k.png", scene, null, true, null, function () {
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/sandy_ground_diffuse.png", scene, null, true, null, function () {
         ObjectEnum.loadingDone();
       });
       ground.material = groundMaterial;
@@ -290,7 +290,7 @@ class Scene {
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
     // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sunny_sky/skybox", scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
