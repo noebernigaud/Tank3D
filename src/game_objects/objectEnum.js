@@ -7,32 +7,34 @@ class ObjectEnum {
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static Player = new ObjectEnum("player", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+
+  //Tanks
   static CharRed = new ObjectEnum("redTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
   static CharBlue = new ObjectEnum("blueTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
   static CharGreen = new ObjectEnum("greenTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
 
-  /*
 
-  //Earthy Biome items
-  static Rock = new ObjectEnum("rock", "rock", 0.4, 0.4, 0.4)
-  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.8, 1, 0.8)
-  static PalmTree2 = new ObjectEnum("palm_trees", "palm_trees", 0.8, 1, 0.8)
-  static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.8, 1, 0.8)
 
-  //Sandy Biome items
-  static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.8, 1, 0.8)
-  static Cactus2 = new ObjectEnum("cactus2", "cactus2", 0.8, 1, 0.8)
-  static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.8, 1, 0.8)
-  static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.4, 0.4, 0.4)
-  static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 0.4, 0.4, 0.4)
+  // //Earthy Biome items
+  // static Rock = new ObjectEnum("rock", "rock", 0.4, 0.4, 0.4)
+  // static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.8, 1, 0.8)
+  // static PalmTree2 = new ObjectEnum("palm_trees", "palm_trees", 0.8, 1, 0.8)
+  // static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.8, 1, 0.8)
 
-  //Snowy Biome items
-  static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.8, 1, 0.8)
-  static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.4, 0.4, 0.4)
-  static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.4, 0.4, 0.4)
-  static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 3, 2, 2)
+  // //Sandy Biome items
+  // static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.8, 1, 0.8)
+  // static Cactus2 = new ObjectEnum("cactus2", "cactus2", 0.8, 1, 0.8)
+  // static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.8, 1, 0.8)
+  // static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.4, 0.4, 0.4)
+  // static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 0.4, 0.4, 0.4)
 
-  */
+  // //Snowy Biome items
+  // static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.8, 1, 0.8)
+  // static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.4, 0.4, 0.4)
+  // static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.4, 0.4, 0.4)
+  // static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 3, 2, 2)
+
+
 
   /** @type {BABYLON.Mesh}*/
   container;
@@ -60,73 +62,32 @@ class ObjectEnum {
     this.meshes = [...meshes];
 
     // Resizing of each meshes
-    if (model == "tree") {
-      this.treeMeshes = [];
-      let tempTreesList;
-      let cont;
-
-      for (let i = 0; i < TREES_LIST.length; i++) {
-        tempTreesList = []
-        for (let j = 0; j < TREES_LIST[i].length; j++) {
-          let m = this.meshes.filter(e => e.name == TREES_LIST[i][j])[0]
-          tempTreesList.push(m)
-        }
-        cont = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
-        cont.position.y += this.height / 2;
-        cont.visibility = false;
-
-        tempTreesList.forEach(e => {
-          e.parent = null
-          cont.addChild(e)
-        });
-        tempTreesList.forEach(e => e.visibility = false)
-        this.treeMeshes.push(cont)
-      }
-      ObjectEnum.loadingDone();
-      return;
-    }
-
-    else if (model == "box") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.008, 0.008, 0.008)
-      })
+    let resize;
+    switch (model) {
+      case "box": resize = 0.008; break;
+      case "palm_trees": resize = 0.002; break;
+      case "coconut_tree": resize = 0.02; break;
+      case "tank": resize = 0.25; break;
+      case "modern_tank": resize = 0.25; break;
+      case "snowy_tree": resize = 0.025; break;
+      case "wintercabin": resize = 0.01; break;
+      case "cactus1": resize = 0.5; break;
+      case "cactus2": resize = 0.2; break;
+      case "cactus2": resize = 0.15; break;
+      case "snowy_rock": resize = 0.15; break;
+      case "snowy_fence": resize = 0.015; break;
+      case "desert_rock": resize = 0.5; break; //to center
+      case "barrel":
+      case "rock":
+      case "ground_palm":
+      case "tumbleweed": //to center
+      default: resize = 1;
 
     }
-    else if (model == "palm_trees") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.002, 0.002, 0.002)
-      })
-    }
 
-    else if (model == "coconut_tree") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02)
-      })
-    }
-    else if (model == "tank") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
-      })
-    }
-    else if (model == "modern_tank") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.25, 0.25, 0.25)
-      })
-    }
-    else if (model == "snowy_tree") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.025, 0.025, 0.025)
-        x.backFaceCulling = false
-      })
-    }
-    else if (model == "wintercabin") {
-      this.meshes.forEach(x => {
-        x.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01)
-      })
-    }
-
-
-
+    this.meshes.forEach(x => {
+      x.scaling = new BABYLON.Vector3(resize, resize, resize)
+    })
 
     // Parent mesh (the original which we will duplicate to create our objects)
     this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
@@ -231,3 +192,29 @@ const TREES_LIST = [
   ["Flowers-01"],
   ["Flowers-03"]
 ];
+
+// if (model == "tree") {
+//   this.treeMeshes = [];
+//   let tempTreesList;
+//   let cont;
+
+//   for (let i = 0; i < TREES_LIST.length; i++) {
+//     tempTreesList = []
+//     for (let j = 0; j < TREES_LIST[i].length; j++) {
+//       let m = this.meshes.filter(e => e.name == TREES_LIST[i][j])[0]
+//       tempTreesList.push(m)
+//     }
+//     cont = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+//     cont.position.y += this.height / 2;
+//     cont.visibility = false;
+
+//     tempTreesList.forEach(e => {
+//       e.parent = null
+//       cont.addChild(e)
+//     });
+//     tempTreesList.forEach(e => e.visibility = false)
+//     this.treeMeshes.push(cont)
+//   }
+//   ObjectEnum.loadingDone();
+//   return;
+// }
