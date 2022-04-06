@@ -205,6 +205,28 @@ function init() {
         keyListener(evt, false)
     });
 
+    canvas.requestPointerLock = canvas.requestPointerLock ||
+        canvas.mozRequestPointerLock ||
+        canvas.webkitPointerLockElement;
+
+    window.addEventListener("mousemove", (evt) => {
+        // console.log("entering mouse move");
+        // console.log("evt.clientX ", evt.clientX);
+        // console.log("evt.clientY ", evt.clientY);
+        // console.log("mousepos ", mousepos);
+
+        if (evt.movementX > 0) char1.rotateTurretAxisY(0.05)
+        else if (evt.movementX < 0) char1.rotateTurretAxisY(-0.05)
+        if (evt.movementY > 0) char1.rotateTurretUpDown(false, 5)
+        else if (evt.movementY < 0) char1.rotateTurretUpDown(true, 5)
+    });
+
+    // canvas.requestPointerLock() -> NE MARCHE PAS!
+    canvas.onpointerdown = function () {
+        console.log("mouse captured in canvas");
+        canvas.requestPointerLock();
+    }
+
     // My part
     startgame(level)
     anime();

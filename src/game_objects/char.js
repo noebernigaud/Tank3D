@@ -145,14 +145,14 @@ class Char extends ObjectPos {
     turret.rotate(BABYLON.Axis.X, prevAngle)
   }
 
-  rotateTurretUpDown(isUp) {
+  rotateTurretUpDown(isUp, angle = 1) {
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
     if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
     }
     if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -1 : 1))
+      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
     }
   }
 
