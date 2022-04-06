@@ -46,6 +46,8 @@ class Bullet extends ObjectPos {
         this.trail.material = sourceMat;
         this.collision = false;
         bullets.push(this)
+
+        this.bulletReboundSound = new Audio('audio/Collision8-Bit.ogg');
     }
 
     createCollider() {
@@ -94,9 +96,9 @@ class Bullet extends ObjectPos {
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
-            bulletDestroyedSound.pause();
-            bulletDestroyedSound.currentTime = 0;
-            bulletDestroyedSound.play();
+            this.bulletReboundSound.pause();
+            this.bulletReboundSound.currentTime = 0;
+            this.bulletReboundSound.play();
         }
 
     }
