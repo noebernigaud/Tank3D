@@ -248,7 +248,7 @@ function init() {
     function lockChangeAlert() {
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
-            scene.menu.show(true)
+            if (!scene.menu.inBonus) scene.menu.show(true)
             if (sceneInterval) clearInterval(sceneInterval)
         }
     }

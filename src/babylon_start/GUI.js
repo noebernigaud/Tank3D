@@ -94,6 +94,7 @@ class Menu {
      * @param {BonusEnum[]} bonusListe 
      */
     bonusChoice(bonusListe) {
+        exitPointerLoc()
         this.inBonus = true;
         this.bonusPanel.style.removeProperty("display")
         /**
@@ -115,6 +116,7 @@ class Menu {
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
                 this.clearBonus()
+                canvas.requestPointerLock()
             }
             this.bonusPanel.appendChild(b);
         }
