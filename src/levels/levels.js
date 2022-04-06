@@ -55,7 +55,7 @@ const level_map = [
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
-        lvlObjective: levelObjectives.killAllTank,
+        lvlObjective: levelObjectives.getAllBonuses,
     }),
     new Level({
         level:

@@ -16,7 +16,7 @@ class Level {
 
   goNextLevel() {
     let res = this.lvlObjective.goToNextLevel()
-    if (res) {
+    if (res && !scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
       exitPointerLoc()
       this.loadNextLevel()
