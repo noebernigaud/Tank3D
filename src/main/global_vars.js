@@ -63,6 +63,9 @@ var reloadMultUti = 1;
 
 var impostorCharList = [];
 
+const BIOMES = ["Earth", "Sand", "Snow"]
+var biome = BIOMES[0];
+
 
 //Texture meshes
 var wallTexture = new Image();

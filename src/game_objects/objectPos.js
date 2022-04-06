@@ -36,7 +36,7 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
       case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
       case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
-      case ObjectEnum.Tree.name: { shape = ObjectEnum.Tree.container.clone(); break; }
+      case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       default: meshBabylon = false;
     }
 
