@@ -49,7 +49,7 @@ class Char extends ObjectPos {
     this.healtBar = new Healthbar(this);
 
     this.mouveSound = new Audio('audio/electricFerry.wav');
-    this.mouveSound.volume = 0.2
+    this.mouveSound.volume = 0.3
     this.bulletFiredSound = new Audio('audio/Explosion2.wav');
     this.bulletFiredSound.volume = 0.2;
 
