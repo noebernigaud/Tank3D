@@ -81,6 +81,8 @@ class Scene {
         let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
         document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
 
+        let posChar1 = char1.shape.position
+
         chars.forEach(c => {
           if (c.shape.position.y < ground.position.y - 5) {
             c.life = 0;
@@ -90,7 +92,12 @@ class Scene {
           let velocityc = c.physicsImpostor.getLinearVelocity()
           let speedc = Math.sqrt(velocityc.x ** 2 + velocityc.y ** 2 + velocityc.z ** 2) * 10
           c.mouveSound.volume = Math.max(Math.min(1, 0.01 * speedc), 0.2)
+          // c.mouveSound.volume = Math.min(1, 0.01 * speedc)
 
+          let posc = c.shape.position
+          let distanceCtoChar1 = Math.sqrt((posc.x - posChar1.x) ** 2 + (posc.y - posChar1.y) ** 2 + (posc.z - posChar1.z) ** 2)
+          console.log(distanceCtoChar1);
+          c.mouveSound.volume *= 1 / (Math.max(1, distanceCtoChar1) ** 0.5)
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())

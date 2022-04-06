@@ -107,6 +107,6 @@ let bonusTookSound = new Audio('audio/hammer.wav');
 bonusTookSound.volume = 0.2
 
 let musicBackground = new Audio('audio/warmusic.mp3')
-musicBackground.volume = 0.2
+musicBackground.volume = 0.1
 
 var impostorCharList = [];
