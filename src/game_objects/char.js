@@ -104,25 +104,6 @@ class Char extends ObjectPos {
     }
   }
 
-  createShape() {
-    if (true) {
-      var shape = BABYLON.MeshBuilder.CreateBox("char", { height: Char.height, depth: Char.depth, width: Char.width }, scene);
-      shape.material = createMaterial(scene, "images/tank.png");
-      return shape;
-    } else {
-      // model = await BABYLON.SceneLoader.ImportMeshAsync("", "./models/", "tank.babylon").then((meshes) => {
-      //   for (var i = 0; i < meshes.length; i++) {
-      //     meshes[i].scaling = new BABYLON.Vector3(0.32, 0.32, 0.32);
-      //     // meshes[i].rotation = v
-      //   }
-      //   x = meshes[0]
-
-      //   x.position.x = 100
-      // });
-      // console.log('this is x', x);
-    }
-  }
-
   rotateAxisY(angle) {
     if (this.life <= 0) return
     this.shape.rotate(BABYLON.Axis.Y, angle)

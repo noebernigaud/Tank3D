@@ -166,7 +166,7 @@ class Scene {
     //scene is optional and defaults to the current scene
     ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
-      "textures/sandy_ground.png",
+      "textures/earthy_ground.png",
       groundOptions,
       scene
     );
@@ -176,7 +176,7 @@ class Scene {
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/sandy_ground_diffuse.png", scene, null, true, null, function () {
+      groundMaterial.diffuseTexture = new BABYLON.Texture("textures/earthy_ground_diffuse.png", scene, null, true, null, function () {
         ObjectEnum.loadingDone();
       });
       ground.material = groundMaterial;
@@ -324,9 +324,3 @@ class Scene {
   }
 
 }
-// /** @type{BABYLON.Scene} */
-// let scene2;
-// let createScene2 = () => {
-//   scene2 = new BABYLON.Scene(engine);
-//   camera2 = new BABYLON.CAMERA("camera2", new )
-// }

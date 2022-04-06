@@ -12,6 +12,29 @@ class ObjectEnum {
   static CharBlue = new ObjectEnum(tankImageBlue.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
   static CharGreen = new ObjectEnum(tankImageGreen.src, "modern_tank", 38 / 40, 25 / 40, 70 / 40)
 
+  /*
+
+  //Earthy Biome items
+  static Rock = new ObjectEnum("rock", "rock", 0.4, 0.4, 0.4)
+  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.8, 1, 0.8)
+  static PalmTree2 = new ObjectEnum("palm_trees", "palm_trees", 0.8, 1, 0.8)
+  static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.8, 1, 0.8)
+
+  //Sandy Biome items
+  static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.8, 1, 0.8)
+  static Cactus2 = new ObjectEnum("cactus2", "cactus2", 0.8, 1, 0.8)
+  static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.8, 1, 0.8)
+  static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.4, 0.4, 0.4)
+  static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 0.4, 0.4, 0.4)
+
+  //Snowy Biome items
+  static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.8, 1, 0.8)
+  static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.4, 0.4, 0.4)
+  static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.4, 0.4, 0.4)
+  static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 3, 2, 2)
+
+  */
+
   /** @type {BABYLON.Mesh}*/
   container;
   remainingLoad;

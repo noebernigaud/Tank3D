@@ -7,25 +7,6 @@ function explode(emitter) {
         for (var sys of set.systems) {
             sys.emitter = emitter
             sys.worldOffset = new BABYLON.Vector3(emitter.position.x, emitter.position.y, emitter.position.z);
-            // sys.minScaleX = 0.1;
-            // sys.minScaleY = 0.1;
-            // sys.maxScaleX = 0.2;
-            // sys.maxScaleY = 0.2;
-            // sys.minEmitPower = 0.1;
-            // sys.maxEmitPower = 0.1;
-            // sys.minSize = 1;
-            // sys.maxSize = 1.5;
-            // sys.minSize = sys.minSize / 100;
-            // sys.maxSize = sys.maxSize / 100;
-            // sys.minEmitPower = sys.minEmitPower / 100;
-            // sys.maxEmitPower = sys.maxEmitPower / 100;
-            // sys.emitRate = sys.emitRate / 100;
-            // sys.minScaleX = sys.minScaleX / 100;
-            // sys.minScaleY = sys.minScaleY / 100;
-            // sys.minScaleZ = sys.minScaleZ / 100;
-            // sys.maxScaleX = sys.maxScaleX / 100;
-            // sys.maxScaleY = sys.maxScaleY / 100;
-            // sys.maxScaleZ = sys.maxScaleZ / 100;
         }
         set.start();
 
