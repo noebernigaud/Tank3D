@@ -157,10 +157,10 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
-        case ObjectEnum.CharRed.name:
-        case ObjectEnum.CharBlue.name:
-        case ObjectEnum.CharGreen.name: { remove(charsAI, this); }
-        case ObjectEnum.Player.name: { remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
+        case ObjectEnum.CharRed.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.CharBlue.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.CharGreen.name: { this.moveSound.pause(); remove(charsAI, this); }
+        case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Tree.name: { remove(trees, this); break }
         default:
           console.log(this.type.name, this);

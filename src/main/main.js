@@ -218,12 +218,11 @@ function init() {
         // console.log("evt.clientX ", evt.clientX);
         // console.log("evt.clientY ", evt.clientY);
         // console.log("mousepos ", mousepos);
-        if (isLocked()) {
-            if (evt.movementX > 0) char1.rotateTurretAxisY(0.05)
-            else if (evt.movementX < 0) char1.rotateTurretAxisY(-0.05)
-            if (evt.movementY > 0) char1.rotateTurretUpDown(false, 5)
-            else if (evt.movementY < 0) char1.rotateTurretUpDown(true, 5)
-        }
+
+        if (evt.movementX > 0) char1.rotateTurretAxisY(0.03)
+        else if (evt.movementX < 0) char1.rotateTurretAxisY(-0.03)
+        if (evt.movementY > 0) char1.rotateTurretUpDown(false, 2)
+        else if (evt.movementY < 0) char1.rotateTurretUpDown(true, 2)
     });
 
 

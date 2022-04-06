@@ -48,11 +48,12 @@ class Char extends ObjectPos {
     this.dust = createDust(this.shape);
     this.healtBar = new Healthbar(this);
 
-    this.mouveSound = new Audio('audio/electricFerry.wav');
-    this.mouveSound.volume = 0.4
-    this.mouveSound.loop = true
+    this.moveSound = new Audio('audio/electricFerry.wav');
+    this.moveSound.volume = 0.4
+    this.moveSound.loop = true
     this.bulletFiredSound = new Audio('audio/Explosion2.wav');
-    this.bulletFiredSound.volume = 0.2;
+    this.setVolumeEmittedFireBullet = 0.3
+    this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 
   }
 
@@ -74,13 +75,18 @@ class Char extends ObjectPos {
     }
 
     if ((this.lastBulletTime === undefined) || (tempEcoule > this.delayMinBetweenBullets)) {
+
+      //création d'une nouvelle balle
       var bullet = new Bullet(this)
-      this.bulletFiredSound.pause();
-      this.bulletFiredSound.currentTime = 0;
-      this.bulletFiredSound.play();
+
+      this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet
+      playSoundWithDistanceEffect(this.bulletFiredSound, this.shape)
+
       // on mémorise le dernier temps.
       this.lastBulletTime = time;
+
     }
+
   }
 
   addMine(time) {
@@ -209,7 +215,7 @@ class Char extends ObjectPos {
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
 
-    this.mouveSound.play();
+    this.moveSound.play();
   }
 
   stabilizeTank(hasFriction = true) {
