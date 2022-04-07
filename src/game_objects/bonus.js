@@ -23,6 +23,7 @@ class Bonus extends ObjectPos {
                 if (b1) {
                     scene.menu.bonusChoice(this.randomBonus(3))
                     b1.dispose(true);
+                    current_level_dico.addBonusObtained()
                 }
             }
         }

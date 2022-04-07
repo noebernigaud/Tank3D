@@ -225,11 +225,10 @@ function init() {
         else if (evt.movementY < 0) char1.rotateTurretUpDown(true, 2)
     });
 
-
     // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
         // console.log("mouse captured in canvas");
-        if (!scene.menu.isShown && !isLocked()) canvas.requestPointerLock();
+        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) canvas.requestPointerLock();
         else if (isLocked() && engine.activeRenderLoops.length == 1) {
             if (sceneInterval) clearInterval(sceneInterval);
             sceneInterval = setInterval(() => {
@@ -247,7 +246,7 @@ function init() {
     function lockChangeAlert() {
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
-            if (!scene.menu.inBonus) scene.menu.show(true)
+            if (!scene.menu.inOtherMenu()) scene.menu.show(true)
             if (sceneInterval) clearInterval(sceneInterval)
         }
     }
@@ -324,7 +323,7 @@ function pausebackgroundMusic() {
 
 function remove_all_objects() {
     let allElts = getAllMeshList()
-    if (level == 0) allElts.push(...chars)
+    if (level == 0) allElts.push(char1)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
@@ -341,7 +340,7 @@ function remove_all_objects() {
 
 
 function getAllMeshList() {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters]
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI]
 }
 
 //ANIMATION

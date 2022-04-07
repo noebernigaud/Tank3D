@@ -1,25 +1,26 @@
-html, body {
-  	padding:0px;
-	margin:0px;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#src{
-	display:none;	
-	filter:blur(5px);
+#src {
+  display: none;
+  filter: blur(5px);
 }
 
 
-.divb{
+.divb {
   display: flex;
   padding: 3%;
   flex-direction: column;
-	border-radius: 2%;
-	background-color: #070707d7;
-	position: absolute;
+  border-radius: 2%;
+  background-color: #070707d7;
+  position: absolute;
   margin: auto;
 }
 
@@ -32,42 +33,44 @@ html, body {
   cursor: pointer;
   transition: all 1s;
   display: flex;
-    align-items: center;
+  align-items: center;
 }
-.button span {
-	text-align:center;
-	/* line-height: 50px; */
-	display: block;
 
-	width: 200px;
-	color: white;
-	font-family: "Roboto", sans-serif;
-	opacity: 0.7;
+.button span {
+  text-align: center;
+  /* line-height: 50px; */
+  display: block;
+
+  width: 200px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  opacity: 0.7;
 }
+
 .button:hover {
   background: rgba(27, 228, 20, 0.226);
 
 }
 
-#minimap{
-    position: absolute;
-    right: 0pt;
-    top: 0;
-    border-radius: 150pt;
-    border: 3px solid rgb(55, 55, 55);
-    background-image: url("../images/woodTexture.jpg");
+#minimap {
+  position: absolute;
+  right: 0pt;
+  top: 0;
+  border-radius: 150pt;
+  border: 3px solid rgb(55, 55, 55);
+  background-image: url("../images/woodTexture.jpg");
 }
 
-#speed{
+#speed {
   position: absolute;
   bottom: 0;
   right: 0;
   color: white;
 }
 
- .hideOnMenu{
+.hideOnMenu {
   display: none;
-} 
+}
 
 .tooltip {
   position: relative;
