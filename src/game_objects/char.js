@@ -48,11 +48,11 @@ class Char extends ObjectPos {
     this.dust = createDust(this.shape);
     this.healtBar = new Healthbar(this);
 
-    this.moveSound = new Audio('audio/electricFerry.wav');
+    this.moveSound = new Audio('audio/electricFerry.mp3');
     this.moveSound.volume = 0.4
     this.moveSound.loop = true
     this.moveSound.autoplay = true
-    this.bulletFiredSound = new Audio('audio/TankFire.wav');
+    this.bulletFiredSound = new Audio('audio/TankFire.mp3');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 

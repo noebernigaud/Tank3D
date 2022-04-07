@@ -7,14 +7,14 @@ class ObjectEnum {
   static Wall = new ObjectEnum(wallTexture.src, "")
 
   //Player
-  static Player = new ObjectEnum("player", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum("player", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
   static Bonus = new ObjectEnum("bonus", "box", 0.4, 0.4, 0.4)
   static Bullet = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
-  static CharRed = new ObjectEnum("redTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum("redTank", "mini_tank", 25 / 40, 25 / 40, 50 / 40)
   static CharBlue = new ObjectEnum("blueTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum("greenTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum("greenTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.4, 0.4, 0.4)
@@ -69,6 +69,9 @@ class ObjectEnum {
       case "coconut_tree": resize = 0.02; break;
       case "tank": resize = 0.25; break;
       case "modern_tank": resize = 0.25; break;
+      case "battle_tank": resize = 0.20; break;
+      case "tiger_tank": resize = 0.25; break;
+      case "mini_tank": resize = 0.25; break;
       case "snowy_tree": resize = 0.025; break;
       case "wintercabin": resize = 0.01; break;
       case "cactus1": resize = 0.5; break;
