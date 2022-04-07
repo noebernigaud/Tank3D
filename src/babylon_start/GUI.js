@@ -166,7 +166,6 @@ class Menu {
     soundHover() {
         menuHoverSound.currentTime = 0
         menuHoverSound.play()
-        console.log("button was hovered");
     }
 }
 
