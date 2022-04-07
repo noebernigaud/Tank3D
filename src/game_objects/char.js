@@ -52,7 +52,7 @@ class Char extends ObjectPos {
     this.moveSound.volume = 0.4
     this.moveSound.loop = true
     this.moveSound.autoplay = true
-    this.bulletFiredSound = new Audio('audio/Explosion2.wav');
+    this.bulletFiredSound = new Audio('audio/TankFire.wav');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 
