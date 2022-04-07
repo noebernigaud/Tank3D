@@ -48,6 +48,12 @@ class Bullet extends ObjectPos {
         bullets.push(this)
 
         this.bulletReboundSound = new Audio('audio/Collision8-Bit.ogg');
+        this.setVolumebulletRebound = 0.3
+        this.bulletReboundSound.volume = this.setVolumebulletRebound
+
+        this.bulletexplosion = new Audio('audio/bulletExplosion3.wav');
+        this.setVolumebulletexplosion = 0.3
+        this.bulletexplosion.volume = this.setVolumebulletexplosion;
 
         if (char1 == char) current_level_dico.addBulletFired()
     }
@@ -98,13 +104,15 @@ class Bullet extends ObjectPos {
 
     dispose(forceDispose = false, explosion = false) {
         super.dispose(forceDispose)
-        if (this.life <= 0 || forceDispose) this.trail.dispose()
+        if (this.life <= 0 || forceDispose) {
+            this.trail.dispose()
+            this.bulletexplosion.volume = this.setVolumebulletexplosion;
+            playSoundWithDistanceEffect(this.bulletexplosion, this)
+        }
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
-            // this.bulletReboundSound.pause();
-            // this.bulletReboundSound.currentTime = 0;
-            // this.bulletReboundSound.play();
+            this.bulletReboundSound.volume = this.setVolumebulletRebound
             playSoundWithDistanceEffect(this.bulletReboundSound, this)
         }
 
