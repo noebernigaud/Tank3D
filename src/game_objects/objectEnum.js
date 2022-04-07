@@ -79,13 +79,13 @@ class ObjectEnum {
       case "cactus3": resize = 0.15; break;
       case "snowy_rock": resize = 0.15; break;
       case "snowy_fence": resize = 0.015; break;
+      case "rock": resize = 0.5; break;
       case "desert_rock": {
         resize = 0.5;
         this.meshes.forEach(x => { x.position.z += 2.5 })
         break;
       }
       case "barrel":
-      case "rock":
       case "ground_palm":
       case "tumbleweed": {
 
