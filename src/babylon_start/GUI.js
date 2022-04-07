@@ -5,7 +5,6 @@ class Menu {
     constructor() {
         this.canBeSwitched = true;
         this.isFirst = true;
-        this.isReallyFirst = true;
         this.isShown = true;
         this.inBonus = false;
         this.inNextLevel = false;
@@ -46,7 +45,10 @@ class Menu {
     }
 
     show(toShow) {
-        if (toShow) document.getElementById("main").style.display = "block"
+        if (toShow) {
+            exitPointerLoc()
+            document.getElementById("main").style.display = "block"
+        }
         else this.hideMenu()
         if (this.inBonus)
             if (toShow) this.bonusPanel.style.display = "none"
@@ -158,8 +160,8 @@ class Menu {
         scene.menu = new Menu()
         level = 0;
         char1.dispose(true)
-        remove_all_objects()
         this.clearBonus()
+        remove_all_objects()
     }
 
     clearBonus() {

@@ -14,15 +14,18 @@ class Level {
     this.lvlObjective = levelInfo.lvlObjective;
   }
 
+  canGoNextLevel() {
+    return this.lvlObjective.goToNextLevel()
+  }
+
   goNextLevel() {
-    let res = this.lvlObjective.goToNextLevel()
-    if (res && !scene.menu.inOtherMenu()) {
+    console.log("in other menu", scene.menu.inOtherMenu());
+    if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
       exitPointerLoc()
       this.loadNextLevel()
       this.writeStat()
     }
-    return res
   }
 
   addDistance(distance) {

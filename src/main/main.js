@@ -246,7 +246,10 @@ function init() {
     function lockChangeAlert() {
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
-            if (!scene.menu.inOtherMenu()) scene.menu.show(true)
+            if (!scene.menu.inOtherMenu()) {
+                console.log("This is a problem");
+                scene.menu.show(true)
+            }
             if (sceneInterval) clearInterval(sceneInterval)
         }
     }
@@ -317,8 +320,10 @@ function playBackgroundMusic() {
 
 function pausebackgroundMusic() {
     let audioPlayer = document.querySelector("#audioPlayer");
-    audioPlayer.pause();
-    audioPlayer.currentTime = 0;
+    if (audioPlayer) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
 }
 
 function remove_all_objects() {

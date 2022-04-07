@@ -116,13 +116,16 @@ class Scene {
           remove_all_objects()
           startgame(level);
           this.scene.menu.createButton()
-          exitPointerLoc()
-        } else if (current_level_dico.goNextLevel() && !this.scene.menu.inOtherMenu()) {
+          console.log("AAA");
+        } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
-            exitPointerLoc()
+            console.log("BBB");
             this.scene.menu.restart()
-          } else {
-            if (sceneInterval) clearInterval(sceneInterval)
+          } else if (!this.scene.menu.inOtherMenu()) {
+            current_level_dico.goNextLevel()
+            if (sceneInterval) {
+              clearInterval(sceneInterval)
+            }
             // startTimer()
           }
         }
