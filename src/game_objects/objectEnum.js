@@ -2,7 +2,7 @@ class ObjectEnum {
   // Create new instances of the same class as static attributes
 
   //Element of decor
-  static Barrel = new ObjectEnum("barrel", "barrel", 24 / 40, 35 / 40, 24 / 40)
+  static Barrel = new ObjectEnum("barrel", "barrel", 15 / 40, 24 / 40, 15 / 40)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
 
@@ -17,7 +17,7 @@ class ObjectEnum {
   static CharGreen = new ObjectEnum("greenTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
 
   //Earthy Biome items
-  static Rock = new ObjectEnum("rock", "rock", 0.4, 0.4, 0.4)
+  static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5)
   static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.8, 1, 0.8)
   static PalmTree2 = new ObjectEnum("palm_trees", "palm_trees", 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.8, 1, 0.8)
@@ -80,6 +80,7 @@ class ObjectEnum {
       case "snowy_rock": resize = 0.15; break;
       case "snowy_fence": resize = 0.015; break;
       case "rock": resize = 0.5; break;
+      case "barrel": resize = 0.65; break;
       case "desert_rock": {
         resize = 0.5;
         this.meshes.forEach(x => { x.position.z += 2.5 })
