@@ -31,7 +31,7 @@ function createRay(origin, dir, length, disposeTime = 5) {
     return pickInfo.pickedMesh
 }
 
-function playSoundWithDistanceEffect(sound, mesh, pauseSound = true) {
+function playSoundWithDistanceEffect(sound, mesh, pauseSound = true, play = true) {
     //son et ses réglages
     if (pauseSound) {
         sound.pause();
@@ -41,7 +41,7 @@ function playSoundWithDistanceEffect(sound, mesh, pauseSound = true) {
     let posc = mesh.position
     let distanceToChar1 = Math.max(0, Math.sqrt((posc.x - posChar1.x) ** 2 + (posc.y - posChar1.y) ** 2 + (posc.z - posChar1.z) ** 2) - 2)
     sound.volume = sound.volume / (Math.max(1, distanceToChar1) ** 0.3)
-    sound.play();
+    if (play) sound.play();
 }
 
 var remove = (list, elt) => {

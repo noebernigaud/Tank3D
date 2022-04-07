@@ -15,6 +15,7 @@ var shadowGenerator;
 var tanksAIReady;
 var inMenu = true;
 var light1;
+var groundSand;
 
 class Scene {
 
@@ -95,7 +96,7 @@ class Scene {
           c.moveSound.volume = Math.max(Math.min(1, 0.01 * speedc), 0.2)
 
           //réglage son de déplacement selon la distance
-          playSoundWithDistanceEffect(c.moveSound, c.shape, false)
+          playSoundWithDistanceEffect(c.moveSound, c.shape, false, false)
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
@@ -226,9 +227,25 @@ class Scene {
     var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
     groundMaterial.diffuseTexture = groundTexture;
 
-    var groundSand = BABYLON.MeshBuilder.CreateGround("groundSand", { height: 128, width: 128, subdivisions: 32 }, scene);
+    groundSand = BABYLON.MeshBuilder.CreateGround("groundSand", { height: 128, width: 128, subdivisions: 32 }, scene);
     groundSand.position.y = gr.position.y - 0.1
     groundSand.material = groundMaterial;
+    groundSand.physicsImpostor = new BABYLON.PhysicsImpostor(
+      groundSand,
+      BABYLON.PhysicsImpostor.BoxImpostor,
+      { mass: 0 },
+      scene
+    );
+    var collidedChar
+    groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
+      if (collidedChar = chars.find(e => e.shape == e2.object)) {
+        console.log("char collided ", collidedChar)
+        console.log("health ", collidedChar.health)
+        collidedChar.healthLoss(1)
+        console.log("health ", collidedChar.health)
+      }
+    }
+
 
     //water ground
     var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 256, width: 256, subdivisions: 32 }, scene);
@@ -244,21 +261,6 @@ class Scene {
     water.addToRenderList(this.skybox);
     water.addToRenderList(groundSand);
     waterMesh.material = water;
-    // var waterMesh = BABYLON.MeshBuilder.CreateGround("waterMesh", { height: 512, width: 512, subdivisions: 32 }, scene);
-    // waterMesh.position.y = gr.position.y - 2.2
-    // var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
-    // water.backFaceCulling = true;
-    // water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
-    // water.windForce = -5;
-    // water.waveHeight = 0.5;
-    // water.bumpHeight = 0.3;
-    // water.waveLength = 0.1;
-    // water.colorBlendFactor = 0;
-
-    // water.addToRenderList(gr);
-    // water.addToRenderList(this.skybox);
-
-    // waterMesh.material = water;
   }
 
   setShadow() {
