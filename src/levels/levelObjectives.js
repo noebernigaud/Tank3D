@@ -2,7 +2,7 @@ let levelObjectives = {
   killAllTank: {
     description: "To pass the following game you have to kill all of the enemies",
     goToNextLevel: (e) => {
-      console.log("HERE", charsAI, chars);
+      // console.log("HERE", charsAI, chars);
 
       return chars.length == 1
     }
@@ -11,6 +11,9 @@ let levelObjectives = {
     description:
       `To pass the following game you have to collect all of the bonuses, be careful : 
       An enemy can pick a bonus and to get it back you must kill him`,
-    goToNextLevel: (e) => bonuses.length == 0
+    goToNextLevel: (e) => {
+      console.log("get all bonus", bonuses.length)
+      return bonuses.length == 0
+    }
   }
 }
