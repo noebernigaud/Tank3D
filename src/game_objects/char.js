@@ -51,6 +51,7 @@ class Char extends ObjectPos {
     this.moveSound = new Audio('audio/electricFerry.wav');
     this.moveSound.volume = 0.4
     this.moveSound.loop = true
+    this.moveSound.autoplay = true
     this.bulletFiredSound = new Audio('audio/Explosion2.wav');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
@@ -214,8 +215,6 @@ class Char extends ObjectPos {
     let moveVec = frontVec.scale(speed * 80000)
     let realVec = new BABYLON.Vector3(moveVec.x, this.physicsImpostor.getLinearVelocity().y, moveVec.z)
     this.physicsImpostor.applyForce(realVec, this.shape.position)
-
-    this.moveSound.play();
   }
 
   stabilizeTank(hasFriction = true) {

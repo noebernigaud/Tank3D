@@ -95,7 +95,7 @@ class Scene {
           c.moveSound.volume = Math.max(Math.min(1, 0.01 * speedc), 0.2)
 
           //réglage son de déplacement selon la distance
-          playSoundWithDistanceEffect(c.moveSound, c.shape, false)
+          playSoundWithDistanceEffect(c.moveSound, c.shape, false, false)
         })
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
