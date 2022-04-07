@@ -68,13 +68,17 @@ class Scene {
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
-        getAllMeshList().forEach(obj => {
-          if (obj.shape.position.x <= width / 2 - 100 ||
-            obj.shape.position.x >= width / 2 + 100 ||
-            obj.shape.position.z <= height / 2 - 100 ||
-            obj.shape.position.z >= height / 2 + 100 ||
-            obj.shape.position.y < current_level_dico.minHeightMap - 0.8 ||
-            obj.shape.position.y >= +8) {
+        getAllMeshList(true).forEach(obj => {
+          let outOfBound = (obj) => {
+            return obj.position && (
+              obj.position.x <= width / 2 - 100 ||
+              obj.position.x >= width / 2 + 100 ||
+              obj.position.z <= height / 2 - 100 ||
+              obj.position.z >= height / 2 + 100 ||
+              obj.position.y < current_level_dico.minHeightMap - 0.8 ||
+              obj.position.y >= +8)
+          }
+          if (outOfBound(obj.shape) || outOfBound(obj)) {
             obj.dispose(true, true)
           }
         })

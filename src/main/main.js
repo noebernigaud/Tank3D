@@ -339,8 +339,8 @@ function remove_all_objects() {
 }
 
 
-function getAllMeshList() {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI]
+function getAllMeshList(withPlayer = false) {
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION

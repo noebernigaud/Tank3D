@@ -7,8 +7,8 @@ class BonusEnum {
             "Acceleration multiplied by 2"),
         new BonusEnum(
             "Reload bullet",
-            function () { char1.delayMinBetweenBullets *= 0.2 },
-            "The delay between shoots is 20% faster"),
+            function () { if (char1.delayMinBetweenBullets >= 100) char1.delayMinBetweenBullets -= 100 },
+            "The delay between shoots is faster"),
         new BonusEnum(
             "Bullets speed",
             function () { char1.bulletSpeed *= 2 },
@@ -17,10 +17,6 @@ class BonusEnum {
             "Bonus life",
             function () { char1.life += 3 },
             "With this bonus you gain 3 lives"),
-        new BonusEnum(
-            "Bonus bullet life",
-            function () { char1.bulletLife += 2 },
-            "With this bonus your bullets will have 2 more lives"),
         new BonusEnum(
             "Bonus bullet damage",
             function () { char1.bulletDamage += 5 },
