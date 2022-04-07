@@ -34,7 +34,8 @@ class Healthbar {
 
     var healthBarTextMaterial = new BABYLON.StandardMaterial("hb3mat", scene);
     healthBarTextMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    healthBarTextMaterial.emissiveColor = new BABYLON.Color3(20.0 / 255, 112.0 / 255, 25.0 / 255);
+    // healthBarTextMaterial.emissiveColor = new BABYLON.Color3(20.0 / 255, 112.0 / 255, 25.0 / 255);
+    healthBarTextMaterial.emissiveColor = new BABYLON.Color3(186.0 / 255, 33.0 / 255, 0 / 255);
     this.healthBarTextMaterial = healthBarTextMaterial;
   }
 

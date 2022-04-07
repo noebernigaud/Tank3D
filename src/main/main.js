@@ -243,7 +243,6 @@ function init() {
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
             if (!scene.menu.inOtherMenu()) {
-                console.log("This is a problem");
                 scene.menu.show(true)
             }
             if (sceneInterval) clearInterval(sceneInterval)

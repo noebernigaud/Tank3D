@@ -85,9 +85,11 @@ class Scene {
         // let posChar1 = char1.shape.position
 
         chars.forEach(c => {
-          if (c.shape.position.y < ground.position.y - 5) {
-            c.life = 0;
-          }
+
+          //le char prend des degats si il est retourné
+          if (c.isRenversed()) c.healthLoss(c.maxHealth / 120)
+
+          //update barre de vie
           c.healtBar.updatePartition()
 
           //réglage son de déplacement selon la vitesse
