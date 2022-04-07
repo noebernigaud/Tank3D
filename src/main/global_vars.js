@@ -81,15 +81,15 @@ var bulletImage = new Image();
 bulletImage.src = './images/bullet.png';
 
 //Sound effects
-let explosionSound = new Audio('audio/Explosion2.wav');
+let explosionSound = new Audio('audio/Explosion2.mp3');
 explosionSound.volume = 0.2;
 
 let applauseSound = new Audio('audio/Human-Applause-LargeCrowd01.mp3');
 
-let menuHoverSound = new Audio('audio/hoverMenu.wav');
+let menuHoverSound = new Audio('audio/hoverMenu.mp3');
 menuHoverSound.volume = 0.2
 
-let bonusTookSound = new Audio('audio/hammer.wav');
+let bonusTookSound = new Audio('audio/hammer.mp3');
 bonusTookSound.volume = 0.2
 
 let musicBackground = new Audio('audio/warmusic.mp3')
