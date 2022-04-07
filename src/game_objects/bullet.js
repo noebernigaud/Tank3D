@@ -102,9 +102,10 @@ class Bullet extends ObjectPos {
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
-            this.bulletReboundSound.pause();
-            this.bulletReboundSound.currentTime = 0;
-            this.bulletReboundSound.play();
+            // this.bulletReboundSound.pause();
+            // this.bulletReboundSound.currentTime = 0;
+            // this.bulletReboundSound.play();
+            playSoundWithDistanceEffect(this.bulletReboundSound, this)
         }
 
     }

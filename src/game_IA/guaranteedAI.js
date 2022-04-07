@@ -64,13 +64,13 @@ class guaranteedAI {
             this.tank.shape.position.y + 3 / 40,
             this.tank.shape.position.z + dirX.x),
             dirZ, 2);
-        // if (!delimAhead)
-        //     this.tank.moveTankForeward();
-        // else
-        //     if (delimAhead.name != "delimiter")
-        //         this.tank.moveTankForeward();
-        //     else
-        //         this.tank.stabilizeTank();
+        if (!delimAhead)
+            this.tank.moveTankForeward();
+        else
+            if (delimAhead.name != "delimiter")
+                this.tank.moveTankForeward();
+            else
+                this.tank.stabilizeTank();
 
         //Rotate turret
         MoveAI.rotateTurret(this.tank);
