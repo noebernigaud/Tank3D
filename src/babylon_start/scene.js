@@ -107,26 +107,27 @@ class Scene {
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
+
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
 
         charsAI.forEach(c => {
           if (c.life <= 0) {
+            console.log("should destroy char ", c);
             let index = chars.indexOf(c)
             if (index !== -1) chars.splice(index, 1)
             index = charsAI.indexOf(c)
             if (index !== -1) charsAI.splice(index, 1)
-            c.dispose()
+            c.destroyTank()
+            // c.dispose(true)
           }
         })
         if (char1.life <= 0 || level == level_map.length) {
           level = 0;
-          remove_all_objects()
+          remove_all_objects(true)
           startgame(level);
           this.scene.menu.createButton()
-          console.log("AAA");
         } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
-            console.log("BBB");
             this.scene.menu.restart()
           } else if (!this.scene.menu.inOtherMenu()) {
             current_level_dico.goNextLevel()

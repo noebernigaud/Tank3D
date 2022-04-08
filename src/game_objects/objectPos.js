@@ -163,6 +163,7 @@ class ObjectPos extends BABYLON.Mesh {
   }
 
   dispose(forceDispose) {
+    console.log("dispose was called for ", this.type.name);
     this.life--
     if (forceDispose || this.life <= 0) {
 
@@ -174,7 +175,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
         case ObjectEnum.CharRed.name: { this.moveSound.pause(); break; }
         case ObjectEnum.CharBlue.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.CharGreen.name: { this.moveSound.pause(); remove(charsAI, this); }
+        case ObjectEnum.CharGreen.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:

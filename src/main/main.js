@@ -274,6 +274,7 @@ function startgame(level) {
     delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
+    charsDestroyed = new Array();
 
     //BULLETS AND MINES INIT
     bullets = new Array();
@@ -321,8 +322,8 @@ function pausebackgroundMusic() {
     }
 }
 
-function remove_all_objects() {
-    let allElts = getAllMeshList()
+function remove_all_objects(withPlayer = false) {
+    let allElts = getAllMeshList(withPlayer)
     if (level == 0) allElts.push(char1)
 
     allElts.forEach(e => e.dispose(true))
@@ -332,6 +333,7 @@ function remove_all_objects() {
     mines = [];
     chars = [];
     charsAI = [];
+    charsDestroyed = [];
     bonuses = [];
     trees = [];
     rocks = [];
@@ -340,7 +342,7 @@ function remove_all_objects() {
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION

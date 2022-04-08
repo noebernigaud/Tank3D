@@ -52,10 +52,13 @@ class Char extends ObjectPos {
     this.moveSound.volume = 0.4
     this.moveSound.loop = true
     this.moveSound.autoplay = true
+
     this.bulletFiredSound = new Audio('audio/TankFire.mp3');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 
+    this.charExploseSound = new Audio('audio/charExplosion.mp3');
+    this.charExploseSound.volume = 0.4
   }
 
   moveForeward(coeff) {
@@ -207,18 +210,20 @@ class Char extends ObjectPos {
     this.dust.stop();
   }
 
-  destroyTank(isDisabled) {
-    if (isDisabled) {
-      // explode(this.shape)
-      var smok = createSmoke(char1.shape)
-      playSmoke(smok)
-      createFire(char1.shape);
-      // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
-      // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
-      //console.log("Disposing");
-      //this.shape.dispose()
-    }
+  destroyTank() {
+    // explode(this.shape)
+    this.stabilizeTank()
+    charsDestroyed.push(this)
+    var smok = createSmoke(this.shape)
+    playSmoke(smok)
+    createFire(this.shape);
+    playSoundWithDistanceEffect(this.charExploseSound, this, false)
+    // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
+    // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+    //console.log("Disposing");
+    //this.shape.dispose()
   }
+
 
   getTurretTank() {
     return this.shape.getChildMeshes()[0];
@@ -251,7 +256,8 @@ class Char extends ObjectPos {
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0
-      this.dispose(false)
+      this.life--
+      // this.dispose(false)
     }
   }
 
