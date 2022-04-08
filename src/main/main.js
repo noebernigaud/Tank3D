@@ -379,35 +379,6 @@ function anime() {
         }
     }
 
-    //IN GAME
-    if (playing == 1) {
-
-        // bullets.forEach(bullet => bullet.move())
-        //Image de fond
-        // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
-
-        //On dessine les murs, trous, mines, balles
-        // walls.forEach(wall => wall.draw3d());
-        // holes.forEach(hole => hole.draw3d());
-        // mines.forEach(mine => mine.draw3d());
-        bullets.forEach(bullet => bullet.move());
-
-        // walls.forEach(wall => wall.draw(ctx));
-        // holes.forEach(hole => hole.draw(ctx));
-        // mines.forEach(mine => mine.draw(ctx));
-        // bullets.forEach(bullet => bullet.draw(ctx));
-
-        // 2) On dessine et on déplace les char
-        // chars.forEach(char => char.draw3d());
-
-        // chars.forEach(char => char.draw(ctx));
-        // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
-        // char1.updateAngle(mousepos);
-
-        // ctx.font = "30px Arial";
-        // ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
-    }
-
     keyApplaier();
 
     //window.requestAnimationFrame(anime);

@@ -44,14 +44,7 @@ class Scene {
     this.setCamera()
     setCurrentLevelDico()
 
-
-
-
     ObjectEnum.initiate_all_models()
-    // this.setCamera()
-    // this.engine.runRenderLoop(() =>
-    //   this.scene.render()
-    // )
   }
 
   /**
@@ -151,14 +144,6 @@ class Scene {
   }
 
   setCamera() {
-    // camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    // camera.setPosition(new BABYLON.Vector3(0, 100 / 20, -110 / 20));
-    // camera.beta += 0.3
-    // camera.angularSensibilityX = 250
-    // camera.angularSensibilityY = 250
-    // camera.inertia = 0
-    // camera.inputs.attached.keyboard.detachControl();
-    // camera.checkCollisions = true;
     camera = new BABYLON.FollowCamera("tankCamera", ground.position, scene, ground);
     // camera.attachControl(canvas, true);
     camera.radius = 40;
@@ -170,14 +155,6 @@ class Scene {
   }
 
   setGround() {
-    // ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    // var grass = new BABYLON.StandardMaterial("groundMat", scene);
-    // grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
-    // ground.material = grass
-    // grass.specularColor = new BABYLON.Color3(0, 0, 0)
-
-    // ground.checkCollisions = true;
-    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
     const groundOptions = {
       width: width + cell_size,
       height: height + cell_size,
@@ -271,9 +248,6 @@ class Scene {
   }
 
   setShadow() {
-    // var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    // light.intensity = 0;
-    // light.position = new BABYLON.Vector3(0, 100, 0);
 
     light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 10, 0), scene);
     light1.emissive = new BABYLON.Color3(0, 0, 0);
@@ -302,14 +276,6 @@ class Scene {
 
 
   setBackground() {
-    // this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
-    // var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-    // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-    // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    // this.skybox.material = skyboxMaterial;
     let skyboxBg = biome != "Sand" ? "cloudy" : "sunny"
     this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);

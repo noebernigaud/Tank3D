@@ -61,14 +61,6 @@ class Char extends ObjectPos {
     this.charExploseSound.volume = 0.4
   }
 
-  moveForeward(coeff) {
-    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
-  }
-
-  moveBackward(coeff) {
-    this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
-  }
-
   addBullet(time = Date.now()) {
     if (this.life <= 0) return;
     // si le temps écoulé depuis le dernier tir est > temps max alors on tire
