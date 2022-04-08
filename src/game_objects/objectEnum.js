@@ -7,13 +7,13 @@ class ObjectEnum {
   static Wall = new ObjectEnum(wallTexture.src, "")
 
   //Player
-  static Player = new ObjectEnum("player", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum("player", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
   static Bonus = new ObjectEnum("bonus", "box", 0.4, 0.4, 0.4)
   static Bullet = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
   static CharRed = new ObjectEnum("redTank", "mini_tank", 25 / 40, 25 / 40, 50 / 40)
-  static CharBlue = new ObjectEnum("blueTank", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum("blueTank", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
   static CharGreen = new ObjectEnum("greenTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
 
   //Earthy Biome items
