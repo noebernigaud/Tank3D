@@ -13,8 +13,8 @@ class ObjectEnum {
 
   //Opponent Tanks
   static CharRed = new ObjectEnum("redTank", "mini_tank", 25 / 40, 25 / 40, 50 / 40)
-  static CharBlue = new ObjectEnum("blueTank", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum("greenTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharBlue = new ObjectEnum("blueTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharGreen = new ObjectEnum("greenTank", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5)

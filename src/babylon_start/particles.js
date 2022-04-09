@@ -77,12 +77,12 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     const box = BABYLON.MeshBuilder.CreateBox("smokeTank", { size: 0.05 });
     box.parent = emitter
     box.position.z -= 0.95
-    box.position.y += 0.18
+    box.position.y += 0.1
     box.position.x += isRight ? 0.12 : -0.08
     box.isVisible = false
 
     // Create a particle system
-    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 500 : 8000);
+    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 2000 : 8000);
 
     // Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/smoke.png");
@@ -92,10 +92,10 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     particleSystem.maxLifeTime = isMoving ? 0.2 : 3;
 
     // Emit rate
-    particleSystem.emitRate = isMoving ? 300 : 200;
+    particleSystem.emitRate = isMoving ? 200 : 300;
 
     // Gravity
-    particleSystem.gravity = new BABYLON.Vector3(0.25, isMoving ? 8 : 4, 0);
+    particleSystem.gravity = new BABYLON.Vector3(0.25, isMoving ? 6 : 4, 0);
 
     // Size gradient
     if (isMoving) {
@@ -113,7 +113,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     // Color gradient
 
     if (isMoving) {
-        particleSystem.addColorGradient(0, new BABYLON.Color4(0.4, 0.4, 0.4, 0), new BABYLON.Color4(0.6, 0.6, 0.6, 0.5));
+        particleSystem.addColorGradient(0, new BABYLON.Color4(0.1, 0.1, 0.1, 0), new BABYLON.Color4(0.2, 0.2, 0.2, 0.5));
         particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.2, 0.2, 0.2, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.1));
         particleSystem.updateSpeed = 0.005;
     }
@@ -143,8 +143,9 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     // particleSystem.maxSize = isMoving ? 0.2 : 0.625;
 
 
-    particleSystem.addSizeGradient(0, isMoving ? 0.01 : 0.0375);
+    particleSystem.addSizeGradient(0, isMoving ? 0.03 : 0.0375);
     particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.625);
+    
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;

@@ -218,15 +218,23 @@ class Char extends ObjectPos {
   }
 
   movingSmoke(isMoving) {
-    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.1 : 0.005;
-    this.exhaustPipeRight.updateSpeed = isMoving ? 0.1 : 0.005;
+    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.01 : 0.005;
+    this.exhaustPipeRight.updateSpeed = isMoving ? 0.01 : 0.005;
     this.exhaustPipeLeft.maxLifeTime = isMoving ? 0.4 : 0.2;
     this.exhaustPipeRight.maxLifeTime = isMoving ? 0.4 : 0.2;
 
-    this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeLeft.emitRate = isMoving ? 500 : 300;
-    this.exhaustPipeRight.emitRate = isMoving ? 500 : 300;
+    // this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
+    // this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
+    this.exhaustPipeLeft.removeSizeGradient(0);
+    this.exhaustPipeLeft.removeSizeGradient(1);
+    this.exhaustPipeRight.removeSizeGradient(0);
+    this.exhaustPipeRight.removeSizeGradient(1);
+    this.exhaustPipeLeft.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeLeft.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeRight.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeRight.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeLeft.emitRate = isMoving ? 400 : 200;
+    this.exhaustPipeRight.emitRate = isMoving ? 400 : 200;
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }

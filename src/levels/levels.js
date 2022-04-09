@@ -40,11 +40,11 @@ const level_map = [
                 "-----------------------------",
                 "---------h--------r-----t----",
                 "----t------------------------",
-                "-------------t-----------G---",
+                "-------------t---------------",
                 "-----------W--W--------------",
-                "--------P-----w------R-------",
+                "--------P-----w--------------",
                 "--------------w--------------",
-                "----r------W--W----------B---",
+                "----r------W--W----------G---",
                 "-----------------t-----------",
                 "---------c-------------------",
                 "-----------------------------",
@@ -173,7 +173,7 @@ function draw_level_map() {
     setCurrentLevelDico()
     if (level == 0) {
         if (char1) char1.dispose(true);
-        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
 
@@ -213,7 +213,7 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 3, 2000, 40);
+                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 2, 2000, 40);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
@@ -221,14 +221,14 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'B':
-                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 3, 10000, 20);
+                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 2, 10000, 20);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     char.applyStrategy()
                     break;
                 case 'G':
-                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 3, 4000, 10);
+                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 2, 4000, 10);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
