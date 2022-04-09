@@ -89,7 +89,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
 
     // lifetime
     particleSystem.minLifeTime = isMoving ? 0.1 : 2;
-    particleSystem.maxLifeTime = isMoving ? 0.2 : 5;
+    particleSystem.maxLifeTime = isMoving ? 0.2 : 3;
 
     // Emit rate
     particleSystem.emitRate = isMoving ? 300 : 200;
@@ -122,6 +122,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
         particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.1, 0.1, 0.1, 0.1), new BABYLON.Color4(0.4, 0.4, 0.4, 0.4));
         particleSystem.addColorGradient(0.7, new BABYLON.Color4(0.03, 0.03, 0.03, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.4));
         particleSystem.addColorGradient(1.0, new BABYLON.Color4(0.0, 0.0, 0.0, 0), new BABYLON.Color4(0.03, 0.03, 0.03, 0));
+        particleSystem.updateSpeed = 0.01;
     }
 
     // Speed gradient
@@ -130,6 +131,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     particleSystem.addVelocityGradient(0.7, 0.4, 0.5);
     particleSystem.addVelocityGradient(1, 0.1, 0.2);
 
+
     // Rotation
     particleSystem.minInitialRotation = 0;
     particleSystem.maxInitialRotation = Math.PI;
@@ -137,8 +139,12 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     particleSystem.maxAngularSpeed = 1;
 
     // Size
-    particleSystem.minSize = isMoving ? 0.1 : 0.375;
-    particleSystem.maxSize = isMoving ? 0.2 : 0.625;
+    // particleSystem.minSize = isMoving ? 0.1 : 0.375;
+    // particleSystem.maxSize = isMoving ? 0.2 : 0.625;
+
+
+    particleSystem.addSizeGradient(0, isMoving ? 0.01 : 0.0375);
+    particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.625);
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
@@ -184,7 +190,8 @@ function createDust(emitter) {
 
 
     // Color gradient
-    particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
+    if (biome == "Snow") particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0.2), new BABYLON.Color4(1, 1, 1, 0.2))
+    else particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
 
 
     // Rotation
