@@ -73,7 +73,7 @@ function bulletExplode(position, isExploding, isCanonFire) {
     return particleSystem;
 }
 
-function createSmoke(emitter, isRight = false, isMoving = false) {
+function createSmoke(emitter, isRight = false, isMoving = false, permanent = false) {
     const box = BABYLON.MeshBuilder.CreateBox("smokeTank", { size: 0.05 });
     box.parent = emitter
     box.position.z -= 0.95
@@ -148,11 +148,11 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
 
     // Where the particles come from
     particleSystem.emitter = isMoving ? box : emitter; // the starting object
-    particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3).scale(isMoving ? 0.08 : 1);
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3).scale(isMoving ? 0.08 : 1);
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5).scale(isMoving ? 0.08 : 1);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5).scale(isMoving ? 0.08 : 1);
 
 
-    if (!isMoving) particleSystem.targetStopDuration = 12;
+    if (!isMoving && !permanent) particleSystem.targetStopDuration = 12;
     particleSystem.disposeOnStop = true;
 
     particleSystem.start();

@@ -100,19 +100,6 @@ class Char extends ObjectPos {
     }
   }
 
-  removeChar() {
-    let position = chars.indexOf(this);
-    this.shape.dispose();
-    chars.splice(position, 1);
-    explosionSound.play();
-    if (this === char1) {
-      stopgame();
-    } else {
-      position = charsAI.indexOf(this);
-      charsAI.splice(position, 1);
-    }
-  }
-
   rotateAxisY(angle) {
     if (this.life <= 0) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
@@ -205,8 +192,9 @@ class Char extends ObjectPos {
   destroyTank() {
     // explode(this.shape)
     this.stabilizeTank()
+    this.moveSound.pause();
     charsDestroyed.push(this)
-    var smok = createSmoke(this.shape)
+    var smok = createSmoke(this.shape, false, false, true)
     playSmoke(smok)
     createFire(this.shape);
     playSoundWithDistanceEffect(this.charExploseSound, this, false)
