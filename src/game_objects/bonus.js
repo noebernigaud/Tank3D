@@ -21,7 +21,7 @@ class Bonus extends ObjectPos {
             let b1 = bonuses.find(e => e.shape == e1.object)
             if (e2.object == char1.shape) {
                 if (b1) {
-                    scene.menu.bonusChoice(this.randomBonus(3))
+                    scene.menu.bonusChoice(Bonus.randomBonus(3))
                     b1.dispose(true);
                     current_level_dico.addBonusObtained()
                 }
@@ -29,7 +29,7 @@ class Bonus extends ObjectPos {
         }
     }
 
-    randomBonus(num) {
+    static randomBonus(num) {
         var res = []
         var copy_bonusEnum = BonusEnum.bonusEnumList.slice()
         for (var i = 0; i < num; i++) {

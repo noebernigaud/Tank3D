@@ -42,6 +42,11 @@
 }
 
 .logo {
-  width: 20pt;
-  height: 20pt;
+  height: 25pt;
+}
+
+.logo.whiteBackground {
+  background: #ffffffbd;
+  border-radius: 25px;
+  padding: 3pt;
 }

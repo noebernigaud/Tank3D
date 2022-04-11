@@ -12,7 +12,7 @@ class Menu {
         this.bonusPanel = document.getElementById("bonusPanel")
         this.nextLevelPanel = document.getElementById("endLevelStat")
 
-        this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        // this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         // this.buttons = []
         // // this.createButton("Play")
         // this.buttons[0].onPointerUpObservable.add(() => {
@@ -110,7 +110,17 @@ class Menu {
         let createButton = (bEnum) => {
             let b = document.createElement("button")
             b.onmouseenter = () => scene.menu.soundHover()
-            b.innerHTML = `<span>${bEnum.name}</span><span class="tooltiptext">${bEnum.description}</span>`;
+
+            let span1 = document.createElement("span")
+            span1.innerHTML = bEnum.name
+            let span2 = document.createElement("span")
+            span2.innerHTML = bEnum.description
+            span2.classList.add("tooltiptext")
+
+            b.appendChild(bEnum.image)
+            b.appendChild(span1)
+            b.appendChild(span2)
+
             b.className = "button tooltip"
             b.onclick = () => {
                 bonusTookSound.currentTime = 0
