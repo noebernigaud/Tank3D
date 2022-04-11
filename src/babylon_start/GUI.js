@@ -49,7 +49,9 @@ class Menu {
             exitPointerLoc()
             document.getElementById("main").style.display = "block"
         }
-        else this.hideMenu()
+        else {
+            this.hideMenu()
+        }
         if (this.inBonus)
             if (toShow) this.bonusPanel.style.display = "none"
             else this.bonusPanel.style.removeProperty("display")
@@ -72,12 +74,12 @@ class Menu {
     }
 
     prettyBG() {
-        let src = document.getElementById("src")
-        src.style.backgroundImage = `url('images/tank_bg.jpg')`;
+        // let src = document.getElementById("src")
+        // src.style.backgroundImage = `url('images/tank_bg.jpg')`;
         canvas.style.display = "none";
-        src.style.display = "block"
-        src.style.filter = "blur(0)"
-        document.getElementById("main").style.display = "block"
+        // src.style.display = "block"
+        // src.style.filter = "blur(0)"
+        document.getElementById("main").style.display = "initial"
     }
 
     setBackground() {
@@ -178,12 +180,14 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
-            e.style.display = "none"
-        })
-        if (toShow) {
-            if (this.inBonusus) this.bonusPanel.style.display = "initial"
+        if (!toShow) document.getElementById("gameBars").style.display = "none"
+        else {
+            if (this.inBonusus) {
+                this.bonusPanel.style.display = "initial"
+                document.getElementById("gameBars").style.display = "initial"
+            }
             else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
+            else document.getElementById("gameBars").style.display = "initial"
         }
     }
 

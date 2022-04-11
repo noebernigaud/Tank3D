@@ -192,6 +192,7 @@ class Char extends ObjectPos {
   destroyTank() {
     // explode(this.shape)
     this.stabilizeTank()
+    this.healtBar.disposeBar()
     this.moveSound.pause();
     charsDestroyed.push(this)
     var smok = createSmoke(this.shape, false, false, true)
@@ -250,6 +251,11 @@ class Char extends ObjectPos {
   }
 
 
+  dispose(forceDispose) {
+    super.dispose(forceDispose)
+    this.healtBar.disposeBar()
+  }
+
 }
 
 function lights() {
@@ -280,6 +286,4 @@ function lights() {
   // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
   // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
   // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
-
-
 }

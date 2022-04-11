@@ -170,6 +170,8 @@ function draw_level_map() {
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
+    document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
+
     setCurrentLevelDico()
     if (level == 0) {
         if (char1) char1.dispose(true);
