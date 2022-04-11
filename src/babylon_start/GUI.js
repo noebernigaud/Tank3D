@@ -120,7 +120,7 @@ class Menu {
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
                 this.clearBonus()
-                canvas.requestPointerLock()
+                pointerLock()
             }
             this.bonusPanel.appendChild(b);
         }

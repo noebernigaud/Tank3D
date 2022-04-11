@@ -16,16 +16,18 @@ class Char extends ObjectPos {
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
     this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
+    this.crossHair = undefined
 
     if (type.name == ObjectEnum.Player.name) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
-      camera1.radius = 5;
-      camera1.heightOffset = 2;
-      camera1.rotationOffset = 180;
+      camera1.radius = 5 //3;
+      camera1.heightOffset = 2//0;
+      camera1.rotationOffset = 180 //-98;
       camera1.cameraAcceleration = .1;
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
+      loadCrossHair(this, scene)
       // engine.runRenderLoop(() => scene.render())
     } else {
       this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
@@ -255,37 +257,31 @@ class Char extends ObjectPos {
     }
   }
 
+  setCrossHairPosition() {
+    let position = ShootAI.targetPlayer(char1, 1000, true, 100, true, this.crossHair);
+    if (position) {
+      this.crossHair.position = position
+    }
+    else
+      this.crossHair.position.y -= 200
+  }
+
 
 }
 
-function lights() {
-  var gui = new dat.GUI();
-  gui.domElement.style.marginTop = "100px";
-  gui.domElement.id = "datGUI";
-  var options = {
-    Emissive: 0.3,
-    Specular: 0.3,
-    Diffuse: 0.3,
-    Ambient: 0.3
-  }
+function loadCrossHair(obj, scene) {
+  var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
+  // crossHair.parent = char1.getTurretTank()
+  let position = ShootAI.targetPlayer(obj, 1000, false, 100000, true, crossHair);
+  // crossHair.parent = obj.shape
+  crossHair.position = position
+  console.log(position);
+  crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
 
-  gui.add(options, "Emissive", 0, 1).onChange(function (value) {
-    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
-  });
-  gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
-    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
-  });
-  gui.add(options, "Specular", 0, 1).onChange(function (value) {
-    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
-  });
-  gui.add(options, "Ambient", 0, 1).onChange(function (value) {
-    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
-  });
-
-  // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
-  // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
-  // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
-  // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
-
-
+  crossHair.material = new BABYLON.StandardMaterial("crossHair", scene);
+  crossHair.material.diffuseTexture = new BABYLON.Texture("images/gunaims.png", scene);
+  crossHair.material.diffuseTexture.hasAlpha = true;
+  crossHair.material.emissiveColor = BABYLON.Color3.White()
+  crossHair.isPickable = false;
+  obj.crossHair = crossHair;
 }

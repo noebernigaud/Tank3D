@@ -76,7 +76,7 @@ class Level {
       scene.menu.inNextLevel = false;
       document.getElementById('endLevelStat').style.display = 'none';
       engine.runRenderLoop(() => scene.render())
-      canvas.requestPointerLock()
+      pointerLock()
     }
     endLine.appendChild(endCell)
     tab.appendChild(endLine)

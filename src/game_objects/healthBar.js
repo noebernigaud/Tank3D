@@ -13,6 +13,7 @@ class Healthbar {
 
     var healthBarContainerMaterial = new BABYLON.StandardMaterial("hb2mat", scene);
     var healthBarContainer = BABYLON.MeshBuilder.CreatePlane("hb2", { width: this.barWidth, height: 0.1, subdivisions: 4 }, scene);
+    healthBarContainer.isPickable = false;
 
     healthBarContainerMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     healthBarContainerMaterial.emissiveColor = new BABYLON.Color4(0.08, 0.08, 0.08);
@@ -50,6 +51,7 @@ class Healthbar {
       let xPos = offset * this.barWidth / 2 - offset * (i * (partitionWidth + paddingBar) + partitionWidth / 2) + paddingBar;
       // console.log(xPos, xPos + paddingBar);
       var healthBarText = BABYLON.MeshBuilder.CreatePlane("hb3", { width: partitionWidth, height: 0.07, subdivisions: 4, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+      healthBarText.isPickable = false;
       healthBarText.position = new BABYLON.Vector3(xPos, 0, offset * 0.01);
       healthBarText.material = this.healthBarTextMaterial;
       healthBarText.parent = this.healthBarContainer

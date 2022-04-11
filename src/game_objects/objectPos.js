@@ -189,7 +189,7 @@ class ObjectPos extends BABYLON.Mesh {
           console.log(this.type.name, this);
           throw `Unknown object type (ObjectPos.dispose)`;
       }
-      this.physicsImpostor.dispose()
+      if (this.physicsImpostor) this.physicsImpostor.dispose()
       this.shape.dispose();
     }
   }

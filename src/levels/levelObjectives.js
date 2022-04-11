@@ -12,7 +12,7 @@ let levelObjectives = {
       `To pass the following game you have to collect all of the bonuses, be careful : 
       An enemy can pick a bonus and to get it back you must kill him`,
     goToNextLevel: (e) => {
-      console.log("get all bonus", bonuses.length)
+      // console.log("get all bonus", bonuses.length)
       return bonuses.length == 0
     }
   }

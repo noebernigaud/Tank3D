@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 4 / 20;
+    static diameter = 2 / 20;
     /**
      * 
      * @param {Char} char 
@@ -11,10 +11,7 @@ class Bullet extends ObjectPos {
     constructor(char, life = 2) {
         super(
             ObjectEnum.Bullet,
-            char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            // char.shape.position.y + char.getTurretTank().getDirection(BABYLON.Axis.Y).y * 4,
-            char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
+            f(char).x, f(char).y, f(char).z, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;

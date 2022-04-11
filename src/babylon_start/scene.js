@@ -98,9 +98,13 @@ class Scene {
           //réglage son de déplacement selon la distance
           playSoundWithDistanceEffect(c.moveSound, c.shape, false, false)
         })
+
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
+
+        char1.setCrossHairPosition()
+
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
 
         charsAI.forEach(c => {
