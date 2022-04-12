@@ -83,20 +83,20 @@ const level_map = [
             "-----------------------",
             "-----------------------",
             "--------------------R--",
-            "----WWWWWWWWwww--------",
+            "----t---t---t---t------",
+            "-----------------------",
+            "-----------R-----------",
             "-----------------------",
             "-----------------------",
             "-----------------------",
-            "-----------------------",
-            "-----------------------",
-            "--------wwwWWWWWWWW----",
+            "----t---t---t---t------",
             "-----------------------",
             "--P--------------------",
             "-----------------------",
         ],
         sol: "textures/ground.png",
         minHeightMap: -1,
-        lvlObjective: levelObjectives.killAllTank,
+        lvlObjective: levelObjectives.burnAllTrees,
     }),
     new Level({
         level: [
@@ -249,7 +249,7 @@ function draw_level_map() {
                     barrels.push(new Barrel(posX, posY))
                     break;
                 case 't':
-                    trees.push(new Tree(posX, posY))
+                    trees.push(new Tree(posX, posY, current_level_dico.lvlObjective == levelObjectives.burnAllTrees ? false : undefined))
                     break;
                 case 'r':
                     rocks.push(new Rock(posX, posY))

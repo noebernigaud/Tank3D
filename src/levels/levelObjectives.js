@@ -17,12 +17,12 @@ let levelObjectives = {
   },
   burnAllTrees: {
     description:
-      `The ennemies' plantation is their main supplie. We've equiped you with burning bullets,
-      so you can burn all trees on the Island to complete the stage`,
+      `The ennemies' plantation is their main supplie. These trees are particularly inflammable:
+      fire on all the trees on the Island to burn them and complete the stage`,
     goToNextLevel: (e) => {
-      return trees.forEach(tree => {
-        tree.isBurning == true
-      });
+      return trees.every(tree => (
+        tree.isBurning
+      ));
     }
   }
 }
