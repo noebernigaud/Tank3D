@@ -11,18 +11,28 @@
   color: white;
 }
 
-#healthBar {
-  height: 25px;
-  background-color: #070707d7;
-  width: 150px;
-  text-align: center;
-}
-
 #gameBars {
   position: absolute;
   width: 100%;
   height: 100%;
   bottom: 0;
+}
+
+#horBar * {
+  padding: 2pt;
+  color: white;
+  vertical-align: middle;
+  border-radius: 4pt;
+}
+
+#healthBar {
+  height: 25px;
+  background-color: #070707d7;
+  width: 150px;
+  text-align: center;
+  border: 1pt solid white;
+  padding: 1px;
+  border-radius: 4pt;
 }
 
 #horBar {
@@ -33,13 +43,11 @@
   padding: 5pt;
   right: 50%;
   transform: translateX(50%);
+  border: 1pt solid white;
+  padding: 1px;
+  border-radius: 4pt;
 }
 
-#horBar * {
-  padding: 2pt;
-  color: white;
-  vertical-align: middle;
-}
 
 .logo {
   height: 25pt;
