@@ -32,6 +32,16 @@ function createRay(origin, dir, length, affiche = false, disposeTime = 5, return
     return filter.length > 0 ? (returnPointInpact ? [filter[0].pickedPoint, filter[0].pickedMesh] : filter[0].pickedMesh) : undefined
 }
 
+function createRayPoint(origin, dir, length) {
+    let ray = new BABYLON.Ray(origin, dir, length);
+
+    let pickInfo = scene.pickWithRay(ray, (mesh) => {
+        return mesh;
+    });
+
+    return pickInfo.pickedPoint
+}
+
 function playSoundWithDistanceEffect(sound, mesh, pauseSound = true, play = true) {
     //son et ses réglages
     if (pauseSound) {

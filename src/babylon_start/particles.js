@@ -73,29 +73,29 @@ function bulletExplode(position, isExploding, isCanonFire) {
     return particleSystem;
 }
 
-function createSmoke(emitter, isRight = false, isMoving = false) {
+function createSmoke(emitter, isRight = false, isMoving = false, permanent = false) {
     const box = BABYLON.MeshBuilder.CreateBox("smokeTank", { size: 0.05 });
     box.parent = emitter
     box.position.z -= 0.95
-    box.position.y += 0.18
+    box.position.y += 0.1
     box.position.x += isRight ? 0.12 : -0.08
     box.isVisible = false
 
     // Create a particle system
-    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 500 : 8000);
+    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 2000 : 8000);
 
     // Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/smoke.png");
 
     // lifetime
     particleSystem.minLifeTime = isMoving ? 0.1 : 2;
-    particleSystem.maxLifeTime = isMoving ? 0.2 : 5;
+    particleSystem.maxLifeTime = isMoving ? 0.2 : 3;
 
     // Emit rate
-    particleSystem.emitRate = isMoving ? 300 : 200;
+    particleSystem.emitRate = isMoving ? 200 : 300;
 
     // Gravity
-    particleSystem.gravity = new BABYLON.Vector3(0.25, isMoving ? 8 : 4, 0);
+    particleSystem.gravity = new BABYLON.Vector3(0.25, isMoving ? 6 : 4, 0);
 
     // Size gradient
     if (isMoving) {
@@ -113,7 +113,7 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
     // Color gradient
 
     if (isMoving) {
-        particleSystem.addColorGradient(0, new BABYLON.Color4(0.4, 0.4, 0.4, 0), new BABYLON.Color4(0.6, 0.6, 0.6, 0.5));
+        particleSystem.addColorGradient(0, new BABYLON.Color4(0.1, 0.1, 0.1, 0), new BABYLON.Color4(0.2, 0.2, 0.2, 0.5));
         particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.2, 0.2, 0.2, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.1));
         particleSystem.updateSpeed = 0.005;
     }
@@ -122,6 +122,7 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
         particleSystem.addColorGradient(0.4, new BABYLON.Color4(0.1, 0.1, 0.1, 0.1), new BABYLON.Color4(0.4, 0.4, 0.4, 0.4));
         particleSystem.addColorGradient(0.7, new BABYLON.Color4(0.03, 0.03, 0.03, 0.2), new BABYLON.Color4(0.3, 0.3, 0.3, 0.4));
         particleSystem.addColorGradient(1.0, new BABYLON.Color4(0.0, 0.0, 0.0, 0), new BABYLON.Color4(0.03, 0.03, 0.03, 0));
+        particleSystem.updateSpeed = 0.01;
     }
 
     // Speed gradient
@@ -130,6 +131,7 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
     particleSystem.addVelocityGradient(0.7, 0.4, 0.5);
     particleSystem.addVelocityGradient(1, 0.1, 0.2);
 
+
     // Rotation
     particleSystem.minInitialRotation = 0;
     particleSystem.maxInitialRotation = Math.PI;
@@ -137,8 +139,13 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
     particleSystem.maxAngularSpeed = 1;
 
     // Size
-    particleSystem.minSize = isMoving ? 0.1 : 0.375;
-    particleSystem.maxSize = isMoving ? 0.2 : 0.625;
+    // particleSystem.minSize = isMoving ? 0.1 : 0.375;
+    // particleSystem.maxSize = isMoving ? 0.2 : 0.625;
+
+
+    particleSystem.addSizeGradient(0, isMoving ? 0.03 : 0.0375);
+    particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.625);
+    
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
@@ -148,11 +155,11 @@ function createSmoke(emitter, isRight = false, isMoving = false) {
 
     // Where the particles come from
     particleSystem.emitter = isMoving ? box : emitter; // the starting object
-    particleSystem.minEmitBox = new BABYLON.Vector3(-0.3, -0.3, -0.3).scale(isMoving ? 0.08 : 1);
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.3, 0.3, 0.3).scale(isMoving ? 0.08 : 1);
+    particleSystem.minEmitBox = new BABYLON.Vector3(-0.5, -0.5, -0.5).scale(isMoving ? 0.08 : 1);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0.5, 0.5, 0.5).scale(isMoving ? 0.08 : 1);
 
 
-    if (!isMoving) particleSystem.targetStopDuration = 12;
+    if (!isMoving && !permanent) particleSystem.targetStopDuration = 12;
     particleSystem.disposeOnStop = true;
 
     particleSystem.start();
@@ -184,7 +191,8 @@ function createDust(emitter) {
 
 
     // Color gradient
-    particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
+    if (biome == "Snow") particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0.2), new BABYLON.Color4(1, 1, 1, 0.2))
+    else particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
 
 
     // Rotation
@@ -218,32 +226,32 @@ function stopSmoke(particleSystem) {
     particleSystem.stop();
 }
 
-function createFire(emitter) {
-    BABYLON.ParticleHelper.CreateAsync("fire", scene).then((set) => {
-        set.systems.forEach(s => {
-            s.disposeOnStop = true;
+// function createFire(emitter) {
+//     BABYLON.ParticleHelper.CreateAsync("fire", scene).then((set) => {
+//         set.systems.forEach(s => {
+//             s.disposeOnStop = true;
 
-        });
-        for (var sys of set.systems) {
-            if (sys.name != "sparksEdge") {
-                sys.minSize = 0.5
-                sys.maxSize = 2
+//         });
+//         for (var sys of set.systems) {
+//             if (sys.name != "sparksEdge") {
+//                 sys.minSize = 0.5
+//                 sys.maxSize = 2
 
-            } else {
-                sys.minSize = 0.1
-                sys.maxSize = 0.5
-            }
-            sys.targetStopDuration = 20;
-            sys.minEmitBox = new BABYLON.Vector3(-0.1, -0.1, -0.1);
-            sys.maxEmitBox = new BABYLON.Vector3(0.1, 0.1, 0.1);
-            sys.emitter = emitter
+//             } else {
+//                 sys.minSize = 0.1
+//                 sys.maxSize = 0.5
+//             }
+//             sys.targetStopDuration = 20;
+//             sys.minEmitBox = new BABYLON.Vector3(-0.1, -0.1, -0.1);
+//             sys.maxEmitBox = new BABYLON.Vector3(0.1, 0.1, 0.1);
+//             sys.emitter = emitter
 
-        }
+//         }
 
-        set.start();
+//         set.start();
 
-    });
-}
+//     });
+// }
 
 function createBonusEffect(emitter) {
     const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
@@ -283,4 +291,94 @@ function createBonusEffect(emitter) {
     particleSystem.start();
 
     return particleSystem
+}
+
+function createFire(emitter) {
+    //Smoke
+    var smokeSystem = new BABYLON.ParticleSystem("particles", 1000, scene);
+    smokeSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    smokeSystem.minEmitBox = new BABYLON.Vector3(-0.5, 1, -0.5); // Starting all from
+    smokeSystem.maxEmitBox = new BABYLON.Vector3(0.5, 1, 0.5); // To...
+
+    smokeSystem.color1 = new BABYLON.Color4(0.02, 0.02, 0.02, .02);
+    smokeSystem.color2 = new BABYLON.Color4(0.02, 0.02, 0.02, .02);
+    smokeSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+    smokeSystem.minSize = 1;
+    smokeSystem.maxSize = 3;
+
+    smokeSystem.minLifeTime = 0.3;
+    smokeSystem.maxLifeTime = 1.5;
+
+    smokeSystem.emitRate = 350;
+
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    smokeSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    smokeSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+    smokeSystem.direction1 = new BABYLON.Vector3(-1.5, 8, -1.5);
+    smokeSystem.direction2 = new BABYLON.Vector3(1.5, 8, 1.5);
+
+    smokeSystem.minAngularSpeed = 0;
+    smokeSystem.maxAngularSpeed = Math.PI;
+
+    smokeSystem.minEmitPower = 0.5;
+    smokeSystem.maxEmitPower = 1.5;
+    smokeSystem.updateSpeed = 0.005;
+    smokeSystem.emitter = emitter
+
+    smokeSystem.start();
+
+
+
+    // Create a particle system
+    var fireSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+
+    //Texture of each particle
+    fireSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+
+    // Where the particles come from
+    fireSystem.minEmitBox = new BABYLON.Vector3(-0.25, 0, -0.25); // Starting all from
+    fireSystem.maxEmitBox = new BABYLON.Vector3(0.25, 0, 0.25); // To...
+
+    // Colors of all particles
+    fireSystem.color1 = new BABYLON.Color4(1, 0.5, 0, 1.0);
+    fireSystem.color2 = new BABYLON.Color4(1, 0.5, 0, 1.0);
+    fireSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+    // Size of each particle (random between...
+    fireSystem.minSize = 0.1;
+    fireSystem.maxSize = 0.5;
+
+    // Life time of each particle (random between...
+    fireSystem.minLifeTime = 0.2;
+    fireSystem.maxLifeTime = 0.4;
+
+    // Emission rate
+    fireSystem.emitRate = 600;
+
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    fireSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    // Set the gravity of all particles
+    fireSystem.gravity = new BABYLON.Vector3(0, 20, 0);
+
+    // Direction of each particle after it has been emitted
+    // fireSystem.direction1 = new BABYLON.Vector3(0, 4, 0);
+    // fireSystem.direction2 = new BABYLON.Vector3(0, 4, 0);
+
+    // Angular speed, in radians
+    fireSystem.minAngularSpeed = 0;
+    fireSystem.maxAngularSpeed = Math.PI;
+
+    // Speed
+    fireSystem.minEmitPower = 0.5;
+    fireSystem.maxEmitPower = 2;
+    fireSystem.updateSpeed = 0.005;
+
+    fireSystem.emitter = emitter
+
+    // Start the particle system
+    fireSystem.start();
 }

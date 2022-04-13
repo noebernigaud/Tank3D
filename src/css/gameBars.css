@@ -1,0 +1,60 @@
+#minimap {
+  position: absolute;
+  right: 0pt;
+  top: 0;
+  border-radius: 150pt;
+  border: 3px solid rgb(55, 55, 55);
+  background-image: url("../images/woodTexture.jpg");
+}
+
+#speed {
+  color: white;
+}
+
+#gameBars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+}
+
+#horBar * {
+  padding: 2pt;
+  color: white;
+  vertical-align: middle;
+  border-radius: 4pt;
+}
+
+#healthBar {
+  height: 25px;
+  background-color: #070707d7;
+  width: 150px;
+  text-align: center;
+  border: 1pt solid white;
+  padding: 1px;
+  border-radius: 4pt;
+}
+
+#horBar {
+  width: 80%;
+  bottom: 2px;
+  position: absolute;
+  background-color: #070707d7;
+  padding: 5pt;
+  right: 50%;
+  transform: translateX(50%);
+  border: 1pt solid white;
+  padding: 1px;
+  border-radius: 4pt;
+}
+
+
+.logo {
+  height: 25pt;
+}
+
+.logo.whiteBackground {
+  background: #ffffffbd;
+  border-radius: 25px;
+  padding: 3pt;
+}

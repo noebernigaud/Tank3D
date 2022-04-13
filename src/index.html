@@ -6,6 +6,7 @@
     <title>Tank 3D</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="css/gameBars.css">
     <link rel="stylesheet" href="css/levelStat.css">
 
     <script src="../lib/ammo.js"></script>
@@ -60,10 +61,29 @@
 
     <body>
         <canvas id="myCanvas"></canvas>
+
+        <div id="gameBars">
+            <canvas id="minimap"></canvas>
+            <table id="horBar">
+                <tr>
+                    <td>
+                        Level : <span id="level">1/10</span>
+                    </td>
+                    <td>
+                        <canvas id="healthBar"></canvas>
+                        <img src="images/life.png" alt="NoLifeImg" class="logo">
+                        <span id="healthPlayer"></span>
+                    </td>
+                    <td>
+                        Speed : <span id="speed">0 km/h</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <div id="src"></div>
         <div id="bonusPanel" class="divb" style="display: none;">
         </div>
-        <canvas id="minimap" class="hideOnMenu"></canvas>
         <div id="main" class="divb">
             <div id="play" class='button' onclick="scene.menu.show(false); canvas.requestPointerLock();"
                 onmouseenter="scene.menu.soundHover()">
@@ -80,12 +100,27 @@
         <div class="divb hideOnMenu" id="endLevelStat">
             <table id="tableStat"></table>
         </div>
-        <div id="speed" class="hideOnMenu">0 km/h</div>
+
         <div id="timer" style="display: none;"></div>
         <script src="babylon_start/scene.js">
         </script>
         <script>
+
+            window.onresize = function () {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                // document.getElementById("src").style.width = window.innerWidth + "px";
+                // document.getElementById("src").style.height = window.innerHeight + "px";
+
+                if (scene) scene.minimap.resize()
+                if (engine) engine.resize();
+            }
+            window.onresize()
+
+            // let m = new Menu()
             new Scene();
+            // hb = new Healthbar()
+            // hb.updatePartition()
         </script>
     </body>
 

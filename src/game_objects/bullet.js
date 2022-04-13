@@ -45,6 +45,12 @@ class Bullet extends ObjectPos {
         bullets.push(this)
 
         this.bulletReboundSound = new Audio('audio/Collision8-Bit.ogg');
+        this.setVolumebulletRebound = 0.3
+        this.bulletReboundSound.volume = this.setVolumebulletRebound
+
+        this.bulletexplosion = new Audio('audio/bulletExplosion3.mp3');
+        this.setVolumebulletexplosion = 0.3
+        this.bulletexplosion.volume = this.setVolumebulletexplosion;
 
         if (char1 == char) current_level_dico.addBulletFired()
     }
@@ -74,11 +80,13 @@ class Bullet extends ObjectPos {
                     if (b2) b2.destroy()
                     if (this.char == char1 && b2.destructable)
                         current_level_dico.addWallDestroyed()
-                }
-                else if (b2 = barrels.find(e => e.shape == e2.object)) {
+                } else if (b2 = barrels.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);
+                } else if (b2 = trees.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose()
+                    if (b2) b2.burnTree()
                 }
                 else this.dispose()
             }
@@ -95,13 +103,16 @@ class Bullet extends ObjectPos {
 
     dispose(forceDispose = false, explosion = false) {
         super.dispose(forceDispose)
-        if (this.life <= 0 || forceDispose) this.trail.dispose()
+        if (this.life <= 0 || forceDispose) {
+            this.trail.dispose()
+            this.bulletexplosion.volume = this.setVolumebulletexplosion;
+            playSoundWithDistanceEffect(this.bulletexplosion, this)
+        }
         if (forceDispose && !explosion) return;
         bulletExplode(this.position, this.life == 0).start();
         if (this.life > 0) {
-            this.bulletReboundSound.pause();
-            this.bulletReboundSound.currentTime = 0;
-            this.bulletReboundSound.play();
+            this.bulletReboundSound.volume = this.setVolumebulletRebound
+            playSoundWithDistanceEffect(this.bulletReboundSound, this)
         }
 
     }

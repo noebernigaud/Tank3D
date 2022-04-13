@@ -10,7 +10,7 @@ class Bonus extends ObjectPos {
      */
     constructor(posX, posY, isSpecial = false) {
         super(ObjectEnum.Bonus, -width / 2 + posX, Bonus.diameter / 2, -height / 2 + posY, 0, 0, 1);
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 10000, restitution: 0.5 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 50000, restitution: 0.5 });
         this.createCollider()
         this.bonusEffect = createBonusEffect(this.shape)
     }
@@ -21,7 +21,7 @@ class Bonus extends ObjectPos {
             let b1 = bonuses.find(e => e.shape == e1.object)
             if (e2.object == char1.shape) {
                 if (b1) {
-                    scene.menu.bonusChoice(this.randomBonus(3))
+                    scene.menu.bonusChoice(Bonus.randomBonus(3))
                     b1.dispose(true);
                     current_level_dico.addBonusObtained()
                 }
@@ -29,7 +29,7 @@ class Bonus extends ObjectPos {
         }
     }
 
-    randomBonus(num) {
+    static randomBonus(num) {
         var res = []
         var copy_bonusEnum = BonusEnum.bonusEnumList.slice()
         for (var i = 0; i < num; i++) {

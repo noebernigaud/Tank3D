@@ -50,22 +50,17 @@ class Char extends ObjectPos {
     this.dust = createDust(this.shape);
     this.healtBar = new Healthbar(this);
 
-    this.moveSound = new Audio('audio/electricFerry.wav');
+    this.moveSound = new Audio('audio/electricFerry.mp3');
     this.moveSound.volume = 0.4
     this.moveSound.loop = true
     this.moveSound.autoplay = true
-    this.bulletFiredSound = new Audio('audio/TankFire.wav');
+
+    this.bulletFiredSound = new Audio('audio/TankFire.mp3');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 
-  }
-
-  moveForeward(coeff) {
-    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
-  }
-
-  moveBackward(coeff) {
-    this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
+    this.charExploseSound = new Audio('audio/charExplosion.mp3');
+    this.charExploseSound.volume = 0.4
   }
 
   addBullet(time = Date.now()) {
@@ -107,19 +102,6 @@ class Char extends ObjectPos {
     }
   }
 
-  removeChar() {
-    let position = chars.indexOf(this);
-    this.shape.dispose();
-    chars.splice(position, 1);
-    explosionSound.play();
-    if (this === char1) {
-      stopgame();
-    } else {
-      position = charsAI.indexOf(this);
-      charsAI.splice(position, 1);
-    }
-  }
-
   rotateAxisY(angle) {
     if (this.life <= 0) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
@@ -158,7 +140,7 @@ class Char extends ObjectPos {
 
   moveTank(speed) {
 
-    if (this.life <= 0) return
+    if (this.isRenversed() || this.life <= 0) return
     if (this.physicsImpostor.friction != 0) {
       this.stabilizeTank(false)
     }
@@ -209,18 +191,22 @@ class Char extends ObjectPos {
     this.dust.stop();
   }
 
-  destroyTank(isDisabled) {
-    if (isDisabled) {
-      // explode(this.shape)
-      var smok = createSmoke(char1.shape)
-      playSmoke(smok)
-      createFire(char1.shape);
-      // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
-      // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
-      //console.log("Disposing");
-      //this.shape.dispose()
-    }
+  destroyTank() {
+    // explode(this.shape)
+    this.stabilizeTank()
+    this.healtBar.disposeBar()
+    this.moveSound.pause();
+    charsDestroyed.push(this)
+    var smok = createSmoke(this.shape, false, false, true)
+    playSmoke(smok)
+    createFire(this.shape);
+    playSoundWithDistanceEffect(this.charExploseSound, this, false)
+    // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
+    // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+    //console.log("Disposing");
+    //this.shape.dispose()
   }
+
 
   getTurretTank() {
     return this.shape.getChildMeshes()[0];
@@ -235,15 +221,23 @@ class Char extends ObjectPos {
   }
 
   movingSmoke(isMoving) {
-    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.1 : 0.005;
-    this.exhaustPipeRight.updateSpeed = isMoving ? 0.1 : 0.005;
+    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.01 : 0.005;
+    this.exhaustPipeRight.updateSpeed = isMoving ? 0.01 : 0.005;
     this.exhaustPipeLeft.maxLifeTime = isMoving ? 0.4 : 0.2;
     this.exhaustPipeRight.maxLifeTime = isMoving ? 0.4 : 0.2;
 
-    this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeLeft.emitRate = isMoving ? 500 : 300;
-    this.exhaustPipeRight.emitRate = isMoving ? 500 : 300;
+    // this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
+    // this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
+    this.exhaustPipeLeft.removeSizeGradient(0);
+    this.exhaustPipeLeft.removeSizeGradient(1);
+    this.exhaustPipeRight.removeSizeGradient(0);
+    this.exhaustPipeRight.removeSizeGradient(1);
+    this.exhaustPipeLeft.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeLeft.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeRight.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeRight.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeLeft.emitRate = isMoving ? 400 : 200;
+    this.exhaustPipeRight.emitRate = isMoving ? 400 : 200;
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
@@ -253,7 +247,8 @@ class Char extends ObjectPos {
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0
-      this.dispose(false)
+      this.life--
+      // this.dispose(false)
     }
   }
 
@@ -284,6 +279,42 @@ class Char extends ObjectPos {
       if (hl) hl.removeAllMeshes()
     }
   }
+
+  dispose(forceDispose) {
+    super.dispose(forceDispose)
+    this.healtBar.disposeBar()
+  }
+
+}
+
+function lights() {
+  var gui = new dat.GUI();
+  gui.domElement.style.marginTop = "100px";
+  gui.domElement.id = "datGUI";
+  var options = {
+    Emissive: 0.3,
+    Specular: 0.3,
+    Diffuse: 0.3,
+    Ambient: 0.3
+  }
+
+  gui.add(options, "Emissive", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Specular", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
+  });
+  gui.add(options, "Ambient", 0, 1).onChange(function (value) {
+    char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
+  });
+
+  // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+  // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+  // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
 
 
 

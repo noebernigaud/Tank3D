@@ -42,9 +42,9 @@ const level_map = [
                 "----t------------------------",
                 "-------------t---------------",
                 "-----------W--W--------------",
-                "--------P-----w------R-------",
+                "--------P-----w--------------",
                 "--------------w--------------",
-                "----r------W--W--------------",
+                "----r------W--W----------G---",
                 "-----------------t-----------",
                 "---------c-------------------",
                 "-----------------------------",
@@ -83,20 +83,20 @@ const level_map = [
             "-----------------------",
             "-----------------------",
             "--------------------R--",
-            "----WWWWWWWWwww--------",
+            "----t---t---t---t------",
+            "-----------------------",
+            "-----------R-----------",
             "-----------------------",
             "-----------------------",
             "-----------------------",
-            "-----------------------",
-            "-----------------------",
-            "--------wwwWWWWWWWW----",
+            "----t---t---t---t------",
             "-----------------------",
             "--P--------------------",
             "-----------------------",
         ],
         sol: "textures/ground.png",
         minHeightMap: -1,
-        lvlObjective: levelObjectives.killAllTank,
+        lvlObjective: levelObjectives.burnAllTrees,
     }),
     new Level({
         level: [
@@ -170,10 +170,12 @@ function draw_level_map() {
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
+    document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
+
     setCurrentLevelDico()
     if (level == 0) {
         if (char1) char1.dispose(true);
-        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 3 * speedMultUti, 800 * reloadMultUti, 40);
+        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
 
@@ -213,7 +215,7 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 3, 2000, 40);
+                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 2, 2000, 40);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
@@ -221,14 +223,14 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'B':
-                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 3, 10000, 20);
+                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 2, 10000, 20);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     char.applyStrategy()
                     break;
                 case 'G':
-                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 3, 4000, 10);
+                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 2, 4000, 10);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
@@ -247,7 +249,7 @@ function draw_level_map() {
                     barrels.push(new Barrel(posX, posY))
                     break;
                 case 't':
-                    trees.push(new Tree(posX, posY))
+                    trees.push(new Tree(posX, posY, current_level_dico.lvlObjective == levelObjectives.burnAllTrees ? false : undefined))
                     break;
                 case 'r':
                     rocks.push(new Rock(posX, posY))

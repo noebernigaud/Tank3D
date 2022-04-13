@@ -4,9 +4,19 @@ class Tree extends ObjectPos {
      * @param {number} x 
      * @param {number} y 
      */
-    constructor(x, y) {
+    constructor(x, y, isBurning = undefined) {
         super(randomTree(), -width / 2 + x, Barrel.height / 2, -height / 2 + y, 0, 0)
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
+        this.isBurning = isBurning
+    }
+
+    burnTree() {
+        if (this.isBurning == false) {
+            var smok = createSmoke(this.shape, false, false, true)
+            playSmoke(smok)
+            createFire(this.shape);
+            this.isBurning = true
+        }
     }
 }
 

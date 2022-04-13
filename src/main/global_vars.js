@@ -21,6 +21,9 @@ var charsAI;
 /** @type {[Char]} */
 var chars;
 
+/** @type {[Char]} */
+var charsDestroyed;
+
 /** @type {[Bonus]} */
 var bonuses;
 
