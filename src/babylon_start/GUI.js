@@ -190,15 +190,14 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) document.getElementById("gameBars").style.display = "none"
+        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
         else {
             if (this.inBonusus) {
                 this.bonusPanel.style.display = "initial"
-                document.getElementById("gameBars").style.display = "initial"
+                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
             }
             else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
-            else document.getElementById("gameBars").style.display = "initial"
+            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
         }
     }
-
 }
