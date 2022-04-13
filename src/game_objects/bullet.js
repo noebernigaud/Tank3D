@@ -51,7 +51,7 @@ class Bullet extends ObjectPos {
         this.setVolumebulletRebound = 0.3
         this.bulletReboundSound.volume = this.setVolumebulletRebound
 
-        this.bulletexplosion = new Audio('audio/bulletExplosion3.wav');
+        this.bulletexplosion = new Audio('audio/bulletExplosion3.mp3');
         this.setVolumebulletexplosion = 0.3
         this.bulletexplosion.volume = this.setVolumebulletexplosion;
 
