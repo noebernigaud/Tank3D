@@ -7,12 +7,15 @@ class MoveAI {
   static rotateTurret(tank) {
     var turret = tank.getTurretTank()
 
+    //char ennemi nous vise en x et z
     var turretDir = turret.getDirection(new BABYLON.Vector3(1, 1, 1));
     var currentAngle = Math.atan2(turretDir.z, turretDir.x);
     var targetDir = char1.shape.position.subtract(tank.shape.position);
     var targetAngle = Math.atan2(targetDir.z, targetDir.x);
-    tank.rotateTurretAxisY(currentAngle - targetAngle)
-    tank.rotateTurretAxisY(Math.PI / 4)
+    var rota = ((currentAngle - targetAngle) + Math.PI / 4)
+    if (rota > Math.PI) rota -= 2 * Math.PI
+    if (rota > 0) tank.rotateTurretAxisY(Math.min(0.05, rota))
+    if (rota < 0) tank.rotateTurretAxisY(Math.max(-0.05, rota))
 
     //char ennemi nous vise en hauteur:
     var currentAngleY = turret.getDirection(BABYLON.Axis.Z).y;
@@ -28,8 +31,8 @@ class MoveAI {
     var currentAngle = Math.atan2(turretDir.z, turretDir.x);
     var targetDir = char1.shape.position.subtract(tank.shape.position);
     var targetAngle = Math.atan2(targetDir.z, targetDir.x);
-    tank.rotate(BABYLON.Axis.Y, currentAngle - targetAngle);
-    tank.rotate(BABYLON.Axis.Y, Math.PI / 4);
+    tank.rotate(BABYLON.Axis.Y, currentAngle - targetAngle + Math.PI / 4);
+    // tank.rotate(BABYLON.Axis.Y, Math.PI / 4);
   }
 
   /**
