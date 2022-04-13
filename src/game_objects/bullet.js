@@ -11,7 +11,7 @@ class Bullet extends ObjectPos {
     constructor(char, life = 2) {
         super(
             ObjectEnum.Bullet,
-            f(char).x, f(char).y, f(char).z, char.bulletSpeed, 0, char.bulletLife);
+            getCannonPoint(char).x, getCannonPoint(char).y, getCannonPoint(char).z, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;

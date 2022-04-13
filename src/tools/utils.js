@@ -20,7 +20,7 @@ function createRay(origin, dir, length, affiche = false, disposeTime = 5, return
 
     if (affiche) {
         rayHelper = new BABYLON.RayHelper(ray);
-        rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
+        rayHelper.show(scene, new BABYLON.Color4(1, 0, 0, 0.5));
         setTimeout(() => {
             rayHelper.dispose(ray);
         }, disposeTime);

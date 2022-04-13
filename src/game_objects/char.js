@@ -258,9 +258,14 @@ class Char extends ObjectPos {
   }
 
   setCrossHairPosition() {
-    let laserRes = ShootAI.targetPlayer(char1, 1000, true, 100, true, this.crossHair);
+    let laserCoolDown = 1;
+    let laserRes = ShootAI.targetPlayer(char1, 1000, false, laserCoolDown, true, this.crossHair);
     if (laserRes) {
       let [position, hitMesh] = laserRes
+      let cannonPoint = getCannonPoint(this)
+
+      let distanceFromTank = Math.sqrt((position.x - cannonPoint.x) ** 2 + (position.y - cannonPoint.y) ** 2 + (position.z - cannonPoint.z) ** 2) * 4
+      ShootAI.targetPlayer(char1, distanceFromTank, true, laserCoolDown, true, this.crossHair);
       // crossHair.parent = obj.shape
       let char;
 
@@ -273,10 +278,13 @@ class Char extends ObjectPos {
       this.crossHair.position = position
     }
     else {
+      ShootAI.targetPlayer(char1, 1000, true, laserCoolDown, true, this.crossHair);
+
       this.crossHair.position.y -= 200
       if (hl) hl.removeAllMeshes()
     }
   }
+
 
 
 }
