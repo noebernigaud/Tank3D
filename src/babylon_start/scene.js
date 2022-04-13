@@ -104,7 +104,6 @@ class Scene {
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
 
-        char1.setCrossHairPosition()
 
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
 
@@ -135,6 +134,8 @@ class Scene {
             // startTimer()
           }
         }
+
+        else char1.setCrossHairPosition()
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
       }
