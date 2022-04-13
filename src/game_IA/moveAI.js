@@ -15,16 +15,12 @@ class MoveAI {
     tank.rotateTurretAxisY(Math.PI / 4)
 
     //char ennemi nous vise en hauteur:
-    // var currentAngleY = turret.rotationQuaternion.toEulerAngles().x;
-    // targetDir = char1.shape.position.subtract(tank.shape.position);
-    // var targetAngleY = Math.atan2(targetDir.x, targetDir.y);
-    // console.log("currentAngleY :", currentAngleY);
-    // console.log("targetAngleY :", targetAngleY);
-    // console.log(currentAngleY - targetAngleY);
-    // // tank.rotateTurretUpDown((currentAngleY >= targetAngleY), Math.min(0.04, Math.abs(currentAngleY - targetAngleY)))
-    // if (Math.abs(currentAngleY - targetAngleY) > 0.01 && (currentAngleY - targetAngleY) < 3.13) {
-    //   tank.rotateTurretUpDown((currentAngleY <= targetAngleY), 0.01)
-    // }
+    var currentAngleY = turret.getDirection(BABYLON.Axis.Z).y;
+    targetDir = BABYLON.Vector3.Normalize(char1.shape.position.subtract(tank.shape.position));
+    let dotVec = BABYLON.Vector3.Dot(new BABYLON.Vector3(0, -1, 0), targetDir);
+    let targetAngleY = Math.acos(dotVec) - Math.PI / 2;
+    console.log("targetAngleY :", targetAngleY);
+    tank.rotateTurretUpDown((currentAngleY <= targetAngleY), 1)
   }
 
   static rotateTankBody(tank) {

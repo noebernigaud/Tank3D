@@ -187,4 +187,8 @@ class Menu {
         }
     }
 
+    isInMenu() {
+        return this.isShown || this.inOtherMenu()
+    }
+
 }

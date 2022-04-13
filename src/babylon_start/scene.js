@@ -135,7 +135,6 @@ class Scene {
             // startTimer()
           }
         }
-        //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
       }
     }
