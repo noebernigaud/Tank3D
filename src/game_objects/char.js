@@ -253,6 +253,7 @@ class Char extends ObjectPos {
   }
 
   setCrossHairPosition() {
+    if (!this.crossHair) return
     let laserCoolDown = 1;
     let laserRes = ShootAI.targetPlayer(char1, 1000, false, laserCoolDown, true, this.crossHair);
     if (laserRes) {
@@ -265,17 +266,17 @@ class Char extends ObjectPos {
       let char;
 
       if (char = chars.find(e => e.shape == hitMesh)) {
-        highlightTank(char.shape, true)
+        highlightTank(char, true)
 
       } else {
         if (hl) hl.removeAllMeshes()
       }
-      this.crossHair.position = position
+      if (this.crossHair.position) this.crossHair.position = position
     }
     else {
       ShootAI.targetPlayer(char1, 1000, true, laserCoolDown, true, this.crossHair);
 
-      this.crossHair.position.y -= 200
+      if (this.crossHair.position) this.crossHair.position.y -= 200
       if (hl) hl.removeAllMeshes()
     }
   }
@@ -283,6 +284,7 @@ class Char extends ObjectPos {
   dispose(forceDispose) {
     super.dispose(forceDispose)
     this.healtBar.disposeBar()
+    if (this.crossHair) this.crossHair.dispose()
   }
 
 }
@@ -319,10 +321,15 @@ function lights() {
 
 
 }
-
+/**
+ * 
+ * @param {Char} tank 
+ * @param {boolean} toHighlight 
+ */
 function highlightTank(tank, toHighlight) {
-  if (toHighlight && !hl.hasMesh(tank.getChildMeshes()[0])) {
-    tank.getChildMeshes().forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
+  if (toHighlight && !hl.hasMesh(tank.shape.getChildMeshes()[0])) {
+    tank.shape.getChildMeshes().filter(m =>
+      !((m == tank.healtBar.healthBarContainer) || (tank.healtBar.healthBarContainer.getChildMeshes().includes(m)))).forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
   }
 }
 
@@ -330,11 +337,6 @@ function highlightTank(tank, toHighlight) {
 function loadCrossHair(obj, scene) {
   var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
 
-  // crossHair.parent = char1.getTurretTank()
-  let position = ShootAI.targetPlayer(obj, 1000, false, 100000, true, crossHair);
-  // crossHair.parent = obj.shape
-  crossHair.position = position
-  console.log(position);
   crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
 
   crossHair.material = new BABYLON.StandardMaterial("crossHair", scene);

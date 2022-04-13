@@ -111,7 +111,6 @@ class Healthbar {
 
   disposeBar() {
     if (!this.isPlayer() && !this.destroyed) {
-      console.log("Here");
       this.healthBarContainerMaterial.dispose()
       this.healthBarContainer.dispose()
       this.destroyed = true;

@@ -204,12 +204,12 @@ function init() {
         canvas.webkitPointerLockElement;
 
     //turret direction is responding to cursor movements
-    // window.addEventListener("mousemove", (evt) => {
-    //     if (evt.movementX > 0) char1.rotateTurretAxisY(Math.sqrt(evt.movementX) / 200)
-    //     else if (evt.movementX < 0) char1.rotateTurretAxisY(- (Math.sqrt(Math.abs(evt.movementX)) / 200))
-    //     if (evt.movementY > 0) char1.rotateTurretUpDown(false, Math.min(Math.sqrt(evt.movementY), 4))
-    //     else if (evt.movementY < 0) char1.rotateTurretUpDown(true, Math.min(Math.sqrt(Math.abs(evt.movementY)), 4))
-    // });
+    window.addEventListener("mousemove", (evt) => {
+        if (evt.movementX > 0) char1.rotateTurretAxisY(Math.sqrt(evt.movementX) / 200)
+        else if (evt.movementX < 0) char1.rotateTurretAxisY(- (Math.sqrt(Math.abs(evt.movementX)) / 200))
+        if (evt.movementY > 0) char1.rotateTurretUpDown(false, Math.min(Math.sqrt(evt.movementY), 4))
+        else if (evt.movementY < 0) char1.rotateTurretUpDown(true, Math.min(Math.sqrt(Math.abs(evt.movementY)), 4))
+    });
 
     // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
@@ -230,6 +230,7 @@ function init() {
 
 
     function lockChangeAlert() {
+        console.log("entering in lockChange");
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
             if (!scene.menu.inOtherMenu()) {
