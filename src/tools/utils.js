@@ -29,7 +29,7 @@ function createRay(origin, dir, length, affiche = false, disposeTime = 5, return
     filter = (pickInfo.filter(e => e != rayHelper && e != exclude))
 
     // if (exclude) console.log(filter.length > 0 ? (returnPointInpact ? filter[0].pickedPoint : filter[0].pickedMesh) : undefined);
-    return filter.length > 0 ? (returnPointInpact ? filter[0].pickedPoint : filter[0].pickedMesh) : undefined
+    return filter.length > 0 ? (returnPointInpact ? [filter[0].pickedPoint, filter[0].pickedMesh] : filter[0].pickedMesh) : undefined
 }
 
 function playSoundWithDistanceEffect(sound, mesh, pauseSound = true, play = true) {

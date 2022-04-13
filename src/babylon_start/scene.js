@@ -44,9 +44,6 @@ class Scene {
     this.setCamera()
     setCurrentLevelDico()
 
-
-
-
     ObjectEnum.initiate_all_models()
     // this.setCamera()
     // this.engine.runRenderLoop(() =>
@@ -61,8 +58,12 @@ class Scene {
     scene = new BABYLON.Scene(this.engine);
     // engine.runRenderLoop(() => scene.render())
 
+    hl = new BABYLON.HighlightLayer("hl", scene);
+
+    hl.blurHorizontalSize = hl.blurVerticalSize = 0.3;
 
     scene.beforeRender = () => {
+
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
@@ -176,11 +177,12 @@ class Scene {
     // ground.checkCollisions = true;
     // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
     const groundOptions = {
-      width: width + cell_size,
-      height: height + cell_size,
+      width: width * 1.5 + cell_size,
+      height: height * 1.5 + cell_size,
       subdivisions: 80,
       minHeight: current_level_dico.minHeightMap,
       maxHeight: 0,
+
       onReady: () => onGroundCreated(this),
     };
     //scene is optional and defaults to the current scene

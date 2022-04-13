@@ -69,7 +69,7 @@ var impostorCharList = [];
 const BIOMES = ["Earth", "Sand", "Snow"]
 var biome = BIOMES[0];
 
-
+var hl;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';

@@ -258,19 +258,39 @@ class Char extends ObjectPos {
   }
 
   setCrossHairPosition() {
-    let position = ShootAI.targetPlayer(char1, 1000, true, 100, true, this.crossHair);
-    if (position) {
+    let laserRes = ShootAI.targetPlayer(char1, 1000, true, 100, true, this.crossHair);
+    if (laserRes) {
+      let [position, hitMesh] = laserRes
+      // crossHair.parent = obj.shape
+      let char;
+
+      if (char = chars.find(e => e.shape == hitMesh)) {
+        highlightTank(char.shape, true)
+
+      } else {
+        if (hl) hl.removeAllMeshes()
+      }
       this.crossHair.position = position
     }
-    else
+    else {
       this.crossHair.position.y -= 200
+      if (hl) hl.removeAllMeshes()
+    }
   }
 
 
 }
 
+function highlightTank(tank, toHighlight) {
+  if (toHighlight && !hl.hasMesh(tank.getChildMeshes()[0])) {
+    tank.getChildMeshes().forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
+  }
+}
+
+/** @param {Char} obj */
 function loadCrossHair(obj, scene) {
   var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
+
   // crossHair.parent = char1.getTurretTank()
   let position = ShootAI.targetPlayer(obj, 1000, false, 100000, true, crossHair);
   // crossHair.parent = obj.shape
