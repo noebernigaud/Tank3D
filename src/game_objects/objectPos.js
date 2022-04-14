@@ -46,6 +46,7 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.DesertRock.name: { shape = ObjectEnum.DesertRock.container.clone(); break; }
       case ObjectEnum.Tumbleweed.name: { shape = ObjectEnum.Tumbleweed.container.clone(); break; }
       case ObjectEnum.SnowyTree.name: { shape = ObjectEnum.SnowyTree.container.clone(); break; }
+      case ObjectEnum.SnowyFir.name: { shape = ObjectEnum.SnowyFir.container.clone(); break; }
       case ObjectEnum.SnowyRock.name: { shape = ObjectEnum.SnowyRock.container.clone(); break; }
       case ObjectEnum.SnowyFence.name: { shape = ObjectEnum.Cactus2.SnowyFence.clone(); break; }
       case ObjectEnum.SnowyHut.name: { shape = ObjectEnum.SnowyHut.container.clone(); break; }
@@ -147,6 +148,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Cactus3.name:
         case ObjectEnum.Tumbleweed.name:
         case ObjectEnum.SnowyTree.name: { remove(trees, this); break }
+        case ObjectEnum.SnowyFir.name: { remove(trees, this); break }
         case ObjectEnum.SnowyFence.name:
         case ObjectEnum.SnowyHut.name: { remove(others, this); break; }
         default:

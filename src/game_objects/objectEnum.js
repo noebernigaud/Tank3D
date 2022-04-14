@@ -21,7 +21,7 @@ class ObjectEnum {
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5, 0.5)
-  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 1, 0.8, 1, 0.8)
+  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.5, 0.8, 1, 0.8)
   static PalmTree2 = new ObjectEnum("merged_palm_tree", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.02, 0.8, 1, 0.8)
 
@@ -34,6 +34,7 @@ class ObjectEnum {
 
   //Snowy Biome items
   static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.025, 0.8, 1, 0.8)
+  static SnowyFir = new ObjectEnum("snowy_fir", "snowy_fir", 0.5, 0.8, 1, 0.8)
   static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.15, 0.4, 0.4, 0.4)
   static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.015, 0.4, 0.4, 0.4)
   static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 0.01, 3, 2, 2)
@@ -74,7 +75,7 @@ class ObjectEnum {
       this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
     } else if (model == "tumbleweed") {
       this.container = BABYLON.MeshBuilder.CreateSphere("container", { diameter: 0.50 }, scene);
-    } else if (model == "cactus1" || model == "snowy_tree" || model == "merged_palm_tree" || model == "coconut_tree") {
+    } else if (model == "cactus1" || model == "snowy_tree" || model == "snowy_fir" || model == "merged_palm_tree" || model == "coconut_tree") {
       this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
     }
     else {
@@ -97,7 +98,7 @@ class ObjectEnum {
     var list_obj = [
       this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
       this.Rock, this.PalmTree1, this.PalmTree2, this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
-      this.Tumbleweed, this.SnowyTree, this.SnowyRock, this.SnowyFence, this.SnowyHut
+      this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
     this.remainingLoad = list_obj.length + 3
     list_obj.forEach(e => e.create_model())

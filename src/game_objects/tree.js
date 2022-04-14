@@ -8,8 +8,8 @@ class Tree extends ObjectPos {
         let tree = randomTree()
         super(tree, -width / 2 + x, Barrel.height / 2, -height / 2 + y, 0, 0)
         this.physicsImpostor = tree == ObjectEnum.Tumbleweed ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1000, restitution: 0.2 }) :
-            (tree == ObjectEnum.Cactus1 || tree == ObjectEnum.SnowyTree || tree == ObjectEnum.PalmTree2 || tree == ObjectEnum.PalmTree3) ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.CylinderImpostor, { mass: 30000, restitution: 0.2 }) :
-                new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
+            (tree == ObjectEnum.Cactus1 || tree == ObjectEnum.SnowyTree || tree == ObjectEnum.SnowyFir || tree == ObjectEnum.PalmTree2 || tree == ObjectEnum.PalmTree3) ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.CylinderImpostor, { mass: 30000, restitution: 0.2 }) :
+                new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 40000, restitution: 0.2 })
         this.isBurning = isBurning
     }
 
@@ -24,9 +24,8 @@ class Tree extends ObjectPos {
 }
 
 function randomTree() {
-    if (biome == "Snow") return ObjectEnum.SnowyTree;
+    if (biome == "Snow") return Math.random() >= 0.50 ? ObjectEnum.SnowyTree : ObjectEnum.SnowyFir;
     let rng = Math.floor(Math.random() * 3);
-    let rng2 = Math.random()
     switch (rng) {
         case 0: return biome == "Earth" ? ObjectEnum.PalmTree1 : ObjectEnum.Cactus1;
         case 1: return biome == "Earth" ? ObjectEnum.PalmTree2 : ObjectEnum.Cactus2;
