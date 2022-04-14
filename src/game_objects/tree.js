@@ -5,8 +5,10 @@ class Tree extends ObjectPos {
      * @param {number} y 
      */
     constructor(x, y, isBurning = undefined) {
-        super(randomTree(), -width / 2 + x, Barrel.height / 2, -height / 2 + y, 0, 0)
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
+        let tree = randomTree()
+        super(tree, -width / 2 + x, Barrel.height / 2, -height / 2 + y, 0, 0)
+        this.physicsImpostor = tree == ObjectEnum.Tumbleweed ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1000, restitution: 0.2 }) :
+            new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
         this.isBurning = isBurning
     }
 
