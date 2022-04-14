@@ -2,19 +2,19 @@ class ObjectEnum {
   // Create new instances of the same class as static attributes
 
   //Element of decor
-  static Barrel = new ObjectEnum("barrel", "barrel", 15 / 40, 24 / 40, 15 / 40)
+  static Barrel = new ObjectEnum("barrel", "barrel", 0.375, 0.6, 0.375)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
 
   //Player
-  static Player = new ObjectEnum("player", "modern_tank", 38 / 40, 25 / 40, 70 / 40)
+  static Player = new ObjectEnum("player", "modern_tank", 0.95, 0.625, 1.75)
   static Bonus = new ObjectEnum("bonus", "box", 0.4, 0.4, 0.4)
   static Bullet = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
-  static CharRed = new ObjectEnum("redTank", "mini_tank", 25 / 40, 25 / 40, 50 / 40)
-  static CharBlue = new ObjectEnum("blueTank", "battle_tank", 38 / 40, 25 / 40, 70 / 40)
-  static CharGreen = new ObjectEnum("greenTank", "tiger_tank", 38 / 40, 25 / 40, 70 / 40)
+  static CharRed = new ObjectEnum("redTank", "mini_tank", 0.625, 0.625, 1.25)
+  static CharBlue = new ObjectEnum("blueTank", "battle_tank", 0.95, 0.625, 1.75)
+  static CharGreen = new ObjectEnum("greenTank", "tiger_tank", 0.95, 0.625, 1.75)
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5)
