@@ -24,7 +24,6 @@ const level_map = [
                 "-----------------t-----------",
                 "-t-------r----------------t--",
             ],
-        sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
         lvlObjective: levelObjectives.getAllBonuses,
         biome: "Earth"
@@ -46,7 +45,6 @@ const level_map = [
                 "----------t------------",
                 "--t----------------t---",
             ],
-        sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
         lvlObjective: levelObjectives.killAllTank,
         biome: "Sand"
@@ -67,7 +65,6 @@ const level_map = [
             "--P--------------------",
             "-----------------------",
         ],
-        sol: "textures/ground.png",
         minHeightMap: -1,
         lvlObjective: levelObjectives.burnAllTrees,
         biome: "Snow"
@@ -88,7 +85,6 @@ const level_map = [
             "----------h----h-------",
             "----------h----h-------",
         ],
-        sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
         lvlObjective: levelObjectives.killAllTank,
         biome: "Snow"
@@ -146,30 +142,11 @@ function draw_level_map() {
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
 
-
     document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
 
     setCurrentLevelDico()
 
-    biome = current_level_dico.biome;
-    listGrounds.forEach(g => {
-        g.position.y = -10
-        g.receiveShadows = false
-        g.isVisible = false
-        g.checkCollision = false
-        if (g.physicsImpostor) g.physicsImpostor.dispose()
-    })
-    let currentGround = listGrounds[BIOMES.indexOf(biome)]
-    currentGround.position.y = 0
-    currentGround.receiveShadows = true
-    currentGround.isVisible = true
-    currentGround.checkCollision = true
-    currentGround.physicsImpostor = new BABYLON.PhysicsImpostor(
-        currentGround,
-        BABYLON.PhysicsImpostor.HeightmapImpostor,
-        { mass: 0 },
-        scene
-    )
+    setCurrentBiome()
 
     if (level == 0) {
         if (char1) char1.dispose(true);
@@ -279,4 +256,26 @@ function setCurrentLevelDico() {
         height = cell_x_number * cell_size;
         width = cell_y_number * cell_size;
     }
+}
+
+function setCurrentBiome() {
+    biome = current_level_dico.biome;
+    listGrounds.forEach(g => {
+        g.position.y = -10
+        g.receiveShadows = false
+        g.isVisible = false
+        g.checkCollision = false
+        if (g.physicsImpostor) g.physicsImpostor.dispose()
+    })
+    let currentGround = listGrounds[BIOMES.indexOf(biome)]
+    currentGround.position.y = 0
+    currentGround.receiveShadows = true
+    currentGround.isVisible = true
+    currentGround.checkCollision = true
+    currentGround.physicsImpostor = new BABYLON.PhysicsImpostor(
+        currentGround,
+        BABYLON.PhysicsImpostor.HeightmapImpostor,
+        { mass: 0 },
+        scene
+    )
 }

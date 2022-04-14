@@ -165,58 +165,44 @@ class Scene {
   }
 
   setGround() {
-    const groundOptions = {
-      width: width * 1.5 + cell_size,
-      height: height * 1.5 + cell_size,
-      subdivisions: 80,
-      minHeight: current_level_dico.minHeightMap,
-      maxHeight: 0,
+    // const groundOptions = {
+    //   width: width * 1.5 + cell_size,
+    //   height: height * 1.5 + cell_size,
+    //   subdivisions: 80,
+    //   minHeight: current_level_dico.minHeightMap,
+    //   maxHeight: 0,
 
-      onReady: () => onGroundCreated(this),
-    };
+    //   onReady: () => onGroundCreated(this),
+    // };
     //scene is optional and defaults to the current scene
 
-
-    listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
-      "gdhm",
-      `textures/earthy_ground.png`,
-      {
+    let groundOptions = (name, index) => {
+      return {
         width: width * 1.5 + cell_size,
         height: height * 1.5 + cell_size,
         subdivisions: 80,
         minHeight: current_level_dico.minHeightMap,
         maxHeight: 0,
 
-        onReady: () => onGroundCreated(this, "earthy", 0),
-      },
+        onReady: () => onGroundCreated(this, name, index),
+      }
+    }
+    listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      `textures/earthy_ground.png`,
+      groundOptions("earthy", 0),
       scene
     ));
     listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
       `textures/sandy_ground.png`,
-      {
-        width: width * 1.5 + cell_size,
-        height: height * 1.5 + cell_size,
-        subdivisions: 80,
-        minHeight: current_level_dico.minHeightMap,
-        maxHeight: 0,
-
-        onReady: () => onGroundCreated(this, "sandy", 1),
-      },
+      groundOptions("sandy", 1),
       scene
     ));
     listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
       `textures/snowy_ground.png`,
-      {
-        width: width * 1.5 + cell_size,
-        height: height * 1.5 + cell_size,
-        subdivisions: 80,
-        minHeight: current_level_dico.minHeightMap,
-        maxHeight: 0,
-
-        onReady: () => onGroundCreated(this, "snowy", 2),
-      },
+      groundOptions("snowy", 2),
       scene
     ));
 

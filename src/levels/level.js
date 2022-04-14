@@ -9,7 +9,6 @@ class Level {
 
   constructor(levelInfo) {
     this.level = levelInfo.level;
-    this.sol = levelInfo.sol;
     this.minHeightMap = levelInfo.minHeightMap;
     this.lvlObjective = levelInfo.lvlObjective;
     this.biome = levelInfo.biome;
