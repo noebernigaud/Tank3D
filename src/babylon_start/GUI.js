@@ -174,6 +174,7 @@ class Menu {
         char1.dispose(true)
         this.clearBonus()
         remove_all_objects()
+        startgame(level)
     }
 
     clearBonus() {

@@ -121,7 +121,6 @@ class ObjectPos extends BABYLON.Mesh {
   }
 
   dispose(forceDispose) {
-    console.log("dispose was called for ", this.type.name);
     this.life--
     if (forceDispose || this.life <= 0) {
 

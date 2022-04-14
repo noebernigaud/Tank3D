@@ -15,6 +15,7 @@ class guaranteedAI {
 
     applyStrategy() {
         if (scene.menu.isInMenu()) return
+        console.log("entering AI")
         var dirZ = this.tank.shape.getDirection(BABYLON.Axis.Z);
         var dirX = this.tank.shape.getDirection(BABYLON.Axis.X);
 

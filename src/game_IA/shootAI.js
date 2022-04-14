@@ -9,7 +9,7 @@ class ShootAI {
      * @param {Char} tank 
      * @returns {BABYLON.Mesh} the mesh targeted
      */
-    static targetPlayer(tank, length = 1000, affiche = false, temps = 1000, pickedPoint = false, exclude = undefined) {
+    static targetPlayer(tank, length = 1000, affiche = true, temps = 1000, pickedPoint = false, exclude = undefined) {
         let origin = getCannonPoint(tank)
         let dir = tank.getTurretTank().getDirection(BABYLON.Axis.Z)
         return createRay(
