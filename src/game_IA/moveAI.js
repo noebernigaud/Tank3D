@@ -22,7 +22,9 @@ class MoveAI {
     targetDir = BABYLON.Vector3.Normalize(char1.shape.position.subtract(tank.shape.position));
     let dotVec = BABYLON.Vector3.Dot(new BABYLON.Vector3(0, -1, 0), targetDir);
     let targetAngleY = Math.acos(dotVec) - Math.PI / 2;
+    // console.log("currentAngleY :", currentAngleY);
     // console.log("targetAngleY :", targetAngleY);
+    // console.log(currentAngleY <= targetAngleY);
     tank.rotateTurretUpDown((currentAngleY <= targetAngleY), 1)
   }
 

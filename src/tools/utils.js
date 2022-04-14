@@ -11,10 +11,12 @@ function getMousePos(canvas, evt) {
     };
 }
 let filter;
-function createRay(origin, dir, length, affiche = false, disposeTime = 5, returnPointInpact = false, exclude = undefined) {
+function createRay(origin, dir, length, affiche = false, disposeTime = 5, returnPointInpact = false, exclude = undefined, canPickInvisible = false) {
     let ray = new BABYLON.Ray(origin, dir, length);
 
-    let pickInfo = scene.multiPickWithRay(ray);
+    let pickInfo
+    if (canPickInvisible) pickInfo = scene.multiPickWithRay(ray, (m) => { return m.isPickable });
+    else pickInfo = scene.multiPickWithRay(ray);
 
     let rayHelper;
 

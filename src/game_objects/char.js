@@ -122,14 +122,20 @@ class Char extends ObjectPos {
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
     var quaternion = turret.rotationQuaternion.toEulerAngles().x
-    if (quaternion > -0.12 && isUp) {
+    if (quaternion > -0.15 && isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret trying to go UP");
+      // console.log("turret going UP");
     }
-    if (quaternion < 0.04 && !isUp) {
+    if (quaternion < 0.06 && !isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret trying to go DOWN");
+      // console.log("turret going DOWN");
     }
+    // if (quaternion <= -0.15 && isUp) {
+    //   console.log("turret is already at MAX UP");
+    // }
+    // if (quaternion >= 0.06 && !isUp) {
+    //   console.log("turret is already at MAX DOWN");
+    // }
   }
 
 
