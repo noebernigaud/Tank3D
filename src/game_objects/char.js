@@ -16,16 +16,18 @@ class Char extends ObjectPos {
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
     this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
+    this.crossHair = undefined
 
     if (type.name == ObjectEnum.Player.name) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
-      camera1.radius = 5;
-      camera1.heightOffset = 2;
-      camera1.rotationOffset = 180;
+      camera1.radius = 5 //3;
+      camera1.heightOffset = 2//0;
+      camera1.rotationOffset = 180 //-98;
       camera1.cameraAcceleration = .1;
       camera1.maxCameraSpeed = 10;
       camera.dispose();
       camera = camera1;
+      loadCrossHair(this, scene)
       // engine.runRenderLoop(() => scene.render())
     } else {
       this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
@@ -49,21 +51,17 @@ class Char extends ObjectPos {
     this.healtBar = new Healthbar(this);
 
     this.moveSound = new Audio('audio/electricFerry.mp3');
-    this.moveSound.volume = 0.4
+    this.moveSound.volume = 1
     this.moveSound.loop = true
-    this.moveSound.autoplay = true
+    this.moveSound.pause()
+    // this.moveSound.autoplay = true
+
     this.bulletFiredSound = new Audio('audio/TankFire.mp3');
     this.setVolumeEmittedFireBullet = 0.3
     this.bulletFiredSound.volume = this.setVolumeEmittedFireBullet;
 
-  }
-
-  moveForeward(coeff) {
-    this.move(Math.cos(camera.rotation.y - Math.PI / 2) * coeff, Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
-  }
-
-  moveBackward(coeff) {
-    this.move(-Math.cos(camera.rotation.y - Math.PI / 2) * coeff, -Math.sin(camera.rotation.y - Math.PI / 2) * coeff);
+    this.charExploseSound = new Audio('audio/charExplosion.mp3');
+    this.charExploseSound.volume = 0.4
   }
 
   addBullet(time = Date.now()) {
@@ -105,19 +103,6 @@ class Char extends ObjectPos {
     }
   }
 
-  removeChar() {
-    let position = chars.indexOf(this);
-    this.shape.dispose();
-    chars.splice(position, 1);
-    explosionSound.play();
-    if (this === char1) {
-      stopgame();
-    } else {
-      position = charsAI.indexOf(this);
-      charsAI.splice(position, 1);
-    }
-  }
-
   rotateAxisY(angle) {
     if (this.life <= 0) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
@@ -134,14 +119,24 @@ class Char extends ObjectPos {
   }
 
   rotateTurretUpDown(isUp, angle = 1) {
+    if (scene.menu.isInMenu()) return
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
-    if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
+    var quaternion = turret.rotationQuaternion.toEulerAngles().x
+    if (quaternion > -0.15 && isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
+      // console.log("turret going UP");
     }
-    if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
+    if (quaternion < 0.06 && !isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
+      // console.log("turret going DOWN");
     }
+    // if (quaternion <= -0.15 && isUp) {
+    //   console.log("turret is already at MAX UP");
+    // }
+    // if (quaternion >= 0.06 && !isUp) {
+    //   console.log("turret is already at MAX DOWN");
+    // }
   }
 
 
@@ -207,18 +202,22 @@ class Char extends ObjectPos {
     this.dust.stop();
   }
 
-  destroyTank(isDisabled) {
-    if (isDisabled) {
-      // explode(this.shape)
-      var smok = createSmoke(char1.shape)
-      playSmoke(smok)
-      createFire(char1.shape);
-      // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
-      // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
-      //console.log("Disposing");
-      //this.shape.dispose()
-    }
+  destroyTank() {
+    // explode(this.shape)
+    this.stabilizeTank()
+    this.healtBar.disposeBar()
+    this.moveSound.pause();
+    charsDestroyed.push(this)
+    var smok = createSmoke(this.shape, false, false, true)
+    playSmoke(smok)
+    createFire(this.shape);
+    playSoundWithDistanceEffect(this.charExploseSound, this, false)
+    // ObjectEnum.Player.meshes.forEach(e => e.setParent(null))
+    // ObjectEnum.Player.meshes.forEach(e => e.physicsImpostor = new BABYLON.PhysicsImpostor(e, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1 }));
+    //console.log("Disposing");
+    //this.shape.dispose()
   }
+
 
   getTurretTank() {
     return this.shape.getChildMeshes()[0];
@@ -233,15 +232,23 @@ class Char extends ObjectPos {
   }
 
   movingSmoke(isMoving) {
-    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.1 : 0.005;
-    this.exhaustPipeRight.updateSpeed = isMoving ? 0.1 : 0.005;
+    this.exhaustPipeLeft.updateSpeed = isMoving ? 0.01 : 0.005;
+    this.exhaustPipeRight.updateSpeed = isMoving ? 0.01 : 0.005;
     this.exhaustPipeLeft.maxLifeTime = isMoving ? 0.4 : 0.2;
     this.exhaustPipeRight.maxLifeTime = isMoving ? 0.4 : 0.2;
 
-    this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
-    this.exhaustPipeLeft.emitRate = isMoving ? 500 : 300;
-    this.exhaustPipeRight.emitRate = isMoving ? 500 : 300;
+    // this.exhaustPipeLeft.maxSize = isMoving ? 0.5 : 0.2;
+    // this.exhaustPipeRight.maxSize = isMoving ? 0.5 : 0.2;
+    this.exhaustPipeLeft.removeSizeGradient(0);
+    this.exhaustPipeLeft.removeSizeGradient(1);
+    this.exhaustPipeRight.removeSizeGradient(0);
+    this.exhaustPipeRight.removeSizeGradient(1);
+    this.exhaustPipeLeft.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeLeft.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeRight.addSizeGradient(0, isMoving ? 0.05 : 0.03);
+    this.exhaustPipeRight.addSizeGradient(1, isMoving ? 0.3 : 0.2);
+    this.exhaustPipeLeft.emitRate = isMoving ? 400 : 200;
+    this.exhaustPipeRight.emitRate = isMoving ? 400 : 200;
     this.exhaustPipeLeft.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
@@ -251,10 +258,45 @@ class Char extends ObjectPos {
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0
-      this.dispose(false)
+      this.life--
+      // this.dispose(false)
     }
   }
 
+  setCrossHairPosition() {
+    if (!this.crossHair) return
+    let laserCoolDown = 1;
+    let laserRes = ShootAI.targetPlayer(char1, 1000, false, laserCoolDown, true, this.crossHair);
+    if (laserRes) {
+      let [position, hitMesh] = laserRes
+      let cannonPoint = getCannonPoint(this)
+
+      let distanceFromTank = Math.sqrt((position.x - cannonPoint.x) ** 2 + (position.y - cannonPoint.y) ** 2 + (position.z - cannonPoint.z) ** 2) * 4
+      ShootAI.targetPlayer(char1, distanceFromTank, true, laserCoolDown, true, this.crossHair);
+      // crossHair.parent = obj.shape
+      let char;
+
+      if (char = chars.find(e => e.shape == hitMesh)) {
+        highlightTank(char, true)
+
+      } else {
+        if (hl) hl.removeAllMeshes()
+      }
+      if (this.crossHair.position) this.crossHair.position = position
+    }
+    else {
+      ShootAI.targetPlayer(char1, 1000, true, laserCoolDown, true, this.crossHair);
+
+      if (this.crossHair.position) this.crossHair.position.y -= 200
+      if (hl) hl.removeAllMeshes()
+    }
+  }
+
+  dispose(forceDispose) {
+    super.dispose(forceDispose)
+    this.healtBar.disposeBar()
+    if (this.crossHair) this.crossHair.dispose()
+  }
 
 }
 
@@ -288,4 +330,30 @@ function lights() {
   // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
 
 
+
+}
+/**
+ * 
+ * @param {Char} tank 
+ * @param {boolean} toHighlight 
+ */
+function highlightTank(tank, toHighlight) {
+  if (toHighlight && !hl.hasMesh(tank.shape.getChildMeshes()[0])) {
+    tank.shape.getChildMeshes().filter(m =>
+      !((m == tank.healtBar.healthBarContainer) || (tank.healtBar.healthBarContainer.getChildMeshes().includes(m)))).forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
+  }
+}
+
+/** @param {Char} obj */
+function loadCrossHair(obj, scene) {
+  var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
+
+  crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
+
+  crossHair.material = new BABYLON.StandardMaterial("crossHair", scene);
+  crossHair.material.diffuseTexture = new BABYLON.Texture("images/gunaims.png", scene);
+  crossHair.material.diffuseTexture.hasAlpha = true;
+  crossHair.material.emissiveColor = BABYLON.Color3.White()
+  crossHair.isPickable = false;
+  obj.crossHair = crossHair;
 }

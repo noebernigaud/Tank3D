@@ -21,6 +21,9 @@ var charsAI;
 /** @type {[Char]} */
 var chars;
 
+/** @type {[Char]} */
+var charsDestroyed;
+
 /** @type {[Bonus]} */
 var bonuses;
 
@@ -67,9 +70,9 @@ var reloadMultUti = 1;
 var impostorCharList = [];
 
 const BIOMES = ["Earth", "Sand", "Snow"]
-var biome = BIOMES[0];
+var biome = BIOMES[1];
 
-
+var hl;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';
@@ -95,5 +98,6 @@ bonusTookSound.volume = 0.2
 let musicBackground = new Audio('audio/warmusic.mp3')
 musicBackground.volume = 0.1
 musicBackground.loop = true
+musicBackground.pause()
 
 var impostorCharList = [];

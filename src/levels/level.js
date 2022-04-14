@@ -22,6 +22,7 @@ class Level {
     console.log("in other menu", scene.menu.inOtherMenu());
     if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
+      Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
       exitPointerLoc()
       this.loadNextLevel()
       this.writeStat()
@@ -76,7 +77,8 @@ class Level {
       scene.menu.inNextLevel = false;
       document.getElementById('endLevelStat').style.display = 'none';
       engine.runRenderLoop(() => scene.render())
-      canvas.requestPointerLock()
+      pointerLock()
+      Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
     }
     endLine.appendChild(endCell)
     tab.appendChild(endLine)

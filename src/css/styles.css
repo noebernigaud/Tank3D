@@ -6,6 +6,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url("../images/tank_bg.jpg");
 }
 
 #src {
@@ -22,6 +23,8 @@ body {
   background-color: #070707d7;
   position: absolute;
   margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .button {
@@ -50,22 +53,6 @@ body {
 .button:hover {
   background: rgba(27, 228, 20, 0.226);
 
-}
-
-#minimap {
-  position: absolute;
-  right: 0pt;
-  top: 0;
-  border-radius: 150pt;
-  border: 3px solid rgb(55, 55, 55);
-  background-image: url("../images/woodTexture.jpg");
-}
-
-#speed {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  color: white;
 }
 
 .hideOnMenu {

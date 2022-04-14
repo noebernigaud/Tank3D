@@ -14,7 +14,7 @@ class guaranteedAI {
     }
 
     applyStrategy() {
-
+        if (scene.menu.isInMenu()) return
         var dirZ = this.tank.shape.getDirection(BABYLON.Axis.Z);
         var dirX = this.tank.shape.getDirection(BABYLON.Axis.X);
 
@@ -23,19 +23,19 @@ class guaranteedAI {
             this.tank.shape.position.x + dirZ.x,
             this.tank.shape.position.y + 3 / 40,
             this.tank.shape.position.z + dirX.x),
-            dirZ, 3);
+            dirZ, 3, false, 5, false, undefined, true);
         let right = Math.atan2(dirX.x, dirZ.x) + Math.PI / 2;
         let left = Math.atan2(dirX.x, dirZ.x) - Math.PI / 2;
         var objLeft = createRay(new BABYLON.Vector3(
             this.tank.shape.position.x + dirZ.x + Math.cos(left) * 0.6,
             this.tank.shape.position.y + 3 / 40,
             this.tank.shape.position.z + dirX.x + Math.sin(left) * 0.6),
-            new BABYLON.Vector3(Math.cos(left), dirZ.y, Math.sin(left)), 3);
+            new BABYLON.Vector3(Math.cos(left), dirZ.y, Math.sin(left)), 3, false, 5, false, undefined, true);
         var objRight = createRay(new BABYLON.Vector3(
             this.tank.shape.position.x + dirZ.x + Math.cos(right) * 0.6,
             this.tank.shape.position.y + 3 / 40,
             this.tank.shape.position.z + dirX.x + Math.sin(right) * 0.6),
-            new BABYLON.Vector3(Math.cos(right), dirZ.y, Math.sin(right)), 3);
+            new BABYLON.Vector3(Math.cos(right), dirZ.y, Math.sin(right)), 3, false, 5, false, undefined, true);
 
         if (!objAhead) {
             if (this.updateDir <= 0) {
@@ -63,7 +63,8 @@ class guaranteedAI {
             this.tank.shape.position.x + dirZ.x,
             this.tank.shape.position.y + 3 / 40,
             this.tank.shape.position.z + dirX.x),
-            dirZ, 2);
+            dirZ, 2, false, 5, false, undefined, true);
+
         if (!delimAhead)
             this.tank.moveTankForeward();
         else
@@ -78,7 +79,7 @@ class guaranteedAI {
         // Shoot simulation
         if (this.updateTir <= 0) {
             if (char1.shape == ShootAI.targetPlayer(this.tank)) {
-                // this.tank.addBullet(Date.now())
+                this.tank.addBullet(Date.now())
             }
             this.updateTir = 12;
         }

@@ -155,24 +155,14 @@ function init() {
 
     scene.minimap = new MiniMap()
 
-    window.onresize = function () {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        document.getElementById("src").style.width = window.innerWidth + "px";
-        document.getElementById("src").style.height = window.innerHeight + "px";
-
-        scene.minimap.resize()
-        engine.resize();
-    }
-
     window.onresize()
 
     canvas = document.querySelector("#myCanvas");
 
     playing = 0;
 
-    musicBackground.play()
-    musicBackground.loop = true
+    // musicBackground.play()
+    // musicBackground.loop = true
 
 
     // level = 0;
@@ -224,7 +214,7 @@ function init() {
     // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
         // console.log("mouse captured in canvas");
-        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) canvas.requestPointerLock();
+        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) pointerLock();
         else if (isLocked() && engine.activeRenderLoops.length == 1) {
             if (sceneInterval) clearInterval(sceneInterval);
             sceneInterval = setInterval(() => {
@@ -240,6 +230,7 @@ function init() {
 
 
     function lockChangeAlert() {
+        console.log("entering in lockChange");
         if (!isLocked()) {
             console.log('The pointer lock status is now unlocked');
             if (!scene.menu.inOtherMenu()) {
@@ -274,6 +265,7 @@ function startgame(level) {
     delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
+    charsDestroyed = new Array();
 
     //BULLETS AND MINES INIT
     bullets = new Array();
@@ -321,8 +313,8 @@ function pausebackgroundMusic() {
     }
 }
 
-function remove_all_objects() {
-    let allElts = getAllMeshList()
+function remove_all_objects(withPlayer = false) {
+    let allElts = getAllMeshList(withPlayer)
     if (level == 0) allElts.push(char1)
 
     allElts.forEach(e => e.dispose(true))
@@ -332,6 +324,7 @@ function remove_all_objects() {
     mines = [];
     chars = [];
     charsAI = [];
+    charsDestroyed = [];
     bonuses = [];
     trees = [];
     rocks = [];
@@ -340,7 +333,7 @@ function remove_all_objects() {
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION
@@ -377,35 +370,6 @@ function anime() {
         }
     }
 
-    //IN GAME
-    if (playing == 1) {
-
-        // bullets.forEach(bullet => bullet.move())
-        //Image de fond
-        // ctx.drawImage(backgroundTexture, 0, 0, canvas.width, canvas.height);
-
-        //On dessine les murs, trous, mines, balles
-        // walls.forEach(wall => wall.draw3d());
-        // holes.forEach(hole => hole.draw3d());
-        // mines.forEach(mine => mine.draw3d());
-        bullets.forEach(bullet => bullet.move());
-
-        // walls.forEach(wall => wall.draw(ctx));
-        // holes.forEach(hole => hole.draw(ctx));
-        // mines.forEach(mine => mine.draw(ctx));
-        // bullets.forEach(bullet => bullet.draw(ctx));
-
-        // 2) On dessine et on déplace les char
-        // chars.forEach(char => char.draw3d());
-
-        // chars.forEach(char => char.draw(ctx));
-        // charsAI.forEach(char => char.intelligence.applyStrategy(char1));
-        // char1.updateAngle(mousepos);
-
-        // ctx.font = "30px Arial";
-        // ctx.fillText("level: " + (level + 1) + "/5", 10, 30);
-    }
-
     keyApplaier();
 
     //window.requestAnimationFrame(anime);
@@ -429,3 +393,4 @@ let isLocked = () => document.pointerLockElement === canvas ||
     document.mozPointerLockElement === canvas
 
 let exitPointerLoc = () => document.exitPointerLock();
+let pointerLock = () => canvas.requestPointerLock()

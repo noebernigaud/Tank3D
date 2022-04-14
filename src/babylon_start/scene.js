@@ -44,14 +44,7 @@ class Scene {
     this.setCamera()
     setCurrentLevelDico()
 
-
-
-
     ObjectEnum.initiate_all_models()
-    // this.setCamera()
-    // this.engine.runRenderLoop(() =>
-    //   this.scene.render()
-    // )
   }
 
   /**
@@ -61,8 +54,12 @@ class Scene {
     scene = new BABYLON.Scene(this.engine);
     // engine.runRenderLoop(() => scene.render())
 
+    hl = new BABYLON.HighlightLayer("hl", scene);
+
+    hl.blurHorizontalSize = hl.blurVerticalSize = 0.3;
 
     scene.beforeRender = () => {
+
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
@@ -104,29 +101,33 @@ class Scene {
           //réglage son de déplacement selon la distance
           playSoundWithDistanceEffect(c.moveSound, c.shape, false, false)
         })
+
         // charsAI.forEach(c => MoveAI.move(c));
         // if (tanksAIReady) charsAI.forEach(c => c.strategy.applyMovement())
         anime()
+
+
         //VERIFICATION TOUS CHARS ENNEMIS ELIMINES
 
         charsAI.forEach(c => {
           if (c.life <= 0) {
+            console.log("should destroy char ", c);
             let index = chars.indexOf(c)
             if (index !== -1) chars.splice(index, 1)
             index = charsAI.indexOf(c)
             if (index !== -1) charsAI.splice(index, 1)
-            c.dispose()
+            c.destroyTank()
+            // c.dispose(true)
           }
         })
         if (char1.life <= 0 || level == level_map.length) {
-          level = 0;
-          remove_all_objects()
-          startgame(level);
-          this.scene.menu.createButton()
-          console.log("AAA");
+          this.scene.menu.restart()
+          // level = 0;
+          // remove_all_objects(true)
+          // startgame(level);
+          // this.scene.menu.createButton()
         } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
-            console.log("BBB");
             this.scene.menu.restart()
           } else if (!this.scene.menu.inOtherMenu()) {
             current_level_dico.goNextLevel()
@@ -136,6 +137,8 @@ class Scene {
             // startTimer()
           }
         }
+
+        else char1.setCrossHairPosition()
         //charsAI.forEach(c => MoveAI.move(c));
         charsAI.forEach(c => c.strategy.applyStrategy())
       }
@@ -150,14 +153,6 @@ class Scene {
   }
 
   setCamera() {
-    // camera = new BABYLON.ArcRotateCamera("camera1", 0, 0, 10, new BABYLON.Vector3(0, 0, 0), scene);
-    // camera.setPosition(new BABYLON.Vector3(0, 100 / 20, -110 / 20));
-    // camera.beta += 0.3
-    // camera.angularSensibilityX = 250
-    // camera.angularSensibilityY = 250
-    // camera.inertia = 0
-    // camera.inputs.attached.keyboard.detachControl();
-    // camera.checkCollisions = true;
     camera = new BABYLON.FollowCamera("tankCamera", ground.position, scene, ground);
     // camera.attachControl(canvas, true);
     camera.radius = 40;
@@ -169,20 +164,13 @@ class Scene {
   }
 
   setGround() {
-    // ground = BABYLON.MeshBuilder.CreateGround("ground", { width: width + cell_size, height: height + cell_size }, scene);
-    // var grass = new BABYLON.StandardMaterial("groundMat", scene);
-    // grass.diffuseTexture = new BABYLON.Texture("images/grass.png", scene);
-    // ground.material = grass
-    // grass.specularColor = new BABYLON.Color3(0, 0, 0)
-
-    // ground.checkCollisions = true;
-    // ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0 });
     const groundOptions = {
-      width: width + cell_size,
-      height: height + cell_size,
+      width: width * 1.5 + cell_size,
+      height: height * 1.5 + cell_size,
       subdivisions: 80,
       minHeight: current_level_dico.minHeightMap,
       maxHeight: 0,
+
       onReady: () => onGroundCreated(this),
     };
     //scene is optional and defaults to the current scene
@@ -270,9 +258,6 @@ class Scene {
   }
 
   setShadow() {
-    // var light = new BABYLON.DirectionalLight("dirLight", new BABYLON.Vector3(25, -25, 0), scene);
-    // light.intensity = 0;
-    // light.position = new BABYLON.Vector3(0, 100, 0);
 
     light1 = new BABYLON.PointLight("spotLight1", new BABYLON.Vector3(0, 10, 0), scene);
     light1.emissive = new BABYLON.Color3(0, 0, 0);
@@ -301,14 +286,6 @@ class Scene {
 
 
   setBackground() {
-    // this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 100.0 }, scene);
-    // var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-    // skyboxMaterial.backFaceCulling = false;
-    // skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/sky/skybox", scene);
-    // skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-    // skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    // skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    // this.skybox.material = skyboxMaterial;
     let skyboxBg = biome != "Sand" ? "cloudy" : "sunny"
     this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
     var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);

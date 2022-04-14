@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 4 / 20;
+    static diameter = 2 / 20;
     /**
      * 
      * @param {Char} char 
@@ -11,17 +11,16 @@ class Bullet extends ObjectPos {
     constructor(char, life = 2) {
         super(
             ObjectEnum.Bullet,
-            char.shape.position.x + char.getTurretTank().getDirection(BABYLON.Axis.Z).x * 6,
-            // char.shape.position.y + char.getTurretTank().getDirection(BABYLON.Axis.Y).y * 4,
-            char.shape.position.y + 9 / 40,
-            char.shape.position.z + char.getTurretTank().getDirection(BABYLON.Axis.X).x * 6, char.bulletSpeed, 0, char.bulletLife);
+            getCannonPoint(char).x, getCannonPoint(char).y, getCannonPoint(char).z, char.bulletSpeed, 0, char.bulletLife);
 
         this.char = char;
         this.speed = char.bulletSpeed;
         this.damage = char.bulletDamage;
 
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
+        console.log("frontvec bullet :", frontVec)
+        frontVec.y += 0.009
         let moveVec = frontVec.scale(this.speed)
         // let moveVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
         this.physicsImpostor.setLinearVelocity(moveVec)
@@ -51,7 +50,7 @@ class Bullet extends ObjectPos {
         this.setVolumebulletRebound = 0.3
         this.bulletReboundSound.volume = this.setVolumebulletRebound
 
-        this.bulletexplosion = new Audio('audio/bulletExplosion3.wav');
+        this.bulletexplosion = new Audio('audio/bulletExplosion3.mp3');
         this.setVolumebulletexplosion = 0.3
         this.bulletexplosion.volume = this.setVolumebulletexplosion;
 
@@ -83,11 +82,13 @@ class Bullet extends ObjectPos {
                     if (b2) b2.destroy()
                     if (this.char == char1 && b2.destructable)
                         current_level_dico.addWallDestroyed()
-                }
-                else if (b2 = barrels.find(e => e.shape == e2.object)) {
+                } else if (b2 = barrels.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);
+                } else if (b2 = trees.find(e => e.shape == e2.object)) {
+                    if (b1) b1.dispose()
+                    if (b2) b2.burnTree()
                 }
                 else this.dispose()
             }

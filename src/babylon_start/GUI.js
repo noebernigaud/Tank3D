@@ -12,7 +12,7 @@ class Menu {
         this.bonusPanel = document.getElementById("bonusPanel")
         this.nextLevelPanel = document.getElementById("endLevelStat")
 
-        this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+        // this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
         // this.buttons = []
         // // this.createButton("Play")
         // this.buttons[0].onPointerUpObservable.add(() => {
@@ -49,7 +49,9 @@ class Menu {
             exitPointerLoc()
             document.getElementById("main").style.display = "block"
         }
-        else this.hideMenu()
+        else {
+            this.hideMenu()
+        }
         if (this.inBonus)
             if (toShow) this.bonusPanel.style.display = "none"
             else this.bonusPanel.style.removeProperty("display")
@@ -57,10 +59,13 @@ class Menu {
         if (!this.isFirst) {
             document.getElementById("restart").style.removeProperty("display")
             if (toShow) {
+                chars.forEach(c => c.moveSound.pause())
                 engine.stopRenderLoop()
                 this.setBackground()
             } else {
                 if (!this.inBonus) {
+                    musicBackground.play()
+                    chars.forEach(c => c.moveSound.play())
                     engine.runRenderLoop(() => scene.render())
                 }
             }
@@ -72,12 +77,12 @@ class Menu {
     }
 
     prettyBG() {
-        let src = document.getElementById("src")
-        src.style.backgroundImage = `url('images/tank_bg.jpg')`;
+        // let src = document.getElementById("src")
+        // src.style.backgroundImage = `url('images/tank_bg.jpg')`;
         canvas.style.display = "none";
-        src.style.display = "block"
-        src.style.filter = "blur(0)"
-        document.getElementById("main").style.display = "block"
+        // src.style.display = "block"
+        // src.style.filter = "blur(0)"
+        document.getElementById("main").style.display = "initial"
     }
 
     setBackground() {
@@ -108,7 +113,17 @@ class Menu {
         let createButton = (bEnum) => {
             let b = document.createElement("button")
             b.onmouseenter = () => scene.menu.soundHover()
-            b.innerHTML = `<span>${bEnum.name}</span><span class="tooltiptext">${bEnum.description}</span>`;
+
+            let span1 = document.createElement("span")
+            span1.innerHTML = bEnum.name
+            let span2 = document.createElement("span")
+            span2.innerHTML = bEnum.description
+            span2.classList.add("tooltiptext")
+
+            b.appendChild(bEnum.image)
+            b.appendChild(span1)
+            b.appendChild(span2)
+
             b.className = "button tooltip"
             b.onclick = () => {
                 bonusTookSound.currentTime = 0
@@ -120,7 +135,7 @@ class Menu {
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
                 this.clearBonus()
-                canvas.requestPointerLock()
+                pointerLock()
             }
             this.bonusPanel.appendChild(b);
         }
@@ -162,6 +177,7 @@ class Menu {
         char1.dispose(true)
         this.clearBonus()
         remove_all_objects()
+        startgame(level)
     }
 
     clearBonus() {
@@ -178,13 +194,19 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) Array.from(document.getElementsByClassName("hideOnMenu")).forEach(e => {
-            e.style.display = "none"
-        })
-        if (toShow) {
-            if (this.inBonusus) this.bonusPanel.style.display = "initial"
+        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
+        else {
+            if (this.inBonusus) {
+                this.bonusPanel.style.display = "initial"
+                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+            }
             else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
+            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
         }
+    }
+
+    isInMenu() {
+        return this.isShown || this.inOtherMenu()
     }
 
 }

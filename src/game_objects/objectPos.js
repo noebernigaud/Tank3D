@@ -32,9 +32,9 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-      case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
-      case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
-      case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      case ObjectEnum.MiniTank.name: { shape = ObjectEnum.MiniTank.container.clone(); break; }
+      case ObjectEnum.SnowTank.name: { shape = ObjectEnum.SnowTank.container.clone(); break; }
+      case ObjectEnum.EarthTank.name: { shape = ObjectEnum.EarthTank.container.clone(); break; }
       case ObjectEnum.Rock.name: { shape = ObjectEnum.Rock.container.clone(); break; }
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
@@ -93,48 +93,6 @@ class ObjectPos extends BABYLON.Mesh {
     //this.center_camera()
   }
 
-  updateAngle(degree) {
-    let new_angle = camera.rotation.y;
-    // if (collision(this)) return;
-    camera.rotation.y += degree;
-    this.rotation.y = camera.rotation.y
-    // char1.rotationQuaternion = new BABYLON.Vector3(0, 10, 0)
-    this.speedAngle = new_angle;
-  }
-
-  // center_camera() {
-  //   if (this === char1) {
-  //     if (typeof tankContainer !== 'undefined') {
-  //       //camera.alpha += tanksMeshes[3].rotation.z
-  //       // camera.position.x = tankContainer.position.x - 100 * Math.sin(camera.rotation.y);
-  //       // camera.position.y = tankContainer.position.y + 100;
-  //       // camera.position.z = tankContainer.position.z - 120 * Math.cos(camera.rotation.y);
-  //       //camera.rotation.y = tanksMeshes[3].rotation.y + 20
-  //     }
-
-  //   }
-  // }
-
-  move() {
-    return;
-    //deplace le tank
-    // let has_moved = true;
-    // /** @type {BABYLON.Vector3} */
-    // let old_pos = this.position.clone()
-    // this.position = this.position.add(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
-    // if (collision(this)) {
-    //   this.position = old_pos.subtract(new BABYLON.Vector3(this.speedNorme * Math.sin(this.speedAngle), 0, this.speedNorme * Math.cos(this.speedAngle)));
-    //   has_moved = false;
-    // }
-    // if (this === char1)
-    //   this.center_camera()
-    // return has_moved
-  }
-
-  modifySpeedAngle(angle) {
-
-  }
-
   defineBoundingBox() {
     let childMeshes = this.getChildMeshes();
     let min = childMeshes[0].getBoundingInfo().boundingBox.minimumWorld;
@@ -172,9 +130,9 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
-        case ObjectEnum.CharRed.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.CharBlue.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.CharGreen.name: { this.moveSound.pause(); remove(charsAI, this); }
+        case ObjectEnum.MiniTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.SnowTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.EarthTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:
@@ -193,7 +151,7 @@ class ObjectPos extends BABYLON.Mesh {
           console.log(this.type.name, this);
           throw `Unknown object type (ObjectPos.dispose)`;
       }
-      this.physicsImpostor.dispose()
+      if (this.physicsImpostor) this.physicsImpostor.dispose()
       this.shape.dispose();
     }
   }

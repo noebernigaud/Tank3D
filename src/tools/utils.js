@@ -10,25 +10,38 @@ function getMousePos(canvas, evt) {
         y: evt.clientY - rect.top
     };
 }
+let filter;
+function createRay(origin, dir, length, affiche = false, disposeTime = 5, returnPointInpact = false, exclude = undefined, canPickInvisible = false) {
+    let ray = new BABYLON.Ray(origin, dir, length);
 
-function createRay(origin, dir, length, disposeTime = 5) {
+    let pickInfo
+    if (canPickInvisible) pickInfo = scene.multiPickWithRay(ray, (m) => { return m.isPickable });
+    else pickInfo = scene.multiPickWithRay(ray);
+
+    let rayHelper;
+
+    if (affiche) {
+        rayHelper = new BABYLON.RayHelper(ray);
+        rayHelper.show(scene, new BABYLON.Color4(1, 0, 0, 0.5));
+        setTimeout(() => {
+            rayHelper.dispose(ray);
+        }, disposeTime);
+    }
+
+    filter = (pickInfo.filter(e => e != rayHelper && e != exclude))
+
+    // if (exclude) console.log(filter.length > 0 ? (returnPointInpact ? filter[0].pickedPoint : filter[0].pickedMesh) : undefined);
+    return filter.length > 0 ? (returnPointInpact ? [filter[0].pickedPoint, filter[0].pickedMesh] : filter[0].pickedMesh) : undefined
+}
+
+function createRayPoint(origin, dir, length) {
     let ray = new BABYLON.Ray(origin, dir, length);
 
     let pickInfo = scene.pickWithRay(ray, (mesh) => {
         return mesh;
     });
-    if (pickInfo.pickedMesh) {
-        let bounder = pickInfo.pickedMesh;
-    }
 
-
-    // let rayHelper = new BABYLON.RayHelper(ray);
-    // rayHelper.show(scene, new BABYLON.Color3(1, 0, 0));
-    // setTimeout(() => {
-    //     rayHelper.dispose(ray);
-    // }, disposeTime);
-
-    return pickInfo.pickedMesh
+    return pickInfo.pickedPoint
 }
 
 function playSoundWithDistanceEffect(sound, mesh, pauseSound = true, play = true) {
@@ -47,4 +60,34 @@ function playSoundWithDistanceEffect(sound, mesh, pauseSound = true, play = true
 var remove = (list, elt) => {
     var index = list.indexOf(elt)
     if (index !== -1) list.splice(index, 1)
+}
+
+function lights() {
+    var gui = new dat.GUI();
+    gui.domElement.style.marginTop = "100px";
+    gui.domElement.id = "datGUI";
+    var options = {
+        Emissive: 0.3,
+        Specular: 0.3,
+        Diffuse: 0.3,
+        Ambient: 0.3
+    }
+
+    gui.add(options, "Emissive", 0, 1).onChange(function (value) {
+        char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.emissiveColor = new BABYLON.Color3(value, value, value) })
+    });
+    gui.add(options, "Diffuse", 0, 1).onChange(function (value) {
+        char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.diffuseColor = new BABYLON.Color3(value, value, value) })
+    });
+    gui.add(options, "Specular", 0, 1).onChange(function (value) {
+        char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.specularColor = new BABYLON.Color3(value, value, value) })
+    });
+    gui.add(options, "Ambient", 0, 1).onChange(function (value) {
+        char1.shape.getChildMeshes().forEach(e => { if (e.material) e.material.ambientColor = new BABYLON.Color3(value, value, value) })
+    });
+
+    // myMaterial.diffuseColor = new BABYLON.Color3(1, 0, 1);
+    // myMaterial.specularColor = new BABYLON.Color3(0.5, 0.6, 0.87);
+    // myMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    // myMaterial.ambientColor = new BABYLON.Color3(0.23, 0.98, 0.53);
 }
