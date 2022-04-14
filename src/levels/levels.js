@@ -207,7 +207,7 @@ function draw_level_map() {
                 case '-':
                     break;
                 case 'N':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 0, 0, 0);
+                    var char = new Char(ObjectEnum.MiniTank, posX, posY, 0, 0, 0, 0);
                     charsAI.push(char);
                     char.setStrategy(new noStrategy(char))
                     chars.push(char);
@@ -215,7 +215,7 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.CharRed, posX, posY, 0, 2, 2000, 40);
+                    var char = new Char(ObjectEnum.MiniTank, posX, posY, 0, 2, 2000, 40);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
@@ -223,14 +223,14 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'B':
-                    var char = new Char(ObjectEnum.CharBlue, posX, posY, 0, 2, 10000, 20);
+                    var char = new Char(ObjectEnum.SnowTank, posX, posY, 0, 2, 10000, 20);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     char.applyStrategy()
                     break;
                 case 'G':
-                    var char = new Char(ObjectEnum.CharGreen, posX, posY, 0, 2, 4000, 10);
+                    var char = new Char(ObjectEnum.EarthTank, posX, posY, 0, 2, 4000, 10);
                     charsAI.push(char);
                     chars.push(char);
                     char.setStrategy(new guaranteedAI(char))

@@ -32,9 +32,9 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
-      case ObjectEnum.CharRed.name: { shape = ObjectEnum.CharRed.container.clone(); break; }
-      case ObjectEnum.CharBlue.name: { shape = ObjectEnum.CharBlue.container.clone(); break; }
-      case ObjectEnum.CharGreen.name: { shape = ObjectEnum.CharGreen.container.clone(); break; }
+      case ObjectEnum.MiniTank.name: { shape = ObjectEnum.MiniTank.container.clone(); break; }
+      case ObjectEnum.SnowTank.name: { shape = ObjectEnum.SnowTank.container.clone(); break; }
+      case ObjectEnum.EarthTank.name: { shape = ObjectEnum.EarthTank.container.clone(); break; }
       case ObjectEnum.Rock.name: { shape = ObjectEnum.Rock.container.clone(); break; }
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
@@ -131,9 +131,9 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
-        case ObjectEnum.CharRed.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.CharBlue.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.CharGreen.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.MiniTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.SnowTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.EarthTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:

@@ -14,9 +14,9 @@ class ObjectEnum {
   static Bullet = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
-  static CharRed = new ObjectEnum("redTank", "mini_tank", 0.25, 0.625, 0.625, 1.25)
-  static CharBlue = new ObjectEnum("blueTank", "battle_tank", 0.20, 0.95, 0.625, 1.75)
-  static CharGreen = new ObjectEnum("greenTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
+  static MiniTank = new ObjectEnum("redTank", "mini_tank", 0.25, 0.625, 0.625, 1.25)
+  static SnowTank = new ObjectEnum("blueTank", "battle_tank", 0.20, 0.95, 0.625, 1.75)
+  static EarthTank = new ObjectEnum("greenTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5, 0.5)
@@ -92,7 +92,7 @@ class ObjectEnum {
 
   static initiate_all_models() {
     var list_obj = [
-      this.Bullet, this.CharBlue, this.CharGreen, this.CharRed, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
+      this.Bullet, this.SnowTank, this.EarthTank, this.MiniTank, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
       this.Rock, this.PalmTree1, this.PalmTree2, this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
       this.Tumbleweed, this.SnowyTree, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
