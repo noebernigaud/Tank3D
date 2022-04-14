@@ -17,7 +17,7 @@ class Bullet extends ObjectPos {
         this.speed = char.bulletSpeed;
         this.damage = char.bulletDamage;
 
-        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 1 });
+        this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
         let moveVec = frontVec.scale(this.speed)
         // let moveVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)

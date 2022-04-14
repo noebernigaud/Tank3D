@@ -27,6 +27,6 @@ function randomTree() {
     switch (rng) {
         case 0: return biome == "Earth" ? ObjectEnum.PalmTree1 : ObjectEnum.Cactus1;
         case 1: return biome == "Earth" ? ObjectEnum.PalmTree2 : ObjectEnum.Cactus2;
-        default: return biome == "Earth" ? ObjectEnum.PalmTree3 : ObjectEnum.Cactus3;
+        default: return biome == "Earth" ? ObjectEnum.PalmTree3 : ObjectEnum.Tumbleweed;
     }
 }

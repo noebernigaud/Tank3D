@@ -81,16 +81,10 @@ class ObjectEnum {
       case "snowy_fence": resize = 0.015; break;
       case "rock": resize = 0.5; break;
       case "barrel": resize = 0.65; break;
-      case "desert_rock": {
-        resize = 0.5;
-        this.meshes.forEach(x => { x.position.z += 2.5 })
-        break;
-      }
+      case "desert_rock": resize = 0.5; break;
       case "barrel":
       case "ground_palm":
-      case "tumbleweed": {
-
-      } //to center
+      case "tumbleweed":
       default: resize = 1;
 
     }
@@ -100,7 +94,12 @@ class ObjectEnum {
     })
 
     // Parent mesh (the original which we will duplicate to create our objects)
-    this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+    if (model == "barrel") {
+      this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
+    } else {
+      this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+    }
+    // this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     this.container.position.y += this.height / 2;
     this.meshes.forEach(e => this.container.addChild(e));
 
