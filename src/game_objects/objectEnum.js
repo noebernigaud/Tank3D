@@ -21,7 +21,7 @@ class ObjectEnum {
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5, 0.5)
   static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 1, 0.8, 1, 0.8)
-  static PalmTree2 = new ObjectEnum("palm_trees", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
+  static PalmTree2 = new ObjectEnum("merged_palm_tree", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.02, 0.8, 1, 0.8)
 
   //Sandy Biome items
@@ -73,6 +73,8 @@ class ObjectEnum {
       this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
     } else if (model == "tumbleweed") {
       this.container = BABYLON.MeshBuilder.CreateSphere("container", { diameter: 0.50 }, scene);
+    } else if (model == "cactus1" || model == "snowy_tree" || model == "merged_palm_tree" || model == "coconut_tree") {
+      this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
     }
     else {
       this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);

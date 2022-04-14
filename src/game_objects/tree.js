@@ -8,7 +8,8 @@ class Tree extends ObjectPos {
         let tree = randomTree()
         super(tree, -width / 2 + x, Barrel.height / 2, -height / 2 + y, 0, 0)
         this.physicsImpostor = tree == ObjectEnum.Tumbleweed ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1000, restitution: 0.2 }) :
-            new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
+            (tree == ObjectEnum.Cactus1 || tree == ObjectEnum.SnowyTree || tree == ObjectEnum.PalmTree2 || tree == ObjectEnum.PalmTree3) ? new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.CylinderImpostor, { mass: 30000, restitution: 0.2 }) :
+                new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2 })
         this.isBurning = isBurning
     }
 
