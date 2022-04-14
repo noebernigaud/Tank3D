@@ -187,6 +187,7 @@ class Scene {
         onReady: () => onGroundCreated(this, name, index),
       }
     }
+
     listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
       "gdhm",
       `textures/earthy_ground.png`,

@@ -43,6 +43,13 @@ class Char extends ObjectPos {
     this.health = health
     this.maxHealth = health
 
+    //tank headlights
+    // this.light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 1), Math.PI / 3, 1, scene);
+    // this.light.diffuse = new BABYLON.Color3(1, 1, 1);
+    // this.light.intensity = 0.5
+    // // this.light.specular = new BABYLON.Color3(1, 1, 1);
+    // this.light.parent = this.shape
+
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 300000, restitution: 0.2, friction: (type.name == ObjectEnum.Player.name) ? 0.2 : 0.2 })
     impostorCharList.push(this.physicsImpostor)
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
