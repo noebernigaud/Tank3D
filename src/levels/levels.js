@@ -11,11 +11,11 @@ const level_map = [
                 "-----------------------------",
                 "---------h--------r-----t----",
                 "----t------------------------",
-                "-------------t---------------",
+                "-------------t--------N------",
                 "-----------W--W--------------",
                 "--------P-----w--------------",
                 "--------------w--------------",
-                "----r------W--W----------G---",
+                "----r------W--W----------R---",
                 "-----------------t-----------",
                 "---------c-------------------",
                 "-----------------------------",
@@ -72,18 +72,18 @@ const level_map = [
     new Level({
         level: [
             "----------h------h-----",
-            "----------h---B--h--B--",
+            "--------------R-----R--",
             "----------h------h-----",
-            "hhhhhhh---h------------",
-            "----------h------------",
-            "----------h--hhhhhhhhhh",
-            "----------h-------B----",
             "-----------------------",
-            "------------B--h-------",
-            "hhhhhhhhhhh----h-------",
-            "--P------------h---hhhh",
-            "----------h----h-------",
-            "----------h----h-------",
+            "----c-----h------------",
+            "-----------------------",
+            "----------h-------R----",
+            "-----------------------",
+            "------------R--h-------",
+            "-----------------------",
+            "--P------------h-----h-",
+            "----------h------------",
+            "---------------h-------",
         ],
         minHeightMap: -1,
         lvlObjective: levelObjectives.killAllTank,
@@ -150,7 +150,7 @@ function draw_level_map() {
 
     if (level == 0) {
         if (char1) char1.dispose(true);
-        char1 = new Char(ObjectEnum.Player, 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
+        char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
     }
 
@@ -182,7 +182,7 @@ function draw_level_map() {
                 case '-':
                     break;
                 case 'N':
-                    var char = new Char(ObjectEnum.MiniTank, posX, posY, 0, 0, 0, 0);
+                    var char = new Char("mini", posX, posY, 0, 0, 0, 0);
                     charsAI.push(char);
                     char.setStrategy(new noStrategy(char))
                     chars.push(char);
@@ -190,26 +190,26 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char(ObjectEnum.MiniTank, posX, posY, 0, 2, 2000, 40);
+                    var char = new Char("normal", posX, posY, 0, 2, 2000, 40);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);
 
                     char.applyStrategy()
                     break;
-                case 'B':
-                    var char = new Char(ObjectEnum.SnowTank, posX, posY, 0, 2, 10000, 30);
-                    charsAI.push(char);
-                    chars.push(char);
-                    char.setStrategy(new guaranteedAI(char))
-                    char.applyStrategy()
-                    break;
-                case 'G':
-                    var char = new Char(ObjectEnum.EarthTank, posX, posY, 0, 2, 4000, 30);
-                    charsAI.push(char);
-                    chars.push(char);
-                    char.setStrategy(new guaranteedAI(char))
-                    char.applyStrategy()
+                    // case 'B':
+                    //     var char = new Char(ObjectEnum.SnowTank, posX, posY, 0, 2, 10000, 30);
+                    //     charsAI.push(char);
+                    //     chars.push(char);
+                    //     char.setStrategy(new guaranteedAI(char))
+                    //     char.applyStrategy()
+                    //     break;
+                    // case 'G':
+                    //     var char = new Char(ObjectEnum.EarthTank, posX, posY, 0, 2, 4000, 30);
+                    //     charsAI.push(char);
+                    //     chars.push(char);
+                    //     char.setStrategy(new guaranteedAI(char))
+                    //     char.applyStrategy()
                     break;
                 case 'W':
                     walls.push(new Wall(posX, posY, false));

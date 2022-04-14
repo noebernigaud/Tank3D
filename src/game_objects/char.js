@@ -12,6 +12,18 @@ class Char extends ObjectPos {
    * @param {HTMLImageElement} img 
    */
   constructor(type, x, y, angle, vitesse, tempsMinEntreTirsEnMillisecondes, bulletSpeed = 40, bulletLife = 2, life = 1, health = 10, bulletDamage = 5, inclinaisonTurretIncrement = 0.002) {
+    switch (type) {
+      case "player":
+        type = ObjectEnum.Player
+        break;
+
+      case "mini": type = ObjectEnum.MiniTank
+        break;
+
+      case "normal": type = (biome == "Earth" ? ObjectEnum.EarthTank : biome == "Sand" ? ObjectEnum.EarthTank : ObjectEnum.SnowTank)
+        break;
+      default: break;
+    }
     super(type, -width / 2 + x, Char.height / 2, -height / 2 + y, vitesse, angle, life);
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
