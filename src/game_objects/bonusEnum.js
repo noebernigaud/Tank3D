@@ -19,12 +19,6 @@ class BonusEnum {
             "Now your bullets will go two time faster !",
             "./images/speed_bullet-removebg-preview.png"
         ),
-        // new BonusEnum(
-        //     "Bonus life",
-        //     function () { char1.life += 3 },
-        //     "With this bonus you gain 3 lives",
-        //     "./images/health.png"
-        // ),
         new BonusEnum(
             "Bonus bullet damage",
             function () { char1.bulletDamage += 3 },
