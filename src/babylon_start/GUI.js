@@ -200,4 +200,9 @@ class Menu {
             else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
         }
     }
+
+    isInMenu() {
+        return this.isShown || this.inOtherMenu()
+    }
+
 }

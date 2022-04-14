@@ -118,13 +118,17 @@ class Char extends ObjectPos {
   }
 
   rotateTurretUpDown(isUp, angle = 1) {
+    if (scene.menu.isInMenu()) return
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
-    if (turret.rotationQuaternion.toEulerAngles().x > -0.12 && isUp) {
+    var quaternion = turret.rotationQuaternion.toEulerAngles().x
+    if (quaternion > -0.12 && isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
+      // console.log("turret trying to go UP");
     }
-    if (turret.rotationQuaternion.toEulerAngles().x < 0.04 && !isUp) {
+    if (quaternion < 0.04 && !isUp) {
       turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
+      // console.log("turret trying to go DOWN");
     }
   }
 

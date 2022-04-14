@@ -14,7 +14,7 @@ class guaranteedAI {
     }
 
     applyStrategy() {
-
+        if (scene.menu.isInMenu()) return
         var dirZ = this.tank.shape.getDirection(BABYLON.Axis.Z);
         var dirX = this.tank.shape.getDirection(BABYLON.Axis.X);
 
