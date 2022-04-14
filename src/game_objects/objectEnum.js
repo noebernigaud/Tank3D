@@ -98,7 +98,7 @@ class ObjectEnum {
       this.Rock, this.PalmTree1, this.PalmTree2, this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
       this.Tumbleweed, this.SnowyTree, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
-    this.remainingLoad = list_obj.length + 1
+    this.remainingLoad = list_obj.length + 3
     list_obj.forEach(e => e.create_model())
 
   }

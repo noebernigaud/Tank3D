@@ -16,6 +16,7 @@ var tanksAIReady;
 var inMenu = true;
 var light1;
 var groundSand;
+var listGrounds = [];
 
 class Scene {
 
@@ -121,11 +122,10 @@ class Scene {
           }
         })
         if (char1.life <= 0 || level == level_map.length) {
-          this.scene.menu.restart()
-          // level = 0;
-          // remove_all_objects(true)
-          // startgame(level);
-          // this.scene.menu.createButton()
+          level = 0;
+          remove_all_objects(true)
+          startgame(level);
+          this.scene.menu.createButton()
         } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
             this.scene.menu.restart()
@@ -174,41 +174,85 @@ class Scene {
       onReady: () => onGroundCreated(this),
     };
     //scene is optional and defaults to the current scene
-    ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
-      "gdhm",
-      `textures/${biome.toLowerCase()}y_ground.png`,
-      groundOptions,
-      scene
-    );
 
-    function onGroundCreated(myScene) {
+
+    listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      `textures/earthy_ground.png`,
+      {
+        width: width * 1.5 + cell_size,
+        height: height * 1.5 + cell_size,
+        subdivisions: 80,
+        minHeight: current_level_dico.minHeightMap,
+        maxHeight: 0,
+
+        onReady: () => onGroundCreated(this, "earthy", 0),
+      },
+      scene
+    ));
+    listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      `textures/sandy_ground.png`,
+      {
+        width: width * 1.5 + cell_size,
+        height: height * 1.5 + cell_size,
+        subdivisions: 80,
+        minHeight: current_level_dico.minHeightMap,
+        maxHeight: 0,
+
+        onReady: () => onGroundCreated(this, "sandy", 1),
+      },
+      scene
+    ));
+    listGrounds.push(BABYLON.MeshBuilder.CreateGroundFromHeightMap(
+      "gdhm",
+      `textures/snowy_ground.png`,
+      {
+        width: width * 1.5 + cell_size,
+        height: height * 1.5 + cell_size,
+        subdivisions: 80,
+        minHeight: current_level_dico.minHeightMap,
+        maxHeight: 0,
+
+        onReady: () => onGroundCreated(this, "snowy", 2),
+      },
+      scene
+    ));
+
+    function onGroundCreated(myScene, name, index) {
       const groundMaterial = new BABYLON.StandardMaterial(
         "groundMaterial",
         scene
       );
-      groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${biome.toLowerCase()}y_ground_diffuse.png`, scene, null, true, null, function () {
+      groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${name}_ground_diffuse.png`, scene, null, true, null, function () {
         ObjectEnum.loadingDone();
       });
-      ground.material = groundMaterial;
+      listGrounds[index].material = groundMaterial;
 
-      ground.receiveShadows = true
+      listGrounds[index].receiveShadows = true
       // to be taken into account by collision detection
-      ground.checkCollisions = true;
+      listGrounds[index].checkCollisions = true;
       //groundMaterial.wireframe=true;
 
       // for physic engine
-      ground.physicsImpostor = new BABYLON.PhysicsImpostor(
-        ground,
+      listGrounds[index].physicsImpostor = new BABYLON.PhysicsImpostor(
+        listGrounds[index],
         BABYLON.PhysicsImpostor.HeightmapImpostor,
         { mass: 0 },
         scene
       );
+
+
       groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
       groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
       groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
 
-      myScene.setWater(ground);
+      myScene.setWater(listGrounds[index]);
+
+      listGrounds[index].position.y = -10
+
     }
+    ground = listGrounds[1]
 
     return ground;
   }
