@@ -17,6 +17,7 @@ var inMenu = true;
 var light1;
 var groundSand;
 var listGrounds = [];
+var listSkyboxes = [];
 
 class Scene {
 
@@ -283,7 +284,8 @@ class Scene {
     water.bumpHeight = 0.1;
     water.waveLength = 0.1;
     water.colorBlendFactor = 0;
-    water.addToRenderList(this.skybox);
+
+    listSkyboxes.forEach(s => water.addToRenderList(s))
     water.addToRenderList(groundSand);
     waterMesh.material = water;
   }
@@ -317,16 +319,25 @@ class Scene {
 
 
   setBackground() {
-    let skyboxBg = biome != "Sand" ? "cloudy" : "sunny"
-    this.skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
-    var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-    skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(`images/${skyboxBg}_sky/skybox`, scene);
-    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-    skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    skyboxMaterial.disableLighting = true;
-    this.skybox.material = skyboxMaterial;
+
+    let createSkybox = (name) => {
+      let skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 512.0 }, scene);
+      let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+      skyboxMaterial.backFaceCulling = false;
+      skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(`images/${name}_sky/skybox`, scene);
+      skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+      skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+      skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+      skyboxMaterial.disableLighting = true;
+      skybox.material = skyboxMaterial;
+      skybox.isVisible = false
+      return skybox
+    }
+
+    listSkyboxes.push(createSkybox("cloudy"))
+    listSkyboxes.push(createSkybox("sunny"))
+
+
   }
 
   setParticles() {

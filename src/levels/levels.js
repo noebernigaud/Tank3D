@@ -281,4 +281,9 @@ function setCurrentBiome() {
         { mass: 0 },
         scene
     )
+
+    listSkyboxes.forEach(s => {
+        s.isVisible = false
+    })
+    listSkyboxes[biome == "Sand" ? 1 : 0].isVisible = true
 }
