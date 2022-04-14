@@ -94,7 +94,12 @@ class ObjectEnum {
     })
 
     // Parent mesh (the original which we will duplicate to create our objects)
-    this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+    if (model == "barrel") {
+      this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
+    } else {
+      this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+    }
+    // this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     this.container.position.y += this.height / 2;
     this.meshes.forEach(e => this.container.addChild(e));
 
