@@ -1,35 +1,6 @@
+const BIOMES = ["Earth", "Sand", "Snow"]
+var biome;
 const level_map = [
-    // {
-    //     level: [
-    //         "----------h------h-----",
-    //         "----------h---B--h--B--",
-    //         "----------h------h-----",
-    //         "hhhhhhh---h------------",
-    //         "----------h------------",
-    //         "----------h--hhhhhhhhhh",
-    //         "----------h-------B----",
-    //         "-----------------------",
-    //         "------------B--h-------",
-    //         "hhhhhhhhhhh----h-------",
-    //         "--P------------h---hhhh",
-    //         "----------h----h-------",
-    //         "----------h----h-------",
-    //     ],
-    //     sol: "textures/ground_diffuse.png",
-    //     minHeightMap: -1,
-    // },
-    // {
-    //     level:
-    //         [
-    //             "---------------",
-    //             "---------------",
-    //             "--P--------N---",
-    //             "------c--------",
-    //             "---------------",
-    //         ],
-    //     sol: "textures/ground_diffuse8k.png",
-    //     minHeightMap: -0.1,
-    // },
     new Level({
         level:
             [
@@ -56,6 +27,7 @@ const level_map = [
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
         lvlObjective: levelObjectives.getAllBonuses,
+        biome: "Earth"
     }),
     new Level({
         level:
@@ -65,18 +37,19 @@ const level_map = [
                 "------h-----------t----",
                 "-t------------t--------",
                 "------t----------t-----",
-                "--------W--W-----------",
+                "-----------------------",
                 "-----P-----w------R----",
-                "-----------w-----------",
-                "--t-----W--W---t-------",
+                "-----------------------",
+                "--t--------c---t-------",
                 "------------t----------",
-                "------c-----------t----",
+                "------------------t----",
                 "----------t------------",
                 "--t----------------t---",
             ],
         sol: "textures/ground_diffuse.png",
         minHeightMap: -0.1,
         lvlObjective: levelObjectives.killAllTank,
+        biome: "Sand"
     }),
     new Level({
         level: [
@@ -97,6 +70,7 @@ const level_map = [
         sol: "textures/ground.png",
         minHeightMap: -1,
         lvlObjective: levelObjectives.burnAllTrees,
+        biome: "Snow"
     }),
     new Level({
         level: [
@@ -117,47 +91,48 @@ const level_map = [
         sol: "textures/ground_diffuse.png",
         minHeightMap: -1,
         lvlObjective: levelObjectives.killAllTank,
+        biome: "Snow"
     }),
-    new Level({
-        level: [
-            "-----------------------",
-            "-------B---------------",
-            "---WWwwwwwwW-----------",
-            "-----------W-----------",
-            "-----------W-----------",
-            "-----------W-----------",
-            "-----------WW-----R----",
-            "------------W----------",
-            "------------W----------",
-            "------------W----------",
-            "--P---------WwwwwwwWW--",
-            "-----------------------",
-            "------------------B----",
-        ],
-        sol: "textures/ground_diffuse.png",
-        minHeightMap: -1,
-        lvlObjective: levelObjectives.killAllTank,
-    }),
-    new Level({
-        level: [
-            "-----------------------",
-            "---WWWWW-------W----G--",
-            "---W-----------W-------",
-            "---W-B---------W-------",
-            "---W-----------W-------",
-            "---W-----------WWWWW---",
-            "-----------------------",
-            "-----------------------",
-            "---WWWWWW----------W---",
-            "--------W----------W---",
-            "--P-----W----------W---",
-            "--------W------WWWWW-R-",
-            "-----------------------",
-        ],
-        sol: "textures/ground_diffuse.png",
-        minHeightMap: -1,
-        lvlObjective: levelObjectives.killAllTank,
-    }),
+    // new Level({
+    //     level: [
+    //         "-----------------------",
+    //         "-------B---------------",
+    //         "---WWwwwwwwW-----------",
+    //         "-----------W-----------",
+    //         "-----------W-----------",
+    //         "-----------W-----------",
+    //         "-----------WW-----R----",
+    //         "------------W----------",
+    //         "------------W----------",
+    //         "------------W----------",
+    //         "--P---------WwwwwwwWW--",
+    //         "-----------------------",
+    //         "------------------B----",
+    //     ],
+    //     sol: "textures/ground_diffuse.png",
+    //     minHeightMap: -1,
+    //     lvlObjective: levelObjectives.killAllTank,
+    // }),
+    // new Level({
+    //     level: [
+    //         "-----------------------",
+    //         "---WWWWW-------W----G--",
+    //         "---W-----------W-------",
+    //         "---W-B---------W-------",
+    //         "---W-----------W-------",
+    //         "---W-----------WWWWW---",
+    //         "-----------------------",
+    //         "-----------------------",
+    //         "---WWWWWW----------W---",
+    //         "--------W----------W---",
+    //         "--P-----W----------W---",
+    //         "--------W------WWWWW-R-",
+    //         "-----------------------",
+    //     ],
+    //     sol: "textures/ground_diffuse.png",
+    //     minHeightMap: -1,
+    //     lvlObjective: levelObjectives.killAllTank,
+    // }),
 ]
 
 let current_level_dico = level_map[0]
@@ -170,9 +145,16 @@ function draw_level_map() {
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
+
+
     document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
 
     setCurrentLevelDico()
+
+    biome = current_level_dico.biome;
+    listGrounds.forEach(g => g.position.y = -10)
+    listGrounds[BIOMES.indexOf(biome)].position.y = 0
+
     if (level == 0) {
         if (char1) char1.dispose(true);
         char1 = new Char(ObjectEnum.Player, 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
