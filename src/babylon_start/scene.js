@@ -230,18 +230,17 @@ class Scene {
       });
       listGrounds[index].material = groundMaterial;
 
-      listGrounds[index].receiveShadows = true
+      listGrounds[index].receiveShadows = false
       // to be taken into account by collision detection
-      listGrounds[index].checkCollisions = true;
       //groundMaterial.wireframe=true;
 
       // for physic engine
-      listGrounds[index].physicsImpostor = new BABYLON.PhysicsImpostor(
-        listGrounds[index],
-        BABYLON.PhysicsImpostor.HeightmapImpostor,
-        { mass: 0 },
-        scene
-      );
+      // listGrounds[index].physicsImpostor = new BABYLON.PhysicsImpostor(
+      //   listGrounds[index],
+      //   BABYLON.PhysicsImpostor.HeightmapImpostor,
+      //   { mass: 0 },
+      //   scene
+      // );
 
 
       groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)

@@ -152,8 +152,22 @@ function draw_level_map() {
     setCurrentLevelDico()
 
     biome = current_level_dico.biome;
-    listGrounds.forEach(g => g.position.y = -10)
-    listGrounds[BIOMES.indexOf(biome)].position.y = 0
+    listGrounds.forEach(g => {
+        g.position.y = -10
+        g.receiveShadows = false
+        g.isVisible = false
+        if (g.physicsImpostor) g.physicsImpostor.dispose()
+    })
+    let currentGround = listGrounds[BIOMES.indexOf(biome)]
+    currentGround.position.y = 0
+    currentGround.receiveShadows = true
+    currentGround.isVisible = true
+    currentGround.physicsImpostor = new BABYLON.PhysicsImpostor(
+        currentGround,
+        BABYLON.PhysicsImpostor.HeightmapImpostor,
+        { mass: 0 },
+        scene
+    )
 
     if (level == 0) {
         if (char1) char1.dispose(true);
