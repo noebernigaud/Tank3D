@@ -154,6 +154,9 @@ function draw_level_map() {
         selected_bonuses = []
     }
 
+
+    char1.dust.updateColor()
+
     let setPlayerPosition = () => {
         for (var [l_index, line] of current_level.entries()) {
             for (var [ch_index, ch] of line.split('').entries()) {

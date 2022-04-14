@@ -145,7 +145,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
 
     particleSystem.addSizeGradient(0, isMoving ? 0.03 : 0.0375);
     particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.625);
-    
+
 
     // Blendmode
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
@@ -191,10 +191,17 @@ function createDust(emitter) {
 
 
     // Color gradient
-    if (biome == "Snow") particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0.2), new BABYLON.Color4(1, 1, 1, 0.2))
-    else particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
+    particleSystem.setColor = () => {
+        if (biome == "Snow") particleSystem.addColorGradient(0, new BABYLON.Color4(1, 1, 1, 0.2), new BABYLON.Color4(1, 1, 1, 0.2))
+        else particleSystem.addColorGradient(0, new BABYLON.Color4(194 / 255, 178 / 255, 128 / 255, 0.2), new BABYLON.Color4(225 / 255, 191 / 255, 146 / 255, 0.1))
+    }
 
+    particleSystem.setColor()
 
+    particleSystem.updateColor = () => {
+        particleSystem.removeSizeGradient(0);
+        particleSystem.setColor()
+    }
     // Rotation
     particleSystem.minInitialRotation = 0;
     particleSystem.maxInitialRotation = Math.PI;
