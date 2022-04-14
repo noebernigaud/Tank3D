@@ -3,7 +3,7 @@ class BonusEnum {
     static bonusEnumList = [
         new BonusEnum(
             "Speed",
-            function () { char1.speedNorme *= 2 },
+            function () { char1.speedNorme += 1.5 },
             "Acceleration multiplied by 2",
             "./images/speed_tank.png"
         ),
@@ -15,19 +15,19 @@ class BonusEnum {
         ),
         new BonusEnum(
             "Bullets speed",
-            function () { char1.bulletSpeed *= 2 },
+            function () { char1.bulletSpeed += 20 },
             "Now your bullets will go two time faster !",
             "./images/speed_bullet-removebg-preview.png"
         ),
-        new BonusEnum(
-            "Bonus life",
-            function () { char1.life += 3 },
-            "With this bonus you gain 3 lives",
-            "./images/health.png"
-        ),
+        // new BonusEnum(
+        //     "Bonus life",
+        //     function () { char1.life += 3 },
+        //     "With this bonus you gain 3 lives",
+        //     "./images/health.png"
+        // ),
         new BonusEnum(
             "Bonus bullet damage",
-            function () { char1.bulletDamage += 5 },
+            function () { char1.bulletDamage += 3 },
             "With this bonus your bullets will deal 5 more damage",
             "./images/bullet_damage.png"
         ),
