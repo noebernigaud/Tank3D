@@ -185,7 +185,7 @@ function draw_level_map() {
                 case '-':
                     break;
                 case 'N':
-                    var char = new Char("mini", posX, posY, 0, 0, 0, 0);
+                    var char = new Char("mini", posX, posY, 0, 1, 1000, 60, 2, 1, 5, 4);
                     charsAI.push(char);
                     char.setStrategy(new noStrategy(char))
                     chars.push(char);
