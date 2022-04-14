@@ -161,8 +161,8 @@ function init() {
 
     playing = 0;
 
-    musicBackground.play()
-    musicBackground.loop = true
+    // musicBackground.play()
+    // musicBackground.loop = true
 
 
     // level = 0;

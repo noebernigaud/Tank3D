@@ -98,5 +98,6 @@ bonusTookSound.volume = 0.2
 let musicBackground = new Audio('audio/warmusic.mp3')
 musicBackground.volume = 0.1
 musicBackground.loop = true
+musicBackground.pause()
 
 var impostorCharList = [];

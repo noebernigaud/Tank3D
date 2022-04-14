@@ -51,9 +51,10 @@ class Char extends ObjectPos {
     this.healtBar = new Healthbar(this);
 
     this.moveSound = new Audio('audio/electricFerry.mp3');
-    this.moveSound.volume = 0.4
+    this.moveSound.volume = 1
     this.moveSound.loop = true
-    this.moveSound.autoplay = true
+    this.moveSound.pause()
+    // this.moveSound.autoplay = true
 
     this.bulletFiredSound = new Audio('audio/TankFire.mp3');
     this.setVolumeEmittedFireBullet = 0.3

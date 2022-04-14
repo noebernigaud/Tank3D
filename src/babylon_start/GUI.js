@@ -59,10 +59,13 @@ class Menu {
         if (!this.isFirst) {
             document.getElementById("restart").style.removeProperty("display")
             if (toShow) {
+                chars.forEach(c => c.moveSound.pause())
                 engine.stopRenderLoop()
                 this.setBackground()
             } else {
                 if (!this.inBonus) {
+                    musicBackground.play()
+                    chars.forEach(c => c.moveSound.play())
                     engine.runRenderLoop(() => scene.render())
                 }
             }
