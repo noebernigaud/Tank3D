@@ -35,6 +35,7 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.MiniTank.name: { shape = ObjectEnum.MiniTank.container.clone(); break; }
       case ObjectEnum.SnowTank.name: { shape = ObjectEnum.SnowTank.container.clone(); break; }
       case ObjectEnum.EarthTank.name: { shape = ObjectEnum.EarthTank.container.clone(); break; }
+      case ObjectEnum.SandTank.name: { shape = ObjectEnum.SandTank.container.clone(); break; }
       case ObjectEnum.Rock.name: { shape = ObjectEnum.Rock.container.clone(); break; }
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
@@ -133,6 +134,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.MiniTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.SnowTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.EarthTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.SandTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:
