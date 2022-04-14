@@ -156,12 +156,14 @@ function draw_level_map() {
         g.position.y = -10
         g.receiveShadows = false
         g.isVisible = false
+        g.checkCollision = false
         if (g.physicsImpostor) g.physicsImpostor.dispose()
     })
     let currentGround = listGrounds[BIOMES.indexOf(biome)]
     currentGround.position.y = 0
     currentGround.receiveShadows = true
     currentGround.isVisible = true
+    currentGround.checkCollision = true
     currentGround.physicsImpostor = new BABYLON.PhysicsImpostor(
         currentGround,
         BABYLON.PhysicsImpostor.HeightmapImpostor,
