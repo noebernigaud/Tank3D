@@ -21,7 +21,7 @@ class ObjectEnum {
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5, 0.5)
-  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 0.5, 0.8, 1, 0.8)
+  static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 1, 0.8, 1, 0.8)
   static PalmTree2 = new ObjectEnum("merged_palm_tree", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.02, 0.8, 1, 0.8)
 
