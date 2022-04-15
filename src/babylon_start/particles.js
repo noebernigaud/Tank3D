@@ -82,7 +82,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     box.isVisible = false
 
     // Create a particle system
-    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 2000 : 8000);
+    var particleSystem = new BABYLON.ParticleSystem("particles", isMoving ? 2000 : 3000);
 
     // Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/smoke.png");
@@ -144,7 +144,7 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
 
 
     particleSystem.addSizeGradient(0, isMoving ? 0.03 : 0.0375);
-    particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.625);
+    particleSystem.addSizeGradient(1, isMoving ? 0.2 : 0.825);
 
 
     // Blendmode
@@ -261,7 +261,7 @@ function stopSmoke(particleSystem) {
 // }
 
 function createBonusEffect(emitter) {
-    const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
+    const particleSystem = new BABYLON.ParticleSystem("particles", 100);
 
     //Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png");
