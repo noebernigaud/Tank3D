@@ -11,10 +11,18 @@ class MiniMap {
     this.ctx = this.canvas.getContext('2d');
   }
 
-  drawPoint(x, y, color, isBullet = false) {
+  drawPoint(x, y, color, radius) {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
-    this.ctx.arc(x, y, isBullet ? 0.5 : 2, 0, 2 * Math.PI);
+    this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    this.ctx.fill();
+    this.ctx.stroke();
+  }
+
+  drawSquare(x, y, color){
+    this.ctx.fillStyle = color;
+    this.ctx.beginPath();
+    this.ctx.rect(x, y, 4, 4);
     this.ctx.fill();
     this.ctx.stroke();
   }
@@ -39,21 +47,24 @@ class MiniMap {
     })
     chars.forEach(c => {
       let point = resize(c.shape.position.z, c.shape.position.x);
-      // console.log(point);
-      this.drawPoint(point.x, point.y, c == char1 ? 'rgb(0,255,0)' : 'rgb(255, 0, 0)')
+      this.drawPoint(point.x, point.y, c == char1 ? 'rgb(0,255,0)' : 'rgb(255, 0, 0)', 3)
     })
     walls.forEach(w => {
       if (w instanceof WallPerimeter) return
       let point = resize(w.shape.position.z, w.shape.position.x);
-      this.drawPoint(point.x, point.y, 'rgb(165,42,42)')
+      this.drawSquare(point.x, point.y, 'rgb(160,82,45)')
     })
     barrels.forEach(w => {
       let point = resize(w.shape.position.z, w.shape.position.x);
-      this.drawPoint(point.x, point.y, 'rgb(165,42,42)')
+      this.drawPoint(point.x, point.y, 'rgb(165,42,42)', 2)
+    })
+    bonuses.forEach(w => {
+      let point = resize(w.shape.position.z, w.shape.position.x);
+      this.drawPoint(point.x, point.y, 'rgb(218,165,32)', 2.5)
     })
     bullets.forEach(b => {
       let point = resize(b.position.z, b.position.x);
-      this.drawPoint(point.x, point.y, 'rgb(0,0,0)', true)
+      this.drawPoint(point.x, point.y, 'rgb(0,0,0)', 1)
     })
   }
 }
