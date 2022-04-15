@@ -41,6 +41,7 @@ class Bullet extends ObjectPos {
         sourceMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
         sourceMat.diffuseColor = new BABYLON.Color3(1, 0, 0);
         sourceMat.specularColor = new BABYLON.Color3(1, 1, 0);
+        sourceMat.alpha = 0.3;
 
         this.trail.material = sourceMat;
         this.collision = false;
