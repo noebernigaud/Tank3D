@@ -52,8 +52,8 @@ class Char extends ObjectPos {
     this.bulletLife = bulletLife;
     this.bulletDamage = bulletDamage;
     this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
-    this.health = health
-    this.maxHealth = health
+    this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? 5 : 10))
+    this.maxHealth = this.health
 
     //tank headlights
     // this.light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 1), Math.PI / 3, 1, scene);
