@@ -4,7 +4,7 @@ let levelObjectives = {
     goToNextLevel: (e) => {
       // console.log("HERE", charsAI, chars);
 
-      return chars.length == 1
+      return charsAI.length == 0
     }
   },
   getAllBonuses: {
@@ -13,6 +13,14 @@ let levelObjectives = {
       An enemy can pick a bonus and to get it back you must kill him`,
     goToNextLevel: (e) => {
       return bonuses.length == 0
+    }
+  },
+  getBonusesAndKillTanks: {
+    description:
+      `To pass the following game you have to collect all of the bonuses and destroy
+      every enemy tank`,
+    goToNextLevel: (e) => {
+      return (bonuses.length == 0 && charsAI.length == 0)
     }
   },
   burnAllTrees: {
