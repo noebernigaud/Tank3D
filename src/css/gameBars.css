@@ -61,3 +61,22 @@
   border-radius: 25px;
   padding: 3pt;
 }
+
+.loadingBarMain {
+  position: absolute;
+  top: 90%;
+  width: 80%;
+  height: 20pt;
+  background-color: green;
+  z-index: 30;
+}
+
+.loadingBarChild {
+  height: 100%;
+  background-color: yellow;
+  width: 0%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

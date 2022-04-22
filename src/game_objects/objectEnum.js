@@ -101,15 +101,28 @@ class ObjectEnum {
       this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
     this.remainingLoad = list_obj.length + 3
+    this.globalLen = this.remainingLoad;
     list_obj.forEach(e => e.create_model())
 
   }
 
   static loadingDone() {
     this.remainingLoad--;
+    let done = this.globalLen - this.remainingLoad;
+    let stat = Math.round(done / this.globalLen * 100 * 100) / 100 + "%";
+    let bar = document.getElementsByClassName('loadingBarChild')[0];
+    bar.style.width = stat;
+    bar.innerHTML = stat;
     if (this.remainingLoad == 0) {
-      engine.hideLoadingUI()
-      init()
+      setTimeout(() => {
+        document.getElementsByClassName('loadingBarChild')[0].innerHTML = "Loading Done - Game Will Start Soon";
+        setTimeout(() => {
+          document.getElementsByClassName('loadingBarMain')[0].style.display = 'none'
+          engine.hideLoadingUI()
+          init()
+        }, 1000);
+      }, 500);
+
     }
   }
 }
