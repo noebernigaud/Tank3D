@@ -81,6 +81,14 @@ class Level {
       // tab.innerHTML += `<tr><td class="button"><span>${iterator[0]}</span></td><td class="button"><span>${iterator[1]}</span></td></tr>`
       tab.appendChild(line)
     }
+
+    if (!(win || die)) {
+      let nextLvlDescLine = document.createElement("tr")
+      let nextLvlDesc = createTd(level_map[level].lvlObjective.description)
+      nextLvlDesc.colSpan = 2
+      nextLvlDescLine.appendChild(nextLvlDesc)
+      tab.appendChild(nextLvlDescLine)
+    }
     let endLine = document.createElement("tr")
     let endCell = (die || win) ? createTd("Main Menu") : createTd("Next Level")
     endCell.colSpan = 2;
