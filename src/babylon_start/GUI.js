@@ -171,6 +171,7 @@ class Menu {
     }
 
     restart() {
+        engine.stopRenderLoop()
         document.getElementById("restart").style.display = "none"
         scene.menu = new Menu()
         level = 0;

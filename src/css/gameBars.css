@@ -10,6 +10,8 @@
 
 #speed {
   color: white;
+  width: 40pt;
+  display: inline-block;
 }
 
 #gameBars {
