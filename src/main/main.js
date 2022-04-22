@@ -84,9 +84,10 @@ function stabilizeIfNotMoving() {
 }
 
 function keyApplaier() {
+
     var speed_angle = 0.05;
 
-    if (typeof char1.shape === 'undefined') return;
+    if (typeof char1.shape === 'undefined' || scene.menu.isInMenu()) return;
 
     // On regarde si on doit poser une mine
     if (inputStates.SPACE) {
@@ -205,6 +206,7 @@ function init() {
 
     //turret direction is responding to cursor movements
     window.addEventListener("mousemove", (evt) => {
+        if (scene.menu.isInMenu()) return
         if (evt.movementX > 0) char1.rotateTurretAxisY(Math.sqrt(evt.movementX) / 200)
         else if (evt.movementX < 0) char1.rotateTurretAxisY(- (Math.sqrt(Math.abs(evt.movementX)) / 200))
         if (evt.movementY > 0) char1.rotateTurretUpDown(false, Math.min(Math.sqrt(evt.movementY), 4))

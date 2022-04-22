@@ -36,7 +36,7 @@ class Char extends ObjectPos {
       camera1.heightOffset = 2//0;
       camera1.rotationOffset = 180 //-98;
       camera1.cameraAcceleration = .1;
-      camera1.maxCameraSpeed = 10;
+      camera1.maxCameraSpeed = 8;
       camera.dispose();
       camera = camera1;
       loadCrossHair(this, scene)

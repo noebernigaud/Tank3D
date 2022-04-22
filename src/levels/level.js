@@ -24,7 +24,6 @@ class Level {
       scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
       exitPointerLoc()
-      if (!died && !win) this.loadNextLevel()
       this.writeStat(died, win)
     }
   }
@@ -100,8 +99,9 @@ class Level {
       else {
         scene.menu.inNextLevel = false;
         document.getElementById('endLevelStat').style.display = 'none';
-        engine.runRenderLoop(() => scene.render())
-        pointerLock()
+        this.loadNextLevel();
+        // engine.runRenderLoop(() => scene.render())
+        pointerLock();
         Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
       }
     }
@@ -111,9 +111,15 @@ class Level {
   }
 
   loadNextLevel() {
+    camera.position =
+      char1.position
+        .multiply(char1.getTurretTank()
+          .getDirection(BABYLON.Axis.Z)
+          .multiply(new BABYLON.Vector3(50, 50, 50)))
+        .add(new BABYLON.Vector3(0, 10, 0))
     level += 1;
     remove_all_objects()
     startgame(level);
-    engine.stopRenderLoop()
+    // engine.stopRenderLoop()
   }
 }
