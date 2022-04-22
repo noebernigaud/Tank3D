@@ -123,14 +123,16 @@ class Scene {
           }
         })
         if (char1.life <= 0 || level == level_map.length) {
-          this.scene.menu.restart()
+          // this.scene.menu.restart()
+          current_level_dico.goNextLevel(true)
           // level = 0;
           // remove_all_objects(true)
           // startgame(level);
           // this.scene.menu.createButton()
         } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
-            this.scene.menu.restart()
+            // this.scene.menu.restart()
+            current_level_dico.goNextLevel(false, true)
           } else if (!this.scene.menu.inOtherMenu()) {
             current_level_dico.goNextLevel()
             if (sceneInterval) {

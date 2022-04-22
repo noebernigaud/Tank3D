@@ -18,14 +18,14 @@ class Level {
     return this.lvlObjective.goToNextLevel()
   }
 
-  goNextLevel() {
+  goNextLevel(died = false, win = false) {
     console.log("in other menu", scene.menu.inOtherMenu());
     if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
       exitPointerLoc()
-      this.loadNextLevel()
-      this.writeStat()
+      if (!died && !win) this.loadNextLevel()
+      this.writeStat(died, win)
     }
   }
 
@@ -49,10 +49,14 @@ class Level {
     this.stats["Wall destroyed"]++;
   }
 
-  writeStat() {
+  writeStat(die, win) {
+
+    if (win) applauseSound.play()
+
     document.getElementById("endLevelStat").style.display = "block"
     let tab = document.getElementById("tableStat")
     tab.innerHTML = "";
+
     let createTd = content => {
       let cell = document.createElement("td");
       let span = document.createElement("span")
@@ -61,6 +65,13 @@ class Level {
       cell.appendChild(span)
       return cell
     }
+
+    let startLine = document.createElement("tr")
+    let startCell = die ? createTd("You Died!") : (win ? createTd("Congratulations!") : createTd("Level Complete!"))
+    startCell.colSpan = 2;
+    startLine.appendChild(startCell)
+    tab.appendChild(startLine)
+
     for (const iterator of Object.entries(this.stats)) {
       let line = document.createElement("tr")
       line.appendChild(createTd(iterator[0]))
@@ -71,14 +82,20 @@ class Level {
       tab.appendChild(line)
     }
     let endLine = document.createElement("tr")
-    let endCell = createTd("Next Level")
+    let endCell = (die || win) ? createTd("Main Menu") : createTd("Next Level")
     endCell.colSpan = 2;
     endCell.onclick = () => {
-      scene.menu.inNextLevel = false;
-      document.getElementById('endLevelStat').style.display = 'none';
-      engine.runRenderLoop(() => scene.render())
-      pointerLock()
-      Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+      if (die || win) {
+        scene.menu.restart()
+        document.getElementById('endLevelStat').style.display = 'none';
+      }
+      else {
+        scene.menu.inNextLevel = false;
+        document.getElementById('endLevelStat').style.display = 'none';
+        engine.runRenderLoop(() => scene.render())
+        pointerLock()
+        Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+      }
     }
     endLine.appendChild(endCell)
     tab.appendChild(endLine)
