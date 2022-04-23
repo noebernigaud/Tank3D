@@ -142,9 +142,12 @@ class Scene {
           }
         }
 
-        else char1.setCrossHairPosition()
+        else {
+          charsAI.forEach(c => c.strategy.applyStrategy());
+          chars.forEach(c => SpecialBonus.updateAllThankBonuses(c));
+        }// TODO : Here update all bonuses list !!!
         //charsAI.forEach(c => MoveAI.move(c));
-        charsAI.forEach(c => c.strategy.applyStrategy())
+
       }
     }
     return scene;

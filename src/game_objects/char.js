@@ -3,6 +3,9 @@ class Char extends ObjectPos {
   static height = cell_size;
   static depth = cell_size;
 
+  /** @type{SpecialBonus[]} */
+  specialBonuses;
+
   /**
    * @param {number} x 
    * @param {number} y 
@@ -28,7 +31,6 @@ class Char extends ObjectPos {
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
     this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
-    this.crossHair = undefined
 
     if (type.name == ObjectEnum.Player.name) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
@@ -39,7 +41,6 @@ class Char extends ObjectPos {
       camera1.maxCameraSpeed = 8;
       camera.dispose();
       camera = camera1;
-      loadCrossHair(this, scene)
       // engine.runRenderLoop(() => scene.render())
     } else {
       this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
@@ -81,6 +82,8 @@ class Char extends ObjectPos {
 
     this.charExploseSound = new Audio('audio/charExplosion.mp3');
     this.charExploseSound.volume = 0.4
+
+    this.specialBonuses = new Set();
   }
 
   addBullet(time = Date.now()) {
@@ -272,6 +275,13 @@ class Char extends ObjectPos {
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
 
+  /**
+   * @param {SpecialBonus} bonus 
+   */
+  addSpecialBonus(bonus) {
+    this.specialBonuses.add(bonus);
+  }
+
 
   healthLoss(damage) {
     if (damage < this.health) this.health -= damage
@@ -282,39 +292,9 @@ class Char extends ObjectPos {
     }
   }
 
-  setCrossHairPosition() {
-    if (!this.crossHair) return
-    let laserCoolDown = 1;
-    let laserRes = ShootAI.targetPlayer(char1, 1000, false, laserCoolDown, true, this.crossHair);
-    if (laserRes) {
-      let [position, hitMesh] = laserRes
-      let cannonPoint = getCannonPoint(this)
-
-      let distanceFromTank = Math.sqrt((position.x - cannonPoint.x) ** 2 + (position.y - cannonPoint.y) ** 2 + (position.z - cannonPoint.z) ** 2) * 4
-      ShootAI.targetPlayer(char1, distanceFromTank, true, laserCoolDown, true, this.crossHair);
-      // crossHair.parent = obj.shape
-      let char;
-
-      if (char = chars.find(e => e.shape == hitMesh)) {
-        highlightTank(char, true)
-
-      } else {
-        if (hl) hl.removeAllMeshes()
-      }
-      if (this.crossHair.position) this.crossHair.position = position
-    }
-    else {
-      ShootAI.targetPlayer(char1, 1000, true, laserCoolDown, true, this.crossHair);
-
-      if (this.crossHair.position) this.crossHair.position.y -= 200
-      if (hl) hl.removeAllMeshes()
-    }
-  }
-
   dispose(forceDispose) {
     super.dispose(forceDispose)
     this.healtBar.disposeBar()
-    if (this.crossHair) this.crossHair.dispose()
   }
 
 }
@@ -350,29 +330,4 @@ function lights() {
 
 
 
-}
-/**
- * 
- * @param {Char} tank 
- * @param {boolean} toHighlight 
- */
-function highlightTank(tank, toHighlight) {
-  if (toHighlight && !hl.hasMesh(tank.shape.getChildMeshes()[0])) {
-    tank.shape.getChildMeshes().filter(m =>
-      !((m == tank.healtBar.healthBarContainer) || (tank.healtBar.healthBarContainer.getChildMeshes().includes(m)))).forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
-  }
-}
-
-/** @param {Char} obj */
-function loadCrossHair(obj, scene) {
-  var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
-
-  crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
-
-  crossHair.material = new BABYLON.StandardMaterial("crossHair", scene);
-  crossHair.material.diffuseTexture = new BABYLON.Texture("images/gunaims.png", scene);
-  crossHair.material.diffuseTexture.hasAlpha = true;
-  crossHair.material.emissiveColor = BABYLON.Color3.White()
-  crossHair.isPickable = false;
-  obj.crossHair = crossHair;
 }
