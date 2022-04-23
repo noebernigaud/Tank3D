@@ -5,26 +5,45 @@ const BONUS_TYPE = {
 };
 
 const SPECIAL_BONUS_ID = {
-  CROSS_HAIR: 1,
+  CROSS_HAIR: {
+    name: "Sniper laser",
+    description: "Highlight enemies once target + Bullet are very fast every 3 seconds",
+    image: "images/gunaims.png"
+  },
 }
 
 class SpecialBonus {
-
   /** @type{Char} */
   tank;
   /** @type{boolean} */
   isActive;
 
+  /** @type{HTMLDivElement} */
+  loader;
+
   /**
    * @param {Char} tank 
-   * @param {number} bonusType 
    */
-  constructor(tank, bonusType, id) {
+  constructor(tank, bonusType) {
     this.tank = tank;
     this.bonusType = bonusType;
     this.isActive = false;
-    this.id = id;
-    tank.addSpecialBonus(this);
+
+    this.name = bonusType.name;
+    this.description = bonusType.description;
+
+    this.image = document.createElement("img");
+    this.image.src = bonusType.image
+    this.image.classList.add("logo")
+    this.image.classList.add("whiteBackground")
+
+    this.delay = 10000;
+    this.timeCooled = 10000;
+    this.startDate = Date.now()
+  }
+
+  addToChar() {
+    this.tank.addSpecialBonus(this);
   }
 
   activate() {
@@ -38,18 +57,23 @@ class SpecialBonus {
 
   /** Remove bonus from thank but not graphically */
   remove() {
-    this.tank.specialBonuses.delete(this);
+    this.tank.specialBonuses.splice(this.tank.specialBonuses.indexOf(this), 1);
   }
 
 
   /** Remove bonus from thank and graphically */
   fullDispose() {
     this.hide();
-    this.remove()
+    this.remove();
+    if (this.tank == char1) this.bg.remove();
   }
 
-  // ABSTRACT
-  update() { }
+  update() {
+    this.timeCooled = Math.max(0, this.startDate + this.delay - Date.now());
+    let timeDisplay = 100 - Math.round(100 - this.timeCooled / this.delay * 100)
+    this.loader.style.setProperty('--p', `${timeDisplay}`);
+    this.loader.innerHTML = timeDisplay > 0 ? (timeDisplay + "%") : ""
+  }
 
   /** Remove bonus graphically but not from thank */
   // ABSTRACT
@@ -57,12 +81,53 @@ class SpecialBonus {
 
   /** Load bonus once collected */
   // ABSTRACT
-  load() { }
+  load() {
+
+    this.loader = document.createElement('div')
+    this.loader.classList = "pie animate no-round"
+    this.loader.style.setProperty("--p", '0')
+    this.loader.innerHTML = "0%";
+
+    this.bg = document.createElement('div')
+    this.bg.classList = 'bg'
+    this.bg.style.setProperty("--img", `url("../${this.bonusType.image}")`)
+
+    this.bg.appendChild(this.loader);
+
+    if (this.tank == char1) {
+      let sb = document.getElementsByClassName('specialBonus')[0]
+      sb.appendChild(this.bg);
+      sb.classList.remove('hide')
+    }
+  }
+
+  /** Apply the effect of the bonus */
+  // ABSTRACT
+  use() { }
+
+  resetTime() {
+    this.startDate = Date.now()
+    this.timeCooled = 0;
+  }
+
+  correctTime() {
+    this.startDate = Date.now() - this.delay + this.timeCooled
+  }
 
   /**
    * @param {Char} tank 
    */
   static updateAllThankBonuses(tank) {
     tank.specialBonuses.forEach(e => e.update());
+  }
+
+  static createSpecialBonusList(tank) {
+    return [
+      new crossHair(tank),
+      new crossHair(tank),
+      new crossHair(tank),
+      new crossHair(tank),
+      new crossHair(tank)
+    ]
   }
 }

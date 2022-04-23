@@ -66,6 +66,7 @@ class Menu {
                 if (!this.inBonus) {
                     musicBackground.play()
                     chars.forEach(c => c.moveSound.play())
+                    chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
                     engine.runRenderLoop(() => scene.render())
                 }
             }
@@ -107,7 +108,7 @@ class Menu {
         this.inBonus = true;
         this.bonusPanel.style.removeProperty("display")
         /**
-         * @param {BonusEnum} bEnum 
+         * @param {BonusEnum|SpecialBonus} bEnum 
          * @returns 
         */
         let createButton = (bEnum) => {
@@ -129,9 +130,10 @@ class Menu {
                 bonusTookSound.currentTime = 0
                 bonusTookSound.play()
                 console.log("bonus was taken");
-                bEnum.effect()
-                selected_bonuses.push(bEnum.name);
+                bEnum.load()
+                bEnum.addToChar()
                 this.bonusPanel.style.display = "none";
+                chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
                 this.clearBonus()
@@ -172,6 +174,7 @@ class Menu {
 
     restart() {
         engine.stopRenderLoop()
+        document.getElementsByClassName('specialBonus')[0].classList.add('hide');
         document.getElementById("restart").style.display = "none"
         scene.menu = new Menu()
         level = 0;

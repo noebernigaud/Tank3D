@@ -6,7 +6,7 @@ const level_map = [
             [
                 "-----------------------------",
                 "-----------------------------",
-                "------P----------------------",
+                "------P---C------------------",
                 "-----------------------------",
                 "-----------------------------",
                 "-----------------------------",
@@ -251,10 +251,10 @@ function draw_level_map() {
                     walls.push(new Wall(posX, posY, true));
                     break;
                 case 'c':
-                    bonuses.push(new Bonus(posX, posY));
+                    bonuses.push(new Bonus(posX, posY, false));
                     break;
                 case 'C':
-                    bonuses.push(new Bonus(posX, posY));
+                    bonuses.push(new Bonus(posX, posY, true));
                     break;
                 case 'h':
                     barrels.push(new Barrel(posX, posY))

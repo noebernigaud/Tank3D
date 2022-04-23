@@ -36,13 +36,17 @@ class BonusEnum {
         ),
     ]
 
-    constructor(name, effect, description, image) {
+    constructor(name, load, description, image) {
         this.name = name
-        this.effect = effect
+        this.load = load
         this.description = description;
         this.image = document.createElement("img");
         this.image.src = image
         this.image.classList.add("logo")
         this.image.classList.add("whiteBackground")
+    }
+
+    addToChar() {
+        selected_bonuses.push(this.name);
     }
 }

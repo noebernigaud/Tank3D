@@ -10,14 +10,14 @@ let levelObjectives = {
   },
   getAllBonuses: {
     description:
-      `Complete the next stage by picking up all bonus supplies`,
+      `Complete the next stage by picking up all bonus supplied`,
     goToNextLevel: (e) => {
       return bonuses.length == 0
     }
   },
   getBonusesAndKillTanks: {
     description:
-      `Complete the next stage by collecting all of the bonus supplies 
+      `Complete the next stage by collecting all of the bonus supplied 
       and destroying every enemy tank`,
     goToNextLevel: (e) => {
       return (bonuses.length == 0 && charsAI.length == 0)

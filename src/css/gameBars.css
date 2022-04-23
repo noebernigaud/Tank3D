@@ -84,3 +84,89 @@
   border-radius: 50pt;
   color: white;
 }
+
+:root {
+  --c: #242424db;
+  --p: 0;
+  --b: 22px;
+  --w: 65px;
+}
+
+.bg {
+  width: var(--w);
+  height: var(--w);
+  border-radius: 100%;
+  background-image: var(--img);
+  background-size: 95%;
+  background-color: #ffffffd8;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 5pt;
+}
+
+.pie {
+  border-radius: 100%;
+  width: var(--w);
+  aspect-ratio: 1;
+  position: relative;
+  display: inline-grid;
+  /* margin: 5px; */
+  place-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.pie:before,
+.pie:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.pie:before {
+  inset: 0;
+  background:
+    radial-gradient(farthest-side, var(--c) 98%, #0000) top/var(--b) var(--b) no-repeat,
+    conic-gradient(var(--c) calc(var(--p)*1%), #0000 0);
+  /* -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b))); */
+  /* mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b))); */
+}
+
+.pie:after {
+  inset: calc(50% - var(--b)/2);
+  background: var(--c);
+  transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+
+.animate {
+  animation: p 1s .5s both;
+}
+
+.no-round:before {
+  background-size: 0 0, auto;
+}
+
+.no-round:after {
+  content: none;
+}
+
+.specialBonus {
+  background-color: #070707ab;
+  /* padding: 3pt; */
+  position: absolute;
+  top: 20%;
+  left: 2pt;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#txtSpecialBonus {
+  background-color: #5c5c5c;
+  color: white;
+}
+
+.hide {
+  display: none;
+}

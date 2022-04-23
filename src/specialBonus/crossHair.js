@@ -1,11 +1,14 @@
 class crossHair extends SpecialBonus {
 
   constructor(tank) {
-    super(tank, BONUS_TYPE.PERMANENT, SPECIAL_BONUS_ID.CROSS_HAIR);
+    super(tank, SPECIAL_BONUS_ID.CROSS_HAIR);
+    this.isActive = true;
   }
 
   update() {
-    if (!this.isActive) return
+    super.update();
+
+    if (!this.isActive || this.tank == undefined) return
     if (!this.crossHair) this.load();
     let laserCoolDown = 1;
     let laserRes = ShootAI.targetPlayer(this.tank, 1000, false, laserCoolDown, true, this.crossHair);
@@ -47,6 +50,8 @@ class crossHair extends SpecialBonus {
   }
 
   load() {
+    super.load()
+
     var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
 
     crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;

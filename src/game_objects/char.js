@@ -83,7 +83,7 @@ class Char extends ObjectPos {
     this.charExploseSound = new Audio('audio/charExplosion.mp3');
     this.charExploseSound.volume = 0.4
 
-    this.specialBonuses = new Set();
+    this.specialBonuses = [];
   }
 
   addBullet(time = Date.now()) {
@@ -279,7 +279,7 @@ class Char extends ObjectPos {
    * @param {SpecialBonus} bonus 
    */
   addSpecialBonus(bonus) {
-    this.specialBonuses.add(bonus);
+    this.specialBonuses.push(bonus);
   }
 
 
@@ -295,6 +295,7 @@ class Char extends ObjectPos {
   dispose(forceDispose) {
     super.dispose(forceDispose)
     this.healtBar.disposeBar()
+    this.specialBonuses.forEach(b => b.fullDispose())
   }
 
 }
