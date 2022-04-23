@@ -66,17 +66,21 @@
   position: absolute;
   top: 90%;
   width: 80%;
-  height: 20pt;
-  background-color: green;
+  height: 10pt;
+  background-color: black;
   z-index: 30;
+  border-radius: 50pt;
+  border: solid 4pt gray;
 }
 
 .loadingBarChild {
   height: 100%;
-  background-color: yellow;
+  background-color: #444444;
   width: 0%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50pt;
+  color: white;
 }
