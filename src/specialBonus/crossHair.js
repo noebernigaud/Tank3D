@@ -68,4 +68,13 @@ class crossHair extends SpecialBonus {
   hide() {
     this.crossHair.dispose()
   }
+
+  use() {
+    if (super.use()) {
+      let oldSpeed = this.tank.bulletSpeed;
+      this.tank.bulletSpeed = 200;
+      this.tank.addBullet();
+      this.tank.bulletSpeed = oldSpeed;
+    }
+  }
 }

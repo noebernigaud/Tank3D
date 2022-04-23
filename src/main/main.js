@@ -66,6 +66,8 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (isPressed) {
+        char1.specialBonuses.forEach(sp => sp.applyListener(evt));
     }
     // else if (evt.code === "KeyP") {
     //     if (isPressed && scene.menu.canBeSwitched) {

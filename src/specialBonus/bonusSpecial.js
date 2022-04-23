@@ -8,13 +8,15 @@ const SPECIAL_BONUS_ID = {
   CROSS_HAIR: {
     name: "Sniper laser",
     description: "Highlight enemies once target + Bullet are very fast every 3 seconds",
-    image: "images/gunaims.png"
+    image: "images/gunaims.png",
+    keyListener: '1'
   },
 }
 
 class SpecialBonus {
   /** @type{Char} */
   tank;
+
   /** @type{boolean} */
   isActive;
 
@@ -101,9 +103,21 @@ class SpecialBonus {
     }
   }
 
-  /** Apply the effect of the bonus */
-  // ABSTRACT
-  use() { }
+  /** Apply the effect of the bonus if possible */
+  use() {
+    if (this.timeCooled > 0) return false;
+    this.startDate = Date.now()
+    this.timeCooled = this.delay;
+    return true;
+  }
+
+  /**
+   * KeyListener specific to each bonus 
+   * @param {KeyboardEvent} event 
+   */
+  applyListener(event) {
+    if (event.key == this.bonusType.keyListener) this.use()
+  }
 
   resetTime() {
     this.startDate = Date.now()
