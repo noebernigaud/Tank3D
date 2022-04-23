@@ -90,11 +90,16 @@ class SpecialBonus {
     this.loader.style.setProperty("--p", '0')
     this.loader.innerHTML = "0%";
 
+    this.shortcut = document.createElement('div')
+    this.shortcut.innerHTML = this.bonusType.keyListener;
+    this.shortcut.classList = 'shortcut'
+
     this.bg = document.createElement('div')
     this.bg.classList = 'bg'
     this.bg.style.setProperty("--img", `url("../${this.bonusType.image}")`)
 
     this.bg.appendChild(this.loader);
+    this.bg.appendChild(this.shortcut);
 
     if (this.tank == char1) {
       let sb = document.getElementsByClassName('specialBonus')[0]
