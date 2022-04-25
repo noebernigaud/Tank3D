@@ -39,7 +39,7 @@ class SpecialBonus {
   /**
    * @param {Char} tank 
    */
-  constructor(tank, bonusType, delay) {
+  constructor(tank, bonusType, delay, bonusStartedDelay = 0) {
     this.tank = tank;
     this.bonusType = bonusType;
     this.isActive = false;
@@ -53,8 +53,13 @@ class SpecialBonus {
     this.image.classList.add("whiteBackground")
 
     this.delay = delay;
-    this.timeCooled = 10000;
+    this.timeCooled = delay;
     this.startDate = Date.now()
+
+
+    this.bonusStartedDelay = bonusStartedDelay;
+    this.bonusStartedDate = Date.now()
+    this.isActive = false;
   }
 
   addToChar() {
@@ -63,6 +68,7 @@ class SpecialBonus {
 
   activate() {
     this.isActive = true;
+    this.bonusStartedDate = Date.now();
   }
 
   disable() {
@@ -84,9 +90,22 @@ class SpecialBonus {
   }
 
   update() {
-    console.log("update")
-    this.timeCooled = Math.max(0, this.startDate + this.delay - Date.now());
-    let timeDisplay = 100 - Math.round(100 - this.timeCooled / this.delay * 100)
+
+    let timeDisplay;
+
+    if (this.isActive) {
+      this.bg.style.setProperty("--c", "#18c12ba8");
+      if (Date.now() - this.bonusStartedDate > this.bonusStartedDelay) {
+        this.disable();
+        this.resetTime();
+      }
+      this.timeCooled = Math.max(0, this.bonusStartedDate + this.bonusStartedDelay - Date.now());
+      timeDisplay = 100 - Math.round(100 - this.timeCooled / this.bonusStartedDelay * 100)
+    } else {
+      this.timeCooled = Math.max(0, this.startDate + this.delay - Date.now());
+      timeDisplay = 100 - Math.round(100 - this.timeCooled / this.delay * 100)
+      this.bg.style.removeProperty("--c")
+    }
     this.loader.style.setProperty('--p', `${timeDisplay}`);
     this.loader.innerHTML = timeDisplay > 0 ? (timeDisplay + "%") : ""
   }
@@ -135,7 +154,7 @@ class SpecialBonus {
    * @param {KeyboardEvent} event 
    */
   applyListener(event) {
-    if (event.key == this.bonusType.keyListener) this.use()
+    if (event.code == ('Digit' + this.bonusType.keyListener)) this.use()
   }
 
   resetTime() {
