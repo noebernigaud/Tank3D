@@ -1,7 +1,7 @@
 class crossHair extends SpecialBonus {
 
   constructor(tank) {
-    super(tank, SPECIAL_BONUS_ID.CROSS_HAIR);
+    super(tank, SPECIAL_BONUS_ID.CROSS_HAIR, 10000);
     this.isActive = true;
   }
 

@@ -11,6 +11,13 @@ const SPECIAL_BONUS_ID = {
     image: "images/gunaims.png",
     keyListener: '1'
   },
+  MACHINE_GUN: {
+    name: 'Machine gun',
+    description: "The delay between bullets is really short and bullets are faster",
+    image: "images/multiple_bullet.png",
+    keyListener: '2'
+  }
+
 }
 
 class SpecialBonus {
@@ -26,7 +33,7 @@ class SpecialBonus {
   /**
    * @param {Char} tank 
    */
-  constructor(tank, bonusType) {
+  constructor(tank, bonusType, delay) {
     this.tank = tank;
     this.bonusType = bonusType;
     this.isActive = false;
@@ -39,7 +46,7 @@ class SpecialBonus {
     this.image.classList.add("logo")
     this.image.classList.add("whiteBackground")
 
-    this.delay = 10000;
+    this.delay = delay;
     this.timeCooled = 10000;
     this.startDate = Date.now()
   }
@@ -143,10 +150,8 @@ class SpecialBonus {
   static createSpecialBonusList(tank) {
     return [
       new crossHair(tank),
+      new MachineGun(tank),
       new crossHair(tank),
-      new crossHair(tank),
-      new crossHair(tank),
-      new crossHair(tank)
     ]
   }
 }
