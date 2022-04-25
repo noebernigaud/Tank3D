@@ -52,7 +52,7 @@ class Char extends ObjectPos {
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
     this.bulletDamage = bulletDamage;
-    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
+    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement || 0.002;
     this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? 5 : 10))
     this.maxHealth = this.health
 
@@ -145,13 +145,13 @@ class Char extends ObjectPos {
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
     var quaternion = turret.rotationQuaternion.toEulerAngles().x
+    let inclinaison = this.inclinaisonTurretIncrement || 0.002;
     if (quaternion > -0.15 && isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret going UP");
+
+      turret.rotate(BABYLON.Axis.X, inclinaison * (isUp ? -angle : angle))
     }
     if (quaternion < 0.06 && !isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret going DOWN");
+      turret.rotate(BABYLON.Axis.X, inclinaison * (isUp ? -angle : angle))
     }
     // if (quaternion <= -0.15 && isUp) {
     //   console.log("turret is already at MAX UP");
@@ -216,6 +216,7 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank(hasFriction = true) {
+    if (this.health <= 0 || scene.inMenu) hasFriction = true
     remove(impostorCharList, this.physicsImpostor)
     this.physicsImpostor.dispose()
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });

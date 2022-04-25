@@ -87,9 +87,10 @@ function stabilizeIfNotMoving() {
 
 function keyApplaier() {
 
+
     var speed_angle = 0.05;
 
-    if (typeof char1.shape === 'undefined' || scene.menu.isInMenu()) return;
+    if (typeof char1.shape === 'undefined' || scene.menu.isInMenu() || char1.health <= 0) return;
 
     // On regarde si on doit poser une mine
     if (inputStates.SPACE) {

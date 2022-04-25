@@ -16,8 +16,14 @@ const SPECIAL_BONUS_ID = {
     description: "The delay between bullets is really short and bullets are faster",
     image: "images/multiple_bullet.png",
     keyListener: '2'
-  }
+  },
 
+  DOME: {
+    name: "Shield",
+    description: "Be protected by a dome during 15 seconds",
+    image: "images/shield.png",
+    keyListener: '3'
+  },
 }
 
 class SpecialBonus {
@@ -78,6 +84,7 @@ class SpecialBonus {
   }
 
   update() {
+    console.log("update")
     this.timeCooled = Math.max(0, this.startDate + this.delay - Date.now());
     let timeDisplay = 100 - Math.round(100 - this.timeCooled / this.delay * 100)
     this.loader.style.setProperty('--p', `${timeDisplay}`);
@@ -151,7 +158,7 @@ class SpecialBonus {
     return [
       new crossHair(tank),
       new MachineGun(tank),
-      new crossHair(tank),
+      new dome(tank),
     ]
   }
 }
