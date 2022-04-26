@@ -37,6 +37,8 @@ const SPECIAL_BONUS_ID = {
   },
 }
 
+let listenerList = ['KeyE', 'KeyR', 'KeyF'];
+
 class SpecialBonus {
   /** @type{Char} */
   tank;
@@ -75,7 +77,9 @@ class SpecialBonus {
   }
 
   addToChar() {
+    this.keyListener = listenerList[this.tank.specialBonuses.length];
     this.tank.addSpecialBonus(this);
+    this.load()
   }
 
   activate() {
@@ -137,7 +141,7 @@ class SpecialBonus {
     this.loader.innerHTML = "0%";
 
     this.shortcut = document.createElement('div')
-    this.shortcut.innerHTML = this.bonusType.keyListener;
+    this.shortcut.innerHTML = this.keyListener[this.keyListener.length - 1];
     this.shortcut.classList = 'shortcut'
 
     this.bg = document.createElement('div')
@@ -167,7 +171,7 @@ class SpecialBonus {
    * @param {KeyboardEvent} event 
    */
   applyListener(event) {
-    if (event.code == ('Digit' + this.bonusType.keyListener)) this.use()
+    if (event.code == this.keyListener) this.use()
   }
 
   resetTime() {
