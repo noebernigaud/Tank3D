@@ -8,7 +8,7 @@ class crossHair extends SpecialBonus {
   update() {
     super.update();
 
-    if (!this.isActive || this.tank == undefined) return
+    if (this.tank == undefined) return
     if (!this.crossHair) this.load();
     let laserCoolDown = 1;
     let laserRes = ShootAI.targetPlayer(this.tank, 1000, false, laserCoolDown, true, this.crossHair);
