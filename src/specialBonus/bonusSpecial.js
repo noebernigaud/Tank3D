@@ -29,6 +29,12 @@ const SPECIAL_BONUS_ID = {
     image: "images/shield.png",
     keyListener: '4'
   },
+  MIND_CONTROL: {
+    name: "Mind Control",
+    description: "Nearby tanks attack their allies for 10 seconds",
+    image: "images/shield.png",
+    keyListener: '5'
+  },
 }
 
 class SpecialBonus {
@@ -184,6 +190,7 @@ class SpecialBonus {
       new MachineGun(tank),
       new dome(tank),
       new SpeedTurbo(tank),
+      new MindControl(tank),
     ]
   }
 }

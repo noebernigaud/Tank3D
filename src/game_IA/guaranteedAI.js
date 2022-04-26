@@ -5,12 +5,13 @@ class guaranteedAI {
 
     angleChange;
 
-    constructor(tank) {
+    constructor(tank, isEnnemy = true) {
         this.tank = tank;
         this.updateTir = 12;
         this.updateDir = 10;
         this.angleChange = 0;
         this.goRight = 0;
+        this.isEnnemy = isEnnemy;
     }
 
     applyStrategy() {
@@ -74,11 +75,13 @@ class guaranteedAI {
                 this.tank.stabilizeTank();
 
         //Rotate turret
-        MoveAI.rotateTurret(this.tank);
+        MoveAI.rotateTurret(this.tank, this.isEnnemy);
 
         // Shoot simulation
         if (this.updateTir <= 0) {
-            if (char1.shape == ShootAI.targetPlayer(this.tank)) {
+            var hit = ShootAI.targetPlayer(this.tank)
+            if (!this.isEnnemy) console.log(hit);
+            if ((this.isEnnemy && char1.shape == hit) || (!this.isEnnemy && charsAI.some(c => c.shape == hit))) {
                 this.tank.addBullet(Date.now())
             }
             this.updateTir = 12;

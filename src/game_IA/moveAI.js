@@ -4,13 +4,29 @@ class MoveAI {
   /**
    * @param {Char} tank 
    */
-  static rotateTurret(tank) {
+  static rotateTurret(tank, isEnnemy = true) {
     var turret = tank.getTurretTank()
+    var target = char1
+
+    if (!isEnnemy) {
+      if (charsAI.length <= 1) return
+      target = (charsAI[0] != tank) ? charsAI[0] : charsAI[1]
+      var distance = 1000
+      charsAI.forEach(c => {
+        var newDist = Math.sqrt((c.shape.position.x - tank.shape.position.x) ** 2 +
+          (c.shape.position.y - tank.shape.position.y) ** 2 +
+          (c.shape.position.z - tank.shape.position.z) ** 2);
+        if (newDist > 0.2 && newDist < distance) {
+          distance = newDist
+          target = c
+        }
+      })
+    }
 
     //char ennemi nous vise en x et z
     var turretDir = turret.getDirection(new BABYLON.Vector3(1, 1, 1));
     var currentAngle = Math.atan2(turretDir.z, turretDir.x);
-    var targetDir = char1.shape.position.subtract(tank.shape.position);
+    var targetDir = target.shape.position.subtract(tank.shape.position);
     var targetAngle = Math.atan2(targetDir.z, targetDir.x);
     var rota = ((currentAngle - targetAngle) + Math.PI / 4)
     if (rota > Math.PI) rota -= 2 * Math.PI
@@ -19,7 +35,7 @@ class MoveAI {
 
     //char ennemi nous vise en hauteur:
     var currentAngleY = turret.getDirection(BABYLON.Axis.Z).y;
-    targetDir = BABYLON.Vector3.Normalize(char1.shape.position.subtract(tank.shape.position));
+    targetDir = BABYLON.Vector3.Normalize(target.shape.position.subtract(tank.shape.position));
     let dotVec = BABYLON.Vector3.Dot(new BABYLON.Vector3(0, -1, 0), targetDir);
     let targetAngleY = Math.acos(dotVec) - Math.PI / 2;
     // console.log("currentAngleY :", currentAngleY);
@@ -31,7 +47,7 @@ class MoveAI {
   static rotateTankBody(tank) {
     var turretDir = tank.getTurretTank().getDirection(new BABYLON.Vector3(1, 1, 1));
     var currentAngle = Math.atan2(turretDir.z, turretDir.x);
-    var targetDir = char1.shape.position.subtract(tank.shape.position);
+    var targetDir = target.shape.position.subtract(tank.shape.position);
     var targetAngle = Math.atan2(targetDir.z, targetDir.x);
     tank.rotate(BABYLON.Axis.Y, currentAngle - targetAngle + Math.PI / 4);
     // tank.rotate(BABYLON.Axis.Y, Math.PI / 4);
