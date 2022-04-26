@@ -26,13 +26,13 @@ const SPECIAL_BONUS_ID = {
   SPEED_TURBO: {
     name: "Speed Turbo",
     description: "Go faster for 3 seconds",
-    image: "images/shield.png",
+    image: "images/speed.png",
     keyListener: '4'
   },
   MIND_CONTROL: {
     name: "Mind Control",
     description: "Nearby tanks attack their allies for 10 seconds",
-    image: "images/shield.png",
+    image: "images/brain.png",
     keyListener: '5'
   },
 }
