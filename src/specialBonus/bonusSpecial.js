@@ -106,7 +106,8 @@ class SpecialBonus {
     let timeDisplay;
 
     if (this.isActive) {
-      this.bg.style.setProperty("--c", "#18c12ba8");
+      if (!this.bg.style.cssText.includes("--c"))
+        this.bg.style.setProperty("--c", "#18c12ba8");
       if (Date.now() - this.bonusStartedDate > this.bonusStartedDelay) {
         this.disable();
         this.resetTime();
