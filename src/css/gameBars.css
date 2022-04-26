@@ -93,6 +93,7 @@
 }
 
 .bg {
+  position: relative;
   width: var(--w);
   height: var(--w);
   border-radius: 100%;
@@ -174,8 +175,8 @@
 .shortcut {
   position: absolute;
   color: white;
-  right: 8pt;
-  bottom: 3pt;
+  right: 0;
+  bottom: 0;
   background: black;
   padding: 2pt;
   border-radius: 100%;
