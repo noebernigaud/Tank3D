@@ -69,6 +69,7 @@ class SpecialBonus {
 
 
     this.bonusStartedDelay = bonusStartedDelay;
+    this.timeStartedCooled = bonusStartedDelay;
     this.bonusStartedDate = Date.now()
     this.isActive = false;
   }
@@ -110,8 +111,8 @@ class SpecialBonus {
         this.disable();
         this.resetTime();
       }
-      this.timeCooled = Math.max(0, this.bonusStartedDate + this.bonusStartedDelay - Date.now());
-      timeDisplay = 100 - Math.round(100 - this.timeCooled / this.bonusStartedDelay * 100)
+      this.timeStartedCooled = Math.max(0, this.bonusStartedDate + this.bonusStartedDelay - Date.now());
+      timeDisplay = 100 - Math.round(100 - this.timeStartedCooled / this.bonusStartedDelay * 100)
     } else {
       this.timeCooled = Math.max(0, this.startDate + this.delay - Date.now());
       timeDisplay = 100 - Math.round(100 - this.timeCooled / this.delay * 100)
@@ -174,7 +175,8 @@ class SpecialBonus {
   }
 
   correctTime() {
-    this.startDate = Date.now() - this.delay + this.timeCooled
+    this.startDate = Date.now() - this.delay + this.timeCooled;
+    this.bonusStartedDate = Date.now() - this.bonusStartedDelay + this.timeStartedCooled;
   }
 
   /**
