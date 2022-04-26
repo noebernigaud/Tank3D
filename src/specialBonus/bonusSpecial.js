@@ -17,12 +17,17 @@ const SPECIAL_BONUS_ID = {
     image: "images/multiple_bullet.png",
     keyListener: '2'
   },
-
   DOME: {
     name: "Shield",
     description: "Be protected by a dome during 15 seconds",
     image: "images/shield.png",
     keyListener: '3'
+  },
+  SPEED_TURBO: {
+    name: "Speed Turbo",
+    description: "Go faster for 3 seconds",
+    image: "images/shield.png",
+    keyListener: '4'
   },
 }
 
@@ -178,6 +183,7 @@ class SpecialBonus {
       new crossHair(tank),
       new MachineGun(tank),
       new dome(tank),
+      new SpeedTurbo(tank),
     ]
   }
 }
