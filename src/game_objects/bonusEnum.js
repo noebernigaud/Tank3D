@@ -17,7 +17,7 @@ class BonusEnum {
             "Bullets speed",
             function () { char1.bulletSpeed += 20 },
             "Now your bullets will go two time faster !",
-            "./images/speed_bullet-removebg-preview.png"
+            "./images/speed_bullet.png"
         ),
         new BonusEnum(
             "Bonus bullet damage",
