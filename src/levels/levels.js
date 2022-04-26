@@ -296,6 +296,7 @@ function setCurrentLevelDico() {
 
 function setCurrentBiome() {
     biome = current_level_dico.biome;
+    document.getElementById("minimap").style.backgroundImage = `url('textures/${biome.toLowerCase()}y_ground_diffuse.png')`;
     listGrounds.forEach(g => {
         g.position.y = -10
         g.receiveShadows = false
