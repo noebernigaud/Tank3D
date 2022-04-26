@@ -2,9 +2,8 @@ class dome extends SpecialBonus {
 
     constructor(tank) {
         super(tank, SPECIAL_BONUS_ID.DOME, 15000);
-        this.isActive = true;
-        this.createDome()
         this.life = 4;
+        this.maxLife = 4;
     }
 
     createDome() {
@@ -16,13 +15,33 @@ class dome extends SpecialBonus {
         this.dome.visibility = 0.2;
         this.dome.parent = this.tank.shape
         this.dome.isVisible = false
-        // this.dome.collider = 
+    }
+
+    update() {
+        if (this.isActive) {
+            bullets.forEach(e => {
+                if (this.dome.intersectsMesh(e)) {
+                    this.life--;
+                    e.dispose(true, true);
+                }
+            })
+            if (this.life <= 0) {
+                this.disable()
+                this.dome.dispose();
+                this.resetTime()
+                this.life = this.maxLife;
+            }
+        } else {
+            super.update();
+        }
 
     }
 
     use() {
         if (super.use()) {
+            this.createDome()
             this.dome.isVisible = true
+            this.activate()
         }
     }
 }
