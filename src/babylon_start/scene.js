@@ -243,7 +243,7 @@ class Scene {
         scene
       );
       groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${name}_ground_diffuse.png`, scene, null, true, null, function () {
-        ObjectEnum.loadingDone();
+        if (name == "earthy") ObjectEnum.loadingDone();
       });
       listGrounds[index].material = groundMaterial;
 

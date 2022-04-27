@@ -183,6 +183,14 @@ function draw_level_map() {
     }
 
 
+    camera.position =
+        char1.position
+            .multiply(char1.getTurretTank()
+                .getDirection(BABYLON.Axis.Z)
+                .multiply(new BABYLON.Vector3(50, 50, 50)))
+            .add(new BABYLON.Vector3(0, 10, 0))
+
+
     char1.dust.updateColor()
 
     let setPlayerPosition = () => {

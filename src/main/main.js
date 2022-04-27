@@ -263,6 +263,7 @@ function stopgame() {
 //DEBUT D'UNE NOUVELLE PARTIE
 
 function startgame(level) {
+
     playing = 1;
 
     barrels = new Array();
@@ -281,10 +282,6 @@ function startgame(level) {
 
     if (level < level_map.length) {
         draw_level_map(level)
-    } else {
-        playing = 2;
-        pausebackgroundMusic();
-        applauseSound.play();
     }
 
     // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL

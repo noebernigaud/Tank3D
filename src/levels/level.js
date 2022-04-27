@@ -180,12 +180,6 @@ class Level {
   }
 
   loadNextLevel() {
-    camera.position =
-      char1.position
-        .multiply(char1.getTurretTank()
-          .getDirection(BABYLON.Axis.Z)
-          .multiply(new BABYLON.Vector3(50, 50, 50)))
-        .add(new BABYLON.Vector3(0, 10, 0))
     level += 1;
     remove_all_objects()
     startgame(level);
