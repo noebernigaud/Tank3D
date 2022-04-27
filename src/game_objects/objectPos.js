@@ -118,7 +118,7 @@ class ObjectPos extends BABYLON.Mesh {
     child.rotation = this.rotation
   }
 
-  isRenversed(degree = 2) {
+  isRenversed(degree = 1) {
     return Math.abs(this.shape.rotationQuaternion.toEulerAngles().z) > degree
   }
 

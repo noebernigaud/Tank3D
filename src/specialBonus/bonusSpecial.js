@@ -35,6 +35,12 @@ const SPECIAL_BONUS_ID = {
     image: "images/brain.png",
     keyListener: '5'
   },
+  TELEPORT: {
+    name: "Teleport",
+    description: "Teleport 5 meters in the direction your are looking",
+    image: "images/teleportation.png",
+    keyListener: '6'
+  },
 }
 
 let listenerList = ['KeyE', 'KeyR', 'KeyF'];
@@ -198,6 +204,7 @@ class SpecialBonus {
       new dome(tank),
       new SpeedTurbo(tank),
       new MindControl(tank),
+      new Teleport(tank),
     ]
   }
 }
