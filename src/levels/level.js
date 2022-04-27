@@ -49,7 +49,7 @@ class Level {
     console.log("in other menu", scene.menu.inOtherMenu());
     if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
-      Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
+      Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
       exitPointerLoc()
       this.writeStat(status)
     }
@@ -104,7 +104,7 @@ class Level {
 
     if (status === lvlStatus.WIN) applauseSound.play()
 
-    document.getElementById("endLevelStat").style.display = "block"
+    document.getElementById("endLevelStat").classList.remove('hide')
     let tab = document.getElementById("tableStat")
     tab.innerHTML = "";
 
@@ -161,20 +161,22 @@ class Level {
     endCell.onclick = () => {
       if (status != lvlStatus.NXT_LVL) {
         scene.menu.restart()
-        document.getElementById('endLevelStat').style.display = 'none';
+        document.getElementById('endLevelStat').classList.add('hide');
       }
       else {
         scene.menu.inNextLevel = false;
-        document.getElementById('endLevelStat').style.display = 'none';
+        document.getElementById('endLevelStat').classList.add('hide');
         this.loadNextLevel();
         // engine.runRenderLoop(() => scene.render())
         pointerLock();
-        Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+        Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
       }
     }
     endLine.appendChild(endCell)
     tab.appendChild(endLine)
-    // tab.innerHTML += "<tr><td class='button' colspan=2 onclick=\"scene.menu.inNextLevel = false;document.getElementById('endLevelStat').style.display = 'none'; engine.runRenderLoop(() => scene.render())\"><span>Next Level</span></td></tr>"
+
+    console.log(tab);
+    // tab.innerHTML += "<tr><td class='button' colspan=2 onclick=\"scene.menu.inNextLevel = false;document.getElementById('endLevelStat').classList.add('hide'); engine.runRenderLoop(() => scene.render())\"><span>Next Level</span></td></tr>"
   }
 
   loadNextLevel() {

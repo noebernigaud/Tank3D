@@ -97,8 +97,10 @@ class ObjectEnum {
 
   static initiate_all_models() {
     var list_obj = [
-      this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
-      this.Rock, this.PalmTree1, this.PalmTree2, this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
+      this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank,
+      this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
+      this.Rock, this.PalmTree1, this.PalmTree2,
+      this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
       this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
     this.remainingLoad = list_obj.length + 3
@@ -118,7 +120,7 @@ class ObjectEnum {
       setTimeout(() => {
         document.getElementsByClassName('loadingBarChild')[0].innerHTML = "Loading Done - Game Will Start Soon";
         setTimeout(() => {
-          document.getElementsByClassName('loadingBarMain')[0].style.display = 'none'
+          document.getElementsByClassName('loadingBarMain')[0].classList.add('hide')
           engine.hideLoadingUI()
           init()
         }, 1000);

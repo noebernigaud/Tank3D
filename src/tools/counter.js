@@ -66,7 +66,7 @@ function startTimer() {
 </div>
 `;
 
-  timerDom.style.removeProperty("display")
+  timerDom.classList.remove('hide')
 
   level += 1;
   remove_all_objects()
@@ -82,7 +82,7 @@ function startTimer() {
 
     if (timeLeft === 0) {
       onTimesUp();
-      timerDom.style.display = "none"
+      timerDom.classList.add('hide')
     }
   }, 1000);
 }
