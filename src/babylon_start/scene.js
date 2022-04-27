@@ -60,6 +60,10 @@ class Scene {
 
     hl.blurHorizontalSize = hl.blurVerticalSize = 0.3;
 
+    hlBalls = new BABYLON.HighlightLayer("hlBalls", scene);
+
+    hlBalls.blurHorizontalSize = hlBalls.blurVerticalSize = 0.001;
+
     scene.beforeRender = () => {
 
       if (!this.scene.menu.isShown) {

@@ -71,6 +71,7 @@ var impostorCharList = [];
 
 
 var hl;
+var hlBalls;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';
