@@ -274,6 +274,7 @@ function startgame(level) {
 
     //BULLETS AND MINES INIT
     bullets = new Array();
+    grenades = new Array();
     mines = new Array();
 
     bonuses = new Array();
@@ -326,6 +327,7 @@ function remove_all_objects(withPlayer = false) {
     walls = [];
     barrels = [];
     bullets = [];
+    grenades = [];
     mines = [];
     chars = [];
     charsAI = [];
@@ -338,7 +340,7 @@ function remove_all_objects(withPlayer = false) {
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsDestroyed].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION

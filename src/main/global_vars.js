@@ -45,6 +45,9 @@ var mines;
 /** @type {[Bullet]} */
 var bullets = []
 
+/** @type {[Grenades]} */
+var grenades = []
+
 /** @type {[Tree]} */
 var trees = []
 

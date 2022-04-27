@@ -12,6 +12,7 @@ class ObjectEnum {
   static Player = new ObjectEnum("player", "modern_tank", 0.25, 0.95, 0.625, 1.75)
   static Bonus = new ObjectEnum("bonus", "box", 0.008, 0.4, 0.4, 0.4)
   static Bullet = new ObjectEnum(bulletImage.src, "")
+  static GrenadeObj = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
   static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 1.25)

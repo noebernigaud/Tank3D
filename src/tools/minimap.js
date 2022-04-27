@@ -65,5 +65,9 @@ class MiniMap {
       let point = resize(b.position.z, b.position.x);
       this.drawPoint(point.x, point.y, 'rgb(0,0,0)', 1)
     })
+    grenades.forEach(b => {
+      let point = resize(b.position.z, b.position.x);
+      this.drawPoint(point.x, point.y, 'rgb(0,0,0)', 1)
+    })
   }
 }

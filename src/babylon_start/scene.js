@@ -54,6 +54,12 @@ class Scene {
   createScene() {
     scene = new BABYLON.Scene(this.engine);
     // engine.runRenderLoop(() => scene.render())
+    // var options = new BABYLON.SceneOptimizerOptions(50, 2000);
+    // BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
+    // BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
+    // var optimizer = new BABYLON.SceneOptimizer(scene, options, false);
+    // optimizer.start();
+
 
     //to improve performance
     scene.skipPointerMovePicking = true;

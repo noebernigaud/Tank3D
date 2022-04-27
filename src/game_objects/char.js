@@ -86,6 +86,7 @@ class Char extends ObjectPos {
     this.specialBonuses = [];
 
     this.bullForce = null;
+    this.grenadeDamage = 10;
   }
 
   addBullet(time = Date.now()) {
@@ -304,6 +305,16 @@ class Char extends ObjectPos {
   applyBullForce() {
     if (!this.bullForce) return
     this.physicsImpostor.applyForce(this.bullForce, this.shape.position)
+  }
+
+  throwGrenade() {
+    let g = new GrenadeObj(this)
+    // g.physicsImpostor.applyForce(
+    //   new BABYLON.Vector3(
+    //     getTurretTank().getDirection(BABYLON.Axis.Z).x * 400,
+    //     500000000000,
+    //     getTurretTank().getDirection(BABYLON.Axis.X).x * 400),
+    //   g.shape.position)
   }
 
 }

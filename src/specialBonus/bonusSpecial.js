@@ -47,6 +47,12 @@ const SPECIAL_BONUS_ID = {
     image: "images/bull_charge.png",
     keyListener: '7'
   },
+  GRENADE: {
+    name: "Grenade",
+    description: "Throw a grenade which explose on collision",
+    image: "images/speed.png",
+    keyListener: '8'
+  },
 }
 
 let listenerList = ['KeyE', 'KeyR', 'KeyF'];
@@ -205,13 +211,14 @@ class SpecialBonus {
 
   static createSpecialBonusList(tank) {
     return [
-      new crossHair(tank),
-      new MachineGun(tank),
-      new dome(tank),
-      new SpeedTurbo(tank),
-      new MindControl(tank),
+      // new crossHair(tank),
+      // new MachineGun(tank),
+      // new dome(tank),
+      // new SpeedTurbo(tank),
+      // new MindControl(tank),
       new Teleport(tank),
       new BullCharge(tank),
+      new Grenade(tank),
     ]
   }
 }

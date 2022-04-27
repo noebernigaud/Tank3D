@@ -129,6 +129,7 @@ class ObjectPos extends BABYLON.Mesh {
       switch (this.type.name) {
         case ObjectEnum.Barrel.name: { remove(barrels, this); break; }
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
+        // case ObjectEnum.GrenadeObj.name: { remove(grenades, this); break; }
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
