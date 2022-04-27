@@ -44,7 +44,6 @@ class Scene {
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
-    setCurrentLevelDico()
 
     ObjectEnum.initiate_all_models()
   }

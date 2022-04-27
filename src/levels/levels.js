@@ -160,23 +160,21 @@ const level_map = [
         biome: "Snow"
     }),
 ]
-
+/** @type{Level} */
 let current_level_dico = level_map[0]
 
 /**
  * @param {number} lvl_number 
  */
 function draw_level_map() {
+    setCurrentLevelDico()
+
+    setCurrentBiome()
 
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
-
     document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
-
-    setCurrentLevelDico()
-
-    setCurrentBiome()
 
     if (level == 0) {
         if (char1) char1.dispose(true);
@@ -284,6 +282,10 @@ function draw_level_map() {
 
 function setCurrentLevelDico() {
     current_level_dico = level_map[level]
+    console.log("SET CURRENT ");
+    if (level == 0) {
+        level_map.forEach(e => e.resetValues())
+    }
     if (current_level_dico) {
         current_level = current_level_dico.level;
         cell_x_number = current_level_dico.level.length;
@@ -291,6 +293,8 @@ function setCurrentLevelDico() {
 
         height = cell_x_number * cell_size;
         width = cell_y_number * cell_size;
+
+        // current_level_dico.resetValues()
     }
 }
 

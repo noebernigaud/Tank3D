@@ -199,3 +199,23 @@
 .nextLvlBg {
   background-color: #1a1a626b;
 }
+
+.currentMission {
+  color: white;
+  position: absolute;
+  top: 3pt;
+  left: 3pt;
+  background-color: #07070733;
+  border-radius: 10pt;
+  border: 1pt solid #ffffff42;
+  padding: 5pt 10pt;
+  font-size: 10pt;
+  width: 100pt;
+  display: flex;
+  flex-direction: column;
+}
+
+.currentMission>div {
+  display: flex;
+  justify-content: space-between;
+}
