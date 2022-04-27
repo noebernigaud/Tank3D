@@ -6,6 +6,7 @@ class MindControl extends SpecialBonus {
     disable() {
         super.disable()
         this.hitTanks.forEach(c => { c[0].strategy = c[1] })
+        hlControlled.removeAllMeshes()
     }
 
     use() {
@@ -19,6 +20,9 @@ class MindControl extends SpecialBonus {
                     (c.shape.position.z - this.tank.shape.position.z) ** 2) < 10) {
                     this.hitTanks.push([c, c.strategy])
                     c.strategy = new guaranteedAI(c, false)
+                    let fileterMeshToHigLight = c.shape.getChildMeshes().filter(m =>
+                        !(c.healtBar.healthBarContainer && ((m == c.healtBar.healthBarContainer) || (c.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
+                    fileterMeshToHigLight.forEach(m => hlControlled.addMesh(m, new BABYLON.Color3(1, 0, 1)))
                 }
             })
         }
