@@ -25,7 +25,7 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    this.engine = new BABYLON.Engine(canvas, true);
+    this.engine = new BABYLON.Engine(canvas, true, null, true);
 
     engine = this.engine;
 
@@ -56,6 +56,11 @@ class Scene {
     scene = new BABYLON.Scene(this.engine);
     // engine.runRenderLoop(() => scene.render())
 
+    //to improve performance
+    scene.skipPointerMovePicking = true;
+    scene.autoClear = false; // Color buffer
+    scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+
     hl = new BABYLON.HighlightLayer("hl", scene);
 
     hl.blurHorizontalSize = hl.blurVerticalSize = 0.3;
@@ -69,6 +74,8 @@ class Scene {
     hlControlled.blurHorizontalSize = hlControlled.blurVerticalSize = 0.3;
 
     scene.beforeRender = () => {
+
+      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps"
 
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
@@ -161,6 +168,7 @@ class Scene {
 
       }
     }
+
     return scene;
   }
 
@@ -315,7 +323,7 @@ class Scene {
     light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
     light1.intensity = 3
 
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
+    shadowGenerator = new BABYLON.ShadowGenerator(128, light1)
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.blurScale = 1;
     shadowGenerator.setDarkness(0.1);
