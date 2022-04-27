@@ -48,5 +48,6 @@ class BonusEnum {
 
     addToChar() {
         selected_bonuses.push(this.name);
+        this.load()
     }
 }

@@ -124,7 +124,7 @@ class Scene {
         })
         if (char1.life <= 0 || level == level_map.length) {
           // this.scene.menu.restart()
-          current_level_dico.goNextLevel(true)
+          current_level_dico.goNextLevel(lvlStatus.DIE)
           // level = 0;
           // remove_all_objects(true)
           // startgame(level);
@@ -132,7 +132,7 @@ class Scene {
         } else if (current_level_dico.canGoNextLevel()) {
           if (level + 1 == level_map.length) {
             // this.scene.menu.restart()
-            current_level_dico.goNextLevel(false, true)
+            current_level_dico.goNextLevel(lvlStatus.WIN)
           } else if (!this.scene.menu.inOtherMenu()) {
             current_level_dico.goNextLevel()
             if (sceneInterval) {

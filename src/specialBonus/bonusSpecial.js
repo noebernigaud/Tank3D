@@ -72,7 +72,7 @@ class SpecialBonus {
     this.image.classList.add("whiteBackground")
 
     this.delay = delay;
-    this.timeCooled = delay;
+    this.timeCooled = 0;
     this.startDate = Date.now()
 
 

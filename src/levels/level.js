@@ -1,3 +1,9 @@
+const lvlStatus = {
+  DIE: 0,
+  WIN: 1,
+  NXT_LVL: 2
+};
+
 class Level {
   stats = {
     "Char Killed": 0,
@@ -18,13 +24,13 @@ class Level {
     return this.lvlObjective.goToNextLevel()
   }
 
-  goNextLevel(died = false, win = false) {
+  goNextLevel(status = lvlStatus.NXT_LVL) {
     console.log("in other menu", scene.menu.inOtherMenu());
     if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
       exitPointerLoc()
-      this.writeStat(died, win)
+      this.writeStat(status)
     }
   }
 
@@ -48,9 +54,12 @@ class Level {
     this.stats["Wall destroyed"]++;
   }
 
-  writeStat(die, win) {
+  /**
+   * @param {number} status 
+   */
+  writeStat(status) {
 
-    if (win) applauseSound.play()
+    if (status === lvlStatus.WIN) applauseSound.play()
 
     document.getElementById("endLevelStat").style.display = "block"
     let tab = document.getElementById("tableStat")
@@ -66,7 +75,22 @@ class Level {
     }
 
     let startLine = document.createElement("tr")
-    let startCell = die ? createTd("You Died!") : (win ? createTd("Congratulations!") : createTd("Level Complete!"))
+    let startCell;
+    switch (status) {
+      case lvlStatus.WIN:
+        startCell = createTd("Congratulations!");
+        startCell.classList.add("greenBg")
+        break;
+      case lvlStatus.DIE:
+        startCell = createTd("You Died!");
+        startCell.classList.add("redBg")
+        break;
+      case lvlStatus.NXT_LVL:
+        startCell = createTd("Level Complete!");
+        startCell.classList.add("nextLvlBg")
+        break;
+    }
+
     startCell.colSpan = 2;
     startLine.appendChild(startCell)
     tab.appendChild(startLine)
@@ -81,7 +105,7 @@ class Level {
       tab.appendChild(line)
     }
 
-    if (!(win || die)) {
+    if (status == lvlStatus.NXT_LVL) {
       let nextLvlDescLine = document.createElement("tr")
       let nextLvlDesc = createTd(level_map[level].lvlObjective.description)
       nextLvlDesc.colSpan = 2
@@ -89,10 +113,10 @@ class Level {
       tab.appendChild(nextLvlDescLine)
     }
     let endLine = document.createElement("tr")
-    let endCell = (die || win) ? createTd("Main Menu") : createTd("Next Level")
+    let endCell = (status != lvlStatus.NXT_LVL) ? createTd("Main Menu") : createTd("Next Level")
     endCell.colSpan = 2;
     endCell.onclick = () => {
-      if (die || win) {
+      if (status != lvlStatus.NXT_LVL) {
         scene.menu.restart()
         document.getElementById('endLevelStat').style.display = 'none';
       }

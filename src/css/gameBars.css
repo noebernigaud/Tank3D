@@ -116,6 +116,7 @@
   font-size: 20px;
   font-weight: bold;
   font-family: sans-serif;
+  color: transparent;
 }
 
 .pie:before,
@@ -185,4 +186,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.redBg {
+  background-color: #ff000066;
+}
+
+.greenBg {
+  background-color: #009b0066;
+}
+
+.nextLvlBg {
+  background-color: #1a1a626b;
 }
