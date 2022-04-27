@@ -75,41 +75,34 @@
     <body>
         <canvas id="myCanvas"></canvas>
 
-        <div id="gameBars" class="gameBarsClass">
-            <table id="horBar">
-                <tr>
-                    <td>
-                        Level : <span id="level">1/10</span>
-                    </td>
-                    <td>
-                        <canvas id="healthBar"></canvas>
-                        <img src="images/life.png" alt="NoLifeImg" class="logo">
-                        <span id="healthPlayer"></span>
-                    </td>
-                    <td>
-                        Speed : <span id="speed">0 km/h</span>
-                    </td>
-                </tr>
-            </table>
+        <div class="box gameBars gameBarsClass">
+            <div> Level : <span id="level">1/10</span></div>
+            <div>
+                <canvas id="healthBar"></canvas>
+                <img src="images/life.png" alt="NoLifeImg" class="logo">
+                <span id="healthPlayer"></span>
+            </div>
+            <div>
+                Speed : <span id="speed">0</span> km/h
+            </div>
         </div>
 
         <canvas id="minimap" class="gameBarsClass"></canvas>
 
         <div id="src"></div>
 
-        <div id="bonusPanel" class="divb" style="display: none;">
+        <div id="bonusPanel" class="divb hide">
         </div>
 
         <div id="main" class="divb">
-            <div id="play" class='button' onclick="scene.menu.show(false); canvas.requestPointerLock();"
+            <div id="play" class='button' onclick="scene.menu.show(false); pointerLock();"
                 onmouseenter="scene.menu.soundHover()">
                 <span>Play</span>
             </div>
             <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
                 <span>Options</span>
             </div>
-            <div id="restart" class="button" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()"
-                style="display: none;">
+            <div id="restart" class="button hide" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()">
                 <span>Main menu</span>
             </div>
         </div>
@@ -125,16 +118,16 @@
         </div>
         <br>
 
-        <div class="specialBonus hide">
+        <div class="box specialBonus hide">
             <div id="txtSpecialBonus">Special Bonus</div>
             <!-- <div class="bg" style="--img: url('../images/gunaims.png')">
                 <div class="pie animate no-round" style="--p:50"> 80%</div>
                 <div class="shortcut">9</div>
             </div> -->
         </div>
-        <div id="fps" style="position:absolute; top:4pt;left:50%;background-color: brown;color: aliceblue;">0</div>
+        <div id="fps" class="box gameBarsClass hide">0</div>
 
-        <div class="currentMission gameBarsClass">
+        <div class="box currentMission gameBarsClass">
             <!-- <div><span>Char a tuer</span><span>1/2</span></div>
             <div><span>Plante a brule</span><span>2/3</span></div> -->
         </div>
@@ -149,7 +142,7 @@
                 // document.getElementById("src").style.width = window.innerWidth + "px";
                 // document.getElementById("src").style.height = window.innerHeight + "px";
 
-                if (scene) scene.minimap.resize()
+                if (scene && scene.minimap) scene.minimap.resize()
                 if (engine) engine.resize();
             }
             window.onresize()

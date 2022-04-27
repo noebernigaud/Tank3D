@@ -10,15 +10,12 @@
 
 #speed {
   color: white;
-  width: 40pt;
+  width: 13pt;
+  text-align: center;
   display: inline-block;
 }
 
-#gameBars {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-}
+
 
 #horBar * {
   padding: 2pt;
@@ -37,19 +34,7 @@
   border-radius: 4pt;
 }
 
-#horBar {
-  width: 80%;
-  bottom: 2px;
-  position: absolute;
-  background-color: #070707d7;
-  padding: 5pt;
-  right: 50%;
-  transform: translateX(50%);
-  border: 1pt solid white;
-  padding: 1px;
-  border-radius: 4pt;
-  text-align: center;
-}
+
 
 
 .logo {
@@ -153,24 +138,17 @@
   content: none;
 }
 
-.specialBonus {
-  background-color: #070707ab;
-  /* padding: 3pt; */
-  position: absolute;
-  top: 20%;
-  left: 2pt;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.redBg {
+  background-color: #ff000066;
 }
 
-#txtSpecialBonus {
-  background-color: #5c5c5c;
-  color: white;
+.greenBg {
+  background-color: #009b0066;
 }
 
-.hide {
-  display: none;
+.nextLvlBg {
+  background-color: #1a1a626b;
 }
 
 .shortcut {
@@ -188,34 +166,58 @@
   justify-content: center;
 }
 
-.redBg {
-  background-color: #ff000066;
+.box {
+  position: absolute;
+  color: white;
+  background-color: #0707074f;
+  border: 1pt solid #ffffff42;
+  font-size: 10pt;
+  border-radius: 10pt;
 }
 
-.greenBg {
-  background-color: #009b0066;
+.gameBars {
+  width: 80%;
+  bottom: 0;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.nextLvlBg {
-  background-color: #1a1a626b;
+.gameBars * {
+  display: flex;
+  align-items: center;
+  padding: 2pt;
+}
+
+.specialBonus {
+  top: 20%;
+  left: 2pt;
+  padding: 5pt;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .currentMission {
-  color: white;
-  position: absolute;
   top: 3pt;
   left: 3pt;
-  background-color: #07070733;
-  border-radius: 10pt;
-  border: 1pt solid #ffffff42;
   padding: 5pt 10pt;
-  font-size: 10pt;
   width: 100pt;
-  display: flex;
-  flex-direction: column;
 }
 
 .currentMission>div {
   display: flex;
   justify-content: space-between;
+}
+
+#fps {
+  padding: 5pt;
+  top: 3pt;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hide {
+  display: none;
 }

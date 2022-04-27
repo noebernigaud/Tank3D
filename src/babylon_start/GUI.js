@@ -47,17 +47,17 @@ class Menu {
     show(toShow) {
         if (toShow) {
             exitPointerLoc()
-            document.getElementById("main").style.display = "block"
+            document.getElementById("main").classList.remove('hide')
         }
         else {
             this.hideMenu()
         }
         if (this.inBonus)
-            if (toShow) this.bonusPanel.style.display = "none"
-            else this.bonusPanel.style.removeProperty("display")
+            if (toShow) this.bonusPanel.classList.add('hide')
+            else this.bonusPanel.classList.remove('hide')
         this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
-            document.getElementById("restart").style.removeProperty("display")
+            document.getElementById("restart").classList.remove('hide')
             if (toShow) {
                 chars.forEach(c => c.moveSound.pause())
                 engine.stopRenderLoop()
@@ -80,10 +80,10 @@ class Menu {
     prettyBG() {
         // let src = document.getElementById("src")
         // src.style.backgroundImage = `url('images/tank_bg.jpg')`;
-        canvas.style.display = "none";
-        // src.style.display = "block"
+        canvas.classList.add('hide');
+        // src.classList.remove('hide')
         // src.style.filter = "blur(0)"
-        document.getElementById("main").style.display = "initial"
+        document.getElementById("main").classList.remove('hide')
     }
 
     setBackground() {
@@ -95,9 +95,9 @@ class Menu {
     };
 
     hideMenu() {
-        canvas.style.display = "block";
-        document.getElementById("src").style.display = "none"
-        document.getElementById("main").style.display = "none"
+        canvas.classList.remove('hide');
+        document.getElementById("src").classList.add('hide')
+        document.getElementById("main").classList.add('hide')
     }
 
     /**
@@ -106,7 +106,7 @@ class Menu {
     bonusChoice(bonusListe) {
         exitPointerLoc()
         this.inBonus = true;
-        this.bonusPanel.style.removeProperty("display")
+        this.bonusPanel.classList.remove('hide')
         /**
          * @param {BonusEnum|SpecialBonus} bEnum 
          * @returns 
@@ -131,7 +131,7 @@ class Menu {
                 bonusTookSound.play()
                 console.log("bonus was taken");
                 bEnum.addToChar()
-                this.bonusPanel.style.display = "none";
+                this.bonusPanel.classList.add('hide');
                 chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
                 engine.runRenderLoop(() => scene.render())
                 this.inBonus = false;
@@ -174,7 +174,7 @@ class Menu {
     restart() {
         engine.stopRenderLoop()
         document.getElementsByClassName('specialBonus')[0].classList.add('hide');
-        document.getElementById("restart").style.display = "none"
+        document.getElementById("restart").classList.add('hide')
         scene.menu = new Menu()
         level = 0;
         char1.dispose(true)
@@ -197,14 +197,14 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
+        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
         else {
             if (this.inBonusus) {
-                this.bonusPanel.style.display = "initial"
-                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+                this.bonusPanel.classList.remove('hide')
+                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
             }
-            else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
-            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+            else if (this.inNextLevel) this.nextLevelPanel.classList.remove('hide')
+            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
         }
     }
 

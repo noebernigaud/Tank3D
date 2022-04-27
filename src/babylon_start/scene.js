@@ -103,7 +103,7 @@ class Scene {
         })
         let velocity = char1.physicsImpostor.getLinearVelocity()
         let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
-        document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
+        document.getElementById("speed").innerHTML = Math.round(speed)
 
         // let posChar1 = char1.shape.position
 
