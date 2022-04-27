@@ -126,6 +126,9 @@ class Scene {
             // c.dispose(true)
           }
         })
+
+        char1.applyBullForce();
+
         if (char1.life <= 0 || level == level_map.length) {
           // this.scene.menu.restart()
           current_level_dico.goNextLevel(lvlStatus.DIE)

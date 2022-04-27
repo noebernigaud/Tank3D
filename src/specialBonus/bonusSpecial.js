@@ -41,6 +41,12 @@ const SPECIAL_BONUS_ID = {
     image: "images/teleportation.png",
     keyListener: '6'
   },
+  BULL_CHARGE: {
+    name: "Bull Charge",
+    description: "Charge forward and destroy ennemies on your way",
+    image: "images/bull_charge.png",
+    keyListener: '7'
+  },
 }
 
 let listenerList = ['KeyE', 'KeyR', 'KeyF'];
@@ -205,6 +211,7 @@ class SpecialBonus {
       new SpeedTurbo(tank),
       new MindControl(tank),
       new Teleport(tank),
+      new BullCharge(tank),
     ]
   }
 }

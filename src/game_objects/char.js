@@ -84,6 +84,8 @@ class Char extends ObjectPos {
     this.charExploseSound.volume = 0.4
 
     this.specialBonuses = [];
+
+    this.bullForce = null;
   }
 
   addBullet(time = Date.now()) {
@@ -297,6 +299,11 @@ class Char extends ObjectPos {
     super.dispose(forceDispose)
     this.healtBar.disposeBar()
     this.specialBonuses.forEach(b => b.fullDispose())
+  }
+
+  applyBullForce() {
+    if (!this.bullForce) return
+    this.physicsImpostor.applyForce(this.bullForce, this.shape.position)
   }
 
 }
