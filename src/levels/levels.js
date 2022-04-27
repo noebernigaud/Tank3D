@@ -223,7 +223,7 @@ function draw_level_map() {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char("normal", posX, posY, 0, 2, 2000, 40);
+                    var char = new Char("normal", posX, posY, 0, 1, 2000, 20);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);

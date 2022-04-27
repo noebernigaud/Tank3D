@@ -100,6 +100,7 @@ class Bullet extends ObjectPos {
     createShape() {
         var shape = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: Bullet.diameter }, scene);
         shape.material = createMaterial(scene, bulletImage.src);
+        hl.addMesh(shape, new BABYLON.Color3(1, 0, 0))
 
         return shape;
     }

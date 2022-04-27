@@ -19,7 +19,7 @@ const SPECIAL_BONUS_ID = {
   },
   DOME: {
     name: "Shield",
-    description: "Be protected by a dome during 15 seconds",
+    description: "Be protected by a 4-lifes dome",
     image: "images/shield.png",
     keyListener: '3'
   },
