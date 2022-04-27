@@ -7,7 +7,7 @@ const lvlStatus = {
 class Level {
   stats = {
     "Char Killed": 0,
-    "Bonus Obteined": 0,
+    "Bonus Obtained": 0,
     "Bullet Fired": 0,
     "Total Distance": 0,
     "Wall destroyed": 0
@@ -20,7 +20,28 @@ class Level {
     this.biome = levelInfo.biome;
   }
 
+  createMessage() {
+    let parentDiv = document
+      .getElementsByClassName('currentMission')[0];
+
+    parentDiv.innerHTML = "";
+    let createLine = ([a, b, c]) => {
+      let d = document.createElement('div');
+      let s1 = document.createElement('span');
+      let s2 = document.createElement('span');
+      d.appendChild(s1);
+      d.appendChild(s2);
+      s1.innerHTML = a;
+      s2.innerHTML = b() + '/' + c();
+      return d;
+    }
+
+    this.lvlObjective.tip.forEach(
+      e => parentDiv.appendChild(createLine(e)));
+  }
+
   canGoNextLevel() {
+    this.createMessage();
     return this.lvlObjective.goToNextLevel()
   }
 
@@ -47,11 +68,33 @@ class Level {
   }
 
   addBonusObtained() {
-    this.stats["Bonus Obteined"]++;
+    console.log(this.stats["Bonus Obtained"], "ADDING BONUS TOTAL ", this.stats["Bonus Obtained"] + 1);
+    this.stats["Bonus Obtained"]++;
+    console.log(this.stats["Bonus Obtained"], "AFTER ");
   }
 
   addWallDestroyed() {
     this.stats["Wall destroyed"]++;
+  }
+
+  getDistance() {
+    return this.stats["Total Distance"];
+  }
+
+  getKilledChar() {
+    return this.stats["Char Killed"];
+  }
+
+  getBulletFired() {
+    return this.stats["Bullet Fired"];
+  }
+
+  getBonusObtained() {
+    return this.stats["Bonus Obtained"];
+  }
+
+  getWallDestroyed() {
+    return this.stats["Wall destroyed"];
   }
 
   /**
@@ -107,7 +150,7 @@ class Level {
 
     if (status == lvlStatus.NXT_LVL) {
       let nextLvlDescLine = document.createElement("tr")
-      let nextLvlDesc = createTd(level_map[level].lvlObjective.description)
+      let nextLvlDesc = createTd(level_map[level + 1].lvlObjective.description)
       nextLvlDesc.colSpan = 2
       nextLvlDescLine.appendChild(nextLvlDesc)
       tab.appendChild(nextLvlDescLine)
@@ -145,5 +188,9 @@ class Level {
     remove_all_objects()
     startgame(level);
     // engine.stopRenderLoop()
+  }
+
+  resetValues() {
+    Object.keys(this.stats).forEach(e => this.stats[e] = 0)
   }
 }

@@ -44,7 +44,6 @@ class Scene {
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
-    setCurrentLevelDico()
 
     ObjectEnum.initiate_all_models()
   }
@@ -69,6 +68,8 @@ class Scene {
     hlControlled.blurHorizontalSize = hlControlled.blurVerticalSize = 0.3;
 
     scene.beforeRender = () => {
+
+      console.log(engine.getFps().toFixed())
 
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()

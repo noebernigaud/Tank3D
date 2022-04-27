@@ -19,7 +19,7 @@ class MiniMap {
     this.ctx.stroke();
   }
 
-  drawSquare(x, y, color){
+  drawSquare(x, y, color) {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
     this.ctx.rect(x, y, 4, 4);
@@ -39,7 +39,6 @@ class MiniMap {
   }
 
   redraw() {
-    setCurrentLevelDico()
     this.clear()
     let resize = (x, y) => ({
       x: (1 - (x + height / 2) / height) * this.canvas.width * 0.6 + this.canvas.width * 0.4 / 2,
