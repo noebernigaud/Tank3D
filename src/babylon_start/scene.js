@@ -25,19 +25,17 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    // this.engine = new BABYLON.Engine(canvas, true, null, true);
+
+
+    createEngine()
+
+  }
+
+  async createEngine() {
     this.engine = new BABYLON.WebGPUEngine(canvas);
-    // await engine.initEngineAsync();
-
-    this.engine = createEngine()
-
-
+    await this.engine.initAsync();
 
     engine = this.engine;
-
-    // window.addEventListener("resize", () => {
-    //   engine.resize()
-    // })
 
     engine.displayLoadingUI();
     this.scene = this.createScene();
@@ -53,7 +51,6 @@ class Scene {
 
     ObjectEnum.initiate_all_models()
   }
-
   /**
    * @returns {BABYLON.Scene}
    */
@@ -413,8 +410,4 @@ class Scene {
     gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
-}
-
-async function createEngine() {
-  return BABYLON.EngineFactory.CreateAsync(document.getElementById("renderCanvas"));
 }
