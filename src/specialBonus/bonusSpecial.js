@@ -50,7 +50,7 @@ const SPECIAL_BONUS_ID = {
   GRENADE: {
     name: "Grenade",
     description: "Throw a grenade which explose on collision",
-    image: "images/speed.png",
+    image: "images/grenade.png",
     keyListener: '8'
   },
 }
