@@ -27,7 +27,7 @@ class Scene {
     tanksAIReady = false;
     // this.engine = new BABYLON.Engine(canvas, true, null, true);
     this.engine = new BABYLON.WebGPUEngine(canvas);
-    await engine.initEngineAsync();
+    // await engine.initEngineAsync();
 
     engine = this.engine;
 
