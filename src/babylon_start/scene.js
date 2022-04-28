@@ -25,7 +25,9 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    this.engine = new BABYLON.Engine(canvas, true, null, true);
+    // this.engine = new BABYLON.Engine(canvas, true, null, true);
+    this.engine = new BABYLON.WebGPUEngine(canvas);
+    await engine.initEngineAsync();
 
     engine = this.engine;
 
