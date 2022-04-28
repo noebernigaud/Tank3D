@@ -206,7 +206,7 @@ function draw_level_map() {
                     // camera.target = char1.getTurretTank();
                     char1.shape.rotate(BABYLON.Axis.Y, Math.PI / 2)
                     // camera.alpha -= Math.PI / 2
-                    char1.health = char1.maxHealth
+                    char1.restoreHealth()
                     return
                 }
             }
