@@ -110,7 +110,9 @@ class Scene {
         chars.forEach(c => {
 
           //le char prend des degats si il est retourné
-          if (c.isRenversed()) c.healthLoss(c.maxHealth / 120)
+          if (c.isRenversed(1.4, true)) {
+            c.healthLoss(c.maxHealth / 120)
+          }
 
           //update barre de vie
           c.healtBar.updatePartition()

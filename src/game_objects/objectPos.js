@@ -119,8 +119,23 @@ class ObjectPos extends BABYLON.Mesh {
     child.rotation = this.rotation
   }
 
-  isRenversed(degree = 1) {
-    return Math.abs(this.shape.rotationQuaternion.toEulerAngles().z) > degree
+  isRenversed(degree = 1, correct = false) {
+    let currentDeg = this.shape.rotationQuaternion.toEulerAngles().z
+    let currentDegAbs = Math.abs(currentDeg)
+    if (correct && currentDegAbs < degree * 2 && currentDegAbs > degree / 1.5) {
+      console.log("crrection applied!");
+      var dirZ = this.shape.getDirection(BABYLON.Axis.Z);
+      var dirX = this.shape.getDirection(BABYLON.Axis.X);
+      let forceDir = Math.atan2(dirX.x, dirZ.x) + (currentDeg < 0 ? -Math.PI / 2 : Math.PI / 2);
+      this.physicsImpostor.applyForce(
+        new BABYLON.Vector3(-Math.cos(forceDir) * 200000, 0, -Math.sin(forceDir) * 200000),
+        new BABYLON.Vector3(this.shape.position.x, this.shape.position.y + 0.5, this.shape.position.z))
+      this.physicsImpostor.applyForce(
+        new BABYLON.Vector3(Math.cos(forceDir) * 200000, 0, Math.sin(forceDir) * 200000),
+        new BABYLON.Vector3(this.shape.position.x, this.shape.position.y - 0.5, this.shape.position.z))
+    }
+    if (currentDegAbs < degree) return false
+    return true
   }
 
   dispose(forceDispose) {
