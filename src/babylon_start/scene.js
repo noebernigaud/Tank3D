@@ -78,7 +78,17 @@ class Scene {
 
     hlControlled.blurHorizontalSize = hlControlled.blurVerticalSize = 0.3;
 
+    let date = Date.now()
+
     scene.beforeRender = () => {
+
+
+      // if (Date.now() - date > 100) {
+      //   this.scene.renderTargetsEnabled = true
+      //   date = Date.now()
+      // } else if (this.scene.renderTargetsEnabled) {
+      //   this.scene.renderTargetsEnabled = false
+      // }
 
       document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps"
 
@@ -113,9 +123,6 @@ class Scene {
           if (c.isRenversed(1.4, true)) {
             c.healthLoss(c.maxHealth / 120)
           }
-
-          //update barre de vie
-          c.healtBar.updatePartition()
 
           //réglage son de déplacement selon la vitesse
           let velocityc = c.physicsImpostor.getLinearVelocity()

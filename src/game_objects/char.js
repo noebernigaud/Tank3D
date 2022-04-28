@@ -294,6 +294,8 @@ class Char extends ObjectPos {
       this.life--
       // this.dispose(false)
     }
+    //update barre de vie
+    this.healtBar.updatePartition()
   }
 
   dispose(forceDispose) {
@@ -319,6 +321,9 @@ class Char extends ObjectPos {
 
   restoreHealth() {
     this.health = this.maxHealth;
+
+    //update barre de vie
+    this.healtBar.updatePartition()
   }
 
 }

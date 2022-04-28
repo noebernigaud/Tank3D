@@ -45,6 +45,7 @@ class Healthbar {
       healthBarTextMaterial.emissiveColor = new BABYLON.Color3(186.0 / 255, 33.0 / 255, 0 / 255);
       this.healthBarTextMaterial = healthBarTextMaterial;
     }
+    this.updatePartition()
   }
 
   updatePartition() {

@@ -30,6 +30,7 @@ class BonusEnum {
             function () {
                 char1.maxHealth += 5
                 char1.health += 5
+                char1.healtBar.updatePartition()
             },
             "With this bonus your char gains 5 maximum health",
             "./images/health.png"
