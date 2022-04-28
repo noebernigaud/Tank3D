@@ -317,7 +317,13 @@ class Char extends ObjectPos {
     //   g.shape.position)
   }
 
+  restoreHealth() {
+    this.health = this.maxHealth;
+  }
+
 }
+
+
 
 function lights() {
   var gui = new dat.GUI();
