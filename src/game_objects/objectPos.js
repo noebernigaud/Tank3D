@@ -31,6 +31,7 @@ class ObjectPos extends BABYLON.Mesh {
     switch (type.name) {
       case ObjectEnum.Barrel.name: { shape = ObjectEnum.Barrel.container.clone(); break; }
       case ObjectEnum.Bonus.name: { shape = ObjectEnum.Bonus.container.clone(); break; }
+      case ObjectEnum.SpecialBonus.name: { shape = ObjectEnum.SpecialBonus.container.clone(); break; }
       case ObjectEnum.Player.name: { shape = ObjectEnum.Player.container.clone(); break; }
       case ObjectEnum.MiniTank.name: { shape = ObjectEnum.MiniTank.container.clone(); break; }
       case ObjectEnum.SnowTank.name: { shape = ObjectEnum.SnowTank.container.clone(); break; }
@@ -131,6 +132,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
         // case ObjectEnum.GrenadeObj.name: { remove(grenades, this); break; }
         case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
+        case ObjectEnum.SpecialBonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
         case ObjectEnum.MiniTank.name: { this.moveSound.pause(); break; }
