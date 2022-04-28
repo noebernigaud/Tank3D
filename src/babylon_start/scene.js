@@ -29,6 +29,10 @@ class Scene {
     this.engine = new BABYLON.WebGPUEngine(canvas);
     // await engine.initEngineAsync();
 
+    this.engine = createEngine()
+
+
+
     engine = this.engine;
 
     // window.addEventListener("resize", () => {
@@ -409,4 +413,8 @@ class Scene {
     gizmoManager.boundingBoxGizmoEnabled = true;
   }
 
+}
+
+async function createEngine() {
+  return BABYLON.EngineFactory.CreateAsync(document.getElementById("renderCanvas"));
 }
