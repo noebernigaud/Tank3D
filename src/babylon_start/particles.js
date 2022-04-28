@@ -389,3 +389,54 @@ function createFire(emitter) {
     // Start the particle system
     fireSystem.start();
 }
+
+function mindControlParticle(emitter, radius) {
+    var position = emitter.clone()
+    position.y += 0.2
+    // Create & launch a particule system
+    var particleSystem = new BABYLON.ParticleSystem("mindControlParticles", 10000, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    particleSystem.color1 = new BABYLON.Color4(0.34, 0.04, 0.3);
+    particleSystem.color2 = new BABYLON.Color4(0.37, 0.05, 0.28);
+    particleSystem.colorDead = new BABYLON.Color4(0.33, 0.04, 0.33, 0.76);
+    particleSystem.emitter = position;
+    particleSystem.minSize = 0.25;
+    particleSystem.maxSize = 0.5;
+    particleSystem.emitRate = 5000;
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;     // to manage alpha
+    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+    //particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
+    //particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
+    particleSystem.minEmitPower = 0;
+    particleSystem.maxEmitPower = 0;
+
+    particleSystem.minLifeTime = 0.2;
+    particleSystem.maxLifeTime = 1;
+    particleSystem.disposeOnStop;
+    //particleSystem.updateSpeed = 0.1;
+    //particleSystem.targetStopDuration = 0.8
+
+    var currentRadius = 0;
+    var goalRadius = radius;
+    var speedRadius = 0.0015
+
+    // Custom function to get the circle effect
+    particleSystem.startPositionFunction = function (worldMatrix, positionToUpdate) {
+        currentRadius = Math.min(goalRadius, currentRadius + speedRadius)
+
+        if (currentRadius >= goalRadius) {
+            particleSystem.stop()
+        }
+
+        particleSystem.emitRate += 10;
+        var rndAngle = 2 * Math.random() * Math.PI;
+        var randX = currentRadius * Math.sin(rndAngle);
+        var randY = this.minEmitBox.y;
+        var randZ = currentRadius * Math.cos(rndAngle);
+
+        BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+    }
+
+    // Start
+    particleSystem.start();
+}

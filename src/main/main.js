@@ -318,6 +318,7 @@ function pausebackgroundMusic() {
 }
 
 function remove_all_objects(withPlayer = false) {
+    scene.blockfreeActiveMeshesAndRenderingGroups = true;
     let allElts = getAllMeshList(withPlayer)
     if (level == 0) allElts.push(char1)
 
@@ -335,6 +336,8 @@ function remove_all_objects(withPlayer = false) {
     trees = [];
     rocks = [];
     delimiters = [];
+
+    scene.blockfreeActiveMeshesAndRenderingGroups = false;
 }
 
 

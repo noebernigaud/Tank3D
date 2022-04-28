@@ -70,6 +70,7 @@ class ObjectEnum {
 
     this.meshes.forEach(x => {
       x.scaling = new BABYLON.Vector3(this.resize, this.resize, this.resize)
+      // x.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
     })
 
     // Parent mesh (the original which we will duplicate to create our objects)
