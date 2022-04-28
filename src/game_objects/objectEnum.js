@@ -1,5 +1,3 @@
-
-
 class ObjectEnum {
   // Create new instances of the same class as static attributes
 
@@ -16,7 +14,7 @@ class ObjectEnum {
 
   //Opponent Tanks
   static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 1.25)
-  static EarthTank = new ObjectEnum("earthTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
+  static EarthTank = new ObjectEnum("earthTank", "modern_tank", 0.25, 0.95, 0.625, 1.75)
   static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.75)
   static SnowTank = new ObjectEnum("snowTank", "battle_tank", 0.2, 0.95, 0.625, 1.75)
 
@@ -39,6 +37,28 @@ class ObjectEnum {
   static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.15, 0.4, 0.4, 0.4)
   static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.015, 0.4, 0.4, 0.4)
   static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 0.01, 3, 2, 2)
+
+  static load1 = {
+    Snow: {
+      id: 0,
+      elts: [ObjectEnum.SnowTank,
+      ObjectEnum.SnowyTree, ObjectEnum.SnowyFir,
+      ObjectEnum.SnowyRock, ObjectEnum.SnowyFence, ObjectEnum.SnowyHut],
+      charged: false
+    },
+    Earth: {
+      id: 1,
+      elts: [
+        this.Bullet, this.MiniTank, this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
+        this.Rock, this.PalmTree1, this.PalmTree2, this.PalmTree3, ObjectEnum.EarthTank],
+      charged: false
+    },
+    Sand: {
+      id: 2,
+      elts: [ObjectEnum.SandTank, ObjectEnum.Cactus1, ObjectEnum.Cactus2,
+      ObjectEnum.Cactus3, ObjectEnum.DesertRock, ObjectEnum.Tumbleweed], charged: false
+    }
+  }
 
 
   /** @type {BABYLON.Mesh}*/
@@ -95,24 +115,23 @@ class ObjectEnum {
     ObjectEnum.loadingDone();
   }
 
-  static initiate_all_models() {
-    var list_obj = [
-      this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank,
-      this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus,
-      this.Rock, this.PalmTree1, this.PalmTree2,
-      this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
-      this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
-    ]
-    this.remainingLoad = list_obj.length + 1 // + 1 for earthy ground
-    this.globalLen = this.remainingLoad;
-    list_obj.forEach(e => e.create_model())
+  static initiate_all_models(biom) {
+    if (biom.charged) return;
+    var list_obj = biom.elts;
+    engine.displayLoadingUI();
+    document.getElementsByClassName('loadingBarMain')[0].classList.remove('hide')
 
+    this.remainingLoad = list_obj.length
+    this.globalLen = list_obj.length
+    list_obj.forEach(e => e.create_model())
+    biom.charged = true;
   }
 
   static loadingDone() {
+    if (engine) engine.stopRenderLoop()
     this.remainingLoad--;
     let done = this.globalLen - this.remainingLoad;
-    let stat = Math.round(done / this.globalLen * 100 * 100) / 100 + "%";
+    let stat = Math.round(done / this.globalLen * 10000) / 100 + "%";
     let bar = document.getElementsByClassName('loadingBarChild')[0];
     bar.style.width = stat;
     bar.innerHTML = stat;
@@ -121,11 +140,16 @@ class ObjectEnum {
         document.getElementsByClassName('loadingBarChild')[0].innerHTML = "Loading Done - Game Will Start Soon";
         setTimeout(() => {
           document.getElementsByClassName('loadingBarMain')[0].classList.add('hide')
+          // document.getElementById('main').classList.add('hide')
           engine.hideLoadingUI()
+          // scene.menu.toggleNotMenuElement(true)
           init()
+          draw_level_map()
+          startRenderLoop()
+          // document.getElementById()
+          scene.menu.show(false)
         }, 1000);
       }, 500);
-
     }
   }
 }

@@ -4,7 +4,7 @@
   top: 0;
   border-radius: 150pt;
   border: 3px solid rgb(55, 55, 55);
-  background-image: url("../textures/earthy_ground_diffuse.png");
+  /* background-image: url("../textures/earthy_ground_diffuse.png"); */
   background-size: 300px;
 }
 

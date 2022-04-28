@@ -28,7 +28,7 @@ let remainingPathColor;
 
 function onTimesUp() {
   clearInterval(timerInterval);
-  engine.runRenderLoop(() => scene.render())
+  startRenderLoop()
   document.getElementById("timer").innerHTML = ""
   toggleNotMenuElement(true)
 }

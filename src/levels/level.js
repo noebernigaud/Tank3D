@@ -167,7 +167,7 @@ class Level {
         scene.menu.inNextLevel = false;
         document.getElementById('endLevelStat').classList.add('hide');
         this.loadNextLevel();
-        // engine.runRenderLoop(() => scene.render())
+        // startRenderLoop() 
         pointerLock();
         Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
       }
@@ -176,7 +176,7 @@ class Level {
     tab.appendChild(endLine)
 
     console.log(tab);
-    // tab.innerHTML += "<tr><td class='button' colspan=2 onclick=\"scene.menu.inNextLevel = false;document.getElementById('endLevelStat').classList.add('hide'); engine.runRenderLoop(() => scene.render())\"><span>Next Level</span></td></tr>"
+    // tab.innerHTML += "<tr><td class='button' colspan=2 onclick=\"scene.menu.inNextLevel = false;document.getElementById('endLevelStat').classList.add('hide'); startRenderLoop() \"><span>Next Level</span></td></tr>"
   }
 
   loadNextLevel() {

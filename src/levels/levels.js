@@ -167,7 +167,12 @@ let current_level_dico = level_map[0]
  * @param {number} lvl_number 
  */
 function draw_level_map() {
-    setCurrentLevelDico()
+
+    if (level == 0) {
+        if (char1) char1.dispose(true);
+        char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
+        selected_bonuses = []
+    }
 
     setCurrentBiome()
 
@@ -175,12 +180,6 @@ function draw_level_map() {
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
     document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
-
-    if (level == 0) {
-        if (char1) char1.dispose(true);
-        char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
-        selected_bonuses = []
-    }
 
 
     camera.position =
@@ -304,11 +303,16 @@ function setCurrentLevelDico() {
 
         // current_level_dico.resetValues()
     }
+    if (level == 0 || current_level_dico.biome != level_map[level - 1].biome) {
+        ObjectEnum.initiate_all_models(ObjectEnum.load1[current_level_dico.biome])
+    } else {
+        draw_level_map()
+    }
 }
 
 function setCurrentBiome() {
     biome = current_level_dico.biome;
-    document.getElementById("minimap").style.backgroundImage = `url('textures/${biome.toLowerCase()}y_ground_diffuse.png')`;
+    document.getElementById("minimap").style.backgroundImage = `url('textures/${biome.toLowerCase()}y_minimap.png')`;
     listGrounds.forEach(g => {
         g.position.y = -10
         g.receiveShadows = false

@@ -75,7 +75,7 @@
     <body>
         <canvas id="myCanvas"></canvas>
 
-        <div class="box gameBars gameBarsClass">
+        <div class="box gameBars gameBarsClass hide">
             <div> Level : <span id="level">1/10</span></div>
             <div>
                 <canvas id="healthBar"></canvas>
@@ -87,7 +87,7 @@
             </div>
         </div>
 
-        <canvas id="minimap" class="gameBarsClass"></canvas>
+        <canvas id="minimap" class="gameBarsClass hide"></canvas>
 
         <div id="src"></div>
 
@@ -95,14 +95,15 @@
         </div>
 
         <div id="main" class="divb">
-            <div id="play" class='button' onclick="scene.menu.show(false); pointerLock();"
+            <div id="play" class='button' onclick="{scene.menu.show(false); pointerLock();}"
                 onmouseenter="scene.menu.soundHover()">
                 <span>Play</span>
             </div>
             <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
                 <span>Options</span>
             </div>
-            <div id="restart" class="button hide" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()">
+            <div id="restart" class="button hide" onclick="scene.menu.restart(); canvas.classList.add('hide')"
+                onmouseenter="scene.menu.soundHover()">
                 <span>Main menu</span>
             </div>
         </div>
@@ -113,7 +114,7 @@
 
         <div id="timer" style="display: none;"></div>
 
-        <div class="loadingBarMain">
+        <div class="loadingBarMain hide">
             <div class="loadingBarChild" style="width:0%"></div>
         </div>
         <br>
@@ -127,7 +128,7 @@
         </div>
         <div id="fps" class="box gameBarsClass hide">0</div>
 
-        <div class="box currentMission gameBarsClass">
+        <div class="box currentMission gameBarsClass hide">
             <!-- <div><span>Char a tuer</span><span>1/2</span></div>
             <div><span>Plante a brule</span><span>2/3</span></div> -->
         </div>

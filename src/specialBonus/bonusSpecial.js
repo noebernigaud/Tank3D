@@ -211,11 +211,11 @@ class SpecialBonus {
 
   static createSpecialBonusList(tank) {
     return [
-      // new crossHair(tank),
-      // new MachineGun(tank),
-      // new dome(tank),
-      // new SpeedTurbo(tank),
-      // new MindControl(tank),
+      new crossHair(tank),
+      new MachineGun(tank),
+      new dome(tank),
+      new SpeedTurbo(tank),
+      new MindControl(tank),
       new Teleport(tank),
       new BullCharge(tank),
       new Grenade(tank),

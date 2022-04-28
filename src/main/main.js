@@ -87,6 +87,8 @@ function stabilizeIfNotMoving() {
 
 function keyApplaier() {
 
+    if (!char1) return
+
 
     var speed_angle = 0.05;
 
@@ -281,7 +283,7 @@ function startgame(level) {
     bonuses = new Array();
 
     if (level < level_map.length) {
-        draw_level_map(level)
+        setCurrentLevelDico()
     }
 
     // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
@@ -398,3 +400,4 @@ let isLocked = () => document.pointerLockElement === canvas ||
 
 let exitPointerLoc = () => document.exitPointerLock();
 let pointerLock = () => canvas.requestPointerLock()
+let startRenderLoop = () => { if (engine._activeRenderLoops.length == 0) engine.runRenderLoop(() => scene.render()) }

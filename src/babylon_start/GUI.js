@@ -26,8 +26,6 @@ class Menu {
         //     remove_all_objects()
         //     startgame(level);
         // });
-
-        this.show(true)
     }
 
     createButton(name) {
@@ -50,6 +48,7 @@ class Menu {
             document.getElementById("main").classList.remove('hide')
         }
         else {
+            canvas.classList.remove('hide')
             this.hideMenu()
         }
         if (this.inBonus)
@@ -67,12 +66,13 @@ class Menu {
                     musicBackground.play()
                     chars.forEach(c => c.moveSound.play())
                     chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
-                    engine.runRenderLoop(() => scene.render())
+                    startRenderLoop()
                 }
             }
             this.isShown = toShow
         } else {
             this.prettyBG()
+            setCurrentLevelDico()
             this.isFirst = false;
         }
     }
@@ -133,7 +133,7 @@ class Menu {
                 bEnum.addToChar()
                 this.bonusPanel.classList.add('hide');
                 chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
-                engine.runRenderLoop(() => scene.render())
+                startRenderLoop()
                 this.inBonus = false;
                 this.clearBonus()
                 pointerLock()
@@ -166,7 +166,7 @@ class Menu {
         //         selected_bonuses.push(bonus.name);
         //         panel.dispose();
         //         inMenu = false;
-        //         engine.runRenderLoop(() => scene.render())
+        //         startRenderLoop() 
         //     });
         // })
     }
@@ -205,6 +205,7 @@ class Menu {
             }
             else if (this.inNextLevel) this.nextLevelPanel.classList.remove('hide')
             else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
+            canvas.classList.remove('hide')
         }
     }
 

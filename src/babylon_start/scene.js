@@ -33,7 +33,7 @@ class Scene {
     //   engine.resize()
     // })
 
-    engine.displayLoadingUI();
+    // engine.displayLoadingUI();
     this.scene = this.createScene();
     this.scene.menu = new Menu()
     this.setPhysic()
@@ -45,7 +45,8 @@ class Scene {
     // this.setGizmo()
     this.setCamera()
 
-    ObjectEnum.initiate_all_models()
+    // ObjectEnum.initiate_all_models(ObjectEnum.load1.Earth)
+    // setCurrentLevelDico()
   }
 
   /**
@@ -53,7 +54,7 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
-    // engine.runRenderLoop(() => scene.render())
+    // startRenderLoop() 
     // var options = new BABYLON.SceneOptimizerOptions(50, 2000);
     // BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
     // BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
@@ -195,6 +196,8 @@ class Scene {
   }
 
   setGround() {
+
+    engine.displayLoadingUI()
     // const groundOptions = {
     //   width: width * 1.5 + cell_size,
     //   height: height * 1.5 + cell_size,
@@ -205,6 +208,43 @@ class Scene {
     //   onReady: () => onGroundCreated(this),
     // };
     //scene is optional and defaults to the current scene
+    let counter = 3;
+    function onGroundCreated(myScene, name, index) {
+      counter--;
+      const groundMaterial = new BABYLON.StandardMaterial(
+        "groundMaterial",
+        scene
+      );
+      groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${name}_ground_diffuse.png`, scene, null, true, null, function () {
+        if (name == "earthy") ObjectEnum.loadingDone();
+      });
+      listGrounds[index].material = groundMaterial;
+
+      listGrounds[index].receiveShadows = false
+      // to be taken into account by collision detection
+      //groundMaterial.wireframe=true;
+
+      // for physic engine
+      // listGrounds[index].physicsImpostor = new BABYLON.PhysicsImpostor(
+      //   listGrounds[index],
+      //   BABYLON.PhysicsImpostor.HeightmapImpostor,
+      //   { mass: 0 },
+      //   scene
+      // );
+
+
+      groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
+      groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
+      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
+
+      myScene.setWater(listGrounds[index]);
+
+      listGrounds[index].position.y = -10
+
+      if (counter == 0) {
+        engine.hideLoadingUI()
+      }
+    }
 
     let groundOptions = (name, index) => {
       return {
@@ -237,38 +277,6 @@ class Scene {
       scene
     ));
 
-    function onGroundCreated(myScene, name, index) {
-      const groundMaterial = new BABYLON.StandardMaterial(
-        "groundMaterial",
-        scene
-      );
-      groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${name}_ground_diffuse.png`, scene, null, true, null, function () {
-        if (name == "earthy") ObjectEnum.loadingDone();
-      });
-      listGrounds[index].material = groundMaterial;
-
-      listGrounds[index].receiveShadows = false
-      // to be taken into account by collision detection
-      //groundMaterial.wireframe=true;
-
-      // for physic engine
-      // listGrounds[index].physicsImpostor = new BABYLON.PhysicsImpostor(
-      //   listGrounds[index],
-      //   BABYLON.PhysicsImpostor.HeightmapImpostor,
-      //   { mass: 0 },
-      //   scene
-      // );
-
-
-      groundMaterial.diffuseColor = new BABYLON.Color3(0.9, 0.9, 0.9)
-      groundMaterial.emissiveColor = new BABYLON.Color3(0.3, 0.3, 0.3)
-      groundMaterial.specularColor = new BABYLON.Color3(0, 0, 0)
-
-      myScene.setWater(listGrounds[index]);
-
-      listGrounds[index].position.y = -10
-
-    }
     ground = listGrounds[1]
 
     return ground;
