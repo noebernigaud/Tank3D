@@ -27,7 +27,7 @@ class Scene {
     tanksAIReady = false;
 
 
-    createEngine()
+    this.createEngine()
 
   }
 
@@ -51,6 +51,7 @@ class Scene {
 
     ObjectEnum.initiate_all_models()
   }
+
   /**
    * @returns {BABYLON.Scene}
    */
