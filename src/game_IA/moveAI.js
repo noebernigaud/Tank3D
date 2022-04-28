@@ -9,11 +9,24 @@ class MoveAI {
     var target = char1
 
     if (!isEnnemy) {
-      if (charsAI.length <= 1) return
-      target = (charsAI[0] != tank) ? charsAI[0] : charsAI[1]
       var distance = 1000
       charsAI.forEach(c => {
-        var newDist = Math.sqrt((c.shape.position.x - tank.shape.position.x) ** 2 +
+        var newDist = Math.sqrt(
+          (c.shape.position.x - tank.shape.position.x) ** 2 +
+          (c.shape.position.y - tank.shape.position.y) ** 2 +
+          (c.shape.position.z - tank.shape.position.z) ** 2);
+        if (newDist > 0.2 && newDist < distance) {
+          distance = newDist
+          target = c
+        }
+      })
+      if (target == char1) return
+    }
+    else if (charsAllies.length > 0) {
+      var distance = 1000
+      charsAllAllies.forEach(c => {
+        var newDist = Math.sqrt(
+          (c.shape.position.x - tank.shape.position.x) ** 2 +
           (c.shape.position.y - tank.shape.position.y) ** 2 +
           (c.shape.position.z - tank.shape.position.z) ** 2);
         if (newDist > 0.2 && newDist < distance) {

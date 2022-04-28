@@ -19,6 +19,12 @@ var char1;
 var charsAI;
 
 /** @type {[Char]} */
+var charsAllies;
+
+/** @type {[Char]} */
+var charsAllAllies;
+
+/** @type {[Char]} */
 var chars;
 
 /** @type {[Char]} */

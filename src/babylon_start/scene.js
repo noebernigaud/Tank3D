@@ -135,13 +135,21 @@ class Scene {
 
         charsAI.forEach(c => {
           if (c.life <= 0) {
-            console.log("should destroy char ", c);
             let index = chars.indexOf(c)
             if (index !== -1) chars.splice(index, 1)
             index = charsAI.indexOf(c)
             if (index !== -1) charsAI.splice(index, 1)
             c.destroyTank()
-            // c.dispose(true)
+          }
+        })
+
+        charsAllies.forEach(c => {
+          if (c.life <= 0) {
+            let index = chars.indexOf(c)
+            if (index !== -1) chars.splice(index, 1)
+            index = charsAllies.indexOf(c)
+            if (index !== -1) charsAllies.splice(index, 1)
+            c.destroyTank()
           }
         })
 
@@ -168,7 +176,10 @@ class Scene {
         }
 
         else {
+          charsAllAllies = charsAllies.slice()
+          charsAllAllies.push(char1)
           charsAI.forEach(c => c.strategy.applyStrategy());
+          charsAllies.forEach(c => c.strategy.applyStrategy());
           chars.forEach(c => SpecialBonus.updateAllThankBonuses(c));
         }// TODO : Here update all bonuses list !!!
         //charsAI.forEach(c => MoveAI.move(c));

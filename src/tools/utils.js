@@ -62,6 +62,8 @@ var remove = (list, elt) => {
     if (index !== -1) list.splice(index, 1)
 }
 
+
+
 function lights() {
     var gui = new dat.GUI();
     gui.domElement.style.marginTop = "100px";
