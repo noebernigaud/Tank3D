@@ -70,11 +70,13 @@ class ObjectEnum {
 
     this.meshes.forEach(x => {
       x.scaling = new BABYLON.Vector3(this.resize, this.resize, this.resize)
+      x.forceSharedVertices();
       // x.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
     })
 
-    if(model == "sand_tank") {
-      [this.meshes[0], this.meshes[3]] = [this.meshes[3], this.meshes[0]];}
+    if (model == "sand_tank") {
+      [this.meshes[0], this.meshes[3]] = [this.meshes[3], this.meshes[0]];
+    }
 
     // Parent mesh (the original which we will duplicate to create our objects)
     if (model == "barrel") {

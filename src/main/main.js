@@ -403,3 +403,6 @@ let isLocked = () => document.pointerLockElement === canvas ||
 
 let exitPointerLoc = () => document.exitPointerLock();
 let pointerLock = () => canvas.requestPointerLock()
+let runRenderLoop = () => {
+    if (engine.activeRenderLoops.length == 0) engine.runRenderLoop(() => scene.render())
+}

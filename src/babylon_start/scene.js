@@ -28,6 +28,8 @@ class Scene {
     this.engine = new BABYLON.Engine(canvas, true, null, true);
 
     engine = this.engine;
+    engine.enableOfflineSupport = false;
+    engine.doNotHandleContextLost = true;
 
     // window.addEventListener("resize", () => {
     //   engine.resize()
@@ -287,6 +289,7 @@ class Scene {
       myScene.setWater(listGrounds[index]);
 
       listGrounds[index].position.y = -10
+      listGrounds[index].forceSharedVertices();
 
     }
     ground = listGrounds[1]

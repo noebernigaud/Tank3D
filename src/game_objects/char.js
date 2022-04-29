@@ -41,7 +41,6 @@ class Char extends ObjectPos {
       camera1.maxCameraSpeed = 8;
       camera.dispose();
       camera = camera1;
-      // engine.runRenderLoop(() => scene.render())
     } else {
       this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
       MoveAI.rotateTurret(this)
