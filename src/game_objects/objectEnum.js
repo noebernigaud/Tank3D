@@ -73,6 +73,9 @@ class ObjectEnum {
       // x.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
     })
 
+    if(model == "sand_tank") {
+      [this.meshes[0], this.meshes[3]] = [this.meshes[3], this.meshes[0]];}
+
     // Parent mesh (the original which we will duplicate to create our objects)
     if (model == "barrel") {
       this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
