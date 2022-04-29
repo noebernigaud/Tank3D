@@ -20,7 +20,7 @@ class dome extends SpecialBonus {
     update() {
         if (this.isActive) {
             bullets.forEach(e => {
-                if (this.dome.intersectsMesh(e)) {
+                if (this.dome.intersectsMesh(e) && e.char != this.tank) {
                     this.life--;
                     e.dispose(true, true);
                 }
