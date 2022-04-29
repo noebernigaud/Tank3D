@@ -440,3 +440,56 @@ function mindControlParticle(emitter, radius) {
     // Start
     particleSystem.start();
 }
+
+function teleportationParticle(emitter) {
+    teleportationEffect(emitter, 0)
+    teleportationEffect(emitter, 180)
+}
+
+function teleportationEffect(emitter, position) {
+    // Create & launch a particule system
+    var particleSystem = new BABYLON.ParticleSystem("spawnParticles", 400, scene);    // 3600 particles to have a continue effect when computing circle positions
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
+    particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+    particleSystem.emitter = emitter;
+    particleSystem.minSize = 0.2;
+    particleSystem.maxSize = 0.4;
+    particleSystem.emitRate = 400;
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;     // to manage alpha
+    particleSystem.gravity = new BABYLON.Vector3(0, 10, 0);
+    //particleSystem.direction1 = new BABYLON.Vector3(-1, 1, -1);
+    //particleSystem.direction2 = new BABYLON.Vector3(1, 1, 1);
+    // particleSystem.minEmitPower = 1;
+    // particleSystem.maxEmitPower = 5;
+    particleSystem.updateSpeed = 0.02;
+    // particleSystem.minLifeTime = 1;
+    // particleSystem.maxLifeTime = 3;
+
+    particleSystem.minLifeTime = 0.5;
+    particleSystem.maxLifeTime = 0.5;
+
+    particleSystem.cpt = position; // Number of particles
+
+
+    // Custom function to get the circle effect
+    particleSystem.startPositionFunction = function (worldMatrix, positionToUpdate) {
+        var randX = Math.sin(this.cpt * Math.PI / 180) * 1.5;
+        var randY = this.minEmitBox.y + 0.5;
+        var randZ = Math.cos(this.cpt * Math.PI / 180) * 1.5;
+
+        BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+        particleSystem.minSize = Math.max(0.0001, particleSystem.minSize -= 0.00015);
+        particleSystem.maxSize = Math.max(0.0006, particleSystem.maxSize -= 0.0009);
+
+        this.cpt++;
+    }
+
+
+    particleSystem.targetStopDuration = 3;
+    particleSystem.disposeOnStop;
+
+    // Start
+    particleSystem.start();
+}

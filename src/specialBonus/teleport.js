@@ -14,6 +14,8 @@ class Teleport extends SpecialBonus {
                 Math.max(this.tank.shape.position.y + this.tank.getTurretTank().getDirection(BABYLON.Axis.Z).y * 40 + 0.4, 1),
                 this.tank.shape.position.z + this.tank.getTurretTank().getDirection(BABYLON.Axis.X).x * 40
             );
+
+            teleportationParticle(this.tank.shape)
         }
 
     }
