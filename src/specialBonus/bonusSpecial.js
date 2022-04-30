@@ -64,7 +64,7 @@ const SPECIAL_BONUS_ID = {
   ALLIES: {
     name: "Allies Intervention",
     description: "2 allies come down from the sky to help you",
-    image: "images/grenade.png",
+    image: "images/parachute.png",
     keyListener: '9',
     bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Allies Intervention") b.delay /= 2 }) },
   },
