@@ -101,10 +101,10 @@ const level_map = [
                 "-----------------------------------------",
                 "-----------------------------------------",
                 "-----------------------------------------",
-                "-------------t---t---t---t---------------",
+                "-------------h---h---h--h----------------",
                 "-----------------------------------------",
                 "-----------------------------R-----------",
-                "-------------t---t---t---t---------------",
+                "-------------h---h---h---h---------------",
                 "-----------------------------------------",
                 "--------------------R--------------------",
                 "-----------------------------------------",
@@ -119,7 +119,7 @@ const level_map = [
                 "-----------------------------------------",
             ],
         minHeightMap: -1,
-        lvlObjective: levelObjectives.burnAllTrees,
+        lvlObjective: levelObjectives.burnAllBarrels,
         biome: "Sand"
     }),
     new Level({
@@ -291,7 +291,7 @@ function draw_level_map() {
                     barrels.push(new Barrel(posX, posY))
                     break;
                 case 't':
-                    trees.push(new Tree(posX, posY, current_level_dico.lvlObjective == levelObjectives.burnAllTrees ? false : undefined))
+                    trees.push(new Tree(posX, posY))
                     break;
                 case 'r':
                     rocks.push(new Rock(posX, posY))

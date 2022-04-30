@@ -33,17 +33,16 @@ let levelObjectives = {
         () => charsDestroyed.length + charsAI.length]
     ]
   },
-  burnAllTrees: {
+  burnAllBarrels: {
     description:
-      `The ennemies' plantation is their main supplie. These trees are particularly
-       inflammable: fire on all the trees on the Island to burn them and complete the stage`,
+      `Destroy all the essence barrels to cut down ennemies' supplies`,
     goToNextLevel: (e) => {
-      return trees.every(tree => (
-        tree.isBurning
+      return barrels.every(barrel => (
+        barrel.isBurning
       ));
     },
     tip: [
-      ["Tree to burn", () => `${trees.filter(t => t.isBurning).length}`, () => trees.length]
+      ["Barrels to burn", () => `${barrels.filter(b => b.isBurning).length}`, () => barrels.length]
     ]
   }
 }
