@@ -36,6 +36,9 @@ var bonuses;
 /** @type {[Bonus]} */
 var selected_bonuses;
 
+/** @type {[BonusEnum]} */
+var addedObtainableBonus;
+
 /** @type {[Wall]} */
 var walls;
 

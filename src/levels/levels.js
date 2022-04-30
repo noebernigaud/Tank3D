@@ -205,6 +205,7 @@ function draw_level_map() {
         if (char1) char1.dispose(true);
         char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
+        addedObtainableBonus = []
     }
 
 

@@ -110,13 +110,13 @@ function keyApplaier() {
     }
 
     // TOURNER LE TANK
-    if (inputStates.rot_minus && !inputStates.rot_plus) {
+    if (inputStates.rot_minus && !inputStates.rot_plus && !char1.bullForce) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
     }
-    if (inputStates.rot_plus && !inputStates.rot_minus) {
+    if (inputStates.rot_plus && !inputStates.rot_minus && !char1.bullForce) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)

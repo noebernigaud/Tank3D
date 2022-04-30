@@ -9,55 +9,64 @@ const SPECIAL_BONUS_ID = {
     name: "Sniper laser",
     description: "Highlight enemies once target + Bullet are very fast every 3 seconds",
     image: "images/gunaims.png",
-    keyListener: '1'
+    keyListener: '1',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Sniper laser") b.delay /= 2 }) },
   },
   MACHINE_GUN: {
     name: 'Machine gun',
     description: "The delay between bullets is really short and bullets are faster",
     image: "images/multiple_bullet.png",
-    keyListener: '2'
+    keyListener: '2',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Machine gun") b.delay /= 2 }) },
   },
   DOME: {
     name: "Shield",
     description: "Be protected by a 4-lifes dome",
     image: "images/shield.png",
-    keyListener: '3'
+    keyListener: '3',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Shield") b.delay /= 2 }) },
   },
   SPEED_TURBO: {
     name: "Speed Turbo",
     description: "Go faster for 3 seconds",
     image: "images/speed.png",
-    keyListener: '4'
+    keyListener: '4',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Speed Turbo") b.delay /= 2 }) },
   },
   MIND_CONTROL: {
     name: "Mind Control",
     description: "Nearby tanks attack their allies for 10 seconds",
     image: "images/brain.png",
-    keyListener: '5'
+    keyListener: '5',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Mind Control") b.delay /= 2 }) },
   },
   TELEPORT: {
     name: "Teleport",
     description: "Teleport 5 meters in the direction your are looking",
     image: "images/teleportation.png",
-    keyListener: '6'
+    keyListener: '6',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Teleport") b.delay /= 2 }) },
   },
   BULL_CHARGE: {
     name: "Bull Charge",
     description: "Charge forward and destroy ennemies on your way",
     image: "images/bull_charge.png",
-    keyListener: '7'
+    keyListener: '7',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Bull Charge") b.delay /= 2 }) },
   },
   GRENADE: {
     name: "Grenade",
     description: "Throw a grenade which explose on collision",
     image: "images/grenade.png",
-    keyListener: '8'
+    keyListener: '8',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Grenade") b.delay /= 2 }) },
   },
   ALLIES: {
     name: "Allies Intervention",
     description: "2 allies come down from the sky to help you",
     image: "images/grenade.png",
-    keyListener: '9'
+    keyListener: '9',
+    bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Allies Intervention") b.delay /= 2 }) },
   },
 }
 
@@ -83,6 +92,7 @@ class SpecialBonus {
 
     this.name = bonusType.name;
     this.description = bonusType.description;
+    this.bonusLevelUp = bonusType.bonusLevelUp;
 
     this.image = document.createElement("img");
     this.image.src = bonusType.image
@@ -103,6 +113,13 @@ class SpecialBonus {
   addToChar() {
     this.keyListener = listenerList[this.tank.specialBonuses.length];
     this.tank.addSpecialBonus(this);
+    addedObtainableBonus.push(
+      new BonusEnum(
+        this.name + " level up",
+        this.bonusLevelUp,
+        "Level up the power of the ", this.name, " special bonus",
+        "./images/health.png"
+      ))
     this.load()
   }
 
@@ -217,12 +234,12 @@ class SpecialBonus {
 
   static createSpecialBonusList(tank) {
     return [
-      new crossHair(tank),
-      new MachineGun(tank),
-      new dome(tank),
-      new SpeedTurbo(tank),
-      new MindControl(tank),
-      new Teleport(tank),
+      // new crossHair(tank),
+      // new MachineGun(tank),
+      // new dome(tank),
+      // new SpeedTurbo(tank),
+      // new MindControl(tank),
+      // new Teleport(tank),
       new BullCharge(tank),
       new Grenade(tank),
       new Allies(tank),

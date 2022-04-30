@@ -19,22 +19,22 @@ class BonusEnum {
             "Now your bullets will go two time faster !",
             "./images/speed_bullet.png"
         ),
-        new BonusEnum(
-            "Bonus bullet damage",
-            function () { char1.bulletDamage += 3 },
-            "With this bonus your bullets will deal 5 more damage",
-            "./images/bullet_damage.png"
-        ),
-        new BonusEnum(
-            "Bonus char health",
-            function () {
-                char1.maxHealth += 5
-                char1.health += 5
-                char1.healtBar.updatePartition()
-            },
-            "With this bonus your char gains 5 maximum health",
-            "./images/health.png"
-        ),
+        // new BonusEnum(
+        //     "Bonus bullet damage",
+        //     function () { char1.bulletDamage += 3 },
+        //     "With this bonus your bullets will deal 5 more damage",
+        //     "./images/bullet_damage.png"
+        // ),
+        // new BonusEnum(
+        //     "Bonus char health",
+        //     function () {
+        //         char1.maxHealth += 5
+        //         char1.health += 5
+        //         char1.healtBar.updatePartition()
+        //     },
+        //     "With this bonus your char gains 5 maximum health",
+        //     "./images/health.png"
+        // ),
     ]
 
     constructor(name, load, description, image) {

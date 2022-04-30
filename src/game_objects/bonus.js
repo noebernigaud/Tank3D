@@ -34,7 +34,7 @@ class Bonus extends ObjectPos {
 
     static randomBonus(num, tank, isSpecial = false) {
         var res = []
-        var copy_bonusEnum = isSpecial ? SpecialBonus.createSpecialBonusList(tank) : BonusEnum.bonusEnumList.slice();
+        var copy_bonusEnum = isSpecial ? SpecialBonus.createSpecialBonusList(tank) : BonusEnum.bonusEnumList.slice().concat(addedObtainableBonus);
         for (var i = 0; i < num; i++) {
             var rand = Math.floor(Math.random() * copy_bonusEnum.length)
             res.push(copy_bonusEnum[rand])

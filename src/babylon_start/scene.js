@@ -172,6 +172,7 @@ class Scene {
           // startgame(level);
           // this.scene.menu.createButton()
         } else if (current_level_dico.canGoNextLevel()) {
+          char1.bullForce = null
           if (level + 1 == level_map.length) {
             // this.scene.menu.restart()
             current_level_dico.goNextLevel(lvlStatus.WIN)

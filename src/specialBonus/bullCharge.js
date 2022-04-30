@@ -1,11 +1,12 @@
 class BullCharge extends SpecialBonus {
     constructor(tank) {
-        super(tank, SPECIAL_BONUS_ID.BULL_CHARGE, 10000, 2000);
+        super(tank, SPECIAL_BONUS_ID.BULL_CHARGE, 10000, 1300);
     }
 
     disable() {
         super.disable()
         this.tank.bullForce = null
+        if (!inputStates.foreward) this.tank.stabilizeTank()
     }
 
     use() {
@@ -13,7 +14,8 @@ class BullCharge extends SpecialBonus {
             this.bonusStartedDate = Date.now();
             super.activate()
             //normalized vector of our current direction
-            let moveVec = this.tank.shape.getDirection(BABYLON.Axis.Z).scale(300000)
+            // let moveVec = this.tank.shape.getDirection(BABYLON.Axis.Z).scale(800000)
+            let moveVec = this.tank.shape.getDirection(BABYLON.Axis.Z).scale(8)
             this.tank.bullForce = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
             this.tank.physicsImpostor.onCollideEvent = (e1, e2) => {
                 let c1 = chars.find(e => e.shape == e1.object)
@@ -23,6 +25,7 @@ class BullCharge extends SpecialBonus {
                     if (c2) {
                         c2.healthLoss(5000)
                         current_level_dico.addKilledChar()
+                        c1.bullForce = null
                     }
                 }
             }

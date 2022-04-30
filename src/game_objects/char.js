@@ -128,7 +128,7 @@ class Char extends ObjectPos {
   }
 
   rotateAxisY(angle) {
-    if (this.life <= 0) return
+    if (this.life <= 0 || this.bullForce) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
     this.rotateTurretAxisY(-angle)
   }
@@ -173,9 +173,9 @@ class Char extends ObjectPos {
     this.moveTank(speed)
   }
 
-  moveTank(speed) {
+  moveTank(speed, fromBullForce = false) {
 
-    if (this.isRenversed() || this.life <= 0) return
+    if (this.isRenversed() || this.life <= 0 || (this.bullForce && !fromBullForce)) return
     if (this.physicsImpostor.friction != 0) {
       this.stabilizeTank(false)
     }
@@ -221,7 +221,7 @@ class Char extends ObjectPos {
     if (this.health <= 0 || scene.inMenu) hasFriction = true
     remove(impostorCharList, this.physicsImpostor)
     this.physicsImpostor.dispose()
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.3 : 0 });
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
     this.dust.stop();
@@ -304,8 +304,10 @@ class Char extends ObjectPos {
   }
 
   applyBullForce() {
-    if (!this.bullForce) return
-    this.physicsImpostor.applyForce(this.bullForce, this.shape.position)
+    if (!this.bullForce || char1.life <= 0) return
+    // this.physicsImpostor.applyForce(this.bullForce, this.shape.position)
+    // this.physicsImpostor.setLinearVelocity(this.bullForce)
+    this.moveTank(10, true)
   }
 
   throwGrenade() {
