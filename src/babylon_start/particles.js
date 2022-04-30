@@ -493,3 +493,75 @@ function teleportationEffect(emitter, position) {
     // Start
     particleSystem.start();
 }
+
+function shieldEffect(emitter, radius, isExploding = false) {
+    var particleSystem = new BABYLON.ParticleSystem("particles", isExploding ? 500 : 300, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+
+    particleSystem.emitter = emitter
+
+    // Colors of all particles
+    particleSystem.color1 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+    // Size of each particle
+    particleSystem.minSize = 0.05;
+    particleSystem.maxSize = 0.1;
+
+    // Life time of each particle
+    particleSystem.minLifeTime = 1;
+    particleSystem.maxLifeTime = isExploding ? 3 : 6;
+
+    // Emission rate
+    particleSystem.emitRate = isExploding ? 500 : 300;
+
+    // Emission space
+    particleSystem.createSphereEmitter(radius / 2, 0)
+
+    // Speed
+    particleSystem.minEmitPower = isExploding ? 1 : 0;
+    particleSystem.maxEmitPower = isExploding ? 20 : 0;
+    particleSystem.updateSpeed = isExploding ? 0.01 : 0.05
+
+    particleSystem.targetStopDuration = isExploding ? 0.4 : 1.5
+    particleSystem.disposeOnStop = true
+
+
+    particleSystem.start();
+}
+
+function shieldImpact(emitter) {
+    var particleSystem = new BABYLON.ParticleSystem("particles", 200, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    particleSystem.emitter = emitter
+
+    // Colors of all particles
+    particleSystem.color1 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+    // Size of each particle
+    particleSystem.minSize = 0.05;
+    particleSystem.maxSize = 0.1;
+
+    // Life time of each particle
+    particleSystem.minLifeTime = 0.05;
+    particleSystem.maxLifeTime = 0.1;
+
+    // Emission rate
+    particleSystem.emitRate = 200;
+
+    particleSystem.minEmitPower = -5;
+    particleSystem.maxEmitPower = -10;
+
+    particleSystem.createSphereEmitter(0.4, 0)
+
+    particleSystem.targetStopDuration = 0.2
+
+    // Speed
+    particleSystem.updateSpeed = 0.01;
+
+    // Start the particle system
+    particleSystem.start();
+}
