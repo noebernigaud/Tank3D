@@ -85,6 +85,7 @@ var impostorCharList = [];
 var hl;
 var hlBalls;
 var hlControlled;
+var hlMinigun;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';
