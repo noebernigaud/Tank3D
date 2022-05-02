@@ -84,6 +84,10 @@ class Scene {
 
     hlMinigun.blurHorizontalSize = hlMinigun.blurVerticalSize = 0.3;
 
+    hlAllies = new BABYLON.HighlightLayer("hAllies", scene);
+
+    hlAllies.blurHorizontalSize = hlAllies.blurVerticalSize = 0.3;
+
     let date = Date.now()
 
     scene.beforeRender = () => {
