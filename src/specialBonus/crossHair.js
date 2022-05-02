@@ -43,8 +43,7 @@ class crossHair extends SpecialBonus {
  */
   highlightTank(tank, toHighlight) {
     if (toHighlight && !hl.hasMesh(tank.shape.getChildMeshes()[0])) {
-      let fileterMeshToHigLight = tank.shape.getChildMeshes().filter(m =>
-        !(tank.healtBar.healthBarContainer && ((m == tank.healtBar.healthBarContainer) || (tank.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
+      let fileterMeshToHigLight = tank.getMeshesToHighlight();
       fileterMeshToHigLight.forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
     }
   }

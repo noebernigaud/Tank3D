@@ -327,6 +327,11 @@ class Char extends ObjectPos {
     this.healtBar.updatePartition()
   }
 
+  getMeshesToHighlight(){
+    return this.shape.getChildMeshes().filter(m =>
+      !(this.healtBar.healthBarContainer && ((m == this.healtBar.healthBarContainer) || (this.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
+  }
+
 }
 
 

@@ -10,9 +10,8 @@ class Allies extends SpecialBonus {
             charsAllies.push(allie1);
             allie1.setStrategy(new guaranteedAI(allie1, false))
             chars.push(allie1);
-            let fileterMeshToHigLight = allie1.shape.getChildMeshes().filter(m =>
-                  !(allie1.healtBar.healthBarContainer && ((m == allie1.healtBar.healthBarContainer) || (allie1.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
-                fileterMeshToHigLight.forEach(m => hl.addMesh(m, new BABYLON.Color3(0, 1, 0)))
+            let fileterMeshToHigLight = allie1.getMeshesToHighlight();
+            fileterMeshToHigLight.forEach(m => hl.addMesh(m, new BABYLON.Color3(0, 1, 0)))
             allie1.healtBar.healthBarTextMaterial.emissiveColor = new BABYLON.Color3(20.0 / 255, 112.0 / 255, 25.0 / 255);
               
 
