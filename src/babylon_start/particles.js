@@ -334,6 +334,7 @@ function createFire(emitter) {
     smokeSystem.maxEmitPower = 1.5;
     smokeSystem.updateSpeed = 0.005;
     smokeSystem.emitter = emitter
+    smokeSystem.disposeOnStop = true;
 
     smokeSystem.start();
 
@@ -383,6 +384,8 @@ function createFire(emitter) {
     fireSystem.minEmitPower = 0.5;
     fireSystem.maxEmitPower = 2;
     fireSystem.updateSpeed = 0.005;
+
+    fireSystem.disposeOnStop = true;
 
     fireSystem.emitter = emitter
 
@@ -437,6 +440,9 @@ function mindControlParticle(emitter, radius) {
         BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
     }
 
+    
+    particleSystem.disposeOnStop = true;
+
     // Start
     particleSystem.start();
 }
@@ -488,7 +494,7 @@ function teleportationEffect(emitter, position) {
 
 
     particleSystem.targetStopDuration = 3;
-    particleSystem.disposeOnStop;
+    particleSystem.disposeOnStop = true;
 
     // Start
     particleSystem.start();
@@ -558,10 +564,48 @@ function shieldImpact(emitter) {
     particleSystem.createSphereEmitter(0.4, 0)
 
     particleSystem.targetStopDuration = 0.2
+    particleSystem.disposeOnStop = true;
 
     // Speed
     particleSystem.updateSpeed = 0.01;
 
     // Start the particle system
+    particleSystem.start();
+}
+
+function bullChargeEffect(emitter){
+    var particleSystem = new BABYLON.ParticleSystem('bullCharge', 600, scene);
+    particleSystem.particleTexture = new BABYLON.Texture('textures/flare.png', scene);
+
+    particleSystem.minLifeTime = 1;
+    particleSystem.maxLifeTime = 3;
+
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
+
+    particleSystem.minEmitPower = 0;
+    particleSystem.maxEmitPower = 0;
+    particleSystem.updateSpeed = 0.05;
+    particleSystem.emitRate = 600;
+
+    // Start the system before rendering
+    // particleSystem.preWarmCycles = 100;
+    // particleSystem.preWarmStepOffset = 5;
+
+
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 0.1;
+
+    particleSystem.addColorGradient(0, new BABYLON.Color4(0.53, 0.02, 0.2));
+    particleSystem.addColorGradient(0.5, new BABYLON.Color4(0.89, 0, 0.04, 0.71));
+    particleSystem.addColorGradient(1, new BABYLON.Color4(1, 0, 0.17, 0.82));
+
+    let dir = emitter.getDirection(BABYLON.Axis.Z)
+    // dir.x *= -1
+    // particleSystem.createDirectedSphereEmitter(1, dir.scale(-1), dir.scale(-1));
+    particleSystem.emitter = emitter;
+
+    particleSystem.targetStopDuration = 4;
+    particleSystem.disposeOnStop = true;
+    
     particleSystem.start();
 }
