@@ -7,22 +7,22 @@ class ObjectEnum {
   static Barrel = new ObjectEnum("barrel", "barrel", 0.65, 0.375, 0.6, 0.375)
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
-  static SpecialBonus = new ObjectEnum("special_bonus", "military_box", 0.60, 0.4, 0.4, 0.4)
+  static SpecialBonus = new ObjectEnum("special_bonus", "military_box", 0.60, 1.15, 0.4, 0.6)
 
   //Player
-  static Player = new ObjectEnum("player", "modern_tank", 0.25, 0.95, 0.625, 1.75)
+  static Player = new ObjectEnum("player", "modern_tank", 0.25, 1.1, 0.625, 1.85)
   static Bonus = new ObjectEnum("bonus", "box", 0.008, 0.4, 0.4, 0.4)
   static Bullet = new ObjectEnum(bulletImage.src, "")
   static GrenadeObj = new ObjectEnum(bulletImage.src, "")
 
   //Opponent Tanks
-  static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 1.25)
+  static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 0.625)
   static EarthTank = new ObjectEnum("earthTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
-  static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.75)
+  static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.85)
   static SnowTank = new ObjectEnum("snowTank", "battle_tank", 0.2, 0.95, 0.625, 1.75)
 
   //Earthy Biome items
-  static Rock = new ObjectEnum("rock", "rock", 0.5, 0.5, 0.5, 0.5)
+  static Rock = new ObjectEnum("rock", "rock", 0.5, 0.95, 0.7, 0.7)
   static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 1, 0.8, 1, 0.8)
   static PalmTree2 = new ObjectEnum("merged_palm_tree", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.02, 0.8, 1, 0.8)
@@ -37,7 +37,7 @@ class ObjectEnum {
   //Snowy Biome items
   static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.025, 0.8, 1, 0.8)
   static SnowyFir = new ObjectEnum("snowy_fir", "snowy_fir", 0.5, 0.8, 1, 0.8)
-  static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.15, 0.4, 0.4, 0.4)
+  static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.15, 0.5, 0.4, 0.5)
   static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.015, 0.4, 0.4, 0.4)
   static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 0.01, 3, 2, 2)
 
