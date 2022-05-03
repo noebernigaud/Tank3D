@@ -61,7 +61,8 @@ class GrenadeObj extends ObjectPos {
 
     dispose() {
         remove(grenades, this);
-        bulletExplode(this.position, true).start();
+        //bulletExplode(this.position, true).start();
+        massiveExplosion(this.position)
         this.physicsImpostor.dispose()
         this.shape.dispose();
     }
