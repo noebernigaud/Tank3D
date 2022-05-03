@@ -1,7 +1,7 @@
 class dome extends SpecialBonus {
 
     constructor(tank) {
-        super(tank, SPECIAL_BONUS_ID.DOME, 15000);
+        super(tank, SPECIAL_BONUS_ID.DOME, 15000, 15000);
         this.life = 3;
         this.maxLife = 3;
         this.radius = 3
@@ -20,7 +20,16 @@ class dome extends SpecialBonus {
         this.dome.isVisible = false
     }
 
+    disable() {
+        super.disable()
+        shieldEffect(this.tank.shape, this.radius, true)
+        this.dome.dispose();
+        this.resetTime()
+        this.life = this.maxLife;
+    }
+
     update() {
+        super.update()
         if (this.isActive) {
             bullets.forEach(e => {
                 if (this.dome.intersectsMesh(e) && e.char != this.tank) {
@@ -30,23 +39,18 @@ class dome extends SpecialBonus {
                 }
             })
             if (this.life <= 0) {
-                shieldEffect(this.tank.shape, this.radius, true)
                 this.disable()
-                this.dome.dispose();
-                this.resetTime()
-                this.life = this.maxLife;
             }
-        } else {
-            super.update();
         }
 
     }
 
     use() {
-        if (super.use()) {
+        if (super.use() && !this.isActive) {
+            this.bonusStartedDate = Date.now();
             this.createDome()
             this.dome.isVisible = true
-            this.activate()
+            super.activate()
             shieldEffect(this.dome, this.radius)
         }
     }
