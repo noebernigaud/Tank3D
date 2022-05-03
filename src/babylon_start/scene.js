@@ -241,9 +241,9 @@ class Scene {
       return {
         width: width * 1.5 + cell_size,
         height: height * 1.5 + cell_size,
-        subdivisions: 80,
+        subdivisions: 28,
         minHeight: current_level_dico.minHeightMap,
-        maxHeight: 0,
+        maxHeight: 1.5,
 
         onReady: () => onGroundCreated(this, name, index),
       }
