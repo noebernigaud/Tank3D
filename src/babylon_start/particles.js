@@ -260,18 +260,18 @@ function stopSmoke(particleSystem) {
 //     });
 // }
 
-function createBonusEffect(emitter, isBlue = false) {
+function createBonusEffect(emitter) {
     const particleSystem = new BABYLON.ParticleSystem("particles", 100);
 
     //Texture of each particle
-    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png");
+    particleSystem.particleTexture = new BABYLON.Texture("textures/shine.png");
 
     //Gravity
     particleSystem.gravity = new BABYLON.Vector3(0, -4, 0);
 
     // Size
-    particleSystem.minSize = 0.05;
-    particleSystem.maxSize = 0.2;
+    particleSystem.minSize = 0.1;
+    particleSystem.maxSize = 0.3;
 
     // Position where the particles are emiited from
     particleSystem.emitter = emitter;
@@ -289,10 +289,55 @@ function createBonusEffect(emitter, isBlue = false) {
     particleSystem.minAngularSpeed = -1;
     particleSystem.maxAngularSpeed = 1;
 
-    particleSystem.color2 = isBlue ? new BABYLON.Color3(0.31, 0.71, 0.81) : new BABYLON.Color3(0.81, 0.71, 0.23);
-    particleSystem.color1 = isBlue ? new BABYLON.Color3(0.31, 0.51, 0.81) : new BABYLON.Color3(1, 0.87, 0);
+
+    particleSystem.color1 = new BABYLON.Color4(1, 0.87, 0, 1);
+    particleSystem.color2 = new BABYLON.Color4(0.81, 0.71, 0.23, 1);
 
 
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
+
+    particleSystem.updateSpeed = 0.005;
+    particleSystem.start();
+
+    return particleSystem
+}
+
+function batteryEffect(emitter) {
+    const particleSystem = new BABYLON.ParticleSystem("particles", 25);
+
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("textures/spark.png")
+
+    //Gravity
+    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+    // Size
+    particleSystem.minSize = 0.2
+    particleSystem.maxSize = 0.4
+
+    // Position where the particles are emitted from
+    particleSystem.emitter = emitter;
+
+    // Emit rate
+    particleSystem.emitRate = 10
+
+    particleSystem.minEmitPower = 0
+    particleSystem.maxEmitPower = 0
+    particleSystem.minLifeTime = 0.5
+    particleSystem.maxLifeTime = 1.5
+    particleSystem.createCylinderEmitter(0.25, 0.5, 0.3);
+
+    // Rotation
+    particleSystem.minInitialRotation = 0;
+    particleSystem.maxInitialRotation = Math.PI;
+    particleSystem.minAngularSpeed = -1;
+    particleSystem.maxAngularSpeed = 1;
+
+
+    particleSystem.color1 = new BABYLON.Color4(0.31, 0.51, 0.81, 1)
+    particleSystem.color2 = new BABYLON.Color4(0.31, 0.71, 0.81, 1)
+
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD
 
     particleSystem.updateSpeed = 0.005;
     particleSystem.start();
@@ -786,4 +831,62 @@ function massiveExplosion(emitter) {
     particleSystem1.start();
     particleSystem2.start();
     particleSystem3.start();
+}
+
+function electricExplosion(emitter) {
+    // Create the core of the electric explosion
+    var particleSystem = new BABYLON.ParticleSystem("electric", 80, scene);
+
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("textures/spark.png", scene);
+
+    // Where the particles come from
+    particleSystem.emitter = emitter
+
+    //Shape of the explosion
+    var emitterType = new BABYLON.SphereParticleEmitter();
+    emitterType.radius = 0.5;
+    emitterType.radiusRange = 0.5;
+
+    particleSystem.particleEmitterType = emitterType;
+
+    // Colors of all particles
+    particleSystem.color1 = new BABYLON.Color4(0.31, 0.51, 0.81, 1);
+    particleSystem.color2 = new BABYLON.Color4(0.31, 0.71, 0.81, 0.8);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0.75, 1, 0.5);
+
+
+    // Size of each particle
+    particleSystem.minSize = 0.4;
+    particleSystem.maxSize = 0.8;
+
+    // Life time of each particle
+    particleSystem.minLifeTime = 0.5;
+    particleSystem.maxLifeTime = 2;
+
+    // Emission rate
+    particleSystem.emitRate = 80;
+    particleSystem.manualEmitCount = 500;
+
+    // Blend mode
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
+
+    // Set the gravity of all particles
+    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+    // Angular speed, in radians
+    particleSystem.minAngularSpeed = 0;
+    particleSystem.maxAngularSpeed = Math.PI;
+
+    // Speed
+    particleSystem.minEmitPower = 0.5;
+    particleSystem.maxEmitPower = 1.5;
+    particleSystem.updateSpeed = 0.05;
+
+    particleSystem.addSizeGradient(0, 1.6);
+    particleSystem.addSizeGradient(0.6, 1);
+
+    particleSystem.disposeOnStop = true;
+
+    particleSystem.start()
 }
