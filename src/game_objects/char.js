@@ -38,7 +38,7 @@ class Char extends ObjectPos {
       camera1.heightOffset = 2//0;
       camera1.rotationOffset = 180 //-98;
       camera1.cameraAcceleration = .1;
-      camera1.maxCameraSpeed = 8;
+      camera1.maxCameraSpeed = 4;
       camera.dispose();
       camera = camera1;
     } else {
@@ -218,7 +218,7 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank(hasFriction = true) {
-    if (this.health <= 0 || scene.inMenu) hasFriction = true
+    if (this.health <= 0 || scene.menu.isInMenu()) hasFriction = true
     remove(impostorCharList, this.physicsImpostor)
     this.physicsImpostor.dispose()
     this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.3 : 0 });

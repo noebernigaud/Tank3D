@@ -4,6 +4,7 @@ var button_list;
 class Menu {
     constructor() {
         this.canBeSwitched = true;
+        this.scenarioDisplayed = false;
         this.isFirst = true;
         this.isShown = true;
         this.inBonus = false;
@@ -47,10 +48,18 @@ class Menu {
     show(toShow) {
         if (toShow) {
             exitPointerLoc()
+            if (char1) char1.stabilizeTank()
             document.getElementById("main").classList.remove('hide')
         }
         else {
             this.hideMenu()
+            if (!this.scenarioDisplayed && document.getElementsByClassName('full-screen')[0].classList.contains('hide')) {
+                if (char1) char1.stabilizeTank()
+                this.isShown = true;
+                this.displayScenario(true)
+                this.scenarioDisplayed = true;
+                return
+            }
         }
         if (this.inBonus)
             if (toShow) this.bonusPanel.classList.add('hide')
@@ -214,4 +223,21 @@ class Menu {
         return this.isShown || this.inOtherMenu()
     }
 
+
+    displayScenario(display) {
+        console.log("To display", display);
+        let elt = document.getElementsByClassName('full-screen')[0]
+        if (display) {
+            this.toggleNotMenuElement(true)
+            elt.classList.remove('hide')
+            runRenderLoop()
+        }
+        else if (!elt.classList.contains('hide')) {
+            pointerLock()
+            this.show(false)
+            elt.classList.add('hide')
+            return true
+        }
+        return false;
+    }
 }

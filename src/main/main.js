@@ -5,7 +5,10 @@ canTire = true;
 function keyListener(evt, isPressed) {
     // tirer
     if (evt.code === "Space") {
-        inputStates.mouseclick = isPressed;
+        if (isPressed && scene.menu.displayScenario(false)) {
+            console.log("HIRE");
+        }
+        else inputStates.mouseclick = isPressed;
     }
     // tourelle
     else if (evt.code === "KeyA") {
@@ -92,9 +95,9 @@ function keyApplaier() {
     if (typeof char1.shape === 'undefined' || scene.menu.isInMenu() || char1.health <= 0) return;
 
     // On regarde si on doit poser une mine
-    if (inputStates.SPACE) {
-        char1.addMine(Date.now());
-    }
+    // if (inputStates.SPACE) {
+    //     char1.addMine(Date.now());
+    // }
     // On regarde si on doit tirer
     if (inputStates.mouseclick) {
         char1.addBullet(Date.now());

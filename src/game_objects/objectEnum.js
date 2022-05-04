@@ -129,6 +129,7 @@ class ObjectEnum {
         setTimeout(() => {
           document.getElementsByClassName('loadingBarMain')[0].classList.add('hide')
           engine.hideLoadingUI()
+          runRenderLoop()
           init()
         }, 1000);
       }, 500);
