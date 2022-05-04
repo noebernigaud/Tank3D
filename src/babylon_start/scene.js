@@ -110,10 +110,10 @@ class Scene {
         getAllMeshList(true).forEach(obj => {
           let outOfBound = (obj) => {
             return obj.position && (
-              obj.position.x <= width / 2 - 100 ||
-              obj.position.x >= width / 2 + 100 ||
-              obj.position.z <= height / 2 - 100 ||
-              obj.position.z >= height / 2 + 100 ||
+              obj.position.x <= width / 2 - 60 ||
+              obj.position.x >= width / 2 + 40 ||
+              obj.position.z <= height / 2 - 60 ||
+              obj.position.z >= height / 2 + 40 ||
               obj.position.y < current_level_dico.minHeightMap - 0.8 ||
               obj.position.y >= +8)
           }
