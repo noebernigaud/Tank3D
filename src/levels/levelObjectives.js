@@ -3,7 +3,6 @@ let levelObjectives = {
     description:
       "Complete the next stage by destroying every enemy tank",
     goToNextLevel: (e) => {
-      // console.log("HERE", charsAI, chars);
       return charsAI.length == 0
     },
     tip: [

@@ -129,7 +129,6 @@ class Menu {
             b.onclick = () => {
                 bonusTookSound.currentTime = 0
                 bonusTookSound.play()
-                console.log("bonus was taken");
                 bEnum.addToChar()
                 this.bonusPanel.classList.add('hide');
                 chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))

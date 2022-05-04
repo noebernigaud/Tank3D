@@ -46,7 +46,6 @@ class Level {
   }
 
   goNextLevel(status = lvlStatus.NXT_LVL) {
-    console.log("in other menu", scene.menu.inOtherMenu());
     if (!scene.menu.inOtherMenu()) {
       scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
@@ -68,9 +67,7 @@ class Level {
   }
 
   addBonusObtained() {
-    console.log(this.stats["Bonus Obtained"], "ADDING BONUS TOTAL ", this.stats["Bonus Obtained"] + 1);
     this.stats["Bonus Obtained"]++;
-    console.log(this.stats["Bonus Obtained"], "AFTER ");
   }
 
   addWallDestroyed() {
@@ -173,8 +170,6 @@ class Level {
     }
     endLine.appendChild(endCell)
     tab.appendChild(endLine)
-
-    console.log(tab);
   }
 
   loadNextLevel() {

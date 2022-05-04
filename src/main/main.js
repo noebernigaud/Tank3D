@@ -18,7 +18,6 @@ function keyListener(evt, isPressed) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
         inputStates.foreward = isPressed;
-        // console.log("here");
     } else if (evt.code === "KeyS") {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
@@ -134,7 +133,6 @@ function keyApplaier() {
     // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
-        // console.log("HERE");
         return;
     }
     if (inputStates.backward) {
@@ -218,7 +216,6 @@ function init() {
 
     // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
-        // console.log("mouse captured in canvas");
         if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) pointerLock();
         else if (isLocked() && engine.activeRenderLoops.length == 1) {
             if (sceneInterval) clearInterval(sceneInterval);
@@ -229,15 +226,12 @@ function init() {
     }
 
     canvas.onmouseup = () => {
-        console.log("stopping");
         clearInterval(sceneInterval); continueShoot = true;
     }
 
 
     function lockChangeAlert() {
-        console.log("entering in lockChange");
         if (!isLocked()) {
-            console.log('The pointer lock status is now unlocked');
             if (!scene.menu.inOtherMenu()) {
                 scene.menu.show(true)
             }

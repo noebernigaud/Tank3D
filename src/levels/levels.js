@@ -316,7 +316,6 @@ function draw_level_map() {
 
 function setCurrentLevelDico() {
     current_level_dico = level_map[level]
-    console.log("SET CURRENT ");
     if (level == 0) {
         level_map.forEach(e => e.resetValues())
     }

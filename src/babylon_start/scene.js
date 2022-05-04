@@ -326,10 +326,7 @@ class Scene {
     var collidedChar
     groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
       if (collidedChar = chars.find(e => e.shape == e2.object)) {
-        console.log("char collided ", collidedChar)
-        console.log("health ", collidedChar.health)
         collidedChar.healthLoss(1)
-        console.log("health ", collidedChar.health)
       }
     }
 

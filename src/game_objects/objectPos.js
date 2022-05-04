@@ -86,8 +86,6 @@ class ObjectPos extends BABYLON.Mesh {
     shadowGenerator.addShadowCaster(shape)
     shadowGenerator.getShadowMap().renderList.push(shape)
 
-    // if (this.type.name == ObjectEnum.CharRed.name)
-    //   //console.log(this.position);
     //   this.showBoundingBox = true;
     this.speedNorme = speedNorme;
     this.speedAngle = speedAngle;
@@ -123,7 +121,6 @@ class ObjectPos extends BABYLON.Mesh {
     let currentDeg = this.shape.rotationQuaternion.toEulerAngles().z
     let currentDegAbs = Math.abs(currentDeg)
     if (correct && currentDegAbs < degree * 2 && currentDegAbs > degree / 1.5) {
-      console.log("crrection applied!");
       var dirZ = this.shape.getDirection(BABYLON.Axis.Z);
       var dirX = this.shape.getDirection(BABYLON.Axis.X);
       let forceDir = Math.atan2(dirX.x, dirZ.x) + (currentDeg < 0 ? -Math.PI / 2 : Math.PI / 2);
@@ -170,7 +167,6 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.SnowyFence.name:
         case ObjectEnum.SnowyHut.name: { remove(others, this); break; }
         default:
-          console.log(this.type.name, this);
           throw `Unknown object type (ObjectPos.dispose)`;
       }
       if (this.physicsImpostor) this.physicsImpostor.dispose()
