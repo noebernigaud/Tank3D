@@ -276,13 +276,11 @@
 .story we {
   color: #6868ff;
   font-weight: bold;
-  text-decoration: underline;
 }
 
 .story they {
   color: #ff6870;
   font-weight: bold;
-  text-decoration: underline;
 }
 
 .hover:hover {

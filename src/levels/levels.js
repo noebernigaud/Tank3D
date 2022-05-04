@@ -211,10 +211,7 @@ function draw_level_map(progress) {
 
     camera.position =
         char1.position
-            .multiply(char1.getTurretTank()
-                .getDirection(BABYLON.Axis.Z)
-                .multiply(new BABYLON.Vector3(50, 50, 50)))
-            .add(new BABYLON.Vector3(0, 10, 0))
+            .add(new BABYLON.Vector3(40, 5, 40))
 
 
     char1.dust.updateColor()
@@ -329,6 +326,12 @@ function setCurrentLevelDico() {
 
         // current_level_dico.resetValues()
     }
+
+    if (level == 0 || current_level_dico.biome != level_map[level - 1].biome) {
+        console.log("HERERERERE");
+        scene.menu.toDisplayScenario = true;
+        if (level != 0) scene.menu.show(false)
+    }
 }
 
 function setCurrentBiome() {
@@ -357,4 +360,6 @@ function setCurrentBiome() {
         s.isVisible = false
     })
     listSkyboxes[biome == "Sand" ? 1 : 0].isVisible = true
+
+
 }

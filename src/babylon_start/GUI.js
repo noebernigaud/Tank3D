@@ -4,7 +4,7 @@ var button_list;
 class Menu {
     constructor() {
         this.canBeSwitched = true;
-        this.scenarioDisplayed = false;
+        this.toDisplayScenario = false;
         this.isFirst = true;
         this.isShown = true;
         this.inBonus = false;
@@ -53,11 +53,21 @@ class Menu {
         }
         else {
             this.hideMenu()
-            if (!this.scenarioDisplayed && document.getElementsByClassName('full-screen')[0].classList.contains('hide')) {
+            if (this.toDisplayScenario) {
+                let text = [
+                    `The firm "<they>X</they>" has discovered how to time travel and wants to
+                        use it to <they> modify</they > past events to gain money. <br>
+                <we>You</we> have succeeded in stealing one of their
+                        gear and <we> You</we> are the only one able to avoid terrible things to happen.`,
+                    `You have passed the first stage of <we>your</we> journey and now <we>you</we> enter the Egyptian world, <br> where <we>you</we> have to collect the Egyptian tablets away from <they>enemies</they>.<br> <we>Good Luck!</we>`,
+                    `This is the last stage of you mission, there are still some <they>bad tank</they> went in Antarctica wanting to melt the ice and build chemical weapon with old virus blocked in the Ice. <br>
+                    <we>Win</we> this last mission and the world will be a <we>better place</we>.`
+                ]
+                document.getElementById('text-mission').innerHTML = text[["Earth", "Sand", "Snow"].indexOf(current_level_dico.biome)];
                 if (char1) char1.stabilizeTank()
                 this.isShown = true;
                 this.displayScenario(true)
-                this.scenarioDisplayed = true;
+                this.toDisplayScenario = false;
                 return
             }
         }
