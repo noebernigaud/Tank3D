@@ -58,6 +58,8 @@ class Menu {
         this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
             document.getElementById("restart").classList.remove('hide')
+            document.getElementById("continue").classList.remove('hide')
+            Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.add('hide'))
             if (toShow) {
                 chars.forEach(c => c.moveSound.pause())
                 engine.stopRenderLoop()
@@ -173,6 +175,8 @@ class Menu {
         engine.stopRenderLoop()
         document.getElementsByClassName('specialBonus')[0].classList.add('hide');
         document.getElementById("restart").classList.add('hide')
+        document.getElementById("continue").classList.add('hide')
+        Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.remove('hide'))
         scene.menu = new Menu()
         level = 0;
         char1.dispose(true)

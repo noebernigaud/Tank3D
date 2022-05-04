@@ -214,9 +214,8 @@ function init() {
         else if (evt.movementY < 0) char1.rotateTurretUpDown(true, Math.min(Math.sqrt(Math.abs(evt.movementY)), 4))
     });
 
-    // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
-        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) pointerLock();
+        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked() && !(pointerLockChange != null && Date.now() - pointerLockChange < 1400)) pointerLock();
         else if (isLocked() && engine.activeRenderLoops.length == 1) {
             if (sceneInterval) clearInterval(sceneInterval);
             sceneInterval = setInterval(() => {
@@ -395,8 +394,14 @@ function changeCadenceTir(value) {
 let isLocked = () => document.pointerLockElement === canvas ||
     document.mozPointerLockElement === canvas
 
-let exitPointerLoc = () => document.exitPointerLock();
-let pointerLock = () => canvas.requestPointerLock()
+let exitPointerLoc = () => {
+    pointerLockChange = Date.now()
+    document.exitPointerLock();
+}
+let pointerLock = () => {
+    pointerLockChange = Date.now()
+    canvas.requestPointerLock();
+}
 let runRenderLoop = () => {
     if (engine.activeRenderLoops.length == 0) engine.runRenderLoop(() => scene.render())
 }

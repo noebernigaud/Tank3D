@@ -195,12 +195,15 @@ class Level {
     level += progress;
     let notTakenBonus = []
     if (!progress) {
-      notTakenBonus = bonuses
+      notTakenBonus = bonuses.slice()
+      console.log("notTakenBonuses = ", notTakenBonus);
     }
     remove_all_objects()
     startgame(level, progress);
     if (!progress) {
-      notTakenBonus.forEach(b => bonuses.push(b))
+      console.log("setting notTakenBonuses");
+      notTakenBonus.forEach(b => bonuses.push(new Bonus(b.position.x + width / 2, b.position.z + height / 2, b.isSpecial)))
+      console.log("bonuses = ", bonuses);
     }
     // engine.stopRenderLoop()
   }

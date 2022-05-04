@@ -172,25 +172,27 @@ class Scene {
 
         char1.applyBullForce();
 
+        //si le char joueur meurt
         if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
-          // this.scene.menu.restart()
-          console.log("you just died!");
-          current_level_dico.goNextLevel(lvlStatus.DIE)
-          // level = 0;
-          // remove_all_objects(true)
-          // startgame(level);
-          // this.scene.menu.createButton()
+          if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
+          else {
+            console.log("you just died!");
+            current_level_dico.goNextLevel(lvlStatus.DIE)
+          }
+          //si le char joueur fini le niveau
         } else if (current_level_dico.canGoNextLevel()) {
-          char1.bullForce = null
-          if (level + 1 == level_map.length) {
-            // this.scene.menu.restart()
-            current_level_dico.goNextLevel(lvlStatus.WIN)
-          } else if (!this.scene.menu.inOtherMenu()) {
-            current_level_dico.goNextLevel()
-            if (sceneInterval) {
-              clearInterval(sceneInterval)
+          if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
+          else {
+            char1.bullForce = null
+            //si il vient de finir le dernier niveau
+            if (level + 1 == level_map.length) {
+              current_level_dico.goNextLevel(lvlStatus.WIN)
+            } else if (!this.scene.menu.inOtherMenu()) {
+              current_level_dico.goNextLevel()
+              if (sceneInterval) {
+                clearInterval(sceneInterval)
+              }
             }
-            // startTimer()
           }
         }
 
