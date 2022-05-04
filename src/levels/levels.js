@@ -191,7 +191,7 @@ let current_level_dico = level_map[0]
 /**
  * @param {number} lvl_number 
  */
-function draw_level_map() {
+function draw_level_map(progress) {
     setCurrentLevelDico()
 
     setCurrentBiome()
@@ -283,10 +283,10 @@ function draw_level_map() {
                     walls.push(new Wall(posX, posY, true));
                     break;
                 case 'c':
-                    bonuses.push(new Bonus(posX, posY, false));
+                    if (progress || level == 0) bonuses.push(new Bonus(posX, posY, false));
                     break;
                 case 'C':
-                    bonuses.push(new Bonus(posX, posY, true));
+                    if (progress || level == 0) bonuses.push(new Bonus(posX, posY, true));
                     break;
                 case 'h':
                     barrels.push(new Barrel(posX, posY))
