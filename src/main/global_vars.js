@@ -69,6 +69,8 @@ var isAdventure = true
 
 let pointerLockChange = null;
 
+let globalProgress = true
+
 level = 0;
 
 var mousepos = { x: 0, y: 0 };

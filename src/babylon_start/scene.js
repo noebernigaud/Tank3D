@@ -176,7 +176,6 @@ class Scene {
         if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
-            console.log("you just died!");
             current_level_dico.goNextLevel(lvlStatus.DIE)
           }
           //si le char joueur fini le niveau

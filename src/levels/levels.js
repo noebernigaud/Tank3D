@@ -201,7 +201,7 @@ function draw_level_map(progress) {
 
     document.getElementById("level").innerHTML = (level + 1) + "/" + level_map.length
 
-    if (level == 0) {
+    if (level == 0 && progress) {
         if (char1) char1.dispose(true);
         char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
         selected_bonuses = []
@@ -280,10 +280,10 @@ function draw_level_map(progress) {
                     walls.push(new Wall(posX, posY, true));
                     break;
                 case 'c':
-                    if (progress || level == 0) bonuses.push(new Bonus(posX, posY, false));
+                    if (progress) bonuses.push(new Bonus(posX, posY, false));
                     break;
                 case 'C':
-                    if (progress || level == 0) bonuses.push(new Bonus(posX, posY, true));
+                    if (progress) bonuses.push(new Bonus(posX, posY, true));
                     break;
                 case 'h':
                     barrels.push(new Barrel(posX, posY))
@@ -327,7 +327,7 @@ function setCurrentLevelDico() {
         // current_level_dico.resetValues()
     }
 
-    if (level == 0 || current_level_dico.biome != level_map[level - 1].biome) {
+    if ((level == 0 || current_level_dico.biome != level_map[level - 1].biome) && globalProgress) {
         console.log("HERERERERE");
         scene.menu.toDisplayScenario = true;
         if (level != 0) scene.menu.show(false)

@@ -228,8 +228,6 @@ class Char extends ObjectPos {
   }
 
   destroyTank() {
-    // explode(this.shape)
-    console.log("ksggkw,glwgggwlngl");
     this.stabilizeTank()
     this.healtBar.disposeBar()
     this.moveSound.pause();

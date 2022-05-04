@@ -18,7 +18,7 @@ class ObjectEnum {
   //Opponent Tanks
   static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 0.625)
   static EarthTank = new ObjectEnum("earthTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
-  static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.85)
+  static SandTank = new ObjectEnum("sandTank", "tiger_tank", 0.25, 0.95, 0.625, 1.85)
   static SnowTank = new ObjectEnum("snowTank", "battle_tank", 0.2, 0.95, 0.625, 1.75)
 
   //Earthy Biome items
