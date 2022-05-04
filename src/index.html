@@ -114,7 +114,7 @@
 
         <div id="timer" style="display: none;"></div>
 
-        <div class="loadingBarMain">
+        <div class="loadingBarMain hide">
             <div class="loadingBarChild" style="width:0%"></div>
         </div>
         <br>
@@ -133,8 +133,22 @@
             <div><span>Plante a brule</span><span>2/3</span></div> -->
         </div>
 
-        <script src="babylon_start/scene.js">
-        </script>
+        <script src="babylon_start/scene.js"></script>
+
+        <div class="full-screen hide">
+            <div class="story box">
+                <div>
+                    <div id="text-mission">
+                        The firm "<they>X</they>" has discovered how to time travel and wants to
+                        use it to <they>modify</they> past events to gain money. <br>
+                        <we>You</we> have succeeded in stealing one of their
+                        gear and <we>You</we> are the only one able to avoid terrible things to happen.
+                    </div>
+                    <div class="hover">Space</div>
+                </div>
+            </div>
+        </div>
+
         <script>
 
             window.onresize = function () {
@@ -149,7 +163,8 @@
             window.onresize()
 
             // let m = new Menu()
-            new Scene();
+            // new Scene();
+
             // hb = new Healthbar()
             // hb.updatePartition()
         </script>
