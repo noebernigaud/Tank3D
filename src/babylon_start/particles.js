@@ -260,7 +260,7 @@ function stopSmoke(particleSystem) {
 //     });
 // }
 
-function createBonusEffect(emitter) {
+function createBonusEffect(emitter, isBlue = false) {
     const particleSystem = new BABYLON.ParticleSystem("particles", 100);
 
     //Texture of each particle
@@ -289,8 +289,8 @@ function createBonusEffect(emitter) {
     particleSystem.minAngularSpeed = -1;
     particleSystem.maxAngularSpeed = 1;
 
-    particleSystem.color2 = new BABYLON.Color3(0.81, 0.71, 0.23);
-    particleSystem.color1 = new BABYLON.Color3(1, 0.87, 0);
+    particleSystem.color2 = isBlue ? new BABYLON.Color3(0.31, 0.71, 0.81) : new BABYLON.Color3(0.81, 0.71, 0.23);
+    particleSystem.color1 = isBlue ? new BABYLON.Color3(0.31, 0.51, 0.81) : new BABYLON.Color3(1, 0.87, 0);
 
 
 
@@ -440,7 +440,7 @@ function mindControlParticle(emitter, radius) {
         BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
     }
 
-    
+
     particleSystem.disposeOnStop = true;
 
     // Start
@@ -573,7 +573,7 @@ function shieldImpact(emitter) {
     particleSystem.start();
 }
 
-function bullChargeEffect(emitter){
+function bullChargeEffect(emitter) {
     var particleSystem = new BABYLON.ParticleSystem('bullCharge', 600, scene);
     particleSystem.particleTexture = new BABYLON.Texture('textures/flare.png', scene);
 
@@ -606,11 +606,11 @@ function bullChargeEffect(emitter){
 
     particleSystem.targetStopDuration = 4;
     particleSystem.disposeOnStop = true;
-    
+
     particleSystem.start();
 }
 
-function massiveExplosion(emitter){
+function massiveExplosion(emitter) {
     //---------------------------------------------------------------------------
     // Create the core of the explosion
     var particleSystem1 = new BABYLON.ParticleSystem("core", 600, scene);
@@ -693,7 +693,7 @@ function massiveExplosion(emitter){
 
     // Emission rate
     particleSystem2.emitRate = 200;
-   particleSystem2.manualEmitCount = 1000;
+    particleSystem2.manualEmitCount = 1000;
 
     // Blend mode
     particleSystem2.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
@@ -708,7 +708,7 @@ function massiveExplosion(emitter){
     // Speed
     particleSystem2.minEmitPower = 5;
     particleSystem2.maxEmitPower = 6;
-    
+
     particleSystem2.updateSpeed = 0.015;
     particleSystem2.disposeOnStop = true;
 
@@ -731,12 +731,12 @@ function massiveExplosion(emitter){
     // Gravity
     particleSystem3.gravity = new BABYLON.Vector3(0.25, 4, 0);
     // Size gradient
-    
+
     particleSystem3.addSizeGradient(0, 0.6 / 20, 1 / 20);
     particleSystem3.addSizeGradient(0.3 / 20, 1 / 20, 2 / 20);
     particleSystem3.addSizeGradient(0.5 / 20, 2 / 20, 3 / 20);
     particleSystem3.addSizeGradient(1.0 / 20, 6 / 20, 8 / 20);
-    
+
 
     // Color gradient
 
@@ -745,7 +745,7 @@ function massiveExplosion(emitter){
     particleSystem3.addColorGradient(0.7, new BABYLON.Color4(0.3, 0.3, 0.3, 0.2), new BABYLON.Color4(0.5, 0.5, 0.5, 0.4));
     particleSystem3.addColorGradient(1.0, new BABYLON.Color4(0.5, 0.5, 0.5, 0), new BABYLON.Color4(0.6, 0.6, 0.6, 0.1));
     particleSystem3.updateSpeed = 0.01;
-    
+
 
     // Speed gradient
     particleSystem3.addVelocityGradient(0, 1, 1.5);

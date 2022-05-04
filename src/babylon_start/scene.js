@@ -18,6 +18,7 @@ var light1;
 var groundSand;
 var listGrounds = [];
 var listSkyboxes = [];
+var w;
 
 class Scene {
 
@@ -169,6 +170,16 @@ class Scene {
             c.destroyTank()
           }
         })
+
+
+        batteries.forEach(b => {
+          if (b.shape.position.y <= w.position.y + 0.2) {
+            b.isDestroyed = true
+            b.dispose()
+            current_level_dico.addBatteryDestroyed()
+          }
+        })
+
 
         char1.applyBullForce();
 
@@ -344,6 +355,7 @@ class Scene {
     water.bumpHeight = 0.1;
     water.waveLength = 0.1;
     water.colorBlendFactor = 0;
+    w = waterMesh
 
     listSkyboxes.forEach(s => water.addToRenderList(s))
     water.addToRenderList(groundSand);

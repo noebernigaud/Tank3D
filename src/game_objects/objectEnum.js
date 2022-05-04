@@ -8,6 +8,7 @@ class ObjectEnum {
   static WallD = new ObjectEnum(wallDTexture.src, "")
   static Wall = new ObjectEnum(wallTexture.src, "")
   static SpecialBonus = new ObjectEnum("special_bonus", "military_box", 0.60, 1.15, 0.4, 0.6)
+  static Battery = new ObjectEnum("battery", "battery", 0.9, 0.375, 0.6, 0.375)
 
   //Player
   static Player = new ObjectEnum("player", "modern_tank", 0.25, 1.1, 0.625, 1.85)
@@ -105,7 +106,7 @@ class ObjectEnum {
   static initiate_all_models() {
     var list_obj = [
       this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank,
-      this.Barrel, this.Player, this.Wall, this.WallD, this.Bonus, this.SpecialBonus,
+      this.Barrel, this.Battery, this.Player, this.Wall, this.WallD, this.Bonus, this.SpecialBonus,
       this.Rock, this.PalmTree1, this.PalmTree2,
       this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
       this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
