@@ -288,6 +288,7 @@ class Char extends ObjectPos {
 
 
   healthLoss(damage) {
+    if (this.specialBonuses.some(b => b.name == SPECIAL_BONUS_ID.DOME.name && b.isActive)) return
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0

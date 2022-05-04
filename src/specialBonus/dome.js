@@ -33,7 +33,7 @@ class dome extends SpecialBonus {
     update() {
         super.update()
         if (this.isActive) {
-            bullets.forEach(e => {
+            [...bullets, ...grenades].forEach(e => {
                 if (this.dome.intersectsMesh(e) && e.char != this.tank) {
                     this.life--;
                     shieldImpact(e.position)
