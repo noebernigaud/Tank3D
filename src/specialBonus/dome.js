@@ -1,10 +1,10 @@
 class dome extends SpecialBonus {
 
-    constructor(tank) {
-        super(tank, SPECIAL_BONUS_ID.DOME, 15000, 15000);
+    constructor(tank, isPermanent = false) {
+        super(tank, SPECIAL_BONUS_ID.DOME, 15000, 15000, isPermanent);
         this.life = 3;
         this.maxLife = 3;
-        this.radius = 3
+        this.radius = 3;
     }
 
     createDome() {
@@ -21,11 +21,13 @@ class dome extends SpecialBonus {
     }
 
     disable() {
-        super.disable()
-        shieldEffect(this.tank.shape, this.radius, true)
-        this.dome.dispose();
-        this.resetTime()
-        this.life = this.maxLife;
+        if (super.disable()) {
+            shieldEffect(this.tank.shape, this.radius, true)
+            this.dome.dispose();
+            this.resetTime()
+            this.life = this.maxLife;
+        }
+
     }
 
     update() {

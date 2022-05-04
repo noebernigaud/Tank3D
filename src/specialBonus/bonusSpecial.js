@@ -85,7 +85,7 @@ class SpecialBonus {
   /**
    * @param {Char} tank 
    */
-  constructor(tank, bonusType, delay, bonusStartedDelay = 0) {
+  constructor(tank, bonusType, delay, bonusStartedDelay = 0, isPermanent = false) {
     this.tank = tank;
     this.bonusType = bonusType;
     this.isActive = false;
@@ -108,6 +108,7 @@ class SpecialBonus {
     this.timeStartedCooled = bonusStartedDelay;
     this.bonusStartedDate = Date.now()
     this.isActive = false;
+    this.isPermanent = isPermanent;
   }
 
   addToChar() {
@@ -129,7 +130,9 @@ class SpecialBonus {
   }
 
   disable() {
+    if (this.isPermanent) return false
     this.isActive = false;
+    return true
   }
 
 

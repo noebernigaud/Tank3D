@@ -29,7 +29,7 @@ const level_map = [
                 "-----------------------------------------",
             ],
         minHeightMap: -0.1,
-        lvlObjective: levelObjectives.getBonusesAndKillTanks,
+        lvlObjective: levelObjectives.batteryKillTanks,
         biome: "Earth"
     }),
     new Level({
@@ -313,6 +313,14 @@ function draw_level_map(progress) {
     delimiters.push(new DelimiterMesh(width / 2 + 1, 0.5, 2, height + 2))
     delimiters.push(new DelimiterMesh(0.5, height / 2 + 2, width, 2))
     delimiters.push(new DelimiterMesh(0.5, -height / 2, width, 2))
+
+    if (current_level_dico.lvlObjective == levelObjectives.batteryKillTanks) {
+        charsAI.forEach(c => {
+            let d = new dome(c, true)
+            d.addToChar()
+            d.use()
+        })
+    }
 }
 
 function setCurrentLevelDico() {

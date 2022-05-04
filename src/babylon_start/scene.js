@@ -177,6 +177,9 @@ class Scene {
             b.isDestroyed = true
             b.dispose()
             current_level_dico.addBatteryDestroyed()
+            if (batteries.length <= 0) {
+              charsAI.forEach(c => c.specialBonuses.forEach(e => e.isPermanent = false))
+            }
           }
         })
 
