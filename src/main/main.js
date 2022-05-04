@@ -263,6 +263,7 @@ function startgame(level, progress = true) {
     playing = 1;
 
     barrels = new Array();
+    batteries = new Array();
     walls = new Array();
     delimiters = new Array();
     chars = new Array();
@@ -321,6 +322,7 @@ function remove_all_objects(withPlayer = false) {
     allElts.forEach(e => e.dispose(true))
     walls = [];
     barrels = [];
+    batteries = [];
     bullets = [];
     grenades = [];
     mines = [];
@@ -338,7 +340,7 @@ function remove_all_objects(withPlayer = false) {
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION

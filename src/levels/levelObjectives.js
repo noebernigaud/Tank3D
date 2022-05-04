@@ -43,5 +43,19 @@ let levelObjectives = {
     tip: [
       ["Barrels to burn", () => `${barrels.filter(b => b.isBurning).length}`, () => barrels.length]
     ]
-  }
+  },
+  batteryKillTanks: {
+    description:
+      `Complete the next stage by destroying all of the batteries which energy the ennemies shield
+      and destroying every enemy tanks`,
+    goToNextLevel: (e) => {
+      return (batteries.every(b => b.isDestroyed) && (charsAI.length == 0));
+    },
+    tip: [
+      ["Battery to disable", () => current_level_dico.getBatteryDestroyed(),
+        () => batteries.length + current_level_dico.getBatteryDestroyed()],
+      ["Tank to kill", () => charsDestroyed.length,
+        () => charsDestroyed.length + charsAI.length]
+    ]
+  },
 }

@@ -48,6 +48,9 @@ var delimiters;
 /** @type {[Barrel]} */
 var barrels;
 
+/** @type {[Battery]} */
+var batteries;
+
 /** @type {[Mine]} */
 var mines;
 

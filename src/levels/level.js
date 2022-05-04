@@ -10,7 +10,8 @@ class Level {
     "Bonus Obtained": 0,
     "Bullet Fired": 0,
     "Total Distance": 0,
-    "Wall destroyed": 0
+    "Wall destroyed": 0,
+    "Battery destroyed": 0
   }
 
   constructor(levelInfo) {
@@ -74,6 +75,10 @@ class Level {
     this.stats["Wall destroyed"]++;
   }
 
+  addBatteryDestroyed() {
+    this.stats["Battery destroyed"]++;
+  }
+
   getDistance() {
     return this.stats["Total Distance"];
   }
@@ -92,6 +97,10 @@ class Level {
 
   getWallDestroyed() {
     return this.stats["Wall destroyed"];
+  }
+
+  getBatteryDestroyed() {
+    return this.stats["Battery destroyed"];
   }
 
   /**

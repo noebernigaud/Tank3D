@@ -46,7 +46,7 @@ class MiniMap {
     })
     chars.forEach(c => {
       let point = resize(c.shape.position.z, c.shape.position.x);
-      this.drawPoint(point.x, point.y, c == char1 ? 'rgb(0, 255, 0)' : (charsAllies.includes(c) ? 'rgb(0, 128, 255)': 'rgb(255, 0, 0)'), 3)
+      this.drawPoint(point.x, point.y, c == char1 ? 'rgb(0, 255, 0)' : (charsAllies.includes(c) ? 'rgb(0, 128, 255)' : 'rgb(255, 0, 0)'), 3)
     })
     walls.forEach(w => {
       if (w instanceof WallPerimeter) return
@@ -56,6 +56,10 @@ class MiniMap {
     barrels.forEach(w => {
       let point = resize(w.shape.position.z, w.shape.position.x);
       this.drawPoint(point.x, point.y, 'rgb(165,42,42)', 2)
+    })
+    batteries.forEach(w => {
+      let point = resize(w.shape.position.z, w.shape.position.x);
+      this.drawPoint(point.x, point.y, 'rgb(42,42,165)', 2)
     })
     bonuses.forEach(w => {
       let point = resize(w.shape.position.z, w.shape.position.x);
