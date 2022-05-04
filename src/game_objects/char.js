@@ -229,6 +229,7 @@ class Char extends ObjectPos {
 
   destroyTank() {
     // explode(this.shape)
+    console.log("ksggkw,glwgggwlngl");
     this.stabilizeTank()
     this.healtBar.disposeBar()
     this.moveSound.pause();
@@ -327,7 +328,7 @@ class Char extends ObjectPos {
     this.healtBar.updatePartition()
   }
 
-  getMeshesToHighlight(){
+  getMeshesToHighlight() {
     return this.shape.getChildMeshes().filter(m =>
       !(this.healtBar.healthBarContainer && ((m == this.healtBar.healthBarContainer) || (this.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
   }

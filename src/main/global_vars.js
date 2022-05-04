@@ -65,6 +65,8 @@ var rocks = []
 
 var gravity = -9.81
 
+var isAdventure = true
+
 level = 0;
 
 var mousepos = { x: 0, y: 0 };

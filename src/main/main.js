@@ -262,7 +262,7 @@ function stopgame() {
 
 //DEBUT D'UNE NOUVELLE PARTIE
 
-function startgame(level) {
+function startgame(level, progress = true) {
 
     playing = 1;
 
@@ -282,7 +282,7 @@ function startgame(level) {
     bonuses = new Array();
 
     if (level < level_map.length) {
-        draw_level_map(level)
+        draw_level_map(progress)
     }
 
     // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL

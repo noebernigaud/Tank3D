@@ -148,6 +148,8 @@ class Level {
       tab.appendChild(line)
     }
 
+    let tryAgain = (isAdventure && status == lvlStatus.DIE)
+
     if (status == lvlStatus.NXT_LVL) {
       let nextLvlDescLine = document.createElement("tr")
       let nextLvlDesc = createTd(level_map[level + 1].lvlObjective.description)
@@ -155,11 +157,28 @@ class Level {
       nextLvlDescLine.appendChild(nextLvlDesc)
       tab.appendChild(nextLvlDescLine)
     }
+    if (tryAgain) {
+      let nextLvlDescLine = document.createElement("tr")
+      let nextLvlDesc = createTd(level_map[level].lvlObjective.description)
+      nextLvlDesc.colSpan = 2
+      nextLvlDescLine.appendChild(nextLvlDesc)
+      tab.appendChild(nextLvlDescLine)
+    }
     let endLine = document.createElement("tr")
-    let endCell = (status != lvlStatus.NXT_LVL) ? createTd("Main Menu") : createTd("Next Level")
+    let endCell = (status != lvlStatus.NXT_LVL) ? (tryAgain ? createTd("Try again") : createTd("Main Menu")) : createTd("Next Level")
     endCell.colSpan = 2;
     endCell.onclick = () => {
-      if (status != lvlStatus.NXT_LVL) {
+      if (tryAgain) {
+        char1.health = char1.maxHealth
+        char1.life += 1
+        scene.menu.inNextLevel = false;
+        document.getElementById('endLevelStat').classList.add('hide');
+        this.loadNextLevel(0);
+        pointerLock();
+        Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
+        console.log("health bar and minimap should be there");
+      }
+      else if (status != lvlStatus.NXT_LVL) {
         scene.menu.restart()
         document.getElementById('endLevelStat').classList.add('hide');
       }
@@ -177,10 +196,17 @@ class Level {
     console.log(tab);
   }
 
-  loadNextLevel() {
-    level += 1;
+  loadNextLevel(progress = true) {
+    level += progress;
+    let notTakenBonus = []
+    if (!progress) {
+      notTakenBonus = bonuses
+    }
     remove_all_objects()
-    startgame(level);
+    startgame(level, progress);
+    if (!progress) {
+      notTakenBonus.forEach(b => bonuses.push(b))
+    }
     // engine.stopRenderLoop()
   }
 

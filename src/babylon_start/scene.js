@@ -172,8 +172,9 @@ class Scene {
 
         char1.applyBullForce();
 
-        if (char1.life <= 0 || level == level_map.length) {
+        if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
           // this.scene.menu.restart()
+          console.log("you just died!");
           current_level_dico.goNextLevel(lvlStatus.DIE)
           // level = 0;
           // remove_all_objects(true)
