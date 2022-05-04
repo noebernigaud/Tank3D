@@ -14,5 +14,6 @@ class Battery extends ObjectPos {
 
         this.batteryEffect = createBonusEffect(this.shape, true)
         this.isDestroyed = false
+        hlBattery.addMesh(this.shape.getChildMeshes()[1], new BABYLON.Color3(0, 0.75, 1))
     }
 }

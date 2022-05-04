@@ -96,6 +96,7 @@ var hlBalls;
 var hlControlled;
 var hlMinigun;
 var hlAllies;
+var hlBattery;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';

@@ -80,14 +80,11 @@ class ObjectEnum {
     }
 
     // Parent mesh (the original which we will duplicate to create our objects)
-    if (model == "barrel") {
-      this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
-    } else if (model == "tumbleweed") {
+    if (model == "tumbleweed") {
       this.container = BABYLON.MeshBuilder.CreateSphere("container", { diameter: 0.50 }, scene);
-    } else if (model == "cactus1" || model == "snowy_tree" || model == "snowy_fir" || model == "merged_palm_tree" || model == "coconut_tree") {
+    } else if (model == "cactus1" || model == "barrel" || model == "battery" || model == "snowy_tree" || model == "snowy_fir" || model == "merged_palm_tree" || model == "coconut_tree") {
       this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
-    }
-    else {
+    } else {
       this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     }
     // this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
