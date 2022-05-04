@@ -314,10 +314,10 @@ function pausebackgroundMusic() {
     }
 }
 
-function remove_all_objects(withPlayer = false) {
+function remove_all_objects(withPlayer = false, progress = true) {
     scene.blockfreeActiveMeshesAndRenderingGroups = true;
     let allElts = getAllMeshList(withPlayer)
-    if (level == 0) allElts.push(char1)
+    if (level == 0 && progress) allElts.push(char1)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];

@@ -179,7 +179,7 @@ class Level {
         char1.life += 1
         scene.menu.inNextLevel = false;
         document.getElementById('endLevelStat').classList.add('hide');
-        this.loadNextLevel(0);
+        this.loadNextLevel(false);
         pointerLock();
         Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
         console.log("health bar and minimap should be there");
@@ -201,13 +201,14 @@ class Level {
   }
 
   loadNextLevel(progress = true) {
+    globalProgress = progress
     level += progress;
     let notTakenBonus = []
     if (!progress) {
       notTakenBonus = bonuses.slice()
       console.log("notTakenBonuses = ", notTakenBonus);
     }
-    remove_all_objects()
+    remove_all_objects(false, progress)
     startgame(level, progress);
     if (!progress) {
       console.log("setting notTakenBonuses");
