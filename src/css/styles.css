@@ -24,11 +24,11 @@ body * {
   padding: 3%;
   flex-direction: column;
   border-radius: 2%;
-  background-color: #070707d7;
   position: absolute;
   margin: auto;
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 10pt;
 }
 
 .button {
