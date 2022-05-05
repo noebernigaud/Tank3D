@@ -189,7 +189,7 @@ class Scene {
         batteries.forEach(b => {
           if (b.shape.position.y <= w.position.y + 0.2) {
             b.isDestroyed = true
-            b.dispose()
+            b.destroy()
             current_level_dico.addBatteryDestroyed()
             if (batteries.length <= 0) {
               charsAI.forEach(c => c.specialBonuses.forEach(e => e.isPermanent = false))

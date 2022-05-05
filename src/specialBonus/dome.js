@@ -37,6 +37,7 @@ class dome extends SpecialBonus {
                 if (this.dome.intersectsMesh(e) && e.char != this.tank) {
                     this.life--;
                     shieldImpact(e.position)
+                    e.destroySound()
                     e.dispose(true, true);
                 }
             })

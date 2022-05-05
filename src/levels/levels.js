@@ -196,6 +196,8 @@ function draw_level_map(progress) {
 
     setCurrentBiome()
 
+    setCurrentMusic()
+
     let widthOffset = (cell_x_number - current_level.length) / 2
     let heightOffset = (cell_y_number - current_level[0].length) / 2
 
@@ -372,6 +374,24 @@ function setCurrentBiome() {
         s.isVisible = false
     })
     listSkyboxes[biome == "Sand" ? 1 : 0].isVisible = true
+}
 
-
+function setCurrentMusic() {
+    // if (level == 0) return
+    biome = current_level_dico.biome;
+    musicBackground.pause()
+    if (biome == "Earth") {
+        musicBackground = new Audio('audio/warmusic.mp3')
+        musicBackground.volume = 0.2
+    }
+    if (biome == "Sand") {
+        musicBackground = new Audio('audio/Ibn-Al-Noor.mp3')
+        musicBackground.volume = 0.2
+    }
+    if (biome == "Snow") {
+        musicBackground = new Audio('audio/GoT.mp3')
+        musicBackground.volume = 0.25
+    }
+    musicBackground.loop = true
+    musicBackground.play()
 }

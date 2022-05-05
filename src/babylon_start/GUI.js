@@ -191,6 +191,7 @@ class Menu {
     }
 
     restart() {
+        musicBackground.pause()
         globalProgress = true
         engine.stopRenderLoop()
         document.getElementsByClassName('specialBonus')[0].classList.add('hide');

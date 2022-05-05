@@ -97,6 +97,8 @@ class Bullet extends ObjectPos {
         }
     }
 
+    destroySound() { return }
+
     createShape() {
         var shape = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: Bullet.diameter, segments: 4 }, scene);
         shape.material = createMaterial(scene, bulletImage.src);

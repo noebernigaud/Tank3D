@@ -14,11 +14,15 @@ class GrenadeObj extends ObjectPos {
         this.char = char;
         this.damage = char.grenadeDamage;
 
+        this.explosionGrenadeSound = new Audio('audio/grenade.wav')
+        this.explosionGrenadeSound.volume = 0.4;
+
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 10, restitution: 1 });
 
 
         this.physicsImpostor.onCollideEvent = (e1, e2) => {
             let g = grenades.find(e => e == e1.object)
+            g.destroySound()
             chars.forEach(c => {
                 if (Math.sqrt((c.shape.position.x - g.position.x) ** 2 +
                     (c.shape.position.y - g.position.y) ** 2 +
@@ -50,6 +54,10 @@ class GrenadeObj extends ObjectPos {
         this.physicsImpostor.setLinearVelocity(moveVec)
 
         grenades.push(this)
+    }
+
+    destroySound() {
+        this.explosionGrenadeSound.play()
     }
 
     createShape() {
