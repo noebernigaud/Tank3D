@@ -4,7 +4,7 @@ class BonusEnum {
         new BonusEnum(
             "Speed",
             function () { char1.speedNorme += 1.5 },
-            "Acceleration multiplied by 2",
+            "Your char will go faster",
             "./images/speed_tank.png"
         ),
         new BonusEnum(

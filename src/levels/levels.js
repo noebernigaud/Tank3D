@@ -203,7 +203,7 @@ function draw_level_map(progress) {
 
     if (level == 0 && progress) {
         if (char1) char1.dispose(true);
-        char1 = new Char("player", 0, 0, 0, 2 * speedMultUti, 800 * reloadMultUti, 40);
+        char1 = new Char("player", 0, 0, 0, 3, 800 * reloadMultUti, 40);
         selected_bonuses = []
         addedObtainableBonus = []
     }
@@ -252,7 +252,7 @@ function draw_level_map(progress) {
                     char.applyStrategy()
                     break;
                 case 'R':
-                    var char = new Char("normal", posX, posY, 0, 1, 2000, 20);
+                    var char = new Char("normal", posX, posY, 0, 1, 2000, 30);
                     charsAI.push(char);
                     char.setStrategy(new guaranteedAI(char))
                     chars.push(char);

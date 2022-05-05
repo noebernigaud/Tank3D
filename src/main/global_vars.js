@@ -85,7 +85,6 @@ var playing;
 
 /** @type {number} */
 var level;
-var speedMultUti = 1;
 var reloadMultUti = 1;
 
 var impostorCharList = [];

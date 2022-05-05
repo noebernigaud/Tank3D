@@ -385,10 +385,6 @@ function anime() {
 var inputVitMult = document.getElementById("mutlvit")
 if (inputVitMult !== null) inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
 
-function changeVitesseChar(value) {
-    speedMultUti = value;
-}
-
 var inputReloadMult = document.getElementById("multReload")
 if (inputReloadMult !== null) inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
 
