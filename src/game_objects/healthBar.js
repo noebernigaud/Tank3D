@@ -55,7 +55,7 @@ class Healthbar {
     let partitionWidth = (this.barWidth - (this.partitions + 1) * paddingBar) / this.partitions;
 
     if (this.isPlayer()) {
-      document.getElementById("healthPlayer").innerHTML = barsToDisplay + "/" + this.partitions
+      document.getElementById("healthPlayer").innerHTML = Math.ceil(barsToDisplay) + "/" + this.partitions
       this.clearCanvas()
     } else {
       this.healthBarContainer.getChildMeshes().forEach(e => e.dispose())

@@ -123,7 +123,10 @@ class Scene {
               obj.position.y >= +8)
           }
           if (outOfBound(obj.shape) || outOfBound(obj)) {
-            obj.dispose(true, true)
+            if (obj == char1) {
+              if (char1.life > 0) char1.healthLoss(char1.maxHealth + 1)
+            }
+            else obj.dispose(true, true)
           }
         })
         let velocity = char1.physicsImpostor.getLinearVelocity()
@@ -143,7 +146,7 @@ class Scene {
 
           if (c.shape.position.y <= w.position.y + 0.4) {
             console.log(c + ' is losing health in water');
-            c.healthLoss(c.maxHealth / 120)
+            c.healthLoss(c.maxHealth / 180)
           }
 
           //réglage son de déplacement selon la vitesse
@@ -201,12 +204,14 @@ class Scene {
         if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
+            char1.stabilizeTank()
             current_level_dico.goNextLevel(lvlStatus.DIE)
           }
           //si le char joueur fini le niveau
         } else if (current_level_dico.canGoNextLevel()) {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
+            char1.stabilizeTank()
             char1.bullForce = null
             //si il vient de finir le dernier niveau
             if (level + 1 == level_map.length) {
