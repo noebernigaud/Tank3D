@@ -114,13 +114,15 @@ class SpecialBonus {
   addToChar() {
     this.keyListener = listenerList[this.tank.specialBonuses.length];
     this.tank.addSpecialBonus(this);
-    addedObtainableBonus.push(
-      new BonusEnum(
-        this.name + " level up",
-        this.bonusLevelUp,
-        "Level up the power of the " + this.name + " special bonus",
-        "./images/health.png"
-      ))
+    if (this.tank == char1) {
+      addedObtainableBonus.push(
+        new BonusEnum(
+          this.name + " level up",
+          this.bonusLevelUp,
+          "Level up the power of the " + this.name + " special bonus",
+          "./images/health.png"
+        ))
+    }
     this.load()
   }
 
