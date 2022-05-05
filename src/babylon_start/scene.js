@@ -134,8 +134,15 @@ class Scene {
 
         chars.forEach(c => {
 
+          if (c.life <= 0) return
+
           //le char prend des degats si il est retourné
           if (c.isRenversed(1.4, true)) {
+            c.healthLoss(c.maxHealth / 120)
+          }
+
+          if (c.shape.position.y <= w.position.y + 0.4) {
+            console.log(c + ' is losing health in water');
             c.healthLoss(c.maxHealth / 120)
           }
 
@@ -343,12 +350,12 @@ class Scene {
       { mass: 0 },
       scene
     );
-    var collidedChar
-    groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
-      if (collidedChar = chars.find(e => e.shape == e2.object)) {
-        collidedChar.healthLoss(1)
-      }
-    }
+    // var collidedChar
+    // groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
+    //   if (collidedChar = chars.find(e => e.shape == e2.object)) {
+    //     collidedChar.healthLoss(1)
+    //   }
+    // }
 
 
     //water ground
