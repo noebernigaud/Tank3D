@@ -381,7 +381,7 @@ function setCurrentMusic() {
     biome = current_level_dico.biome;
     musicBackground.pause()
     if (biome == "Earth") {
-        musicBackground = new Audio('audio/warmusic.mp3')
+        musicBackground = new Audio('audio/warmusic-cut.mp3')
         musicBackground.volume = 0.2
     }
     if (biome == "Sand") {

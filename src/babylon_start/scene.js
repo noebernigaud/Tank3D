@@ -211,6 +211,7 @@ class Scene {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
             char1.stabilizeTank()
+            playSoundWithDistanceEffect(char1.charExploseSound, char1, false)
             current_level_dico.goNextLevel(lvlStatus.DIE)
           }
           //si le char joueur fini le niveau
