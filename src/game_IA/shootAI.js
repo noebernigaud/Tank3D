@@ -9,14 +9,15 @@ class ShootAI {
      * @param {Char} tank 
      * @returns {BABYLON.Mesh} the mesh targeted
      */
-    static targetPlayer(tank, length = 1000, affiche = false, temps = 1000, pickedPoint = false, exclude = undefined) {
+    static targetPlayer(tank, length = 1000, affiche =  false, temps = 1000, pickedPoint = false, exclude = undefined) {
         let origin = getCannonPoint(tank)
         let dir = tank.getTurretTank().getDirection(BABYLON.Axis.Z)
+        let toReverse = tank.type.name == ObjectEnum.SandTank.name
         // let hitted = createRay(
         //     origin, dir, length, affiche, temps, pickedPoint, exclude);
         // console.log(hitted);
         // return hitted
         return createRay(
-            origin, dir, length, affiche, temps, pickedPoint, exclude);
+            origin, dir, length, affiche, temps, pickedPoint, exclude, false, toReverse);
     }
 }

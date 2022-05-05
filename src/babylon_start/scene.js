@@ -56,6 +56,7 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
+
     // engine.runRenderLoop(() => scene.render())
     // var options = new BABYLON.SceneOptimizerOptions(50, 2000);
     // BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
@@ -111,6 +112,11 @@ class Scene {
         scene.minimap.redraw()
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
+
+        // chars.forEach(c => {
+        //   let p = getCannonPoint(c)
+        //   c.test.position = p
+        // })
 
         getAllMeshList(true).forEach(obj => {
           let outOfBound = (obj) => {
