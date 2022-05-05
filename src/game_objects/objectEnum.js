@@ -19,7 +19,7 @@ class ObjectEnum {
   //Opponent Tanks
   static MiniTank = new ObjectEnum("miniTank", "mini_tank", 0.25, 0.625, 0.625, 0.625)
   static EarthTank = new ObjectEnum("earthTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
-  static SandTank = new ObjectEnum("sandTank", "tiger_tank", 0.25, 0.95, 0.625, 1.85)
+  static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.85)
   static SnowTank = new ObjectEnum("snowTank", "battle_tank", 0.2, 0.95, 0.625, 1.75)
 
   //Earthy Biome items
@@ -81,11 +81,11 @@ class ObjectEnum {
 
     // Parent mesh (the original which we will duplicate to create our objects)
     if (model == "tumbleweed") {
-      this.container = BABYLON.MeshBuilder.CreateSphere("container", { diameter: 0.50 }, scene);
+      this.container = BABYLON.MeshBuilder.CreateSphere("model_container", { diameter: 0.50 }, scene);
     } else if (model == "cactus1" || model == "barrel" || model == "battery" || model == "snowy_tree" || model == "snowy_fir" || model == "merged_palm_tree" || model == "coconut_tree") {
-      this.container = BABYLON.MeshBuilder.CreateCylinder("container", { height: this.height, diameter: 0.37 }, scene);
+      this.container = BABYLON.MeshBuilder.CreateCylinder("model_container", { height: this.height, diameter: 0.37 }, scene);
     } else {
-      this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
+      this.container = BABYLON.MeshBuilder.CreateBox("model_container", { height: this.height, width: this.width, depth: this.depth }, scene);
     }
     // this.container = BABYLON.MeshBuilder.CreateBox("container", { height: this.height, width: this.width, depth: this.depth }, scene);
     this.container.position.y += this.height / 2;

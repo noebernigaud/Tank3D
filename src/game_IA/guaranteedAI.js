@@ -81,7 +81,7 @@ class guaranteedAI {
         // Shoot simulation
         if (this.updateTir <= 0) {
             var hit = ShootAI.targetPlayer(this.tank)
-            if ((this.isEnnemy && charsAllAllies.some(c => c.shape == hit)) || (!this.isEnnemy && charsAI.some(c => c.shape == hit))) {
+            if ((this.isEnnemy && (charsAllAllies.some(c => c.shape == hit)) || (charsAllAllies.some(c => c.getChildMeshes().some(m => m == hit)))) || (!this.isEnnemy && charsAI.some(c => c.shape == hit))) {
                 this.tank.addBullet(Date.now())
             }
             this.updateTir = 12;
