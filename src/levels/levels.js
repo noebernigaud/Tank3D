@@ -119,7 +119,7 @@ const level_map = [
                 "-----------------------------------------",
             ],
         minHeightMap: -1,
-        lvlObjective: levelObjectives.burnAllBarrels,
+        lvlObjective: levelObjectives.killAllTank,
         biome: "Sand"
     }),
     new Level({
@@ -148,7 +148,7 @@ const level_map = [
                 "-----------------------------------------",
             ],
         minHeightMap: -1,
-        lvlObjective: levelObjectives.burnAllBarrels,
+        lvlObjective: levelObjectives.chronoMission,
         biome: "Sand"
     }),
     new Level({

@@ -9,6 +9,17 @@ let levelObjectives = {
       ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
     ]
   },
+  chronoMission: {
+    description:
+      `The ennemies have planted a bomb, and are plannign to activate it! 
+      Detroy all of them before the countdown goes to 0`,
+    goToNextLevel: (e) => {
+      return charsAI.length == 0
+    },
+    tip: [
+      ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
+    ]
+  },
   getAllBonuses: {
     description:
       `Complete the next stage by picking up all bonus supplied`,
