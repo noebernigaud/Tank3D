@@ -106,7 +106,7 @@ class Scene {
       //   this.scene.renderTargetsEnabled = false
       // }
 
-      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps"
+      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps" + " - Chrono : " + (chronoLvl == null ? "none" : (Math.ceil(chronoLvl.timeCooled / 1000) + "." + chronoLvl.timeCooled % 1000))
 
       if (!this.scene.menu.isShown) {
         scene.minimap.redraw()
@@ -238,6 +238,7 @@ class Scene {
           charsAI.forEach(c => c.strategy.applyStrategy());
           charsAllies.forEach(c => c.strategy.applyStrategy());
           chars.forEach(c => SpecialBonus.updateAllThankBonuses(c));
+          if (chronoLvl) chronoLvl.update()
         }// TODO : Here update all bonuses list !!!
         //charsAI.forEach(c => MoveAI.move(c));
 

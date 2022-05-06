@@ -89,6 +89,8 @@ var reloadMultUti = 1;
 
 var impostorCharList = [];
 
+var chronoLvl = null;
+
 
 var hl;
 var hlBalls;

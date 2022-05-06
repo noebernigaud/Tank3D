@@ -88,6 +88,7 @@ class Menu {
                     musicBackground.play()
                     chars.forEach(c => c.moveSound.play())
                     chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
+                    if (chronoLvl) chronoLvl.correctTime()
                     runRenderLoop()
                 }
             }
@@ -153,6 +154,7 @@ class Menu {
                 bEnum.addToChar()
                 this.bonusPanel.classList.add('hide');
                 chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
+                if (chronoLvl) chronoLvl.correctTime()
                 runRenderLoop()
                 this.inBonus = false;
                 this.clearBonus()

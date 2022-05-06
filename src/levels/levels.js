@@ -270,6 +270,8 @@ function draw_level_map(progress) {
         addedObtainableBonus = []
     }
 
+    chronoLvl = (level == 4 ? new Chrono(50000) : null)
+
 
     camera.position =
         char1.position
