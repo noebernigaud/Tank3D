@@ -157,6 +157,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:
         case ObjectEnum.DesertRock.name: { remove(rocks, this); break }
+        case ObjectEnum.SnowyHut.name: { remove(houses, this); break }
         case ObjectEnum.PalmTree1.name:
         case ObjectEnum.PalmTree2.name:
         case ObjectEnum.PalmTree3.name:
@@ -164,10 +165,9 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Cactus2.name:
         case ObjectEnum.Cactus3.name:
         case ObjectEnum.Tumbleweed.name:
-        case ObjectEnum.SnowyTree.name: { remove(trees, this); break }
+        case ObjectEnum.SnowyTree.name:
         case ObjectEnum.SnowyFir.name: { remove(trees, this); break }
-        case ObjectEnum.SnowyFence.name:
-        case ObjectEnum.SnowyHut.name: { remove(others, this); break; }
+        case ObjectEnum.SnowyFence.name: { remove(others, this); break; }
         default:
           throw `Unknown object type (ObjectPos.dispose)`;
       }
