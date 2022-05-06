@@ -49,7 +49,7 @@ const SPECIAL_BONUS_ID = {
   },
   BULL_CHARGE: {
     name: "Bull Charge",
-    description: "Charge forward and destroy ennemies on your way",
+    description: "Charge forward and destroy ennemies and bullets on your way",
     image: "images/bull_charge.png",
     keyListener: '7',
     bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Bull Charge") b.delay /= 2 }) },
@@ -239,12 +239,12 @@ class SpecialBonus {
 
   static createSpecialBonusList(tank) {
     return [
-      new crossHair(tank),
-      new MachineGun(tank),
-      new dome(tank),
-      new SpeedTurbo(tank),
-      new MindControl(tank),
-      new Teleport(tank),
+      // new crossHair(tank),
+      // new MachineGun(tank),
+      // new dome(tank),
+      // new SpeedTurbo(tank),
+      // new MindControl(tank),
+      // new Teleport(tank),
       new BullCharge(tank),
       new Grenade(tank),
       new Allies(tank),

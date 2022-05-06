@@ -50,11 +50,11 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
-    this.bulletDamage = bulletDamage + (biome == "Sand" ? 3 : 0);
+    this.bulletDamage = bulletDamage + (biome == "Earth" ? 0 : (biome == "Sand" ? Math.floor(bulletDamage / 3) : Math.floor(bulletDamage * 2 / 3)))
     this.inclinaisonTurretIncrement = inclinaisonTurretIncrement || 0.002;
-    this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? 5 : 10))
+    this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? Math.floor(health / 2) : health))
     this.maxHealth = this.health
-    
+
     //this.test = BABYLON.MeshBuilder.CreateSphere("test", { diameter: 0.1, segments: 4 }, scene);
 
     //tank headlights
@@ -289,6 +289,7 @@ class Char extends ObjectPos {
 
   healthLoss(damage) {
     if (this.specialBonuses.some(b => b.name == SPECIAL_BONUS_ID.DOME.name && b.isActive)) return
+    if (this.bullForce) return
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0
