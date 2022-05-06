@@ -23,12 +23,25 @@ class GrenadeObj extends ObjectPos {
         this.physicsImpostor.onCollideEvent = (e1, e2) => {
             let g = grenades.find(e => e == e1.object)
             g.destroySound()
+
             chars.forEach(c => {
                 if (Math.sqrt((c.shape.position.x - g.position.x) ** 2 +
                     (c.shape.position.y - g.position.y) ** 2 +
-                    (c.shape.position.z - g.position.z) ** 2) < 5)
+                    (c.shape.position.z - g.position.z) ** 2) < 4)
                     c.healthLoss(g.damage)
             })
+
+            barrels.forEach(c => {
+                if (Math.sqrt((c.shape.position.x - g.position.x) ** 2 +
+                    (c.shape.position.y - g.position.y) ** 2 +
+                    (c.shape.position.z - g.position.z) ** 2) < 4) {
+                    createFire(c.shape);
+                    createSmoke(c.shape);
+                    c.explose()
+                    c.isBurning = true
+                }
+            })
+
             if (g) {
                 g.dispose()
             }

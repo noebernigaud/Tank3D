@@ -86,6 +86,7 @@ class Bullet extends ObjectPos {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);
+                    b2.explose()
                     b2.isBurning = true
                 } else if (b2 = trees.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()

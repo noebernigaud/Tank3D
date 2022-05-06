@@ -210,7 +210,7 @@ class Scene {
         if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
-            char1.stabilizeTank()
+            chars.forEach(c => c.stabilizeTank())
             playSoundWithDistanceEffect(char1.charExploseSound, char1, false)
             current_level_dico.goNextLevel(lvlStatus.DIE)
           }
@@ -218,7 +218,7 @@ class Scene {
         } else if (current_level_dico.canGoNextLevel()) {
           if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
           else {
-            char1.stabilizeTank()
+            chars.forEach(c => c.stabilizeTank())
             char1.bullForce = null
             //si il vient de finir le dernier niveau
             if (level + 1 == level_map.length) {
