@@ -66,6 +66,9 @@ var trees = []
 /** @type {[Rock]} */
 var rocks = []
 
+/** @type {[House]} */
+var houses = []
+
 var gravity = -9.81
 
 var isAdventure = true

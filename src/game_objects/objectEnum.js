@@ -71,7 +71,7 @@ class ObjectEnum {
 
     this.meshes.forEach(x => {
       x.scaling = new BABYLON.Vector3(this.resize, this.resize, this.resize)
-      x.forceSharedVertices();
+      //x.forceSharedVertices();
       // x.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
     })
 

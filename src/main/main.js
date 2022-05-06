@@ -333,6 +333,7 @@ function remove_all_objects(withPlayer = false, progress = true) {
     bonuses = [];
     trees = [];
     rocks = [];
+    houses = [];
     delimiters = [];
 
     scene.blockfreeActiveMeshesAndRenderingGroups = false;
@@ -340,7 +341,7 @@ function remove_all_objects(withPlayer = false, progress = true) {
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...houses, ...delimiters, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION
