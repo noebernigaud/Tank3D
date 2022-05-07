@@ -175,12 +175,6 @@
 
         <script>
             window.onresize = function () {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                // document.getElementById("src").style.width = window.innerWidth + "px";
-                // document.getElementById("src").style.height = window.innerHeight + "px";
-
-                if (scene && scene.minimap) scene.minimap.resize()
                 if (engine) engine.resize();
             }
             window.onresize()

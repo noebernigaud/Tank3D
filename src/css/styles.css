@@ -98,3 +98,8 @@ body * {
   visibility: visible;
   opacity: 1;
 }
+
+#myCanvas {
+  height: 100vh;
+  width: 100vw;
+}

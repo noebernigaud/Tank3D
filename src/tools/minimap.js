@@ -31,12 +31,12 @@ class MiniMap {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
-  resize() {
-    let width = window.innerWidth / 6;
-    let height = window.innerHeight / 6;
-    this.canvas.width = Math.min(width, height)
-    this.canvas.height = Math.min(width, height)
-  }
+  // resize() {
+  //   let width = window.innerWidth / 6;
+  //   let height = window.innerHeight / 6;
+  //   this.canvas.width = Math.min(width, height)
+  //   this.canvas.height = Math.min(width, height)
+  // }
 
   redraw() {
     this.clear()
