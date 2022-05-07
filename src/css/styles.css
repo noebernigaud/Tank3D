@@ -18,19 +18,6 @@ body * {
   filter: blur(5px);
 }
 
-
-.divb {
-  display: flex;
-  padding: 3%;
-  flex-direction: column;
-  border-radius: 2%;
-  position: absolute;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 10pt;
-}
-
 .button {
   margin: 2%;
   /* width: 200px; */

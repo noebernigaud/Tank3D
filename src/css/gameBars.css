@@ -182,6 +182,19 @@
   border-radius: 10pt;
 }
 
+.divb {
+  display: flex;
+  padding: 3%;
+  flex-direction: column;
+  border-radius: 2%;
+  position: absolute;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10pt;
+  background: #000000bd;
+}
+
 .gameBars {
   width: 80%;
   bottom: 0;
