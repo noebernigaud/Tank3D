@@ -197,6 +197,8 @@ class Menu {
         globalProgress = true
         engine.stopRenderLoop()
         document.getElementsByClassName('bonusPanel')[0].classList.add('hide');
+        let sb = document.getElementsByClassName('specialBonus')[0];
+        sb.parentElement.children[0].classList.add('hide');
         document.getElementById("restart").classList.add('hide')
         document.getElementById("continue").classList.add('hide')
         Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.remove('hide'))

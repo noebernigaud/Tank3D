@@ -201,6 +201,7 @@ class SpecialBonus {
       let sb = document.getElementsByClassName('specialBonus')[0]
       sb.appendChild(this.bg);
       sb.classList.remove('hide')
+      sb.parentElement.children[0].classList.remove('hide');
     }
   }
 

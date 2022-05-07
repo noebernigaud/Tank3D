@@ -62,7 +62,7 @@ class BonusEnum {
 
     resetCounter() {
         if (BonusEnum.bonusEnumList.some(e => e.name == this.name)) {
-            document.getElementById(e.htmlCounter).innerHTML = "0";
+            document.getElementById(this.htmlCounter).innerHTML = "0";
         }
     }
 }
