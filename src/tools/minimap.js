@@ -28,21 +28,23 @@ class MiniMap {
   }
 
   clear() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight)
   }
 
   // resize() {
   //   let width = window.innerWidth / 6;
   //   let height = window.innerHeight / 6;
-  //   this.canvas.width = Math.min(width, height)
-  //   this.canvas.height = Math.min(width, height)
+  //   this.canvas.offsetWidth = Math.min(width, height)
+  //   this.canvas.offsetHeight = Math.min(width, height)
   // }
 
   redraw() {
     this.clear()
+    this.canvas.height = this.canvas.offsetHeight
+    this.canvas.width = this.canvas.offsetWidth
     let resize = (x, y) => ({
-      x: (1 - (x + height / 2) / height) * this.canvas.width * 0.6 + this.canvas.width * 0.4 / 2,
-      y: (1 - (y + width / 2) / width) * this.canvas.height * 0.6 + this.canvas.height * 0.4 / 2
+      x: (1 - (x + height / 2) / height) * this.canvas.offsetWidth * 0.6 + this.canvas.offsetWidth * 0.4 / 2,
+      y: (1 - (y + width / 2) / width) * this.canvas.offsetHeight * 0.6 + this.canvas.offsetHeight * 0.4 / 2
     })
     chars.forEach(c => {
       let point = resize(c.shape.position.z, c.shape.position.x);
