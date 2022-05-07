@@ -24,7 +24,6 @@ body * {
   height: 50px;
   border: solid rgba(255, 255, 255, 0.3) 1px;
   background: transparent;
-  cursor: pointer;
   transition: all 1s;
   display: flex;
   align-items: center;
@@ -40,9 +39,9 @@ body * {
   opacity: 0.7;
 }
 
-.button:hover {
+#main .button:hover {
   background: rgba(27, 228, 20, 0.226);
-
+  cursor: pointer;
 }
 
 .hideOnMenu {

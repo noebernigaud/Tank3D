@@ -33,6 +33,11 @@
   animation: blinker 1s linear infinite;
 }
 
+#tableStat tr:last-child td:hover {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+
 @keyframes blinker {
   10% {
     background-color: #0b65bd19
