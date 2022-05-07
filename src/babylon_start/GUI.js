@@ -196,7 +196,7 @@ class Menu {
         musicBackground.pause()
         globalProgress = true
         engine.stopRenderLoop()
-        document.getElementsByClassName('specialBonus')[0].classList.add('hide');
+        document.getElementsByClassName('bonusPanel')[0].classList.add('hide');
         document.getElementById("restart").classList.add('hide')
         document.getElementById("continue").classList.add('hide')
         Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.remove('hide'))
@@ -209,6 +209,7 @@ class Menu {
     }
 
     clearBonus() {
+        BonusEnum.bonusEnumList.forEach(e => e.resetCounter());
         this.bonusPanel.innerHTML = "";
     }
 
