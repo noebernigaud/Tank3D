@@ -7,9 +7,9 @@ class Healthbar {
   /**
    * @param {Char} tank 
    */
-  constructor(tank) {
+  constructor(tank, width) {
     this.tank = tank;
-    this.barWidth = 1;
+    this.barWidth = width;
     this.destroyed = false
     if (this.isPlayer()) {
       this.barWidth = document.getElementById("healthBar").width

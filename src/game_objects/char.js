@@ -72,7 +72,7 @@ class Char extends ObjectPos {
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape);
-    this.healtBar = new Healthbar(this);
+    this.healtBar = new Healthbar(this, type.name == ObjectEnum.BossTank.name ? 2 : 1);
 
     this.moveSound = new Audio('audio/electricFerry.mp3');
     this.moveSound.volume = 1
