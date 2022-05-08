@@ -38,6 +38,7 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.SnowTank.name: { shape = ObjectEnum.SnowTank.container.clone(); break; }
       case ObjectEnum.EarthTank.name: { shape = ObjectEnum.EarthTank.container.clone(); break; }
       case ObjectEnum.SandTank.name: { shape = ObjectEnum.SandTank.container.clone(); break; }
+      case ObjectEnum.BossTank.name: { shape = ObjectEnum.BossTank.container.clone(); break; }
       case ObjectEnum.Rock.name: { shape = ObjectEnum.Rock.container.clone(); break; }
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
@@ -45,14 +46,12 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.EarthyHouse.name: { shape = ObjectEnum.EarthyHouse.container.clone(); break; }
       case ObjectEnum.Cactus1.name: { shape = ObjectEnum.Cactus1.container.clone(); break; }
       case ObjectEnum.Cactus2.name: { shape = ObjectEnum.Cactus2.container.clone(); break; }
-      case ObjectEnum.Cactus3.name: { shape = ObjectEnum.Cactus3.container.clone(); break; }
       case ObjectEnum.DesertRock.name: { shape = ObjectEnum.DesertRock.container.clone(); break; }
       case ObjectEnum.Tumbleweed.name: { shape = ObjectEnum.Tumbleweed.container.clone(); break; }
       case ObjectEnum.DesertHouse.name: { shape = ObjectEnum.DesertHouse.container.clone(); break; }
       case ObjectEnum.SnowyTree.name: { shape = ObjectEnum.SnowyTree.container.clone(); break; }
       case ObjectEnum.SnowyFir.name: { shape = ObjectEnum.SnowyFir.container.clone(); break; }
       case ObjectEnum.SnowyRock.name: { shape = ObjectEnum.SnowyRock.container.clone(); break; }
-      case ObjectEnum.SnowyFence.name: { shape = ObjectEnum.SnowyFence.container.clone(); break; }
       case ObjectEnum.SnowyHut.name: { shape = ObjectEnum.SnowyHut.container.clone(); break; }
       default: meshBabylon = false;
     }
@@ -155,6 +154,7 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.SnowTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.EarthTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.SandTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.BossTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:
@@ -167,11 +167,9 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.PalmTree3.name:
         case ObjectEnum.Cactus1.name:
         case ObjectEnum.Cactus2.name:
-        case ObjectEnum.Cactus3.name:
         case ObjectEnum.Tumbleweed.name:
         case ObjectEnum.SnowyTree.name:
         case ObjectEnum.SnowyFir.name: { remove(trees, this); break }
-        case ObjectEnum.SnowyFence.name: { remove(others, this); break; }
         default:
           throw `Unknown object type (ObjectPos.dispose)`;
       }

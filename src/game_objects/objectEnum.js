@@ -21,6 +21,7 @@ class ObjectEnum {
   static EarthTank = new ObjectEnum("earthTank", "tiger_tank", 0.25, 0.95, 0.625, 1.75)
   static SandTank = new ObjectEnum("sandTank", "desert_tank", 0.5, 0.95, 0.625, 1.85)
   static SnowTank = new ObjectEnum("snowTank", "battle_tank", 0.2, 0.95, 0.625, 1.75)
+  static BossTank = new ObjectEnum("boss_tank", "boss_tank", 0.5, 1.9 ,1.3, 3.7)
 
   //Earthy Biome items
   static Rock = new ObjectEnum("rock", "rock", 0.5, 0.95, 0.7, 0.7)
@@ -32,7 +33,6 @@ class ObjectEnum {
   //Sandy Biome items
   static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.5, 0.8, 1, 0.8)
   static Cactus2 = new ObjectEnum("cactus2", "cactus2", 0.2, 0.8, 1, 0.8)
-  static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.15, 0.8, 1, 0.8)
   static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.5, 0.8, 0.8, 0.8)
   static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 1, 0.4, 0.4, 0.4)
   static DesertHouse = new ObjectEnum("desert_house", "desert_house", 0.5, 2, 2, 2)
@@ -41,7 +41,6 @@ class ObjectEnum {
   static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.025, 0.8, 1, 0.8)
   static SnowyFir = new ObjectEnum("snowy_fir", "snowy_fir", 0.5, 0.8, 1, 0.8)
   static SnowyRock = new ObjectEnum("snowy_rock", "snowy_rock", 0.15, 0.5, 0.4, 0.5)
-  static SnowyFence = new ObjectEnum("snowy_fence", "snowy_fence", 0.015, 0.4, 0.4, 0.4)
   static SnowyHut = new ObjectEnum("wintercabin", "wintercabin", 0.01, 3, 2, 2)
 
 
@@ -88,6 +87,8 @@ class ObjectEnum {
 
     if (model == "sand_tank") {
       [this.meshes[0], this.meshes[3]] = [this.meshes[3], this.meshes[0]];
+    } else if (model == "boss_tank") {
+      [this.meshes[0], this.meshes[2]] = [this.meshes[2], this.meshes[0]];
     }
 
     
@@ -115,11 +116,11 @@ class ObjectEnum {
 
   static initiate_all_models() {
     var list_obj = [
-      this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank,
+      this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank, this.BossTank,
       this.Barrel, this.Battery, this.Player, this.Wall, this.WallD, this.Bonus, this.SpecialBonus,
       this.Rock, this.PalmTree1, this.PalmTree2,
-      this.PalmTree3, this.EarthyHouse, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
-      this.Tumbleweed, this.DesertHouse, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
+      this.PalmTree3, this.EarthyHouse, this.Cactus1, this.Cactus2, this.DesertRock,
+      this.Tumbleweed, this.DesertHouse, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyHut
     ]
     this.remainingLoad = list_obj.length + 1 // + 1 for earthy ground
     this.globalLen = this.remainingLoad;

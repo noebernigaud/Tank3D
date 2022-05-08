@@ -23,6 +23,9 @@ class Char extends ObjectPos {
       case "mini": type = ObjectEnum.MiniTank
         break;
 
+      case "boss": type = ObjectEnum.BossTank
+        break;
+
       case "normal": type = (biome == "Earth" ? ObjectEnum.EarthTank : (biome == "Sand" ? ObjectEnum.SandTank : ObjectEnum.SnowTank))
         break;
       default: break;
