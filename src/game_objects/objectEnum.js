@@ -27,6 +27,7 @@ class ObjectEnum {
   static PalmTree1 = new ObjectEnum("ground_palm", "ground_palm", 1, 0.8, 1, 0.8)
   static PalmTree2 = new ObjectEnum("merged_palm_tree", "merged_palm_tree", 0.4, 0.8, 1, 0.8)
   static PalmTree3 = new ObjectEnum("coconut_tree", "coconut_tree", 0.02, 0.8, 1, 0.8)
+  static EarthyHouse = new ObjectEnum("ww2_house", "ww2_house", 0.75, 2, 2, 2)
 
   //Sandy Biome items
   static Cactus1 = new ObjectEnum("cactus1", "cactus1", 0.5, 0.8, 1, 0.8)
@@ -34,6 +35,7 @@ class ObjectEnum {
   static Cactus3 = new ObjectEnum("cactus3", "cactus3", 0.15, 0.8, 1, 0.8)
   static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.5, 0.8, 0.8, 0.8)
   static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 1, 0.4, 0.4, 0.4)
+  static DesertHouse = new ObjectEnum("desert_house", "desert_house", 0.5, 2, 2, 2)
 
   //Snowy Biome items
   static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.025, 0.8, 1, 0.8)
@@ -71,6 +73,15 @@ class ObjectEnum {
 
     this.meshes.forEach(x => {
       x.scaling = new BABYLON.Vector3(this.resize, this.resize, this.resize)
+      if (model == "desert_house") {
+        x.material.transparencyMode = 1;
+        x.material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5)
+      } else if (model == "snowy_fir") {
+        x.material.transparencyMode = 1;
+      } else if (model == "ww2_house") {
+        x.material.specularColor = new BABYLON.Color3(0, 0, 0)
+        x.material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5)
+      }
       //x.forceSharedVertices();
       // x.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
     })
@@ -78,6 +89,8 @@ class ObjectEnum {
     if (model == "sand_tank") {
       [this.meshes[0], this.meshes[3]] = [this.meshes[3], this.meshes[0]];
     }
+
+    
 
     // Parent mesh (the original which we will duplicate to create our objects)
     if (model == "tumbleweed") {
@@ -105,8 +118,8 @@ class ObjectEnum {
       this.Bullet, this.SnowTank, this.EarthTank, this.SandTank, this.MiniTank,
       this.Barrel, this.Battery, this.Player, this.Wall, this.WallD, this.Bonus, this.SpecialBonus,
       this.Rock, this.PalmTree1, this.PalmTree2,
-      this.PalmTree3, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
-      this.Tumbleweed, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
+      this.PalmTree3, this.EarthyHouse, this.Cactus1, this.Cactus2, this.Cactus3, this.DesertRock,
+      this.Tumbleweed, this.DesertHouse, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyFence, this.SnowyHut
     ]
     this.remainingLoad = list_obj.length + 1 // + 1 for earthy ground
     this.globalLen = this.remainingLoad;

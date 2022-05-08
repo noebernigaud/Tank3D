@@ -12,8 +12,8 @@ class House extends ObjectPos {
 
 function chooseHouse() {
     switch (biome) {
-        case "Earth": return ObjectEnum.SnowyHut;
-        case "Sand": return ObjectEnum.SnowyHut;
+        case "Earth": return ObjectEnum.EarthyHouse;
+        case "Sand": return ObjectEnum.DesertHouse;
         default: return ObjectEnum.SnowyHut;
     }
 }

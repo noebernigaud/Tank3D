@@ -42,15 +42,17 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.PalmTree1.name: { shape = ObjectEnum.PalmTree1.container.clone(); break; }
       case ObjectEnum.PalmTree2.name: { shape = ObjectEnum.PalmTree2.container.clone(); break; }
       case ObjectEnum.PalmTree3.name: { shape = ObjectEnum.PalmTree3.container.clone(); break; }
+      case ObjectEnum.EarthyHouse.name: { shape = ObjectEnum.EarthyHouse.container.clone(); break; }
       case ObjectEnum.Cactus1.name: { shape = ObjectEnum.Cactus1.container.clone(); break; }
       case ObjectEnum.Cactus2.name: { shape = ObjectEnum.Cactus2.container.clone(); break; }
       case ObjectEnum.Cactus3.name: { shape = ObjectEnum.Cactus3.container.clone(); break; }
       case ObjectEnum.DesertRock.name: { shape = ObjectEnum.DesertRock.container.clone(); break; }
       case ObjectEnum.Tumbleweed.name: { shape = ObjectEnum.Tumbleweed.container.clone(); break; }
+      case ObjectEnum.DesertHouse.name: { shape = ObjectEnum.DesertHouse.container.clone(); break; }
       case ObjectEnum.SnowyTree.name: { shape = ObjectEnum.SnowyTree.container.clone(); break; }
       case ObjectEnum.SnowyFir.name: { shape = ObjectEnum.SnowyFir.container.clone(); break; }
       case ObjectEnum.SnowyRock.name: { shape = ObjectEnum.SnowyRock.container.clone(); break; }
-      case ObjectEnum.SnowyFence.name: { shape = ObjectEnum.Cactus2.SnowyFence.clone(); break; }
+      case ObjectEnum.SnowyFence.name: { shape = ObjectEnum.SnowyFence.container.clone(); break; }
       case ObjectEnum.SnowyHut.name: { shape = ObjectEnum.SnowyHut.container.clone(); break; }
       default: meshBabylon = false;
     }
@@ -157,6 +159,8 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Rock.name:
         case ObjectEnum.SnowyRock.name:
         case ObjectEnum.DesertRock.name: { remove(rocks, this); break }
+        case ObjectEnum.DesertHouse.name:
+        case ObjectEnum.EarthyHouse.name:
         case ObjectEnum.SnowyHut.name: { remove(houses, this); break }
         case ObjectEnum.PalmTree1.name:
         case ObjectEnum.PalmTree2.name:
