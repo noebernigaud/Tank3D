@@ -238,17 +238,21 @@ class SpecialBonus {
     tank.specialBonuses.forEach(e => e.update());
   }
 
+  /**
+   * @param {Char} tank 
+   * @returns 
+   */
   static createSpecialBonusList(tank) {
     return [
-      // new crossHair(tank),
-      // new MachineGun(tank),
-      // new dome(tank),
-      // new SpeedTurbo(tank),
-      // new MindControl(tank),
-      // new Teleport(tank),
+      new crossHair(tank),
+      new MachineGun(tank),
+      new dome(tank),
+      new SpeedTurbo(tank),
+      new MindControl(tank),
+      new Teleport(tank),
       new BullCharge(tank),
       new Grenade(tank),
       new Allies(tank),
-    ]
+    ].filter(e => !tank.specialBonuses.includes(e.name));
   }
 }
