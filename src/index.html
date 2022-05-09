@@ -204,13 +204,6 @@
 
         <div id="levelBox" class="box levelsBox hide">
             <div class="levels">
-                <div class="level blocked">1</div>
-                <div class="level blocked">2</div>
-                <div class="level blocked">3</div>
-                <div class="level blocked">4</div>
-                <div class="level blocked">5</div>
-                <div class="level blocked">6</div>
-                <div class="level blocked">7</div>
             </div>
             <div id="backButton" class="backButton">Back</div>
         </div>
@@ -219,6 +212,15 @@
             let mainDiv = document.getElementById('main')
             let levelBox = document.getElementById('levelBox')
 
+            {
+                let levelDiv = document.getElementsByClassName('levels')[0]
+                level_map.forEach((e, pos) => {
+                    let child = document.createElement('div')
+                    child.classList.add('level', 'blocked')
+                    child.innerHTML = pos + 1
+                    levelDiv.appendChild(child)
+                })
+            }
             document.getElementById('backButton').onclick = () => {
                 mainDiv.classList.remove('hide')
                 levelBox.classList.add('hide')

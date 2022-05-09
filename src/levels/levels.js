@@ -487,8 +487,11 @@ function setCurrentLevelDico() {
         document.getElementsByClassName('full-screen')[0].classList.add('hide')
     }
 
+    document.getElementsByClassName('level')[level].classList.remove('blocked')
+
+
     if (level > 0) {
-        document.getElementsByClassName('level')[level - 1].classList.remove('blocked')
+        document.getElementsByClassName('level')[level - 1].classList.add('done')
     }
 }
 

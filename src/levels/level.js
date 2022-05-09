@@ -138,7 +138,7 @@ class Level {
 
     if (status === lvlStatus.WIN) {
       applauseSound.play()
-      document.getElementsByClassName('level')[level_map.length - 1].classList.remove('blocked')
+      document.getElementsByClassName('level')[level_map.length - 1].classList.add('done')
     }
 
     document.getElementById("endLevelStat").classList.remove('hide')
