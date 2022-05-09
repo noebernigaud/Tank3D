@@ -618,7 +618,69 @@ function shieldImpact(emitter) {
     particleSystem.start();
 }
 
-function bullChargeEffect(emitter) {
+function bullChargeEffect(emitter, delay) {
+    var bullLight = new BABYLON.SpotLight("bullSpotLight", new BABYLON.Vector3(0, 3, 0), new BABYLON.Vector3(0, -1, 0), Math.PI / 4, 50, scene, true);
+    bullLight.diffuse = new BABYLON.Color3(1, 0, 0);
+    bullLight.specular = new BABYLON.Color3(1, 0, 0);
+    bullLight.intensity = 3
+            
+    bullLight.parent = emitter;
+
+    setTimeout(()=>{
+        bullLight.dispose()
+    }, delay)
+    bullChargeParticle(emitter, 0)
+    bullChargeParticle(emitter, 180)
+}
+
+function bullChargeParticle(emitter, position){
+
+    // Create & launch a particule system
+    var particleSystem = new BABYLON.ParticleSystem("bullCharge", 500, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/spark.png", scene);
+
+    // particleSystem.addColorGradient(0, new BABYLON.Color4(0.87, 0, 0, 0.6));
+    // particleSystem.addColorGradient(0.5, new BABYLON.Color4(0.95, 0, 0, 0.71, 0.5));
+    // particleSystem.addColorGradient(1, new BABYLON.Color4(1, 0, 0, 0.82, 0.1));
+
+    particleSystem.color1 = new BABYLON.Color4(0.8, 0, 0, 0.4);
+	particleSystem.color2 = new BABYLON.Color4(0.9, 0, 0, 0.3);
+	particleSystem.colorDead = new BABYLON.Color4(1, 0, 0, 0);
+    
+    particleSystem.minSize = 0.5;
+    particleSystem.maxSize = 0.5;
+    particleSystem.emitRate = 150;
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
+    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+    particleSystem.minEmitPower = 0;
+    particleSystem.maxEmitPower = 0;
+    particleSystem.minLifeTime = 2;
+    particleSystem.maxLifeTime = 2;
+    particleSystem.updateSpeed = 0.1;
+
+    particleSystem.cpt = position; // Number of particles
+
+    // Custom function to get the circle effect
+    particleSystem.startPositionFunction = function(worldMatrix, positionToUpdate)
+    {
+        var randX = -Math.sin(this.cpt * Math.PI/180)/2;
+        var randY = Math.cos(this.cpt * Math.PI/180)/2;
+        var randZ = this.minEmitBox.z + 1.25;
+        
+        BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+    
+        this.cpt++;
+    }
+    particleSystem.targetStopDuration = 8;
+    particleSystem.disposeOnStop = true;
+    particleSystem.emitter = emitter;
+
+    // Start
+    particleSystem.start();
+}
+
+function bullChargeEffect2(emitter) {
     var particleSystem = new BABYLON.ParticleSystem('bullCharge', 600, scene);
     particleSystem.particleTexture = new BABYLON.Texture('textures/flare.png', scene);
 

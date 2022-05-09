@@ -13,6 +13,7 @@ class BullCharge extends SpecialBonus {
         if (super.use() && !this.isActive) {
             this.bonusStartedDate = Date.now();
             super.activate()
+            bullChargeEffect(this.tank.shape, this.bonusStartedDelay)
             //normalized vector of our current direction
             // let moveVec = this.tank.shape.getDirection(BABYLON.Axis.Z).scale(800000)
             let moveVec = this.tank.shape.getDirection(BABYLON.Axis.Z).scale(8)
