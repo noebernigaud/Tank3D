@@ -1,6 +1,6 @@
 class SpeedTurbo extends SpecialBonus {
     constructor(tank) {
-        super(tank, SPECIAL_BONUS_ID.SPEED_TURBO, 10000, 3000);
+        super(tank, SPECIAL_BONUS_ID.SPEED_TURBO, 6000, 3000);
     }
 
     disable() {
@@ -12,6 +12,7 @@ class SpeedTurbo extends SpecialBonus {
         if (super.use() && !this.isActive) {
             this.bonusStartedDate = Date.now();
             super.activate()
+            createTurboParticles(this.tank.shape, this.bonusStartedDelay)
             this.oldSpeed = this.tank.speedNorme;
             this.tank.speedNorme = this.oldSpeed + 5;
         }

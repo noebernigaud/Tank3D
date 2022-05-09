@@ -167,6 +167,95 @@ function createSmoke(emitter, isRight = false, isMoving = false, permanent = fal
     return particleSystem;
 }
 
+
+function createTurboParticles(emitter, delay){
+    createTurboEffect(emitter, delay, true)
+    createTurboEffect(emitter, delay, false)
+}
+function createTurboEffect(emitter, delay, isRight){
+    const box = BABYLON.MeshBuilder.CreateBox("turboTank", { size: 0.05 });
+    box.parent = emitter
+    box.position.z -= 0.95
+    box.position.y -= 0.05
+    box.position.x += isRight ? 0.22 : -0.18
+    box.isVisible = false
+
+    if(isRight){
+        var turboLight = new BABYLON.PointLight("turboSpotLight", new BABYLON.Vector3(-0.2, 0, 0), scene);
+        turboLight.diffuse = new BABYLON.Color3(0, 0, 1);
+        turboLight.specular = new BABYLON.Color3(0, 0, 1);
+        turboLight.intensity = 1.2
+        turboLight.range = 4.5;
+                
+        turboLight.parent = box;
+    
+        setTimeout(()=>{
+            turboLight.dispose()
+        }, delay)
+    }
+    
+
+    // Create a particle system
+    var particleSystem = new BABYLON.ParticleSystem("turboParticles", 500, scene);
+
+    //Texture of each particle
+    particleSystem.particleTexture = new BABYLON.Texture("textures/boost.png", scene);
+
+    // Where the particles come from
+    particleSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
+
+    // Colors of all particles
+    particleSystem.color1 = new BABYLON.Color4(1, 1, 1, 0.5);
+    particleSystem.color2 = new BABYLON.Color4(0.5, 0.8, 1.0, 0.4);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 1, 0);
+
+    // Size of each particle
+    // particleSystem.minSize = 0.2;
+    // particleSystem.maxSize = 0.2;
+    particleSystem.addSizeGradient(0, 0.15);
+    particleSystem.addSizeGradient(0.25, 0.12);
+    particleSystem.addSizeGradient(0.5, 0.1);
+    particleSystem.addSizeGradient(0.75, 0.08);
+
+    // Life time of each particle
+    particleSystem.minLifeTime = 0.3;
+    particleSystem.maxLifeTime = 0.6;
+
+    // Emission rate
+    particleSystem.emitRate = 400;
+
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
+
+    // Set the gravity of all particles
+    particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+
+    // Direction of each particle after it has been emitted
+    particleSystem.direction1 = new BABYLON.Vector3(0, 0, -1);
+    particleSystem.direction2 = new BABYLON.Vector3(0, 0, -1);
+
+    // Angular speed, in radians
+    particleSystem.minAngularSpeed = 0;
+    particleSystem.maxAngularSpeed = Math.PI;
+
+    // Speed
+    particleSystem.minEmitPower = 1;
+    particleSystem.maxEmitPower = 2;
+    particleSystem.updateSpeed = 0.02;
+
+    particleSystem.disposeOnStop = true;
+    particleSystem.targetStopDuration = 15;
+
+    particleSystem.emitter = box
+
+    setTimeout(()=>{
+        box.dispose()
+    }, delay)
+    // Start the particle system
+    particleSystem.start();
+}
+
 function createDust(emitter) {
     var particleSystem = new BABYLON.ParticleSystem("particles", 1000);
 
