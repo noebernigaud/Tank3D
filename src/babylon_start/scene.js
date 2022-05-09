@@ -106,7 +106,7 @@ class Scene {
       //   this.scene.renderTargetsEnabled = false
       // }
 
-      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps" + " - Chrono : " + (chronoLvl == null ? "none" : (Math.ceil(chronoLvl.timeCooled / 1000) + "." + chronoLvl.timeCooled % 1000))
+      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps" + (chronoLvl ? (" <br> Chrono : " + Math.ceil(chronoLvl.timeCooled / 1000) + "." + (chronoLvl.timeCooled % 1000 + "").padEnd(3, "0")) : "")
 
       if (!this.scene.menu.isShown) {
         current_level_dico.updateTipMessage()

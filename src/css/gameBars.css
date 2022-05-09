@@ -265,6 +265,7 @@
   top: 3pt;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Tapestry&display=swap');
