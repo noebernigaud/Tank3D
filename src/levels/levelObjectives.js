@@ -7,6 +7,8 @@ let levelObjectives = {
     },
     tip: [
       ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
+    ],
+    msg: [
     ]
   },
   chronoMission: {
@@ -18,6 +20,9 @@ let levelObjectives = {
     },
     tip: [
       ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
+    ],
+    msg: [
+      "This is a temporized level : <br> kill enemies before everything explose !"
     ]
   },
   getAllBonuses: {
@@ -27,7 +32,10 @@ let levelObjectives = {
       return bonuses.length == 0
     },
     tip: [["Bonus to collect", () => current_level_dico.getBonusObtained(),
-      () => bonuses.length + current_level_dico.getBonusObtained()]]
+      () => bonuses.length + current_level_dico.getBonusObtained()]],
+    msg: [
+      "You must collect bonuses to<br> go to next level !"
+    ]
   },
   getBonusesAndKillTanks: {
     description:
@@ -41,6 +49,8 @@ let levelObjectives = {
         () => bonuses.length + current_level_dico.getBonusObtained()],
       ["Tank to kill", () => charsDestroyed.length,
         () => charsDestroyed.length + charsAI.length]
+    ],
+    msg: [
     ]
   },
   burnAllBarrels: {
@@ -53,6 +63,9 @@ let levelObjectives = {
     },
     tip: [
       ["Barrels to burn", () => `${barrels.filter(b => b.isBurning).length}`, () => barrels.length]
+    ],
+    msg: [
+      "Destroy barrels, to pass the level !"
     ]
   },
   batteryKillTanks: {
@@ -67,6 +80,10 @@ let levelObjectives = {
         () => batteries.length + current_level_dico.getBatteryDestroyed()],
       ["Tank to kill", () => charsDestroyed.length,
         () => charsDestroyed.length + charsAI.length]
+    ],
+    msg: [
+      "Push batteries into water to disable tanks shield !",
+      "Remember : batteries are not baloons<br>But sometimes..."
     ]
   },
 }

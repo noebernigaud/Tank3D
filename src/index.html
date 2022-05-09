@@ -24,10 +24,10 @@
     <script src="../lib/dat.gui.min.js"></script>
 
     <script src="babylon_start/tool_babylon.js"></script>
+    <script src="main/global_vars.js"></script>
     <script src="levels/levelObjectives.js"></script>
     <script src="levels/level.js"></script>
     <script src="levels/levels.js"></script>
-    <script src="main/global_vars.js"></script>
     <script src="babylon_start/particles.js"></script>
     <script src="babylon_start/GUI.js"></script>
 
@@ -92,9 +92,10 @@
         </div>
 
         <div class="top-right-panel gameBarsClass">
-            <div id="tips" class="box tips hide">
-                Push all bateries in water <br>
-                to desactivate enemies' shield !
+            <div id="tips_container" class="box tips">
+                <div id="tips">
+
+                </div>
             </div>
             <canvas id="minimap"></canvas>
         </div>
@@ -183,6 +184,16 @@
                 if (engine) engine.resize();
             }
             window.onresize()
+
+            // setInterval(() => {
+            //     if (Date.now() - dateLastMessageTip > 3000) {
+            //         console.log(123);
+            //         let tips = document.getElementById('tips')
+            //         if (counter >= msg.length) counter = 0
+            //         tips.innerHTML = msg[counter++]
+            //         dateLastMessageTip = Date.now()
+            //     }
+            // }, 1000 / 60)
 
             // let m = new Menu()
             new Scene();

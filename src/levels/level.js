@@ -14,11 +14,37 @@ class Level {
     "Battery destroyed": 0
   }
 
+  static normalMessage = [
+    "Be careful, water is poisoned, <br> do not fall inside too much longer",
+    "Kill tanks to go into next level",
+    "The minimap on tho-right of the screen <br> can be really useful !"
+  ]
+
   constructor(levelInfo) {
     this.level = levelInfo.level;
     this.minHeightMap = levelInfo.minHeightMap;
     this.lvlObjective = levelInfo.lvlObjective;
     this.biome = levelInfo.biome;
+    this.dateLastMessageTip = Date.now();
+    this.counter = 0;
+    this.msg = levelInfo.lvlObjective.msg.concat(Level.normalMessage);
+    if (barrels && barrels.length > 0) {
+      this.msg.push("Barrels can explode and cause lots of damage,<br>Don't be too close to it !")
+    }
+  }
+
+  updateTipMessage() {
+    if (Date.now() - this.dateLastMessageTip > 3000) {
+      console.log(Date.now(), this.dateLastMessageTip, Date.now() - this.dateLastMessageTip);
+      this.dateLastMessageTip = Date.now()
+      let tips = document.getElementById('tips')
+      tips.style.opacity = "0"
+      if (this.counter >= this.msg.length) this.counter = 0
+      setTimeout(() => {
+        tips.innerHTML = this.msg[this.counter++]
+        tips.style.opacity = "1";
+      }, 500);
+    }
   }
 
   createMessage() {

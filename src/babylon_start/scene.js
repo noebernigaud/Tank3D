@@ -109,6 +109,7 @@ class Scene {
       document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps" + " - Chrono : " + (chronoLvl == null ? "none" : (Math.ceil(chronoLvl.timeCooled / 1000) + "." + chronoLvl.timeCooled % 1000))
 
       if (!this.scene.menu.isShown) {
+        current_level_dico.updateTipMessage()
         scene.minimap.redraw()
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))

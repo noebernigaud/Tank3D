@@ -15,12 +15,13 @@
 }
 
 .top-right-panel {
+  margin-top: 2pt;
   position: absolute;
   right: 0pt;
   top: 0;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 
@@ -348,6 +349,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+#tips {
+  -webkit-transition: opacity .5s ease-in-out;
+  -moz-transition: opacity .5s ease-in-out;
+  -ms-transition: opacity .5s ease-in-out;
+  -o-transition: opacity .5s ease-in-out;
+  transition: opacity .5s ease-in-out;
 }
 
 .hide {
