@@ -337,9 +337,6 @@ function draw_level_map(progress) {
         addedObtainableBonus = []
     }
 
-    chronoLvl = (level == 4 ? new Chrono(50000) : null)
-
-
     camera.position =
         char1.position
             .add(new BABYLON.Vector3(40, 5, 40))
@@ -467,6 +464,8 @@ function draw_level_map(progress) {
 
 function setCurrentLevelDico() {
     current_level_dico = level_map[level]
+    chronoLvl = (current_level_dico.lvlObjective == levelObjectives.chronoMission ? new Chrono(50000) : null)
+
     if (level == 0) {
         level_map.forEach(e => e.resetValues())
     }
@@ -482,9 +481,14 @@ function setCurrentLevelDico() {
     }
 
     if ((level == 0 || current_level_dico.biome != level_map[level - 1].biome) && globalProgress) {
-        console.log("HERERERERE");
         scene.menu.toDisplayScenario = true;
         if (level != 0) scene.menu.show(false)
+    } else {
+        document.getElementsByClassName('full-screen')[0].classList.add('hide')
+    }
+
+    if (level > 0) {
+        document.getElementsByClassName('level')[level - 1].classList.remove('blocked')
     }
 }
 

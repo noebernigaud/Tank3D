@@ -119,8 +119,8 @@
                 onmouseenter="scene.menu.soundHover()">
                 <span>Continue</span>
             </div>
-            <div id="opt" class='button' onclick="scene.menu.show(false)" onmouseenter="scene.menu.soundHover()">
-                <span>Options</span>
+            <div id="goToLevels" class='button' onmouseenter="scene.menu.soundHover()">
+                <span>Levels</span>
             </div>
             <div id="restart" class="button hide" onclick="scene.menu.restart()" onmouseenter="scene.menu.soundHover()">
                 <span>Main menu</span>
@@ -200,6 +200,48 @@
 
             // hb = new Healthbar()
             // hb.updatePartition()
+        </script>
+
+        <div id="levelBox" class="box levelsBox hide">
+            <div class="levels">
+                <div class="level blocked">1</div>
+                <div class="level blocked">2</div>
+                <div class="level blocked">3</div>
+                <div class="level blocked">4</div>
+                <div class="level blocked">5</div>
+                <div class="level blocked">6</div>
+                <div class="level blocked">7</div>
+            </div>
+            <div id="backButton" class="backButton">Back</div>
+        </div>
+
+        <script>
+            let mainDiv = document.getElementById('main')
+            let levelBox = document.getElementById('levelBox')
+
+            document.getElementById('backButton').onclick = () => {
+                mainDiv.classList.remove('hide')
+                levelBox.classList.add('hide')
+            }
+
+            document.getElementById('goToLevels').onclick = () => {
+                levelBox.classList.remove('hide')
+                mainDiv.classList.add('hide')
+            }
+
+            Array.from(document.getElementsByClassName('level')).forEach((e, pos) => {
+                e.onclick = () => {
+                    if (!e.classList.contains('blocked')) {
+                        level = pos;
+                        remove_all_objects();
+                        setCurrentLevelDico();
+                        init();
+                        scene.menu.show(false);
+                        scene.menu.displayScenario(false)
+                        levelBox.classList.add('hide')
+                    }
+                }
+            })
         </script>
     </body>
 

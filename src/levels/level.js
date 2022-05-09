@@ -22,6 +22,8 @@ class Level {
 
   constructor(levelInfo) {
     this.level = levelInfo.level;
+
+    console.log(level);
     this.minHeightMap = levelInfo.minHeightMap;
     this.lvlObjective = levelInfo.lvlObjective;
     this.biome = levelInfo.biome;
@@ -134,7 +136,10 @@ class Level {
    */
   writeStat(status) {
 
-    if (status === lvlStatus.WIN) applauseSound.play()
+    if (status === lvlStatus.WIN) {
+      applauseSound.play()
+      document.getElementsByClassName('level')[level_map.length - 1].classList.remove('blocked')
+    }
 
     document.getElementById("endLevelStat").classList.remove('hide')
     let tab = document.getElementById("tableStat")
