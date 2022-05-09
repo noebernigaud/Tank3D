@@ -12,7 +12,7 @@ class Bonus extends ObjectPos {
         super(isSpecial ? ObjectEnum.SpecialBonus : ObjectEnum.Bonus, -width / 2 + posX, Bonus.diameter / 2, -height / 2 + posY, 0, 0, 1);
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 50000, restitution: 0.5 });
         this.createCollider()
-        this.bonusEffect = createBonusEffect(this.shape)
+        this.bonusEffect = createBonusEffect(this.shape, isSpecial)
         this.isSpecial = isSpecial;
     }
 

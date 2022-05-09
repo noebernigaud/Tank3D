@@ -196,7 +196,7 @@ function createTurboEffect(emitter, delay, isRight){
     
 
     // Create a particle system
-    var particleSystem = new BABYLON.ParticleSystem("turboParticles", 500, scene);
+    var particleSystem = new BABYLON.ParticleSystem("turboParticles", 400, scene);
 
     //Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/boost.png", scene);
@@ -223,7 +223,7 @@ function createTurboEffect(emitter, delay, isRight){
     particleSystem.maxLifeTime = 0.6;
 
     // Emission rate
-    particleSystem.emitRate = 400;
+    particleSystem.emitRate = 300;
 
     // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
@@ -248,6 +248,8 @@ function createTurboEffect(emitter, delay, isRight){
     particleSystem.targetStopDuration = 15;
 
     particleSystem.emitter = box
+    
+    particleSystem.isLocal = true;
 
     setTimeout(()=>{
         box.dispose()
@@ -349,8 +351,8 @@ function stopSmoke(particleSystem) {
 //     });
 // }
 
-function createBonusEffect(emitter) {
-    const particleSystem = new BABYLON.ParticleSystem("particles", 100);
+function createBonusEffect(emitter, isSpecialBonus) {
+    const particleSystem = new BABYLON.ParticleSystem("particles", 50);
 
     //Texture of each particle
     particleSystem.particleTexture = new BABYLON.Texture("textures/shine.png");
@@ -360,17 +362,20 @@ function createBonusEffect(emitter) {
 
     // Size
     particleSystem.minSize = 0.1;
-    particleSystem.maxSize = 0.3;
+    particleSystem.maxSize = 0.4;
+
+    particleSystem.minLifeTime = 2
+    particleSystem.maxLifeTime = 3
 
     // Position where the particles are emiited from
     particleSystem.emitter = emitter;
-    particleSystem.minEmitBox = new BABYLON.Vector3(-0.40, -0.4, -0.4)
-    particleSystem.maxEmitBox = new BABYLON.Vector3(0.40, -0.5, 0.4)
-
+    particleSystem.minEmitBox = isSpecialBonus ? new BABYLON.Vector3(-0.8, -0.4, -0.4) : new BABYLON.Vector3(-0.40, -0.4, -0.4)
+    particleSystem.maxEmitBox = isSpecialBonus ? new BABYLON.Vector3(0.8, -0.5, 0.4) : new BABYLON.Vector3(0.40, -0.5, 0.4)
     // Emit rate
-    particleSystem.emitRate = 50;
+    particleSystem.emitRate = 10;
 
-    particleSystem.minEmitPower = 3
+    particleSystem.minEmitPower = 1.8
+    particleSystem.maxEmitPower = 3.2
 
     // Rotation
     particleSystem.minInitialRotation = 0;
