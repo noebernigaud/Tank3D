@@ -6,9 +6,13 @@
 # <p align="center">Trailer<p>
 
 <p align="center">[![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)<p>
+  
+***
 
 # Goal 
   The goal of this project was the creation of a 3D Tank Game with [<b>Babylon.js</b>](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest. The theme was "you are unique".
+  
+***
 
 # The DNA games team
 
@@ -19,14 +23,18 @@ VENTURELLI Antoine | FISSORE Davide | BERNIGAUD Noé
 We are three students at the University of Côte d'Azur in M1 of Computer Science. Together, we form <b>DNA games</b>, a team formed to develop this project from start to end.
 
 We also want to mention <b>BUFFA Michel</b>, who encouraged us to participate to the contest and was our Babylonjs professor.
+  
+***
 
 # Code Development, Implemented Features
 
 ## Origin
 
-The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame)), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
+The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript on [<b>this Github repository</b>](https://github.com/noebernigaud/TankGame), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
 
 While the idea was taken from there, nothing from the code is common between both version as we had to remake everything and use the physic engine.
+  
+***
 
 ## Engine
 
@@ -37,6 +45,8 @@ Some noteworthy difficulties were the implementation of the tank's movements, in
 The engine's development is also the period where we learned to use our first tank models, created the bricks of the interaction between the player and the game, and made our first animations. the game was rather basic at this point and there was no gameplay, but it had all the fundations to build up the rest of our game.
 
 Here is a version of the game by the end of the engine's development LINK. There was still a couple of issues in the engine that we would eventually correct later, but we were quite happy about this first step and ready to start implementing the game's feature.
+  
+***
 
 ## World Development
 
@@ -45,10 +55,14 @@ What marked the transition between the engine's development and the features dev
 The opponent's AI was then deployed, as well as multiple level objectives. One of the main challenge for the AI was to keep it simple but also make it look natural and interesting, and we are very happy about the current result. Another big part was to make the AI stay in the island and not go into the water, and to make it target the player.
 
 Later on, we built levels with specific missions, such as timed levels, levels where you would have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
+  
+***
 
 ## Controls
 
 The next part was to improve the controls - up until now, the aim was donne with the keyboard's arrow keys. You can still do it now, but we wanted to also give to the player the possibility to aim with their mouse, as it would feel much more natural, dynamic, and precise. Requesting pointerlock to capture the mouse into the game was tricky as navigators have strict standards regarding this, and we also wanted to give back the mouse to the player in menus, but we were eventually successful in its implementation.
+  
+***
 
 ## Bonuses
 
@@ -57,6 +71,8 @@ At this point, the game was starting to look like a complete game. We had gamepl
 Special bonuses were a particularly fun stage of the development, as they made the game a lot more enjoyable. While they took a lot of time to implement, the whole engine we already built was making the whole process a lot easier, giving more space to our imagination and to testing.
 
 With 9 Special Bonuses, 5 Normal ones, and 9 Normal Bonuses associated to their special bonuses there are approximatively 5000 possible (3 parmis 9 x (7 normal bonus opportunities x 8 possible bonus)) different tanks that can be built through game. This makes the game a lot more interesting to re-play, and give sense to the theme "you are unique", as the tank you are playing by the end of the game is likely unique across all games played and all players.
+  
+***
 
 ## Performances
 
@@ -67,6 +83,8 @@ By default, a lot of computers use their integrated GPU by default for web appli
 Particules, models, and the Heightmap were all re-adjusted to make the game run at a good fps number and make things enjoyable again, even on slow integrated GPU.
 
 Note: if you think you web browser might be running on your computer's integrated GPU and want to make it run on your dedicated one (if you have one), check out [<b>this tutorial (Windows)</b>](https://www.amd.com/en/support/kb/faq/gpu-110). While the game should run fine even on low-end integrated GPUs, using the dedicated GPU will help make sure you don't experience any fps drop aven in the most ressource-intensive situations.
+  
+***
 
 # Audio source 
 
