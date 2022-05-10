@@ -42,7 +42,7 @@ While the idea was taken from there, nothing from the code is common between bot
   
 ***
 
-## Engine - January 28th to March 17th
+## Engine
   
 <img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
 
