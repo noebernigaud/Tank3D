@@ -18,7 +18,7 @@
 
 VENTURELLI Antoine | FISSORE Davide | BERNIGAUD Noé 
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://zupimages.net/up/22/19/39hp.png" alt="Venturelli Antoine" width="300"/> | <img src="https://zupimages.net/up/22/19/di99.png" alt="Architecture Dossiers" width="300"/> | <img src="https://zupimages.net/up/22/19/dak6.png" alt="BERNIGAUD Noé" width="300"/>
+<img src="https://zupimages.net/up/22/19/39hp.png" alt="Venturelli Antoine" width="200"/> | <img src="https://zupimages.net/up/22/19/di99.png" alt="Architecture Dossiers" width="200"/> | <img src="https://zupimages.net/up/22/19/dak6.png" alt="BERNIGAUD Noé" width="200"/>
 
 We are three students at the University of Côte d'Azur in M1 of Computer Science. Together, we form <b>DNA games</b>, a team formed to develop this project from start to end.
 
@@ -30,7 +30,7 @@ We also want to mention <b>BUFFA Michel</b>, who encouraged us to participate to
 
 ## Origin
 
-<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
+[<img align="left" src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" width="200"/>](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
   
 The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript on [<b>this Github repository</b>](https://github.com/noebernigaud/TankGame), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
 
@@ -44,7 +44,7 @@ While the idea was taken from there, nothing from the code is common between bot
 
 ## Engine
   
-<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
+[<img align="left" src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" width="200"/>](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 At first, we started by building the engine of the engine, which would later rule all the game's interactions and mechanics.This was the most difficult part of the development, as problems that would seem quite simple could take a lot of time to solve. Moreover, we were beginners in Babylonjs, and bending the physic engine to our needs wasn't always the easy.
 
@@ -74,7 +74,7 @@ The next part was to improve the controls - up until now, the aim was donne with
 
 ## Bonuses
   
-<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
+[<img align="left" src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" width="200"/>](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 
 At this point, the game was starting to look like a complete game. We had gameplay with different levels and ennemies, a good-looking map, a rudimentary menu, and the tank felt pleasant to control. However, it was still lacking some fun gameplay and discovery factor. It was time to implement the bonus feature, which would make our game into a roguelike, very fitting of the theme "You are unique".
 
