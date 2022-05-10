@@ -13,9 +13,13 @@ This project has been realized by
 
 We are three students at the University of Côte d'Azur in M2 of Coumputer Science
 
-# Code History and Development
+# Code Development, Implemented Features
+
+- <b>Origin</b>
 
 The code has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame)). With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
+
+- <b>Engine</b>
 
 At first, we started by building the engine of the engine, which would later rule all the game's interactions and mechanics.This was the most difficult part of the development, as problems that would seem quite simple could take a lot of time to solve. Moreover, we were beginners in Babylonjs, and bending the physic engine to our needs wasn't always the easy.
 
@@ -25,17 +29,35 @@ The engine's devlopment is also the period where we learned to use models, creat
 
 Here is a version of the game by the end of the engine's development LINK. There was still a couple of issues in the engine that we would eventually correct later, but we were quite happy about this first step and ready to start implementing the game's feature.
 
+- <b>World Development</b>
+
 What marked the transition between the engine's development and the features development was the introduction of the heightmap. This was a game-changer both for graphics and gameplay. After that, we developped menus, different levels, added new models, and changed our empty world into a beautiful island. We also introduced the sounds and music, and builded a function to make sound's volumes dynamic depending on the distance of the emitter relative to the player.
 
 The opponent's AI was then deployed, as well as multiple level objectives. One of the main challenge for the AI was to keep it simple but also make it look natural and interesting, and we are very happy about the current result. Another big part was to make the AI stay in the island and not go into the water, and to make it target the player.
 
+Later on, we built levels with specific missions, such as timed levels, levels where you woul have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
+
+- <b>Controls</b>
+
 The next part was to improve the controls - up until now, the aim was donne with the keyboard's arrow keys. You can still do it now, but we wanted to also give to the player the possibility to aim with their mouse, as it would feel much more natural, dynamic, and precise. Requesting pointerlock to capture the mouse into the game was tricky as navigators have strict standards regarding this, and we also wanted to give back the mouse to the player in menus, but we were eventually successful in its implementation.
+
+- <b>Bonuses</b>
 
 At this point, the game was starting to look like a complete game. We had gameplay with different levels and ennemies, a good-looking map, a rudimentary menu, and the tank felt pleasant to control. However, it was still lacking some fun gameplay and discovery factor. It was time to implement the bonus feature, which would make our game into a roguelike, very fitting of the theme "You are unique".
 
 Special bonuses were a particularly fun stage of the development, as they made the game a lot more enjoyable. While they took a lot of time to implement, the whole engine we already built was making the whole process a lot easier, giving more space to our imagination and to testing.
 
-With 8 Special Bonuses and X normal ones, there are exactly XXX possibilites of building your tank. This makes the game a lot more interesting to re-play, and give sense to the theme "you are unique", as the tank you are playing by the end of the game is likely unique across all games and all players.
+With 9 Special Bonuses, 5 Normal ones, and 9 Normal Bonuses associated to their special bonuses there are approximatively 5000 possible (3 parmis 9 x (7 normal bonus opportunities x 8 possible bonus)) different tanks that can be built through game. This makes the game a lot more interesting to re-play, and give sense to the theme "you are unique", as the tank you are playing by the end of the game is likely unique across all games played and all players.
+
+- <b>Performances</b>
+
+One major concern for the game was performance issue. Quickly after introducing the Heightmap and complex models, we began to experiment large fps drops, to the point where the game was not enjoyable anymore. The game wasn't very CPU-intensive as we wrote our code while being able of its complexity, but it was the rendering that was difficult for computers.
+
+By default, most computers use their integrated GPU by default for web application, which isn't built for 3D-rendering. It is impossible from the code to force the computer to use its dedicated GPU, which is much more powerful, as it has to be done in the computer's system parameters. Therefore, we had to take the performance issue at heart, so the game could run even on integrated GPUs.
+
+Particules, models, and the Heightmap were all re-adjusted to make the game run at a good fps number and make things enjoyable again, even on slow integrated GPU.
+
+Note: if you think you web browser might be running on your computer's integrated GPU and want to make it run on your dedicated one (if you have one), check out this tutorial (Windows) LINK. While the game should run fine even on low-end integrated GPUs, using the dedicated GPU will help make sure you don't experience any fps drop aven in the most ressource-intensive situations.
 
 # Audio source 
 
