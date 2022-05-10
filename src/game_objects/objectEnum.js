@@ -36,6 +36,12 @@ class ObjectEnum {
   static DesertRock = new ObjectEnum("desert_rock", "desert_rock", 0.5, 0.8, 0.8, 0.8)
   static Tumbleweed = new ObjectEnum("tumbleweed", "tumbleweed", 1, 0.4, 0.4, 0.4)
   static DesertHouse = new ObjectEnum("desert_house", "desert_house", 0.5, 2, 2, 2)
+  
+  //Egyptian Relics
+  static CatRelic = new ObjectEnum("egyptian_cat", "egyptian_cat", 0.5, 0.8, 1, 0.8)
+  static JackalRelic = new ObjectEnum("egyptian_jackal", "egyptian_jackal", 0.5, 0.8, 1, 0.8)
+  static MoonRelic = new ObjectEnum("egyptian_moon", "egyptian_moon", 0.75, 0.8, 1, 0.8)
+
 
   //Snowy Biome items
   static SnowyTree = new ObjectEnum("snowy_tree", "snowy_tree", 0.025, 0.8, 1, 0.8)
@@ -79,6 +85,7 @@ class ObjectEnum {
         x.material.transparencyMode = 1;
       } else if (model == "ww2_house") {
         x.material.specularColor = new BABYLON.Color3(0, 0, 0)
+      } else if (model == "egyptian_cat" || model == "egyptian_jackal" || model == "egyptian_moon"){
         x.material.emissiveColor = new BABYLON.Color3(0.5, 0.5, 0.5)
       }
       //x.forceSharedVertices();
@@ -120,7 +127,8 @@ class ObjectEnum {
       this.Barrel, this.Battery, this.Player, this.Wall, this.WallD, this.Bonus, this.SpecialBonus,
       this.Rock, this.PalmTree1, this.PalmTree2,
       this.PalmTree3, this.EarthyHouse, this.Cactus1, this.Cactus2, this.DesertRock,
-      this.Tumbleweed, this.DesertHouse, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyHut
+      this.Tumbleweed, this.DesertHouse, this.SnowyTree, this.SnowyFir, this.SnowyRock, this.SnowyHut,
+      this.CatRelic, this.JackalRelic, this.MoonRelic
     ]
     this.remainingLoad = list_obj.length + 1 // + 1 for earthy ground
     this.globalLen = this.remainingLoad;

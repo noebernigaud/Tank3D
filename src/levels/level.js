@@ -11,7 +11,8 @@ class Level {
     "Bullet Fired": 0,
     "Total Distance": 0,
     "Wall destroyed": 0,
-    "Battery destroyed": 0
+    "Battery destroyed": 0,
+    "Relic Obtained": 0
   }
 
   static normalMessage = [
@@ -99,6 +100,10 @@ class Level {
     this.stats["Bonus Obtained"]++;
   }
 
+  addRelicObtained() {
+    this.stats["Relic Obtained"]++;
+  }
+
   addWallDestroyed() {
     this.stats["Wall destroyed"]++;
   }
@@ -121,6 +126,10 @@ class Level {
 
   getBonusObtained() {
     return this.stats["Bonus Obtained"];
+  }
+
+  getRelicObtained() {
+    return this.stats["Relic Obtained"];
   }
 
   getWallDestroyed() {

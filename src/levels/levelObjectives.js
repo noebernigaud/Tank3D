@@ -6,7 +6,7 @@ let levelObjectives = {
       return charsAI.length == 0
     },
     tip: [
-      ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
+      ["Tank killed", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
     ],
     msg: [
     ]
@@ -19,7 +19,7 @@ let levelObjectives = {
       return charsAI.length == 0
     },
     tip: [
-      ["Tank to kill", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
+      ["Tank killed", () => charsDestroyed.length, () => charsDestroyed.length + charsAI.length]
     ],
     msg: [
       "This is a temporized level : <br> kill enemies before everything explose !"
@@ -31,7 +31,7 @@ let levelObjectives = {
     goToNextLevel: (e) => {
       return bonuses.length == 0
     },
-    tip: [["Bonus to collect", () => current_level_dico.getBonusObtained(),
+    tip: [["Bonus collected", () => current_level_dico.getBonusObtained(),
       () => bonuses.length + current_level_dico.getBonusObtained()]],
     msg: [
       "You must collect bonuses to<br> go to next level !"
@@ -45,9 +45,9 @@ let levelObjectives = {
       return (bonuses.length == 0 && charsAI.length == 0)
     },
     tip: [
-      ["Bonus to collect", () => current_level_dico.getBonusObtained(),
+      ["Bonus collected", () => current_level_dico.getBonusObtained(),
         () => bonuses.length + current_level_dico.getBonusObtained()],
-      ["Tank to kill", () => charsDestroyed.length,
+      ["Tank killed", () => charsDestroyed.length,
         () => charsDestroyed.length + charsAI.length]
     ],
     msg: [
@@ -62,7 +62,7 @@ let levelObjectives = {
       ));
     },
     tip: [
-      ["Barrels to burn", () => `${barrels.filter(b => b.isBurning).length}`, () => barrels.length]
+      ["Barrels burned", () => `${barrels.filter(b => b.isBurning).length}`, () => barrels.length]
     ],
     msg: [
       "Destroy barrels, to pass the level !"
@@ -76,14 +76,31 @@ let levelObjectives = {
       return (batteries.every(b => b.isDestroyed) && (charsAI.length == 0));
     },
     tip: [
-      ["Battery to disable", () => current_level_dico.getBatteryDestroyed(),
+      ["Battery disabled", () => current_level_dico.getBatteryDestroyed(),
         () => batteries.length + current_level_dico.getBatteryDestroyed()],
-      ["Tank to kill", () => charsDestroyed.length,
+      ["Tank killed", () => charsDestroyed.length,
         () => charsDestroyed.length + charsAI.length]
     ],
     msg: [
       "Push batteries into water to disable tanks shield !",
       "Remember : batteries are not baloons<br>But sometimes..."
+    ]
+  },getAllRelicsAndTanks: {
+    description:
+      `Complete the next stage by collecting all of the Egyptian relics
+      and destroying every enemy tank`,
+    goToNextLevel: (e) => {
+      return (relics.length == 0 && charsAI.length == 0)
+    },
+    tip: [
+      ["Relic collected", () => current_level_dico.getRelicObtained(),
+        () => relics.length + current_level_dico.getRelicObtained()],
+      ["Tank killed", () => charsDestroyed.length,
+        () => charsDestroyed.length + charsAI.length]
+    ],
+    msg: [
+      "Collect all Egyptian relics before the enemy takes them.",
+      "Enemy troops will still appear until you secure these relics!"
     ]
   },
 }

@@ -53,6 +53,9 @@ class ObjectPos extends BABYLON.Mesh {
       case ObjectEnum.SnowyFir.name: { shape = ObjectEnum.SnowyFir.container.clone(); break; }
       case ObjectEnum.SnowyRock.name: { shape = ObjectEnum.SnowyRock.container.clone(); break; }
       case ObjectEnum.SnowyHut.name: { shape = ObjectEnum.SnowyHut.container.clone(); break; }
+      case ObjectEnum.CatRelic.name: { shape = ObjectEnum.CatRelic.container.clone(); break; }
+      case ObjectEnum.JackalRelic.name: { shape = ObjectEnum.JackalRelic.container.clone(); break; }
+      case ObjectEnum.MoonRelic.name: { shape = ObjectEnum.MoonRelic.container.clone(); break; }
       default: meshBabylon = false;
     }
 
@@ -146,14 +149,14 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Battery.name: { remove(batteries, this); break; }
         case ObjectEnum.Bullet.name: { remove(bullets, this); break; }
         // case ObjectEnum.GrenadeObj.name: { remove(grenades, this); break; }
-        case ObjectEnum.Bonus.name: { remove(bonuses, this); break; }
+        case ObjectEnum.Bonus.name:
         case ObjectEnum.SpecialBonus.name: { remove(bonuses, this); break; }
         case ObjectEnum.Wall.name:
         case ObjectEnum.WallD.name: { remove(walls, this); break; }
-        case ObjectEnum.MiniTank.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.SnowTank.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.EarthTank.name: { this.moveSound.pause(); break; }
-        case ObjectEnum.SandTank.name: { this.moveSound.pause(); break; }
+        case ObjectEnum.MiniTank.name:
+        case ObjectEnum.SnowTank.name:
+        case ObjectEnum.EarthTank.name:
+        case ObjectEnum.SandTank.name:
         case ObjectEnum.BossTank.name: { this.moveSound.pause(); break; }
         case ObjectEnum.Player.name: { this.moveSound.pause(); remove(impostorCharList, this.physicsImpostor); remove(chars, this); break; }
         case ObjectEnum.Rock.name:
@@ -170,6 +173,9 @@ class ObjectPos extends BABYLON.Mesh {
         case ObjectEnum.Tumbleweed.name:
         case ObjectEnum.SnowyTree.name:
         case ObjectEnum.SnowyFir.name: { remove(trees, this); break }
+        case ObjectEnum.CatRelic.name:
+        case ObjectEnum.JackalRelic.name:
+        case ObjectEnum.MoonRelic.name: { remove(relics, this); break }
         default:
           throw `Unknown object type (ObjectPos.dispose)`;
       }

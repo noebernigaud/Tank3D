@@ -335,13 +335,14 @@ function remove_all_objects(withPlayer = false, progress = true) {
     rocks = [];
     houses = [];
     delimiters = [];
+    relics = [];
 
     scene.blockfreeActiveMeshesAndRenderingGroups = false;
 }
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...houses, ...delimiters, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...houses, ...delimiters, ...relics, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION
