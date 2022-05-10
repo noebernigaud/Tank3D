@@ -60,7 +60,7 @@ Here is a version of the game by the end of the engine's development LINK. There
 
 What marked the transition between the engine's development and the features development was the introduction of the heightmap. This was a game-changer both for graphics and gameplay. After that, we developped menus, different levels, added new models, and changed our empty world into a beautiful island. We also introduced the sounds and music, and build a function to make sound's volumes dynamic depending on the distance of the emitter relative to the player.
 
-The opponent's AI was then deployed, as well as multiple level objectives. One of the main challenge for the AI was to keep it simple but also make it look natural and interesting, and we are very happy about the current result. Another big part was to make the AI stay in the island and not go into the water, and to make it target the player.
+The opponents' AI was then deployed, as well as multiple level objectives. One of the main challenge for the AI was to keep it simple but also make it look natural and interesting, and we are very happy about the current result. Another big part was to make the AI stay in the island and not go into the water, and to make it target the player, which were respectively solved with invisible delimiters and invisible rays.
 
 Later on, we built levels with specific missions, such as timed levels, levels where you would have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
   
