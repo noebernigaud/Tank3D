@@ -30,13 +30,21 @@ We also want to mention <b>BUFFA Michel</b>, who encouraged us to participate to
 
 ## Origin
 
+<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
+  
 The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript on [<b>this Github repository</b>](https://github.com/noebernigaud/TankGame), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
 
 While the idea was taken from there, nothing from the code is common between both version as we had to remake everything and use the physic engine.
+
+<br clear="right"/>
+  
+<br>
   
 ***
 
-## Engine
+## Engine - January 28th to March 17th
+  
+<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
 
 At first, we started by building the engine of the engine, which would later rule all the game's interactions and mechanics.This was the most difficult part of the development, as problems that would seem quite simple could take a lot of time to solve. Moreover, we were beginners in Babylonjs, and bending the physic engine to our needs wasn't always the easy.
 
@@ -65,6 +73,8 @@ The next part was to improve the controls - up until now, the aim was donne with
 ***
 
 ## Bonuses
+  
+<img align="left" src="https://zupimages.net/up/22/19/dak6.png" width="200"/>
 
 At this point, the game was starting to look like a complete game. We had gameplay with different levels and ennemies, a good-looking map, a rudimentary menu, and the tank felt pleasant to control. However, it was still lacking some fun gameplay and discovery factor. It was time to implement the bonus feature, which would make our game into a roguelike, very fitting of the theme "You are unique".
 
