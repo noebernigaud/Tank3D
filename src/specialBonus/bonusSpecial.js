@@ -29,7 +29,7 @@ const SPECIAL_BONUS_ID = {
   SPEED_TURBO: {
     name: "Speed Turbo",
     description: "Go faster for 3 seconds",
-    image: "images/speed.png",
+    image: "images/turbo.png",
     keyListener: '4',
     bonusLevelUp: function () { char1.specialBonuses.forEach(b => { if (b.name == "Speed Turbo") b.delay /= 2 }) },
   },
