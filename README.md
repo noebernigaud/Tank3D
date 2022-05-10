@@ -1,5 +1,5 @@
 ***
-# <p  align="center">Tank 3D Game with Babylonjs<p>
+# <p  align="center">[Tank 3D Game with Babylonjs](https://noebernigaud.github.io/Tank3D/src/)<p>
 ## <p  align="center">by DNA games<p>
 ***
 
@@ -8,7 +8,7 @@
 <p align="center">[![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)<p>
 
 # Goal 
-The goal of this project was the creation of a 3D Tank Game with [Babylon.js](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest. The theme was "you are unique".
+  The goal of this project was the creation of a 3D Tank Game with [<b>Babylon.js</b>](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest. The theme was "you are unique".
 
 # The DNA games team
 
@@ -66,7 +66,7 @@ By default, a lot of computers use their integrated GPU by default for web appli
 
 Particules, models, and the Heightmap were all re-adjusted to make the game run at a good fps number and make things enjoyable again, even on slow integrated GPU.
 
-Note: if you think you web browser might be running on your computer's integrated GPU and want to make it run on your dedicated one (if you have one), check out this tutorial (Windows) LINK. While the game should run fine even on low-end integrated GPUs, using the dedicated GPU will help make sure you don't experience any fps drop aven in the most ressource-intensive situations.
+Note: if you think you web browser might be running on your computer's integrated GPU and want to make it run on your dedicated one (if you have one), check out [<b>this tutorial (Windows)</b>](https://www.amd.com/en/support/kb/faq/gpu-110). While the game should run fine even on low-end integrated GPUs, using the dedicated GPU will help make sure you don't experience any fps drop aven in the most ressource-intensive situations.
 
 # Audio source 
 
