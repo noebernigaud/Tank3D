@@ -8,15 +8,15 @@
 <p align="center">[![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)<p>
 
 # Goal 
-Creation of a 3D Tank Game with [Babylon.js](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest.
+The goal of this project was the creation of a 3D Tank Game with [Babylon.js](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest. The theme was "you are unique".
 
-# Authors
+# The DNA games team
 
 VENTURELLI Antoine | FISSORE Davide | BERNIGAUD Noé 
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://zupimages.net/up/22/19/39hp.png" alt="Venturelli Antoine" width="300"/> | <img src="https://zupimages.net/up/22/19/di99.png" alt="Architecture Dossiers" width="300"/> | <img src="https://zupimages.net/up/22/19/dak6.png" alt="BERNIGAUD Noé" width="300"/>
 
-We are three students at the University of Côte d'Azur in M1 of Computer Science.
+We are three students at the University of Côte d'Azur in M1 of Computer Science. Together, we form DNA games, a team formed to develop this project from start to end. We also want to mention BUFFA Michel, who encouraged us to participate to the contest and was our Babylonjs professor.
 
 # Code Development, Implemented Features
 
