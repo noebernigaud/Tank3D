@@ -1,27 +1,27 @@
-# Tank3D
-3D Tank Game Project for the Game on Web 2022 contest
+***
+# Tank 3D Game with Babylonjs
+***
 
 # Goal 
-Creation of a 3D Tank Game with [Babylon.js](https://www.babylonjs.com/) in Spring of 2022.
+Creation of a 3D Tank Game with [Babylon.js](https://www.babylonjs.com/) in Spring of 2022 for the Game on Web 2022 contest.
 
 # Authors
 
-This project has been realized by
-- Bernigaud Noé
-- Fissore Davide
-- Venturelli Antoine
+VENTURELLI Antoine | FISSORE Davide | BERNIGAUD Noé 
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="https://zupimages.net/up/22/19/39hp.png" alt="Venturelli Antoine" width="300"/> | <img src="https://zupimages.net/up/22/19/di99.png" alt="Architecture Dossiers" width="300"/> | <img src="https://zupimages.net/up/22/19/dak6.png" alt="BERNIGAUD Noé" width="300"/>
 
-We are three students at the University of Côte d'Azur in M2 of Coumputer Science
+We are three students at the University of Côte d'Azur in M1 of Computer Science.
 
 # Code Development, Implemented Features
 
-- <b>Origin</b>
+## Origin
 
 The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame)), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
 
 While the idea was taken from there, nothing from the code is common between both version as we had to remake everything and use the physic engine.
 
-- <b>Engine</b>
+## Engine
 
 At first, we started by building the engine of the engine, which would later rule all the game's interactions and mechanics.This was the most difficult part of the development, as problems that would seem quite simple could take a lot of time to solve. Moreover, we were beginners in Babylonjs, and bending the physic engine to our needs wasn't always the easy.
 
@@ -31,7 +31,7 @@ The engine's development is also the period where we learned to use our first ta
 
 Here is a version of the game by the end of the engine's development LINK. There was still a couple of issues in the engine that we would eventually correct later, but we were quite happy about this first step and ready to start implementing the game's feature.
 
-- <b>World Development</b>
+## World Development
 
 What marked the transition between the engine's development and the features development was the introduction of the heightmap. This was a game-changer both for graphics and gameplay. After that, we developped menus, different levels, added new models, and changed our empty world into a beautiful island. We also introduced the sounds and music, and build a function to make sound's volumes dynamic depending on the distance of the emitter relative to the player.
 
@@ -39,11 +39,11 @@ The opponent's AI was then deployed, as well as multiple level objectives. One o
 
 Later on, we built levels with specific missions, such as timed levels, levels where you would have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
 
-- <b>Controls</b>
+## Controls
 
 The next part was to improve the controls - up until now, the aim was donne with the keyboard's arrow keys. You can still do it now, but we wanted to also give to the player the possibility to aim with their mouse, as it would feel much more natural, dynamic, and precise. Requesting pointerlock to capture the mouse into the game was tricky as navigators have strict standards regarding this, and we also wanted to give back the mouse to the player in menus, but we were eventually successful in its implementation.
 
-- <b>Bonuses</b>
+## Bonuses
 
 At this point, the game was starting to look like a complete game. We had gameplay with different levels and ennemies, a good-looking map, a rudimentary menu, and the tank felt pleasant to control. However, it was still lacking some fun gameplay and discovery factor. It was time to implement the bonus feature, which would make our game into a roguelike, very fitting of the theme "You are unique".
 
@@ -51,7 +51,7 @@ Special bonuses were a particularly fun stage of the development, as they made t
 
 With 9 Special Bonuses, 5 Normal ones, and 9 Normal Bonuses associated to their special bonuses there are approximatively 5000 possible (3 parmis 9 x (7 normal bonus opportunities x 8 possible bonus)) different tanks that can be built through game. This makes the game a lot more interesting to re-play, and give sense to the theme "you are unique", as the tank you are playing by the end of the game is likely unique across all games played and all players.
 
-- <b>Performances</b>
+## Performances
 
 One major concern for the game was performance issue. Quickly after introducing the Heightmap and complex models, we began to experiment large fps drops, to the point where the game was not enjoyable anymore. The game wasn't very CPU-intensive as we wrote our code while being able of its complexity, but it was the rendering that was difficult for computers.
 
