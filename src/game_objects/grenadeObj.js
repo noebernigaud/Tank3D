@@ -42,6 +42,14 @@ class GrenadeObj extends ObjectPos {
                 }
             })
 
+            walls.forEach(c => {
+                if (Math.sqrt((c.shape.position.x - g.position.x) ** 2 +
+                    (c.shape.position.y - g.position.y) ** 2 +
+                    (c.shape.position.z - g.position.z) ** 2) < 4) {
+                    c.destroy()
+                }
+            })
+
             if (g) {
                 g.dispose()
             }
