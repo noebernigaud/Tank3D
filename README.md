@@ -16,7 +16,9 @@ VENTURELLI Antoine | FISSORE Davide | BERNIGAUD Noé
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="https://zupimages.net/up/22/19/39hp.png" alt="Venturelli Antoine" width="300"/> | <img src="https://zupimages.net/up/22/19/di99.png" alt="Architecture Dossiers" width="300"/> | <img src="https://zupimages.net/up/22/19/dak6.png" alt="BERNIGAUD Noé" width="300"/>
 
-We are three students at the University of Côte d'Azur in M1 of Computer Science. Together, we form DNA games, a team formed to develop this project from start to end. We also want to mention BUFFA Michel, who encouraged us to participate to the contest and was our Babylonjs professor.
+We are three students at the University of Côte d'Azur in M1 of Computer Science. Together, we form DNA games, a team formed to develop this project from start to end.
+
+We also want to mention <b>BUFFA Michel</b>, who encouraged us to participate to the contest and was our Babylonjs professor.
 
 # Code Development, Implemented Features
 
