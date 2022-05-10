@@ -17,25 +17,27 @@ We are three students at the University of Côte d'Azur in M2 of Coumputer Scien
 
 - <b>Origin</b>
 
-The code has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame)). With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
+The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript (the original game can be found at this [link](https://github.com/noebernigaud/TankGame)), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
+
+While the idea was taken from there, nothing from the code is common between both version as we had to remake everything and use the physic engine.
 
 - <b>Engine</b>
 
 At first, we started by building the engine of the engine, which would later rule all the game's interactions and mechanics.This was the most difficult part of the development, as problems that would seem quite simple could take a lot of time to solve. Moreover, we were beginners in Babylonjs, and bending the physic engine to our needs wasn't always the easy.
 
-Some noteworthy difficulties were the implementation of the tank's movements, in particular setting up the friction, to create natural movement. Antoher difficult part was the physic of the bullets. We wanted them to go slow so the players could avoid them, making the game a lot more fun, but we also wanted to use the physic engine to make the bullets bounce.
+Some noteworthy difficulties were the implementation of the tank's movements, in particular setting up the friction, to create natural movement. Another difficult part was the physic of the bullets. We wanted them to be rather slow so the players could avoid them, making the game a lot more fun, but we also wanted to use the physic engine to make the bullets bounce.
 
-The engine's devlopment is also the period where we learned to use models, created the bricks of the interaction between the player and the game, and made our first animations. the game was rather basic at this point ad there was no gameplay, but it had all the fundations to build up the rest of our game.
+The engine's development is also the period where we learned to use our first tank models, created the bricks of the interaction between the player and the game, and made our first animations. the game was rather basic at this point and there was no gameplay, but it had all the fundations to build up the rest of our game.
 
 Here is a version of the game by the end of the engine's development LINK. There was still a couple of issues in the engine that we would eventually correct later, but we were quite happy about this first step and ready to start implementing the game's feature.
 
 - <b>World Development</b>
 
-What marked the transition between the engine's development and the features development was the introduction of the heightmap. This was a game-changer both for graphics and gameplay. After that, we developped menus, different levels, added new models, and changed our empty world into a beautiful island. We also introduced the sounds and music, and builded a function to make sound's volumes dynamic depending on the distance of the emitter relative to the player.
+What marked the transition between the engine's development and the features development was the introduction of the heightmap. This was a game-changer both for graphics and gameplay. After that, we developped menus, different levels, added new models, and changed our empty world into a beautiful island. We also introduced the sounds and music, and build a function to make sound's volumes dynamic depending on the distance of the emitter relative to the player.
 
 The opponent's AI was then deployed, as well as multiple level objectives. One of the main challenge for the AI was to keep it simple but also make it look natural and interesting, and we are very happy about the current result. Another big part was to make the AI stay in the island and not go into the water, and to make it target the player.
 
-Later on, we built levels with specific missions, such as timed levels, levels where you woul have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
+Later on, we built levels with specific missions, such as timed levels, levels where you would have to find some items, or ennemies that could only be damaged once the player fullfil a condition. This variety in the gameplay and objectives allows the game to be less repetitive, and keep players on their toes.
 
 - <b>Controls</b>
 
@@ -53,7 +55,7 @@ With 9 Special Bonuses, 5 Normal ones, and 9 Normal Bonuses associated to their 
 
 One major concern for the game was performance issue. Quickly after introducing the Heightmap and complex models, we began to experiment large fps drops, to the point where the game was not enjoyable anymore. The game wasn't very CPU-intensive as we wrote our code while being able of its complexity, but it was the rendering that was difficult for computers.
 
-By default, most computers use their integrated GPU by default for web application, which isn't built for 3D-rendering. It is impossible from the code to force the computer to use its dedicated GPU, which is much more powerful, as it has to be done in the computer's system parameters. Therefore, we had to take the performance issue at heart, so the game could run even on integrated GPUs.
+By default, a lot of computers use their integrated GPU by default for web application, which isn't built for 3D-rendering. It is impossible to force from the code the computer to use its dedicated GPU, which is much more powerful, as it has to be done in the computer's system parameters. Therefore, we had to take the performance issue at heart, so the game could run even on integrated GPUs.
 
 Particules, models, and the Heightmap were all re-adjusted to make the game run at a good fps number and make things enjoyable again, even on slow integrated GPU.
 
