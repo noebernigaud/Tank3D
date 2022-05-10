@@ -3,9 +3,9 @@
 ## <p  align="center">by DNA games<p>
 ***
 
-# <p align="center">Trailer<p>
-
-<p align="center">[![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)<p>
+| <b>Trailer</b> | <b>Gameplay</b> |
+|:-------------------------:|:-------------------------:|
+|[![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE) | [![TRAILER](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)|
   
 ***
 
@@ -32,7 +32,7 @@ We also want to mention <b>BUFFA Michel</b>, who encouraged us to participate to
 
 [<img align="left" src="https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" width="200"/>](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
   
-The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript on [<b>this Github repository</b>](https://github.com/noebernigaud/TankGame), itself inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
+The concept has been based on Noé Bernigaud's project of a Tank game in 2D written in Javascript on [<b>this Github repository</b>](https://github.com/noebernigaud/TankGame), which itself was inspired from the game WiiPlay - Tanks. With Babylonjs, we saw an opportunity to push the game much further and expand the game's feature to make a more complete game out of it.
 
 While the idea was taken from there, nothing from the code is common between both version as we had to remake everything and use the physic engine.
 
