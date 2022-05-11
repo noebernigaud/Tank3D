@@ -27,6 +27,7 @@ class Relic extends ObjectPos {
     }
 
     dispose(forceDispose = false) {
+        collectRelicParticle(this.shape.position) 
         super.dispose(forceDispose)
     }
 

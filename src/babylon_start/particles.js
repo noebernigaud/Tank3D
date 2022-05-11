@@ -593,7 +593,7 @@ function teleportationParticle(emitter) {
 
 function teleportationEffect(emitter, position) {
     // Create & launch a particule system
-    var particleSystem = new BABYLON.ParticleSystem("spawnParticles", 400, scene);    // 3600 particles to have a continue effect when computing circle positions
+    var particleSystem = new BABYLON.ParticleSystem("spawnParticles", 400, scene);
     particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
     particleSystem.color1 = new BABYLON.Color4(0.7, 0.8, 1.0, 1.0);
     particleSystem.color2 = new BABYLON.Color4(0.2, 0.5, 1.0, 1.0);
@@ -1045,4 +1045,55 @@ function electricExplosion(emitter) {
     particleSystem.disposeOnStop = true;
 
     particleSystem.start()
+}
+
+function collectRelicParticle(emitter) {
+    collectRelicEffect(emitter, 0)
+    collectRelicEffect(emitter, 180)
+}
+
+function collectRelicEffect(emitter, position) {
+    // Create & launch the particule system
+    var particleSystem = new BABYLON.ParticleSystem("spawnParticles", 600, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+    particleSystem.color1 = new BABYLON.Color4(0, 0.4, 0, 0.6);
+    particleSystem.color2 = new BABYLON.Color4(0, 0.5, 0, 0.4);
+    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0);
+
+    particleSystem.emitter = emitter;
+    particleSystem.minSize = 0.15;
+    particleSystem.maxSize = 0.35;
+    particleSystem.emitRate = 450;
+
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    particleSystem.gravity = new BABYLON.Vector3(0, 8, 0);
+    particleSystem.updateSpeed = 0.03;
+
+
+    particleSystem.minLifeTime = 0.4;
+    particleSystem.maxLifeTime = 0.6;
+
+    particleSystem.cpt = position;
+    
+    particleSystem.preWarmCycles = 10;
+    particleSystem.preWarmStepOffset = 1;
+
+    // Custom function to get the circle effect
+    particleSystem.startPositionFunction = function (worldMatrix, positionToUpdate) {
+        var randX = Math.sin(this.cpt * Math.PI / 180)/3;
+        var randY = this.minEmitBox.y;
+        var randZ = Math.cos(this.cpt * Math.PI / 180)/3;
+
+        BABYLON.Vector3.TransformCoordinatesFromFloatsToRef(randX, randY, randZ, worldMatrix, positionToUpdate);
+        particleSystem.minSize = Math.max(0.0001, particleSystem.minSize -= 0.00015);
+        particleSystem.maxSize = Math.max(0.0006, particleSystem.maxSize -= 0.0009);
+
+        this.cpt++;
+    }
+
+    particleSystem.targetStopDuration = 2;
+    particleSystem.disposeOnStop = true;
+
+    // Start
+    particleSystem.start();
 }
