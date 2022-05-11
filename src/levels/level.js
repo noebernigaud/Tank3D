@@ -76,8 +76,8 @@ class Level {
   }
 
   goNextLevel(status = lvlStatus.NXT_LVL) {
-    if (true || !scene.menu.inOtherMenu()) {
-      // scene.menu.inNextLevel = true;
+    if (!scene.menu.inOtherMenu()) {
+      scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
       exitPointerLoc()
       this.writeStat(status)

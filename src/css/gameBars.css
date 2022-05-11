@@ -189,7 +189,7 @@
 
 .divb {
   display: flex;
-  padding: 3%;
+  padding: 30px;
   flex-direction: column;
   border-radius: 2%;
   position: absolute;
