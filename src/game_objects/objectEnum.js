@@ -38,9 +38,9 @@ class ObjectEnum {
   static DesertHouse = new ObjectEnum("desert_house", "desert_house", 0.5, 2, 2, 2)
   
   //Egyptian Relics
-  static CatRelic = new ObjectEnum("egyptian_cat", "egyptian_cat", 0.5, 0.8, 1, 0.8)
-  static JackalRelic = new ObjectEnum("egyptian_jackal", "egyptian_jackal", 0.5, 0.8, 1, 0.8)
-  static MoonRelic = new ObjectEnum("egyptian_moon", "egyptian_moon", 0.75, 0.8, 1, 0.8)
+  static CatRelic = new ObjectEnum("egyptian_cat", "egyptian_cat", 0.5, 0.6, 0.8, 0.6)
+  static JackalRelic = new ObjectEnum("egyptian_jackal", "egyptian_jackal", 0.5, 0.7, 1, 0.7)
+  static MoonRelic = new ObjectEnum("egyptian_moon", "egyptian_moon", 0.75, 0.6, 0.8, 0.6)
 
 
   //Snowy Biome items
