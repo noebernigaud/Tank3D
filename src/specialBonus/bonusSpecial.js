@@ -170,7 +170,8 @@ class SpecialBonus {
       this.bg.style.removeProperty("--c")
     }
     this.loader.style.setProperty('--p', `${timeDisplay}`);
-    this.loader.innerHTML = timeDisplay > 0 ? (timeDisplay + "%") : ""
+    let txt = Math.round((this.isActive ? this.timeStartedCooled : this.timeCooled) / 1000)
+    this.loader.innerHTML = txt == 0 ? "" : txt
   }
 
   /** Remove bonus graphically but not from thank */

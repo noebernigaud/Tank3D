@@ -157,7 +157,10 @@ class Menu {
                 if (chronoLvl) chronoLvl.correctTime()
                 runRenderLoop()
                 this.inBonus = false;
-                this.clearBonus()
+                document.getElementsByClassName('bonusPanel')[0].classList.remove('hide');
+
+                // this.clearBonus()
+                this.bonusPanel.innerHTML = "";
                 pointerLock()
             }
             this.bonusPanel.appendChild(b);
@@ -199,8 +202,9 @@ class Menu {
         document.getElementsByClassName('bonusPanel')[0].classList.add('hide');
         let sb = document.getElementsByClassName('specialBonus')[0];
         sb.parentElement.children[0].classList.add('hide');
-        document.getElementById("restart").classList.add('hide')
-        document.getElementById("continue").classList.add('hide')
+        sb.classList.add('hide');
+        document.getElementById("restart").classList.add('hide');
+        document.getElementById("continue").classList.add('hide');
         Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.remove('hide'))
         scene.menu = new Menu()
         level = 0;
@@ -212,7 +216,6 @@ class Menu {
 
     clearBonus() {
         BonusEnum.bonusEnumList.forEach(e => e.resetCounter());
-        this.bonusPanel.innerHTML = "";
     }
 
     soundHover() {
@@ -225,14 +228,22 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
+        /** @type{HTMLDivElement[]} */
+        let elts = Array.from(document.getElementsByClassName("gameBarsClass"))
+        let remove = () => {
+            elts.forEach(e => {
+                if (!(e.classList.contains('bonusPanel') && (char1.specialBonuses.length == 0 && selected_bonuses.length == 0))) {
+                    e.classList.remove('hide')
+                }
+            })
+        }
+        if (!toShow) elts.forEach(e => e.classList.add('hide'))
         else {
             if (this.inBonusus) {
                 this.bonusPanel.classList.remove('hide')
-                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
             }
             else if (this.inNextLevel) this.nextLevelPanel.classList.remove('hide')
-            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
+            else remove()
         }
     }
 
