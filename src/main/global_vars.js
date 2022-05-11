@@ -97,6 +97,8 @@ var impostorCharList = [];
 
 var chronoLvl = null;
 
+var optimizer;
+
 
 var hl;
 var hlBalls;

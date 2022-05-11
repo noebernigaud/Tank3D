@@ -1,6 +1,7 @@
 const BIOMES = ["Earth", "Sand", "Snow"]
 var biome;
 const level_map = [
+
     new Level({
         level:
             [
@@ -431,6 +432,11 @@ function draw_level_map(progress) {
             d.use()
         })
     }
+
+    // engine.setHardwareScalingLevel(1)
+    // optimizer.stop()
+    // optimizer.reset()
+    // optimizer.start()
 }
 
 function setCurrentLevelDico() {

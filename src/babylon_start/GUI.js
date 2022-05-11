@@ -255,7 +255,7 @@ class Menu {
 
 
     displayScenario(display) {
-        console.log("To display", display);
+        // console.log("To display", display);
         let elt = document.getElementsByClassName('full-screen')[0]
         if (display) {
             this.toggleNotMenuElement(true)

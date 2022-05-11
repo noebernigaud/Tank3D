@@ -152,7 +152,7 @@ class Scene {
           }
 
           if (c.shape.position.y <= w.position.y + 0.4) {
-            console.log(c + ' is losing health in water');
+            // console.log(c + ' is losing health in water');
             c.healthLoss(c.maxHealth / 180)
           }
 
@@ -245,6 +245,35 @@ class Scene {
 
       }
     }
+
+    // var options = new BABYLON.SceneOptimizerOptions(60, 1000);
+    // var options = BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(70);
+
+    // var result = new BABYLON.SceneOptimizerOptions(50, 500);
+
+    // var priority = 0;
+
+    // result.optimizations.push(new BABYLON.PostProcessesOptimization(priority++));
+
+    // result.optimizations.push(new BABYLON.TextureOptimization(priority++, 256));
+
+    // result.optimizations.push(new BABYLON.LensFlaresOptimization(priority++));
+
+    // // result.optimizations.push(new BABYLON.ShadowsOptimization(priority++));
+
+    // optimizer = new BABYLON.SceneOptimizer(scene, result);
+
+    // optimizer.onNewOptimizationAppliedObservable.add(opt => console.log(opt.getDescription()));
+    // optimizer.onSuccessObservable.add(opt => console.log(`Frame rate stabilized at ${opt.targetFrameRate}`));
+    // optimizer.onFailureObservable.add((opt, es) => console.log(`Failed to apply optimization`))
+
+
+    // optimizer.start();
+
+    // optimizer.start()
+    // setInterval(() => optimizer.reset(), 1000)
+
+    this.engine.setHardwareScalingLevel(1.1);
 
     return scene;
   }
