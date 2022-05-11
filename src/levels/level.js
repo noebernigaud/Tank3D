@@ -24,7 +24,7 @@ class Level {
   constructor(levelInfo) {
     this.level = levelInfo.level;
 
-    console.log(level);
+    // console.log(level);
     this.minHeightMap = levelInfo.minHeightMap;
     this.lvlObjective = levelInfo.lvlObjective;
     this.biome = levelInfo.biome;
@@ -38,7 +38,6 @@ class Level {
 
   updateTipMessage() {
     if (Date.now() - this.dateLastMessageTip > 5000) {
-      console.log(Date.now(), this.dateLastMessageTip, Date.now() - this.dateLastMessageTip);
       this.dateLastMessageTip = Date.now()
       let tips = document.getElementById('tips')
       tips.style.opacity = "0"
@@ -223,7 +222,7 @@ class Level {
         this.loadNextLevel(false);
         pointerLock();
         Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.remove('hide'))
-        console.log("health bar and minimap should be there");
+        // console.log("health bar and minimap should be there");
       }
       else if (status != lvlStatus.NXT_LVL) {
         scene.menu.restart()
@@ -247,14 +246,14 @@ class Level {
     let notTakenBonus = []
     if (!progress) {
       notTakenBonus = bonuses.slice()
-      console.log("notTakenBonuses = ", notTakenBonus);
+      // console.log("notTakenBonuses = ", notTakenBonus);
     }
     remove_all_objects(false, progress)
     startgame(level, progress);
     if (!progress) {
-      console.log("setting notTakenBonuses");
+      // console.log("setting notTakenBonuses");
       notTakenBonus.forEach(b => bonuses.push(new Bonus(b.position.x + width / 2, b.position.z + height / 2, b.isSpecial)))
-      console.log("bonuses = ", bonuses);
+      // console.log("bonuses = ", bonuses);
     }
     // engine.stopRenderLoop()
   }
