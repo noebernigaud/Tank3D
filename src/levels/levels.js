@@ -437,9 +437,7 @@ function setCurrentLevelDico() {
     current_level_dico = level_map[level]
     chronoLvl = (current_level_dico.lvlObjective == levelObjectives.chronoMission ? new Chrono(50000) : null)
 
-    if (level == 0) {
-        level_map.forEach(e => e.resetValues())
-    }
+    level_map.forEach(e => e.resetValues())
     if (current_level_dico) {
         current_level = current_level_dico.level;
         cell_x_number = current_level_dico.level.length;

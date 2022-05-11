@@ -37,7 +37,7 @@ class Level {
   }
 
   updateTipMessage() {
-    if (Date.now() - this.dateLastMessageTip > 3000) {
+    if (Date.now() - this.dateLastMessageTip > 5000) {
       console.log(Date.now(), this.dateLastMessageTip, Date.now() - this.dateLastMessageTip);
       this.dateLastMessageTip = Date.now()
       let tips = document.getElementById('tips')

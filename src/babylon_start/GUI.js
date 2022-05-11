@@ -234,6 +234,8 @@ class Menu {
             elts.forEach(e => {
                 if (!(e.classList.contains('bonusPanel') && (char1.specialBonuses.length == 0 && selected_bonuses.length == 0))) {
                     e.classList.remove('hide')
+                } else {
+                    e.classList.add('hide')
                 }
             })
         }
