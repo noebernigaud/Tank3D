@@ -19,6 +19,12 @@ var char1;
 var charsAI;
 
 /** @type {[Char]} */
+var charsAllies;
+
+/** @type {[Char]} */
+var charsAllAllies;
+
+/** @type {[Char]} */
 var chars;
 
 /** @type {[Char]} */
@@ -30,6 +36,9 @@ var bonuses;
 /** @type {[Bonus]} */
 var selected_bonuses;
 
+/** @type {[BonusEnum]} */
+var addedObtainableBonus;
+
 /** @type {[Wall]} */
 var walls;
 
@@ -39,11 +48,17 @@ var delimiters;
 /** @type {[Barrel]} */
 var barrels;
 
+/** @type {[Battery]} */
+var batteries;
+
 /** @type {[Mine]} */
 var mines;
 
 /** @type {[Bullet]} */
 var bullets = []
+
+/** @type {[Grenades]} */
+var grenades = []
 
 /** @type {[Tree]} */
 var trees = []
@@ -51,7 +66,19 @@ var trees = []
 /** @type {[Rock]} */
 var rocks = []
 
+/** @type {[House]} */
+var houses = []
+
+/** @type {[RRelic]} */
+var relics = []
+
 var gravity = -9.81
+
+var isAdventure = true
+
+let pointerLockChange = null;
+
+let globalProgress = true
 
 level = 0;
 
@@ -64,13 +91,19 @@ var playing;
 
 /** @type {number} */
 var level;
-var speedMultUti = 1;
 var reloadMultUti = 1;
 
 var impostorCharList = [];
 
+var chronoLvl = null;
+
 
 var hl;
+var hlBalls;
+var hlControlled;
+var hlMinigun;
+var hlAllies;
+var hlBattery;
 //Texture meshes
 var wallTexture = new Image();
 wallTexture.src = './images/wallTexture.jpg';
@@ -93,7 +126,8 @@ menuHoverSound.volume = 0.2
 let bonusTookSound = new Audio('audio/hammer.mp3');
 bonusTookSound.volume = 0.2
 
-let musicBackground = new Audio('audio/warmusic.mp3')
+// let musicBackground = new Audio('audio/warmusic.mp3')
+let musicBackground = new Audio('audio/warmusic-cut.mp3')
 musicBackground.volume = 0.1
 musicBackground.loop = true
 musicBackground.pause()

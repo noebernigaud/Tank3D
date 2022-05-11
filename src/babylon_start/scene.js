@@ -18,6 +18,7 @@ var light1;
 var groundSand;
 var listGrounds = [];
 var listSkyboxes = [];
+var w;
 
 class Scene {
 
@@ -25,9 +26,11 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    this.engine = new BABYLON.Engine(canvas, true);
+    this.engine = new BABYLON.Engine(canvas, true, null, true);
 
     engine = this.engine;
+    engine.enableOfflineSupport = false;
+    engine.doNotHandleContextLost = true;
 
     // window.addEventListener("resize", () => {
     //   engine.resize()
@@ -44,7 +47,6 @@ class Scene {
     this.setParticles()
     // this.setGizmo()
     this.setCamera()
-    setCurrentLevelDico()
 
     ObjectEnum.initiate_all_models()
   }
@@ -54,46 +56,105 @@ class Scene {
    */
   createScene() {
     scene = new BABYLON.Scene(this.engine);
+
     // engine.runRenderLoop(() => scene.render())
+    // var options = new BABYLON.SceneOptimizerOptions(50, 2000);
+    // BABYLON.SceneOptimizerOptions.LowDegradationAllowed()
+    // BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed()
+    // var optimizer = new BABYLON.SceneOptimizer(scene, options, false);
+    // optimizer.start();
+
+
+    //to improve performance
+    scene.skipPointerMovePicking = true;
+    scene.autoClear = false; // Color buffer
+    scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
     hl = new BABYLON.HighlightLayer("hl", scene);
 
     hl.blurHorizontalSize = hl.blurVerticalSize = 0.3;
 
+    hlBalls = new BABYLON.HighlightLayer("hlBalls", scene);
+
+    hlBalls.blurHorizontalSize = hlBalls.blurVerticalSize = 0.001;
+
+    hlControlled = new BABYLON.HighlightLayer("hlControlled", scene);
+
+    hlControlled.blurHorizontalSize = hlControlled.blurVerticalSize = 0.3;
+
+    hlMinigun = new BABYLON.HighlightLayer("hlMinigun", scene);
+
+    hlMinigun.blurHorizontalSize = hlMinigun.blurVerticalSize = 0.3;
+
+    hlAllies = new BABYLON.HighlightLayer("hlAllies", scene);
+
+    hlAllies.blurHorizontalSize = hlAllies.blurVerticalSize = 0.3;
+
+    hlBattery = new BABYLON.HighlightLayer("hlBattery", scene);
+
+    hlBattery.blurHorizontalSize = hlBattery.blurVerticalSize = 0.3;
+
+    let date = Date.now()
+
     scene.beforeRender = () => {
 
+
+      // if (Date.now() - date > 100) {
+      //   this.scene.renderTargetsEnabled = true
+      //   date = Date.now()
+      // } else if (this.scene.renderTargetsEnabled) {
+      //   this.scene.renderTargetsEnabled = false
+      // }
+
+      document.getElementById("fps").innerHTML = engine.getFps().toFixed() + " fps" + (chronoLvl ? (" <br> Chrono : " + Math.ceil(chronoLvl.timeCooled / 1000) + "." + (chronoLvl.timeCooled % 1000 + "").padEnd(3, "0")) : "")
+
       if (!this.scene.menu.isShown) {
+        current_level_dico.updateTipMessage()
         scene.minimap.redraw()
         // char1.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity * 30000, 0), char1.shape.position)
         bullets.forEach(bullet => bullet.physicsImpostor.applyForce(new BABYLON.Vector3(0, -gravity, 0), bullet.position))
 
+        // chars.forEach(c => {
+        //   let p = getCannonPoint(c)
+        //   c.test.position = p
+        // })
+
         getAllMeshList(true).forEach(obj => {
           let outOfBound = (obj) => {
             return obj.position && (
-              obj.position.x <= width / 2 - 100 ||
-              obj.position.x >= width / 2 + 100 ||
-              obj.position.z <= height / 2 - 100 ||
-              obj.position.z >= height / 2 + 100 ||
+              obj.position.x <= width / 2 - 60 ||
+              obj.position.x >= width / 2 + 40 ||
+              obj.position.z <= height / 2 - 60 ||
+              obj.position.z >= height / 2 + 40 ||
               obj.position.y < current_level_dico.minHeightMap - 0.8 ||
               obj.position.y >= +8)
           }
           if (outOfBound(obj.shape) || outOfBound(obj)) {
-            obj.dispose(true, true)
+            if (obj == char1) {
+              if (char1.life > 0) char1.healthLoss(char1.maxHealth + 1)
+            }
+            else obj.dispose(true, true)
           }
         })
         let velocity = char1.physicsImpostor.getLinearVelocity()
         let speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2) * 10
-        document.getElementById("speed").innerHTML = Math.round(speed) + " km/h"
+        document.getElementById("speed").innerHTML = Math.round(speed)
 
         // let posChar1 = char1.shape.position
 
         chars.forEach(c => {
 
-          //le char prend des degats si il est retourné
-          if (c.isRenversed()) c.healthLoss(c.maxHealth / 120)
+          if (c.life <= 0) return
 
-          //update barre de vie
-          c.healtBar.updatePartition()
+          //le char prend des degats si il est retourné
+          if (c.isRenversed(1.4, true)) {
+            c.healthLoss(c.maxHealth / 120)
+          }
+
+          if (c.shape.position.y <= w.position.y + 0.4) {
+            console.log(c + ' is losing health in water');
+            c.healthLoss(c.maxHealth / 180)
+          }
 
           //réglage son de déplacement selon la vitesse
           let velocityc = c.physicsImpostor.getLinearVelocity()
@@ -113,38 +174,78 @@ class Scene {
 
         charsAI.forEach(c => {
           if (c.life <= 0) {
-            console.log("should destroy char ", c);
             let index = chars.indexOf(c)
             if (index !== -1) chars.splice(index, 1)
             index = charsAI.indexOf(c)
             if (index !== -1) charsAI.splice(index, 1)
             c.destroyTank()
-            // c.dispose(true)
           }
         })
-        if (char1.life <= 0 || level == level_map.length) {
-          this.scene.menu.restart()
-          // level = 0;
-          // remove_all_objects(true)
-          // startgame(level);
-          // this.scene.menu.createButton()
-        } else if (current_level_dico.canGoNextLevel()) {
-          if (level + 1 == level_map.length) {
-            this.scene.menu.restart()
-          } else if (!this.scene.menu.inOtherMenu()) {
-            current_level_dico.goNextLevel()
-            if (sceneInterval) {
-              clearInterval(sceneInterval)
+
+        charsAllies.forEach(c => {
+          if (c.life <= 0) {
+            let index = chars.indexOf(c)
+            if (index !== -1) chars.splice(index, 1)
+            index = charsAllies.indexOf(c)
+            if (index !== -1) charsAllies.splice(index, 1)
+            c.destroyTank()
+          }
+        })
+
+
+        batteries.forEach(b => {
+          if (b.shape.position.y <= w.position.y + 0.2) {
+            b.isDestroyed = true
+            b.destroy()
+            current_level_dico.addBatteryDestroyed()
+            if (batteries.length <= 0) {
+              charsAI.forEach(c => c.specialBonuses.forEach(e => e.isPermanent = false))
             }
-            // startTimer()
+          }
+        })
+
+
+        char1.applyBullForce();
+
+        //si le char joueur meurt
+        if (char1.life <= 0 && !this.scene.menu.isInMenu() || level == level_map.length) {
+          if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
+          else {
+            chars.forEach(c => c.stabilizeTank())
+            playSoundWithDistanceEffect(char1.charExploseSound, char1, false)
+            current_level_dico.goNextLevel(lvlStatus.DIE)
+          }
+          //si le char joueur fini le niveau
+        } else if (current_level_dico.canGoNextLevel()) {
+          if (pointerLockChange != null && Date.now() - pointerLockChange < 1400) console.log('entering pointer lock too fast!')
+          else {
+            chars.forEach(c => c.stabilizeTank())
+            char1.bullForce = null
+            //si il vient de finir le dernier niveau
+            if (level + 1 == level_map.length) {
+              current_level_dico.goNextLevel(lvlStatus.WIN)
+            } else if (!this.scene.menu.inOtherMenu()) {
+              current_level_dico.goNextLevel()
+              if (sceneInterval) {
+                clearInterval(sceneInterval)
+              }
+            }
           }
         }
 
-        else char1.setCrossHairPosition()
+        else {
+          charsAllAllies = charsAllies.slice()
+          charsAllAllies.push(char1)
+          charsAI.forEach(c => c.strategy.applyStrategy());
+          charsAllies.forEach(c => c.strategy.applyStrategy());
+          chars.forEach(c => SpecialBonus.updateAllThankBonuses(c));
+          if (chronoLvl) chronoLvl.update()
+        }// TODO : Here update all bonuses list !!!
         //charsAI.forEach(c => MoveAI.move(c));
-        charsAI.forEach(c => c.strategy.applyStrategy())
+
       }
     }
+
     return scene;
   }
 
@@ -181,9 +282,9 @@ class Scene {
       return {
         width: width * 1.5 + cell_size,
         height: height * 1.5 + cell_size,
-        subdivisions: 80,
+        subdivisions: 28,
         minHeight: current_level_dico.minHeightMap,
-        maxHeight: 0,
+        maxHeight: 1.5,
 
         onReady: () => onGroundCreated(this, name, index),
       }
@@ -214,7 +315,7 @@ class Scene {
         scene
       );
       groundMaterial.diffuseTexture = new BABYLON.Texture(`textures/${name}_ground_diffuse.png`, scene, null, true, null, function () {
-        ObjectEnum.loadingDone();
+        if (name == "earthy") ObjectEnum.loadingDone();
       });
       listGrounds[index].material = groundMaterial;
 
@@ -238,6 +339,7 @@ class Scene {
       myScene.setWater(listGrounds[index]);
 
       listGrounds[index].position.y = -10
+      listGrounds[index].forceSharedVertices();
 
     }
     ground = listGrounds[1]
@@ -262,15 +364,12 @@ class Scene {
       { mass: 0 },
       scene
     );
-    var collidedChar
-    groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
-      if (collidedChar = chars.find(e => e.shape == e2.object)) {
-        console.log("char collided ", collidedChar)
-        console.log("health ", collidedChar.health)
-        collidedChar.healthLoss(1)
-        console.log("health ", collidedChar.health)
-      }
-    }
+    // var collidedChar
+    // groundSand.physicsImpostor.onCollideEvent = (e1, e2) => {
+    //   if (collidedChar = chars.find(e => e.shape == e2.object)) {
+    //     collidedChar.healthLoss(1)
+    //   }
+    // }
 
 
     //water ground
@@ -284,6 +383,7 @@ class Scene {
     water.bumpHeight = 0.1;
     water.waveLength = 0.1;
     water.colorBlendFactor = 0;
+    w = waterMesh
 
     listSkyboxes.forEach(s => water.addToRenderList(s))
     water.addToRenderList(groundSand);
@@ -299,7 +399,7 @@ class Scene {
     light1.diffuse = new BABYLON.Color3(0.8, 0.8, 0.8);
     light1.intensity = 3
 
-    shadowGenerator = new BABYLON.ShadowGenerator(256, light1)
+    shadowGenerator = new BABYLON.ShadowGenerator(128, light1)
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.blurScale = 1;
     shadowGenerator.setDarkness(0.1);

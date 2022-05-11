@@ -7,9 +7,9 @@ class Healthbar {
   /**
    * @param {Char} tank 
    */
-  constructor(tank) {
+  constructor(tank, width) {
     this.tank = tank;
-    this.barWidth = 1;
+    this.barWidth = width;
     this.destroyed = false
     if (this.isPlayer()) {
       this.barWidth = document.getElementById("healthBar").width
@@ -45,6 +45,7 @@ class Healthbar {
       healthBarTextMaterial.emissiveColor = new BABYLON.Color3(186.0 / 255, 33.0 / 255, 0 / 255);
       this.healthBarTextMaterial = healthBarTextMaterial;
     }
+    this.updatePartition()
   }
 
   updatePartition() {
@@ -54,7 +55,7 @@ class Healthbar {
     let partitionWidth = (this.barWidth - (this.partitions + 1) * paddingBar) / this.partitions;
 
     if (this.isPlayer()) {
-      document.getElementById("healthPlayer").innerHTML = barsToDisplay + "/" + this.partitions
+      document.getElementById("healthPlayer").innerHTML = Math.ceil(barsToDisplay) + "/" + this.partitions
       this.clearCanvas()
     } else {
       this.healthBarContainer.getChildMeshes().forEach(e => e.dispose())

@@ -4,6 +4,7 @@ var button_list;
 class Menu {
     constructor() {
         this.canBeSwitched = true;
+        this.toDisplayScenario = false;
         this.isFirst = true;
         this.isShown = true;
         this.inBonus = false;
@@ -47,17 +48,37 @@ class Menu {
     show(toShow) {
         if (toShow) {
             exitPointerLoc()
-            document.getElementById("main").style.display = "block"
+            if (char1) char1.stabilizeTank()
+            document.getElementById("main").classList.remove('hide')
         }
         else {
             this.hideMenu()
+            if (this.toDisplayScenario) {
+                let text = [
+                    `The firm "<they>X</they>" has discovered how to time travel and wants to
+                        use it to <they> modify</they > past events to gain money. <br>
+                <we>You</we> have succeeded in stealing one of their
+                        gear and <we> You</we> are the only one able to avoid terrible things to happen.`,
+                    `You have passed the first stage of <we>your</we> journey and now <we>you</we> enter the Egyptian world, <br> where <we>you</we> have to collect the Egyptian tablets away from <they>enemies</they>.<br> <we>Good Luck!</we>`,
+                    `This is the last stage of you mission, there are still some <they>bad tank</they> went in Antarctica wanting to melt the ice and build chemical weapon with old virus blocked in the Ice. <br>
+                    <we>Win</we> this last mission and the world will be a <we>better place</we>.`
+                ]
+                document.getElementById('text-mission').innerHTML = text[["Earth", "Sand", "Snow"].indexOf(current_level_dico.biome)];
+                if (char1) char1.stabilizeTank()
+                this.isShown = true;
+                this.displayScenario(true)
+                this.toDisplayScenario = false;
+                return
+            }
         }
         if (this.inBonus)
-            if (toShow) this.bonusPanel.style.display = "none"
-            else this.bonusPanel.style.removeProperty("display")
+            if (toShow) this.bonusPanel.classList.add('hide')
+            else this.bonusPanel.classList.remove('hide')
         this.toggleNotMenuElement(!toShow)
         if (!this.isFirst) {
-            document.getElementById("restart").style.removeProperty("display")
+            document.getElementById("restart").classList.remove('hide')
+            document.getElementById("continue").classList.remove('hide')
+            Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.add('hide'))
             if (toShow) {
                 chars.forEach(c => c.moveSound.pause())
                 engine.stopRenderLoop()
@@ -66,7 +87,9 @@ class Menu {
                 if (!this.inBonus) {
                     musicBackground.play()
                     chars.forEach(c => c.moveSound.play())
-                    engine.runRenderLoop(() => scene.render())
+                    chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
+                    if (chronoLvl) chronoLvl.correctTime()
+                    runRenderLoop()
                 }
             }
             this.isShown = toShow
@@ -79,10 +102,10 @@ class Menu {
     prettyBG() {
         // let src = document.getElementById("src")
         // src.style.backgroundImage = `url('images/tank_bg.jpg')`;
-        canvas.style.display = "none";
-        // src.style.display = "block"
+        canvas.classList.add('hide');
+        // src.classList.remove('hide')
         // src.style.filter = "blur(0)"
-        document.getElementById("main").style.display = "initial"
+        document.getElementById("main").classList.remove('hide')
     }
 
     setBackground() {
@@ -94,9 +117,9 @@ class Menu {
     };
 
     hideMenu() {
-        canvas.style.display = "block";
-        document.getElementById("src").style.display = "none"
-        document.getElementById("main").style.display = "none"
+        canvas.classList.remove('hide');
+        document.getElementById("src").classList.add('hide')
+        document.getElementById("main").classList.add('hide')
     }
 
     /**
@@ -105,9 +128,9 @@ class Menu {
     bonusChoice(bonusListe) {
         exitPointerLoc()
         this.inBonus = true;
-        this.bonusPanel.style.removeProperty("display")
+        this.bonusPanel.classList.remove('hide')
         /**
-         * @param {BonusEnum} bEnum 
+         * @param {BonusEnum|SpecialBonus} bEnum 
          * @returns 
         */
         let createButton = (bEnum) => {
@@ -128,13 +151,16 @@ class Menu {
             b.onclick = () => {
                 bonusTookSound.currentTime = 0
                 bonusTookSound.play()
-                console.log("bonus was taken");
-                bEnum.effect()
-                selected_bonuses.push(bEnum.name);
-                this.bonusPanel.style.display = "none";
-                engine.runRenderLoop(() => scene.render())
+                bEnum.addToChar()
+                this.bonusPanel.classList.add('hide');
+                chars.forEach(e => e.specialBonuses.forEach(b => b.correctTime()))
+                if (chronoLvl) chronoLvl.correctTime()
+                runRenderLoop()
                 this.inBonus = false;
-                this.clearBonus()
+                document.getElementsByClassName('bonusPanel')[0].classList.remove('hide');
+
+                // this.clearBonus()
+                this.bonusPanel.innerHTML = "";
                 pointerLock()
             }
             this.bonusPanel.appendChild(b);
@@ -165,13 +191,21 @@ class Menu {
         //         selected_bonuses.push(bonus.name);
         //         panel.dispose();
         //         inMenu = false;
-        //         engine.runRenderLoop(() => scene.render())
         //     });
         // })
     }
 
     restart() {
-        document.getElementById("restart").style.display = "none"
+        musicBackground.pause()
+        globalProgress = true
+        engine.stopRenderLoop()
+        document.getElementsByClassName('bonusPanel')[0].classList.add('hide');
+        let sb = document.getElementsByClassName('specialBonus')[0];
+        sb.parentElement.children[0].classList.add('hide');
+        sb.classList.add('hide');
+        document.getElementById("restart").classList.add('hide');
+        document.getElementById("continue").classList.add('hide');
+        Array.from(document.getElementsByClassName('main')).forEach(e => e.classList.remove('hide'))
         scene.menu = new Menu()
         level = 0;
         char1.dispose(true)
@@ -181,7 +215,7 @@ class Menu {
     }
 
     clearBonus() {
-        this.bonusPanel.innerHTML = "";
+        BonusEnum.bonusEnumList.forEach(e => e.resetCounter());
     }
 
     soundHover() {
@@ -194,14 +228,24 @@ class Menu {
     }
 
     toggleNotMenuElement(toShow) {
-        if (!toShow) Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'none')
+        /** @type{HTMLDivElement[]} */
+        let elts = Array.from(document.getElementsByClassName("gameBarsClass"))
+        let remove = () => {
+            elts.forEach(e => {
+                if (!(e.classList.contains('bonusPanel') && (char1.specialBonuses.length == 0 && selected_bonuses.length == 0))) {
+                    e.classList.remove('hide')
+                } else {
+                    e.classList.add('hide')
+                }
+            })
+        }
+        if (!toShow) elts.forEach(e => e.classList.add('hide'))
         else {
             if (this.inBonusus) {
-                this.bonusPanel.style.display = "initial"
-                Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+                this.bonusPanel.classList.remove('hide')
             }
-            else if (this.inNextLevel) this.nextLevelPanel.style.display = "initial"
-            else Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.style.display = 'initial')
+            else if (this.inNextLevel) this.nextLevelPanel.classList.remove('hide')
+            else remove()
         }
     }
 
@@ -209,4 +253,21 @@ class Menu {
         return this.isShown || this.inOtherMenu()
     }
 
+
+    displayScenario(display) {
+        console.log("To display", display);
+        let elt = document.getElementsByClassName('full-screen')[0]
+        if (display) {
+            this.toggleNotMenuElement(true)
+            elt.classList.remove('hide')
+            runRenderLoop()
+        }
+        else if (!elt.classList.contains('hide')) {
+            pointerLock()
+            this.show(false)
+            elt.classList.add('hide')
+            return true
+        }
+        return false;
+    }
 }

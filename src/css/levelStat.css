@@ -3,7 +3,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 5%;
+  /* padding: 5%; */
+  width: 240px;
 }
 
 #tableStat span {
@@ -31,6 +32,11 @@
 
 #tableStat tr:last-child td {
   animation: blinker 1s linear infinite;
+}
+
+#tableStat tr:last-child td:hover {
+  animation-play-state: paused;
+  cursor: pointer;
 }
 
 @keyframes blinker {

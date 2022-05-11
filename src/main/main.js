@@ -5,7 +5,10 @@ canTire = true;
 function keyListener(evt, isPressed) {
     // tirer
     if (evt.code === "Space") {
-        inputStates.mouseclick = isPressed;
+        if (isPressed && scene.menu.displayScenario(false)) {
+            console.log("HIRE");
+        }
+        else inputStates.mouseclick = isPressed;
     }
     // tourelle
     else if (evt.code === "KeyA") {
@@ -18,7 +21,6 @@ function keyListener(evt, isPressed) {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.foreward) char1.stabilizeTank(false)
         inputStates.foreward = isPressed;
-        // console.log("here");
     } else if (evt.code === "KeyS") {
         if (!isPressed) char1.stabilizeTank()
         else if (!inputStates.backward) char1.stabilizeTank(false)
@@ -66,6 +68,8 @@ function keyListener(evt, isPressed) {
         // setTimeout(() => {
         //     rayHelper.dispose(ray);
         // }, 200);
+    } else if (isPressed) {
+        char1.specialBonuses.forEach(sp => sp.applyListener(evt));
     }
     // else if (evt.code === "KeyP") {
     //     if (isPressed && scene.menu.canBeSwitched) {
@@ -84,14 +88,16 @@ function stabilizeIfNotMoving() {
 }
 
 function keyApplaier() {
+
+
     var speed_angle = 0.05;
 
-    if (typeof char1.shape === 'undefined') return;
+    if (typeof char1.shape === 'undefined' || scene.menu.isInMenu() || char1.health <= 0) return;
 
     // On regarde si on doit poser une mine
-    if (inputStates.SPACE) {
-        char1.addMine(Date.now());
-    }
+    // if (inputStates.SPACE) {
+    //     char1.addMine(Date.now());
+    // }
     // On regarde si on doit tirer
     if (inputStates.mouseclick) {
         char1.addBullet(Date.now());
@@ -106,13 +112,13 @@ function keyApplaier() {
     }
 
     // TOURNER LE TANK
-    if (inputStates.rot_minus && !inputStates.rot_plus) {
+    if (inputStates.rot_minus && !inputStates.rot_plus && !char1.bullForce) {
         char1.rotateTurretAxisY(-speed_angle, tankMeshes)
         // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(-speed_angle)
 
     }
-    if (inputStates.rot_plus && !inputStates.rot_minus) {
+    if (inputStates.rot_plus && !inputStates.rot_minus && !char1.bullForce) {
         char1.rotateTurretAxisY(speed_angle, tankMeshes)
         // camera.alpha = -char1.getTurretTank().rotationQuaternion.toEulerAngles().y - Math.PI / 2 - char1.shape.rotationQuaternion.toEulerAngles().y
         char1.rotateAxisY(speed_angle)
@@ -130,7 +136,6 @@ function keyApplaier() {
     // DEPLACEMENT
     if (inputStates.foreward) {
         char1.moveTankForeward();
-        // console.log("HERE");
         return;
     }
     if (inputStates.backward) {
@@ -205,16 +210,15 @@ function init() {
 
     //turret direction is responding to cursor movements
     window.addEventListener("mousemove", (evt) => {
+        if (scene.menu.isInMenu()) return
         if (evt.movementX > 0) char1.rotateTurretAxisY(Math.sqrt(evt.movementX) / 200)
         else if (evt.movementX < 0) char1.rotateTurretAxisY(- (Math.sqrt(Math.abs(evt.movementX)) / 200))
         if (evt.movementY > 0) char1.rotateTurretUpDown(false, Math.min(Math.sqrt(evt.movementY), 4))
         else if (evt.movementY < 0) char1.rotateTurretUpDown(true, Math.min(Math.sqrt(Math.abs(evt.movementY)), 4))
     });
 
-    // canvas.requestPointerLock() -> NE MARCHE PAS!
     canvas.onpointerdown = function () {
-        // console.log("mouse captured in canvas");
-        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked()) pointerLock();
+        if (!scene.menu.isShown && !scene.menu.inOtherMenu() && !isLocked() && !(pointerLockChange != null && Date.now() - pointerLockChange < 1400)) pointerLock();
         else if (isLocked() && engine.activeRenderLoops.length == 1) {
             if (sceneInterval) clearInterval(sceneInterval);
             sceneInterval = setInterval(() => {
@@ -224,15 +228,12 @@ function init() {
     }
 
     canvas.onmouseup = () => {
-        console.log("stopping");
         clearInterval(sceneInterval); continueShoot = true;
     }
 
 
     function lockChangeAlert() {
-        console.log("entering in lockChange");
         if (!isLocked()) {
-            console.log('The pointer lock status is now unlocked');
             if (!scene.menu.inOtherMenu()) {
                 scene.menu.show(true)
             }
@@ -257,28 +258,28 @@ function stopgame() {
 
 //DEBUT D'UNE NOUVELLE PARTIE
 
-function startgame(level) {
+function startgame(level, progress = true) {
+
     playing = 1;
 
     barrels = new Array();
+    batteries = new Array();
     walls = new Array();
     delimiters = new Array();
     chars = new Array();
     charsAI = new Array();
+    charsAllies = new Array();
     charsDestroyed = new Array();
 
     //BULLETS AND MINES INIT
     bullets = new Array();
+    grenades = new Array();
     mines = new Array();
 
     bonuses = new Array();
 
     if (level < level_map.length) {
-        draw_level_map(level)
-    } else {
-        playing = 2;
-        pausebackgroundMusic();
-        applauseSound.play();
+        draw_level_map(progress)
     }
 
     // TOP, BOTTOM, RIGHT, LEFT WALLS - ALWAYS HERE NO MATTER THE LEVEL
@@ -313,27 +314,35 @@ function pausebackgroundMusic() {
     }
 }
 
-function remove_all_objects(withPlayer = false) {
+function remove_all_objects(withPlayer = false, progress = true) {
+    scene.blockfreeActiveMeshesAndRenderingGroups = true;
     let allElts = getAllMeshList(withPlayer)
-    if (level == 0) allElts.push(char1)
+    if (level == 0 && progress) allElts.push(char1)
 
     allElts.forEach(e => e.dispose(true))
     walls = [];
     barrels = [];
+    batteries = [];
     bullets = [];
+    grenades = [];
     mines = [];
     chars = [];
     charsAI = [];
+    charsAllies = [];
     charsDestroyed = [];
     bonuses = [];
     trees = [];
     rocks = [];
+    houses = [];
     delimiters = [];
+    relics = [];
+
+    scene.blockfreeActiveMeshesAndRenderingGroups = false;
 }
 
 
 function getAllMeshList(withPlayer = false) {
-    return [...walls, ...barrels, ...bullets, ...mines, ...bonuses, ...trees, ...rocks, ...delimiters, ...charsAI, ...charsDestroyed].concat(withPlayer ? [char1] : [])
+    return [...walls, ...barrels, ...batteries, ...bullets, ...grenades, ...mines, ...bonuses, ...trees, ...rocks, ...houses, ...delimiters, ...relics, ...charsAI, ...charsAllies, ...charsDestroyed].concat(withPlayer ? [char1] : [])
 }
 
 //ANIMATION
@@ -378,10 +387,6 @@ function anime() {
 var inputVitMult = document.getElementById("mutlvit")
 if (inputVitMult !== null) inputVitMult.oninput = function () { changeVitesseChar(inputVitMult.value) };
 
-function changeVitesseChar(value) {
-    speedMultUti = value;
-}
-
 var inputReloadMult = document.getElementById("multReload")
 if (inputReloadMult !== null) inputReloadMult.oninput = function () { changeCadenceTir(inputReloadMult.value) };
 
@@ -392,5 +397,14 @@ function changeCadenceTir(value) {
 let isLocked = () => document.pointerLockElement === canvas ||
     document.mozPointerLockElement === canvas
 
-let exitPointerLoc = () => document.exitPointerLock();
-let pointerLock = () => canvas.requestPointerLock()
+let exitPointerLoc = () => {
+    pointerLockChange = Date.now()
+    document.exitPointerLock();
+}
+let pointerLock = () => {
+    pointerLockChange = Date.now()
+    canvas.requestPointerLock();
+}
+let runRenderLoop = () => {
+    if (engine.activeRenderLoops.length == 0) engine.runRenderLoop(() => scene.render())
+}

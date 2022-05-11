@@ -9,22 +9,13 @@ body {
   background-image: url("../images/tank_bg.jpg");
 }
 
+body * {
+  font-family: "Roboto", sans-serif;
+}
+
 #src {
   display: none;
   filter: blur(5px);
-}
-
-
-.divb {
-  display: flex;
-  padding: 3%;
-  flex-direction: column;
-  border-radius: 2%;
-  background-color: #070707d7;
-  position: absolute;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .button {
@@ -33,7 +24,6 @@ body {
   height: 50px;
   border: solid rgba(255, 255, 255, 0.3) 1px;
   background: transparent;
-  cursor: pointer;
   transition: all 1s;
   display: flex;
   align-items: center;
@@ -46,13 +36,12 @@ body {
 
   width: 200px;
   color: white;
-  font-family: "Roboto", sans-serif;
   opacity: 0.7;
 }
 
-.button:hover {
+#main .button:hover {
   background: rgba(27, 228, 20, 0.226);
-
+  cursor: pointer;
 }
 
 .hideOnMenu {
@@ -94,4 +83,9 @@ body {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+#myCanvas {
+  height: 100vh;
+  width: 100vw;
 }

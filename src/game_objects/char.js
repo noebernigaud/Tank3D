@@ -3,6 +3,9 @@ class Char extends ObjectPos {
   static height = cell_size;
   static depth = cell_size;
 
+  /** @type{SpecialBonus[]} */
+  specialBonuses;
+
   /**
    * @param {number} x 
    * @param {number} y 
@@ -20,6 +23,9 @@ class Char extends ObjectPos {
       case "mini": type = ObjectEnum.MiniTank
         break;
 
+      case "boss": type = ObjectEnum.BossTank
+        break;
+
       case "normal": type = (biome == "Earth" ? ObjectEnum.EarthTank : (biome == "Sand" ? ObjectEnum.SandTank : ObjectEnum.SnowTank))
         break;
       default: break;
@@ -28,7 +34,6 @@ class Char extends ObjectPos {
 
     this.getTurretTank().rotate(BABYLON.Axis.X, -0.01)
     this.getTurretTank().rotate(BABYLON.Axis.X, +0.01)
-    this.crossHair = undefined
 
     if (type.name == ObjectEnum.Player.name) {
       let camera1 = new BABYLON.FollowCamera("tankCamera", this.getTurretTank().position, scene, this.getTurretTank());
@@ -36,11 +41,9 @@ class Char extends ObjectPos {
       camera1.heightOffset = 2//0;
       camera1.rotationOffset = 180 //-98;
       camera1.cameraAcceleration = .1;
-      camera1.maxCameraSpeed = 10;
+      camera1.maxCameraSpeed = 4;
       camera.dispose();
       camera = camera1;
-      loadCrossHair(this, scene)
-      // engine.runRenderLoop(() => scene.render())
     } else {
       this.shape.rotate(BABYLON.Axis.Y, 3.14 / 2);
       MoveAI.rotateTurret(this)
@@ -50,10 +53,12 @@ class Char extends ObjectPos {
     this.delayMinBetweenMines = 5000;
     this.bulletSpeed = bulletSpeed;
     this.bulletLife = bulletLife;
-    this.bulletDamage = bulletDamage;
-    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement;
-    this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? 5 : 10))
+    this.bulletDamage = bulletDamage + (biome == "Earth" ? 0 : (biome == "Sand" ? Math.floor(bulletDamage / 3) : Math.floor(bulletDamage * 2 / 3)))
+    this.inclinaisonTurretIncrement = inclinaisonTurretIncrement || 0.002;
+    this.health = health + (biome == "Earth" ? 0 : (biome == "Sand" ? Math.floor(health / 2) : health))
     this.maxHealth = this.health
+
+    //this.test = BABYLON.MeshBuilder.CreateSphere("test", { diameter: 0.1, segments: 4 }, scene);
 
     //tank headlights
     // this.light = new BABYLON.SpotLight("spotLight", new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 1), Math.PI / 3, 1, scene);
@@ -67,7 +72,7 @@ class Char extends ObjectPos {
     this.exhaustPipeLeft = createSmoke(this.shape, false, true)
     this.exhaustPipeRight = createSmoke(this.shape, true, true)
     this.dust = createDust(this.shape);
-    this.healtBar = new Healthbar(this);
+    this.healtBar = new Healthbar(this, type.name == ObjectEnum.BossTank.name ? 2 : 1);
 
     this.moveSound = new Audio('audio/electricFerry.mp3');
     this.moveSound.volume = 1
@@ -81,6 +86,11 @@ class Char extends ObjectPos {
 
     this.charExploseSound = new Audio('audio/charExplosion.mp3');
     this.charExploseSound.volume = 0.4
+
+    this.specialBonuses = [];
+
+    this.bullForce = null;
+    this.grenadeDamage = 10;
   }
 
   addBullet(time = Date.now()) {
@@ -123,7 +133,7 @@ class Char extends ObjectPos {
   }
 
   rotateAxisY(angle) {
-    if (this.life <= 0) return
+    if (this.life <= 0 || this.bullForce) return
     this.shape.rotate(BABYLON.Axis.Y, angle)
     this.rotateTurretAxisY(-angle)
   }
@@ -142,13 +152,13 @@ class Char extends ObjectPos {
     if (this.life <= 0) return;
     var turret = this.getTurretTank()
     var quaternion = turret.rotationQuaternion.toEulerAngles().x
+    let inclinaison = this.inclinaisonTurretIncrement || 0.002;
     if (quaternion > -0.15 && isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret going UP");
+
+      turret.rotate(BABYLON.Axis.X, inclinaison * (isUp ? -angle : angle))
     }
     if (quaternion < 0.06 && !isUp) {
-      turret.rotate(BABYLON.Axis.X, this.inclinaisonTurretIncrement * (isUp ? -angle : angle))
-      // console.log("turret going DOWN");
+      turret.rotate(BABYLON.Axis.X, inclinaison * (isUp ? -angle : angle))
     }
     // if (quaternion <= -0.15 && isUp) {
     //   console.log("turret is already at MAX UP");
@@ -168,9 +178,9 @@ class Char extends ObjectPos {
     this.moveTank(speed)
   }
 
-  moveTank(speed) {
+  moveTank(speed, fromBullForce = false) {
 
-    if (this.isRenversed() || this.life <= 0) return
+    if (this.isRenversed() || this.life <= 0 || (this.bullForce && !fromBullForce)) return
     if (this.physicsImpostor.friction != 0) {
       this.stabilizeTank(false)
     }
@@ -213,16 +223,16 @@ class Char extends ObjectPos {
   }
 
   stabilizeTank(hasFriction = true) {
+    if (this.health <= 0 || scene.menu.isInMenu()) hasFriction = true
     remove(impostorCharList, this.physicsImpostor)
     this.physicsImpostor.dispose()
-    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.5 : 0 });
+    this.physicsImpostor = new BABYLON.PhysicsImpostor(this.shape, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 30000, restitution: 0.2, friction: hasFriction ? 0.3 : 0 });
     impostorCharList.push(this.physicsImpostor)
     this.movingSmoke(false)
     this.dust.stop();
   }
 
   destroyTank() {
-    // explode(this.shape)
     this.stabilizeTank()
     this.healtBar.disposeBar()
     this.moveSound.pause();
@@ -272,52 +282,65 @@ class Char extends ObjectPos {
     this.exhaustPipeRight.gravity = new BABYLON.Vector3(0.25, isMoving ? 3 : 8, 0);
   }
 
+  /**
+   * @param {SpecialBonus} bonus 
+   */
+  addSpecialBonus(bonus) {
+    this.specialBonuses.push(bonus);
+  }
+
 
   healthLoss(damage) {
+    if (this.specialBonuses.some(b => b.name == SPECIAL_BONUS_ID.DOME.name && b.isActive)) return
+    if (this.bullForce) return
     if (damage < this.health) this.health -= damage
     else {
       this.health = 0
       this.life--
       // this.dispose(false)
     }
-  }
-
-  setCrossHairPosition() {
-    if (!this.crossHair) return
-    let laserCoolDown = 1;
-    let laserRes = ShootAI.targetPlayer(char1, 1000, false, laserCoolDown, true, this.crossHair);
-    if (laserRes) {
-      let [position, hitMesh] = laserRes
-      let cannonPoint = getCannonPoint(this)
-
-      let distanceFromTank = Math.sqrt((position.x - cannonPoint.x) ** 2 + (position.y - cannonPoint.y) ** 2 + (position.z - cannonPoint.z) ** 2) * 4
-      ShootAI.targetPlayer(char1, distanceFromTank, true, laserCoolDown, true, this.crossHair);
-      // crossHair.parent = obj.shape
-      let char;
-
-      if (char = chars.find(e => e.shape == hitMesh)) {
-        highlightTank(char, true)
-
-      } else {
-        if (hl) hl.removeAllMeshes()
-      }
-      if (this.crossHair.position) this.crossHair.position = position
-    }
-    else {
-      ShootAI.targetPlayer(char1, 1000, true, laserCoolDown, true, this.crossHair);
-
-      if (this.crossHair.position) this.crossHair.position.y -= 200
-      if (hl) hl.removeAllMeshes()
-    }
+    //update barre de vie
+    this.healtBar.updatePartition()
   }
 
   dispose(forceDispose) {
     super.dispose(forceDispose)
     this.healtBar.disposeBar()
-    if (this.crossHair) this.crossHair.dispose()
+    this.specialBonuses.forEach(b => b.fullDispose())
+  }
+
+  applyBullForce() {
+    if (!this.bullForce || char1.life <= 0) return
+    // this.physicsImpostor.applyForce(this.bullForce, this.shape.position)
+    // this.physicsImpostor.setLinearVelocity(this.bullForce)
+    this.moveTank(10, true)
+  }
+
+  throwGrenade() {
+    let g = new GrenadeObj(this)
+    // g.physicsImpostor.applyForce(
+    //   new BABYLON.Vector3(
+    //     getTurretTank().getDirection(BABYLON.Axis.Z).x * 400,
+    //     500000000000,
+    //     getTurretTank().getDirection(BABYLON.Axis.X).x * 400),
+    //   g.shape.position)
+  }
+
+  restoreHealth() {
+    this.health = this.maxHealth;
+
+    //update barre de vie
+    this.healtBar.updatePartition()
+  }
+
+  getMeshesToHighlight() {
+    return this.shape.getChildMeshes().filter(m =>
+      !(this.healtBar.healthBarContainer && ((m == this.healtBar.healthBarContainer) || (this.healtBar.healthBarContainer.getChildMeshes().includes(m)))));
   }
 
 }
+
+
 
 function lights() {
   var gui = new dat.GUI();
@@ -350,29 +373,4 @@ function lights() {
 
 
 
-}
-/**
- * 
- * @param {Char} tank 
- * @param {boolean} toHighlight 
- */
-function highlightTank(tank, toHighlight) {
-  if (toHighlight && !hl.hasMesh(tank.shape.getChildMeshes()[0])) {
-    tank.shape.getChildMeshes().filter(m =>
-      !((m == tank.healtBar.healthBarContainer) || (tank.healtBar.healthBarContainer.getChildMeshes().includes(m)))).forEach(m => hl.addMesh(m, new BABYLON.Color3(1, 0, 0)))
-  }
-}
-
-/** @param {Char} obj */
-function loadCrossHair(obj, scene) {
-  var crossHair = new BABYLON.MeshBuilder.CreatePlane("crossHair", { size: 0.5 }, scene);
-
-  crossHair.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
-
-  crossHair.material = new BABYLON.StandardMaterial("crossHair", scene);
-  crossHair.material.diffuseTexture = new BABYLON.Texture("images/gunaims.png", scene);
-  crossHair.material.diffuseTexture.hasAlpha = true;
-  crossHair.material.emissiveColor = BABYLON.Color3.White()
-  crossHair.isPickable = false;
-  obj.crossHair = crossHair;
 }

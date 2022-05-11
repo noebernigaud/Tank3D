@@ -11,7 +11,7 @@ function getMousePos(canvas, evt) {
     };
 }
 let filter;
-function createRay(origin, dir, length, affiche = false, disposeTime = 5, returnPointInpact = false, exclude = undefined, canPickInvisible = false) {
+function createRay(origin, dir, length, affiche = false, disposeTime = 5, returnPointInpact = false, exclude = undefined, canPickInvisible = false, toReverse = false) {
     let ray = new BABYLON.Ray(origin, dir, length);
 
     let pickInfo
@@ -27,11 +27,13 @@ function createRay(origin, dir, length, affiche = false, disposeTime = 5, return
             rayHelper.dispose(ray);
         }, disposeTime);
     }
-
     filter = (pickInfo.filter(e => e != rayHelper && e != exclude))
 
-    // if (exclude) console.log(filter.length > 0 ? (returnPointInpact ? filter[0].pickedPoint : filter[0].pickedMesh) : undefined);
-    return filter.length > 0 ? (returnPointInpact ? [filter[0].pickedPoint, filter[0].pickedMesh] : filter[0].pickedMesh) : undefined
+    let index = toReverse ? filter.length - 1 : 0
+
+    // if (filter.length > 0) {console.log("--------------start--------------");}
+    // filter.forEach(e => console.log(e.pickedMesh.id))
+    return filter.length > 0 ? (returnPointInpact ? [filter[index].pickedPoint, filter[index].pickedMesh] : filter[index].pickedMesh) : undefined
 }
 
 function createRayPoint(origin, dir, length) {
@@ -61,6 +63,8 @@ var remove = (list, elt) => {
     var index = list.indexOf(elt)
     if (index !== -1) list.splice(index, 1)
 }
+
+
 
 function lights() {
     var gui = new dat.GUI();

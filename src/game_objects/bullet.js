@@ -1,7 +1,7 @@
 class Bullet extends ObjectPos {
 
 
-    static diameter = 2 / 20;
+    static diameter = 0.2;
     /**
      * 
      * @param {Char} char 
@@ -19,7 +19,6 @@ class Bullet extends ObjectPos {
 
         this.physicsImpostor = new BABYLON.PhysicsImpostor(this, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 1 });
         let frontVec = char.getTurretTank().getDirection(BABYLON.Axis.Z)
-        console.log("frontvec bullet :", frontVec)
         frontVec.y += 0.009
         let moveVec = frontVec.scale(this.speed)
         // let moveVec = new BABYLON.Vector3(moveVec.x, 0, moveVec.z)
@@ -87,6 +86,8 @@ class Bullet extends ObjectPos {
                     if (b1) b1.dispose()
                     createFire(e2.object);
                     createSmoke(e2.object);
+                    b2.explose()
+                    b2.isBurning = true
                 } else if (b2 = trees.find(e => e.shape == e2.object)) {
                     if (b1) b1.dispose()
                     if (b2) b2.burnTree()
@@ -97,9 +98,13 @@ class Bullet extends ObjectPos {
         }
     }
 
+    destroySound() { return }
+
     createShape() {
-        var shape = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: Bullet.diameter }, scene);
+        var shape = BABYLON.MeshBuilder.CreateSphere("bullet", { diameter: Bullet.diameter, segments: 4 }, scene);
         shape.material = createMaterial(scene, bulletImage.src);
+        // shape.cullingStrategy = BABYLON.AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY
+        hlBalls.addMesh(shape, new BABYLON.Color3(1, 0, 0))
 
         return shape;
     }

@@ -5,15 +5,17 @@ class guaranteedAI {
 
     angleChange;
 
-    constructor(tank) {
+    constructor(tank, isEnnemy = true) {
         this.tank = tank;
         this.updateTir = 12;
         this.updateDir = 10;
         this.angleChange = 0;
         this.goRight = 0;
+        this.isEnnemy = isEnnemy;
     }
 
     applyStrategy() {
+        // return
         if (scene.menu.isInMenu()) return
         var dirZ = this.tank.shape.getDirection(BABYLON.Axis.Z);
         var dirX = this.tank.shape.getDirection(BABYLON.Axis.X);
@@ -74,11 +76,12 @@ class guaranteedAI {
                 this.tank.stabilizeTank();
 
         //Rotate turret
-        MoveAI.rotateTurret(this.tank);
+        MoveAI.rotateTurret(this.tank, this.isEnnemy);
 
         // Shoot simulation
         if (this.updateTir <= 0) {
-            if (char1.shape == ShootAI.targetPlayer(this.tank)) {
+            var hit = ShootAI.targetPlayer(this.tank)
+            if ((this.isEnnemy && (charsAllAllies.some(c => c.shape == hit)) || (charsAllAllies.some(c => c.getChildMeshes().some(m => m == hit)))) || (!this.isEnnemy && charsAI.some(c => c.shape == hit))) {
                 this.tank.addBullet(Date.now())
             }
             this.updateTir = 12;
