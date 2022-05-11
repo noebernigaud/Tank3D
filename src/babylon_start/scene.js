@@ -26,7 +26,7 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    this.engine = new BABYLON.Engine(canvas, true, null, true);
+    this.engine = new BABYLON.Engine(canvas, true, null, false);
 
     engine = this.engine;
     engine.enableOfflineSupport = false;
@@ -253,6 +253,8 @@ class Scene {
     var gravityVector = new BABYLON.Vector3(0, gravity, 0);
     var physicsPlugin = new BABYLON.CannonJSPlugin();
     scene.enablePhysics(gravityVector, physicsPlugin);
+    // var physicsEngine = scene.getPhysicsEngine();
+    // physicsEngine.setSubTimeStep(50);
   }
 
   setCamera() {
