@@ -76,8 +76,8 @@ class Level {
   }
 
   goNextLevel(status = lvlStatus.NXT_LVL) {
-    if (!scene.menu.inOtherMenu()) {
-      scene.menu.inNextLevel = true;
+    if (true || !scene.menu.inOtherMenu()) {
+      // scene.menu.inNextLevel = true;
       Array.from(document.getElementsByClassName("gameBarsClass")).forEach(e => e.classList.add('hide'))
       exitPointerLoc()
       this.writeStat(status)
@@ -184,21 +184,22 @@ class Level {
     startLine.appendChild(startCell)
     tab.appendChild(startLine)
 
-    for (const iterator of Object.entries(this.stats)) {
-      let line = document.createElement("tr")
-      line.appendChild(createTd(iterator[0]))
-      line.appendChild(createTd(iterator[1]))
-      // cell1.innerHTML = iterator[0]
-      // cell2.innerHTML = iterator[1]
-      // tab.innerHTML += `<tr><td class="button"><span>${iterator[0]}</span></td><td class="button"><span>${iterator[1]}</span></td></tr>`
-      tab.appendChild(line)
-    }
+    // for (const iterator of Object.entries(this.stats)) {
+    //   let line = document.createElement("tr")
+    //   line.appendChild(createTd(iterator[0]))
+    //   line.appendChild(createTd(iterator[1]))
+    //   // cell1.innerHTML = iterator[0]
+    //   // cell2.innerHTML = iterator[1]
+    //   // tab.innerHTML += `<tr><td class="button"><span>${iterator[0]}</span></td><td class="button"><span>${iterator[1]}</span></td></tr>`
+    //   tab.appendChild(line)
+    // }
 
     let tryAgain = (isAdventure && status == lvlStatus.DIE)
 
     if (status == lvlStatus.NXT_LVL) {
       let nextLvlDescLine = document.createElement("tr")
       let nextLvlDesc = createTd(level_map[level + 1].lvlObjective.description)
+      nextLvlDesc.classList.add('greenBg')
       nextLvlDesc.colSpan = 2
       nextLvlDescLine.appendChild(nextLvlDesc)
       tab.appendChild(nextLvlDescLine)

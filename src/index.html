@@ -234,7 +234,7 @@
 
             Array.from(document.getElementsByClassName('level')).forEach((e, pos) => {
                 e.onclick = () => {
-                    if (!e.classList.contains('blocked')) {
+                    if (!e.classList.contains('blocked') || true) {
                         level = pos;
                         remove_all_objects();
                         setCurrentLevelDico();
