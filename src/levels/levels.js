@@ -433,10 +433,10 @@ function draw_level_map(progress) {
         })
     }
 
-    // engine.setHardwareScalingLevel(1)
-    // optimizer.stop()
-    // optimizer.reset()
-    // optimizer.start()
+    engine.setHardwareScalingLevel(1)
+    optimizer.stop()
+    optimizer.reset()
+    optimizer.start()
 }
 
 function setCurrentLevelDico() {

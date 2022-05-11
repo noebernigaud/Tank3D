@@ -26,7 +26,7 @@ class Scene {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     tanksAIReady = false;
-    this.engine = new BABYLON.Engine(canvas, true, null, true);
+    this.engine = new BABYLON.Engine(canvas, true, null, false);
 
     engine = this.engine;
     engine.enableOfflineSupport = false;
@@ -249,31 +249,35 @@ class Scene {
     // var options = new BABYLON.SceneOptimizerOptions(60, 1000);
     // var options = BABYLON.SceneOptimizerOptions.ModerateDegradationAllowed(70);
 
-    // var result = new BABYLON.SceneOptimizerOptions(50, 500);
+    var result = new BABYLON.SceneOptimizerOptions(30, 2000);
 
-    // var priority = 0;
+    var priority = 0;
 
-    // result.optimizations.push(new BABYLON.PostProcessesOptimization(priority++));
+    result.optimizations.push(new BABYLON.PostProcessesOptimization(priority++));
 
-    // result.optimizations.push(new BABYLON.TextureOptimization(priority++, 256));
+    result.optimizations.push(new BABYLON.LensFlaresOptimization(priority++));
 
-    // result.optimizations.push(new BABYLON.LensFlaresOptimization(priority++));
+    result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority++, 1.10));
 
-    // // result.optimizations.push(new BABYLON.ShadowsOptimization(priority++));
+    result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority++, 1.25));
 
-    // optimizer = new BABYLON.SceneOptimizer(scene, result);
+    // result.optimizations.push(new BABYLON.HardwareScalingOptimization(priority++, 1.5));
 
-    // optimizer.onNewOptimizationAppliedObservable.add(opt => console.log(opt.getDescription()));
-    // optimizer.onSuccessObservable.add(opt => console.log(`Frame rate stabilized at ${opt.targetFrameRate}`));
-    // optimizer.onFailureObservable.add((opt, es) => console.log(`Failed to apply optimization`))
+    result.optimizations.push(new BABYLON.ShadowsOptimization(priority++));
+
+    result.optimizations.push(new BABYLON.TextureOptimization(priority++, 256));
+
+    optimizer = new BABYLON.SceneOptimizer(scene, result);
+
+    optimizer.onNewOptimizationAppliedObservable.add(opt => console.log(opt.getDescription()));
+    optimizer.onSuccessObservable.add(opt => console.log(`Frame rate stabilized at ${opt.targetFrameRate}`));
+    optimizer.onFailureObservable.add((opt, es) => console.log(`Failed to apply optimization`))
 
 
-    // optimizer.start();
+    optimizer.start();
 
     // optimizer.start()
     // setInterval(() => optimizer.reset(), 1000)
-
-    this.engine.setHardwareScalingLevel(1.1);
 
     return scene;
   }
